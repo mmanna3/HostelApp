@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTable } from 'react-table';
-import ESTADOS from 'store/estadosFetch';
+import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
 
 const Table = ({ fetchData, columnas, datos, estado }) => {
-  useEffect(() => fetchData(), [fetchData]);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const data = React.useMemo(() => datos, [datos]);
 
@@ -26,7 +28,7 @@ const Table = ({ fetchData, columnas, datos, estado }) => {
     </tbody>
   );
 
-  if (estado === ESTADOS.huboError) return <p>Hubo un error.</p>;
+  if (estado === ESTADO.huboError) return <p>Hubo un error.</p>;
 
   return (
     <table {...getTableProps()} className="table is-striped is-hoverable is-bordered is-fullwidth">
@@ -41,7 +43,7 @@ const Table = ({ fetchData, columnas, datos, estado }) => {
           </tr>
         ))}
       </thead>
-      {estado === ESTADOS.cargando ? (
+      {estado === ESTADO.cargando ? (
         <tbody>
           <tr>
             <td>Cargando...</td>

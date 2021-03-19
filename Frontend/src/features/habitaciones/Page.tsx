@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ReactElement } from 'react';
+import React, { useState, ReactElement } from 'react';
 import Table from 'components/Table';
 import useStore from 'store/store';
 import Crear from './crear/Modal';
@@ -7,10 +7,6 @@ import { Button } from 'components/botones/botones';
 
 const HabitacionesPage = (): ReactElement => {
   const { datos, estado, listar } = useStore.habitaciones.listar();
-
-  const fetchData = useCallback((): void => {
-    listar();
-  }, [listar]);
 
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
   const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
@@ -53,7 +49,7 @@ const HabitacionesPage = (): ReactElement => {
 
   function cerrarModalDeCreacionYRefrescarTabla(): void {
     mostrarModalDeCreacion(false);
-    fetchData();
+    listar();
   }
 
   return (
@@ -75,7 +71,7 @@ const HabitacionesPage = (): ReactElement => {
           <Button clases="" onClick={(): void => mostrarModalDeCreacion(true)} text="Cargar nueva" />
         </div>
       </div>
-      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
+      <Table fetchData={listar} columnas={columnas} datos={datos} estado={estado} />
     </div>
   );
 };

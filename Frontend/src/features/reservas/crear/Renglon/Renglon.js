@@ -3,7 +3,7 @@ import Select from 'components/Select';
 import { Input } from 'components/Input';
 import { Icon } from 'components/Icon';
 import Estilos from './Renglon.module.scss';
-import ESTADOS from 'store/estadosFetch';
+import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
 
 const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }) => {
   return (
@@ -22,7 +22,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
                 onChange={onHabitacionChange}
                 value={renglon.habitacionSeleccionada?.id || ''}
               >
-                {estado === ESTADOS.cargando ? (
+                {estado === ESTADO.cargando ? (
                   <option>Cargando...</option>
                 ) : (
                   renglon.habitacionesDisponibles.map(habitacion => {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { fetchCheckoutsDeHoy, checkoutsDeHoySelector } from '../../../store/api/reserva/checkoutsDeHoy/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import ESTADOS from 'store/estadosFetch';
+import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
 import { BotonSalir } from 'components/botones/botones';
 
 const CheckoutsDeHoy = () => {
@@ -19,11 +19,11 @@ const CheckoutsDeHoy = () => {
     return (
       <div className="notification is-primary is-light">
         <BotonSalir onClick={() => mostrar(false)} />
-        {estado === ESTADOS.huboError ? (
+        {estado === ESTADO.huboError ? (
           'Hubo un error.'
-        ) : estado === ESTADOS.cargando ? (
+        ) : estado === ESTADO.cargando ? (
           'Cargando...'
-        ) : estado === ESTADOS.exitoso ? (
+        ) : estado === ESTADO.exitoso ? (
           <>
             <strong>Checkouts de hoy</strong>
             <ul>

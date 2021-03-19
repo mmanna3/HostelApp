@@ -6,7 +6,7 @@ import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
 import SelectorDeVista from './SelectorDeVista/Componente';
 import Tabla from './Tabla/Tabla';
-import ESTADOS from 'store/estadosFetch';
+import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
 import CheckoutsDeHoy from './CheckoutsDeHoy/Componente';
 
 const ReservasPage = () => {
@@ -58,11 +58,11 @@ const ReservasPage = () => {
         </div>
       </div>
       <div>
-        {estado === ESTADOS.huboError ? (
+        {estado === ESTADO.huboError ? (
           'Hubo un error.'
-        ) : estado === ESTADOS.cargando ? (
+        ) : estado === ESTADO.cargando ? (
           'Cargando...'
-        ) : estado === ESTADOS.exitoso ? (
+        ) : estado === ESTADO.exitoso ? (
           <Tabla datos={datos} habitaciones={habitaciones.datos} />
         ) : (
           <></>
