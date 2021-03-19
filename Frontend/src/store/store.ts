@@ -1,6 +1,7 @@
 import useCrearHabitacion from './api/habitacion/crear/useCrearHabitacion';
 import useListarHabitaciones from './api/habitacion/listar/useListar';
 import useListarHabitacionesConLugaresLibres from './api/habitacion/listarConLugaresLibres/useListar';
+import userListarHuespedes from './api/huespedes/listar/useListar';
 import { IUseListarHookRespuesta } from './interfaces';
 
 interface IStore {
@@ -9,6 +10,9 @@ interface IStore {
     listar: () => IUseListarHookRespuesta;
     listarConLugaresLibres: (desde: string, hasta: string) => IUseListarHookRespuesta;
   };
+  huespedes: {
+    listar: () => IUseListarHookRespuesta;
+  };
 }
 
 const store: IStore = {
@@ -16,6 +20,9 @@ const store: IStore = {
     crear: useCrearHabitacion,
     listar: useListarHabitaciones,
     listarConLugaresLibres: useListarHabitacionesConLugaresLibres,
+  },
+  huespedes: {
+    listar: userListarHuespedes,
   },
 };
 
