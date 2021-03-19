@@ -1,7 +1,7 @@
 export interface IUseListarHookRespuesta {
   estado: EstadosFetchEnum;
   datos: any[];
-  listar: () => any;
+  listar: (...params: any[]) => any;
 }
 
 export enum EstadosFetchEnum {
