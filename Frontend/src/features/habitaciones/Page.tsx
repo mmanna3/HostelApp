@@ -1,18 +1,16 @@
 import React, { useState, useCallback, ReactElement } from 'react';
 import Table from 'components/Table';
-import { fetchHabitaciones, habitacionesSelector } from '../../store/api/habitacion/listar/slice';
-import { useDispatch, useSelector } from 'react-redux';
+import useStore from 'store/store';
 import Crear from './crear/Modal';
 import Detalle from './detalle/Modal';
 import { Button } from 'components/botones/botones';
 
 const HabitacionesPage = (): ReactElement => {
-  const dispatch = useDispatch();
-  const { datos, estado } = useSelector(habitacionesSelector);
+  const { datos, estado, listar } = useStore.habitaciones.listar();
 
   const fetchData = useCallback((): void => {
-    dispatch(fetchHabitaciones());
-  }, [dispatch]);
+    listar();
+  }, [listar]);
 
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
   const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
