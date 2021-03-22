@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux';
 
-//Para Matías del futuro:
-//Hoy opino que todos estos archivos deberían estar en la misma carpeta.
-//Pensalo.
-
-import habitacionesReducer from 'store/api/habitacion/listar/slice';
+import { reducer as habitacionesReducer } from 'store/api/habitacion/listar/slice';
 import habitacionesConLugaresLibresReducer from 'store/api/habitacion/listarConLugaresLibres/slice';
 import crearHabitacionReducer from 'store/api/habitacion/crear/slice';
 import obtenerHabitacionPorIdReducer from 'store/api/habitacion/obtenerPorId/slice';

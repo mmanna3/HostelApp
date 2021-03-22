@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { fetchReservasMensuales, fetchReservasActuales, reservasSelector } from '../../store/api/reserva/listar/slice';
-import { fetchHabitaciones, habitacionesSelector } from 'store/api/habitacion/listar/slice';
+import { invocarHttpGet as fetchHabitaciones, selector as habitacionesSelector } from 'store/api/habitacion/listar/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
