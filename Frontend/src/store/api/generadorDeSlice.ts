@@ -1,7 +1,7 @@
-import { createSlice, fetchFunc } from 'store/defaultFetchSlice';
-import { AxiosResponse } from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
-import { IGetRequestSlice } from './requestsInterfaces';
+import { AxiosResponse } from 'axios';
+import { createSlice, fetchFunc } from 'store/defaultFetchSlice';
+import { ISliceHttpGetInfo } from './requestsInterfaces';
 
 interface ISliceGenerado {
   selector: (state: any) => any;
@@ -9,9 +9,8 @@ interface ISliceGenerado {
   invocarHttpGet: () => any;
 }
 
-export function generarSlice<T>(requestSlice: IGetRequestSlice): ISliceGenerado {
+export function generarSliceHttpGet<T>(requestSlice: ISliceHttpGetInfo): ISliceGenerado {
   const slice = createSlice(requestSlice.nombreDelSlice);
-
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 

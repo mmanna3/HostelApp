@@ -1,10 +1,13 @@
-import { IGetRequestSlice } from './requestsInterfaces';
-import { generarSlice } from './generadorDeSlice';
+import { ISliceHttpGetInfo } from './requestsInterfaces';
+import { generarSliceHttpGet } from './generadorDeSlice';
 import { HabitacionDTO } from 'interfaces/habitacion';
 
-const a: IGetRequestSlice = {
+const listarSliceInfo: ISliceHttpGetInfo = {
   nombreDelSlice: 'habitaciones',
   endpoint: '/habitaciones',
+  //parámetros
 };
 
-export const { selector, reducer, invocarHttpGet } = generarSlice<HabitacionDTO[]>(a);
+export const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
+
+// export const obtenerPorId = { ...generarSliceHttpGet<HabitacionDTO[]>(obtenerPorIdSliceInfo) };

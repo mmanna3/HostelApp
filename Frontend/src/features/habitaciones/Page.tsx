@@ -1,16 +1,17 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, ReactElement, useCallback } from 'react';
 import Table from 'components/Table';
-import useStore from 'store/store';
 import Crear from './crear/Modal';
 import Detalle from './detalle/Modal';
 import { Button } from 'components/botones/botones';
+import { listar } from 'store/api/habitacion';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HabitacionesPage = (): ReactElement => {
-  const { datos, estado, listar } = useStore.habitaciones.listar();
-
+  const dispatch = useDispatch();
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
   const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
   const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState(null);
+  const { datos, estado } = useSelector(listar.selector);
 
   const columnas = [
     {
@@ -47,9 +48,13 @@ const HabitacionesPage = (): ReactElement => {
     },
   ];
 
+  const fetchData = useCallback((): void => {
+    dispatch(listar.invocarHttpGet());
+  }, [dispatch]);
+
   function cerrarModalDeCreacionYRefrescarTabla(): void {
     mostrarModalDeCreacion(false);
-    listar();
+    fetchData();
   }
 
   return (
@@ -71,7 +76,7 @@ const HabitacionesPage = (): ReactElement => {
           <Button clases="" onClick={(): void => mostrarModalDeCreacion(true)} text="Cargar nueva" />
         </div>
       </div>
-      <Table fetchData={listar} columnas={columnas} datos={datos} estado={estado} />
+      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>
   );
 };

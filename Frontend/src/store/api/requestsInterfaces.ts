@@ -1,4 +1,5 @@
-export interface IGetRequestSlice {
+export interface ISliceHttpGetInfo {
   nombreDelSlice: string;
   endpoint: string;
+  //params
 }

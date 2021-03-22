@@ -32,7 +32,7 @@ export function fetchFunc<T>(
 ): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
   const { fetchInit, fetchSuccess, fetchFailure } = actions;
 
-  return async (dispatch: Dispatch): Promise<any> => {
+  const funcionAsincronica = async (dispatch: Dispatch): Promise<any> => {
     dispatch(fetchInit());
 
     axios
@@ -45,4 +45,6 @@ export function fetchFunc<T>(
         dispatch(fetchFailure(error.response.data));
       });
   };
+
+  return funcionAsincronica;
 }
