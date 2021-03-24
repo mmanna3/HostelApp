@@ -13,12 +13,14 @@ const ReservasPage = () => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(reservasSelector);
   const habitaciones = useSelector(listar.selector);
+  //api.habitaciones.listar.datos, api.habitaciones.listar.estado, api.habitaciones.listar.invocar
+
   const [IsModalVisible, setModalVisibility] = useState(false);
 
   const fetchData = useCallback(() => {
     // dispatch(fetchReservasMensuales(2020, mes));
     dispatch(fetchReservasActuales());
-    dispatch(listar.invocarHttpGet());
+    dispatch(listar.invocar());
   }, [dispatch]);
 
   useEffect(() => fetchData(), [fetchData]);

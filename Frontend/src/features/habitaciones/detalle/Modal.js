@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from 'react';
 import { Modal, Body, Header, FooterVolver } from 'components/Modal';
 import Display, { SiNo, DisplayLista, DisplayTextarea } from 'components/display/Display';
-import { obtenerHabitacionPorId, obtenerHabitacionPorIdSelector } from '../../../store/api/habitacion/obtenerPorId/slice';
+import { obtenerPorId } from 'store/api/habitacion';
 import { useDispatch, useSelector } from 'react-redux';
 import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
 
 const Detalle = ({ isVisible, onHide, id }) => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(obtenerHabitacionPorIdSelector);
+  const { datos, estado } = useSelector(obtenerPorId.selector);
 
   const fetchData = useCallback(() => {
-    if (isVisible) dispatch(obtenerHabitacionPorId(id));
+    if (isVisible) dispatch(obtenerPorId.invocar(id));
   }, [dispatch, isVisible, id]);
 
   useEffect(() => fetchData(), [fetchData]);

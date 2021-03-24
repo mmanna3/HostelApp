@@ -1,13 +1,16 @@
 import { ISliceHttpGetInfo } from './requestsInterfaces';
-import { generarSliceHttpGet } from './generadorDeSlice';
+import { generarSliceHttpGet, generarSliceObtenerPorId } from './generadorDeSlice';
 import { HabitacionDTO } from 'interfaces/habitacion';
 
 const listarSliceInfo: ISliceHttpGetInfo = {
   nombreDelSlice: 'habitaciones',
   endpoint: '/habitaciones',
-  //parámetros
+};
+
+const obtenerPorIdSliceInfo: ISliceHttpGetInfo = {
+  nombreDelSlice: 'obtenerHabitacionPorId',
+  endpoint: '/habitaciones',
 };
 
 export const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
-
-// export const obtenerPorId = { ...generarSliceHttpGet<HabitacionDTO[]>(obtenerPorIdSliceInfo) };
+export const obtenerPorId = { ...generarSliceObtenerPorId<HabitacionDTO>(obtenerPorIdSliceInfo) };

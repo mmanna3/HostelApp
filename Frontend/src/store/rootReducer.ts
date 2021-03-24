@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux';
 
-import { listar } from 'store/api/habitacion';
+import { listar, obtenerPorId } from 'store/api/habitacion';
 import habitacionesConLugaresLibresReducer from 'store/api/habitacion/listarConLugaresLibres/slice';
 import crearHabitacionReducer from 'store/api/habitacion/crear/slice';
-import obtenerHabitacionPorIdReducer from 'store/api/habitacion/obtenerPorId/slice';
 
 import huespedesReducer from 'store/api/huespedes/listar/slice';
 import crearHuespedReducer from 'store/api/huespedes/crear/slice';
@@ -20,6 +19,7 @@ const rootReducer = combineReducers({
   login: loginReducer,
 
   habitaciones: listar.reducer,
+  obtenerHabitacionPorId: obtenerPorId.reducer,
   habitacionesConLugaresLibres: habitacionesConLugaresLibresReducer,
   crearHabitacion: crearHabitacionReducer,
 
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
 
   reservas: reservasReducer,
   crearReserva: crearReservaReducer,
-  obtenerHabitacionPorId: obtenerHabitacionPorIdReducer,
+
   checkoutsDeHoy: checkoutsDeHoy,
 });
 

@@ -49,7 +49,7 @@ const HabitacionesPage = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    dispatch(listar.invocarHttpGet());
+    dispatch(listar.invocar());
   }, [dispatch]);
 
   function cerrarModalDeCreacionYRefrescarTabla(): void {

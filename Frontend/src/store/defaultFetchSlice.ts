@@ -48,3 +48,28 @@ export function fetchFunc<T>(
 
   return funcionAsincronica;
 }
+
+export function obtenerPorIdFunc<T>(
+  endpoint: string,
+  id: number,
+  actions: any,
+  onSuccessCallback?: () => void
+): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
+  const { fetchInit, fetchSuccess, fetchFailure } = actions;
+
+  const funcionAsincronica = async (dispatch: Dispatch): Promise<any> => {
+    dispatch(fetchInit());
+
+    axios
+      .get<T[]>(`/api${endpoint}/${id}`)
+      .then((res): void => {
+        dispatch(fetchSuccess(res.data));
+        typeof onSuccessCallback === 'function' && onSuccessCallback();
+      })
+      .catch((error): void => {
+        dispatch(fetchFailure(error.response.data));
+      });
+  };
+
+  return funcionAsincronica;
+}
