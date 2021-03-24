@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { fetchReservasMensuales, fetchReservasActuales, reservasSelector } from '../../store/api/reserva/listar/slice';
-import { listar } from 'store/api/habitacion';
+import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
@@ -12,7 +12,7 @@ import CheckoutsDeHoy from './CheckoutsDeHoy/Componente';
 const ReservasPage = () => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(reservasSelector);
-  const habitaciones = useSelector(listar.selector);
+  const habitaciones = useSelector(api.habitaciones.listar.selector);
   //api.habitaciones.listar.datos, api.habitaciones.listar.estado, api.habitaciones.listar.invocar
 
   const [IsModalVisible, setModalVisibility] = useState(false);
@@ -20,7 +20,7 @@ const ReservasPage = () => {
   const fetchData = useCallback(() => {
     // dispatch(fetchReservasMensuales(2020, mes));
     dispatch(fetchReservasActuales());
-    dispatch(listar.invocar());
+    dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
 
   useEffect(() => fetchData(), [fetchData]);
