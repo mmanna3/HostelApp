@@ -10,6 +10,7 @@ import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
+import { EstadosFetchEnum } from 'store/interfaces';
 
 interface IProps {
   isVisible: boolean;
@@ -30,7 +31,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
 
   const dispatch = useDispatch();
   const { selector, invocar, reset } = api.habitaciones.crear;
-  const { loading, errores } = useSelector(selector);
+  const { estado, errores } = useSelector(selector);
 
   function onSuccess(): void {
     onSuccessfulSubmit();
@@ -162,7 +163,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
           <Button text="Agregar cama" onClick={(): void => addCama()} style={{ marginTop: '1em' }} />
         </div>
       </Body>
-      <FooterAcceptCancel onCancel={hide} loading={loading} />
+      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosFetchEnum.cargando} />
     </ModalForm>
   );
 };

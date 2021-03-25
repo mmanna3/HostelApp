@@ -1,8 +1,9 @@
 import { createSlice as createSliceRTK, Slice, Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
+import { EstadosFetchEnum as ESTADO } from './interfaces';
 
 export const initialState = {
-  loading: false,
+  estado: ESTADO.inactivo,
   requestData: '',
   responseData: '',
   errores: undefined,
@@ -14,19 +15,19 @@ export const createSlice = (nombre: string): Slice =>
     initialState,
     reducers: {
       postInit: (state, { payload }): void => {
-        state.loading = true;
+        state.estado = ESTADO.cargando;
         state.requestData = payload;
       },
       postSuccess: (state): void => {
-        state.loading = false;
+        state.estado = ESTADO.exitoso;
         state.errores = undefined;
       },
       postFailure: (state, { payload }): void => {
-        state.loading = false;
+        state.estado = ESTADO.huboError;
         state.errores = payload?.errors;
       },
       reset: (state): void => {
-        state.loading = false;
+        state.estado = ESTADO.inactivo;
         state.responseData = '';
         state.requestData = '';
         state.errores = undefined;
