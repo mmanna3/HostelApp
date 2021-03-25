@@ -1,4 +1,4 @@
-export interface ISliceHttpGetInfo {
+export interface IApiSliceInfo {
   nombreDelSlice: string;
   endpoint: string;
 }

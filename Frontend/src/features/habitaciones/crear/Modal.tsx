@@ -8,7 +8,8 @@ import Label from 'components/Label';
 import SelectCama from './SelectCama';
 import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';
-import useStore from 'store/store';
+import api from 'store/api/api';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
   isVisible: boolean;
@@ -27,7 +28,10 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   const [resetOnChanged, resetForm] = React.useState(0);
   const [camas, setCamas] = React.useState<IRenglonCama[]>([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
 
-  const { loading, validationErrors, cleanErrors, agregarHabitacion } = useStore.habitaciones.crear();
+  // const { loading, validationErrors, cleanErrors, agregarHabitacion } = api.habitaciones.crear;
+  const dispatch = useDispatch();
+  const { selector, invocar, reset } = api.habitaciones.crear;
+  const { loading, validationErrors } = useSelector(selector);
 
   function onSuccess(): void {
     onSuccessfulSubmit();
@@ -36,12 +40,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   }
 
   const onSubmit = (data: any): void => {
-    agregarHabitacion(data, onSuccess);
+    dispatch(invocar(data, onSuccess));
   };
 
   function hide(): void {
     onHide();
-    cleanErrors();
+    dispatch(reset());
     setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
   }
 

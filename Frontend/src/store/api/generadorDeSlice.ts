@@ -1,7 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { createSlice, fetchFunc, fetchFuncConParams, obtenerPorIdFunc } from 'store/defaultFetchSlice';
-import { ISliceHttpGetInfo } from './requestsInterfaces';
+import { createSlice as createGetSlice, fetchFunc, fetchFuncConParams, obtenerPorIdFunc } from 'store/defaultFetchSlice';
+import { createSlice as createPostSlice, postFunc, cleanErrors } from 'store/defaultPostSlice';
+import { IApiSliceInfo } from './requestsInterfaces';
 
 interface ISliceHttpGetGenerado {
   selector: (state: any) => any;
@@ -15,14 +16,21 @@ interface ISliceHttpGetConParametros<TParametros> {
   invocar: (parametros: TParametros) => any;
 }
 
+interface ISliceHttpPost<TPostBody> {
+  selector: (state: any) => any;
+  reducer: any;
+  invocar: (body: TPostBody, onSuccess: () => void) => any;
+  reset: () => void;
+}
+
 interface ISliceObtenerPorId {
   selector: (state: any) => any;
   reducer: any;
   invocar: (id: number) => any;
 }
 
-export function generarSliceHttpGet<T>(requestSlice: ISliceHttpGetInfo): ISliceHttpGetGenerado {
-  const slice = createSlice(requestSlice.nombreDelSlice);
+export function generarSliceHttpGet<T>(requestSlice: IApiSliceInfo): ISliceHttpGetGenerado {
+  const slice = createGetSlice(requestSlice.nombreDelSlice);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
@@ -38,9 +46,9 @@ export function generarSliceHttpGet<T>(requestSlice: ISliceHttpGetInfo): ISliceH
 }
 
 export function generarSliceHttpGetConParams<TResultado, TParametros>(
-  requestSlice: ISliceHttpGetInfo
+  requestSlice: IApiSliceInfo
 ): ISliceHttpGetConParametros<TParametros> {
-  const slice = createSlice(requestSlice.nombreDelSlice);
+  const slice = createGetSlice(requestSlice.nombreDelSlice);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
@@ -55,8 +63,8 @@ export function generarSliceHttpGetConParams<TResultado, TParametros>(
   };
 }
 
-export function generarSliceObtenerPorId<T>(requestSlice: ISliceHttpGetInfo): ISliceObtenerPorId {
-  const slice = createSlice(requestSlice.nombreDelSlice);
+export function generarSliceObtenerPorId<T>(requestSlice: IApiSliceInfo): ISliceObtenerPorId {
+  const slice = createGetSlice(requestSlice.nombreDelSlice);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
@@ -68,5 +76,26 @@ export function generarSliceObtenerPorId<T>(requestSlice: ISliceHttpGetInfo): IS
     selector,
     reducer,
     invocar,
+  };
+}
+
+export function generarSliceHttpPost<TResultado, TPostBody>(requestSlice: IApiSliceInfo): ISliceHttpPost<TPostBody> {
+  const slice = createPostSlice(requestSlice.nombreDelSlice);
+  const selector = (state: any): any => state[requestSlice.nombreDelSlice];
+  const reducer = slice.reducer;
+
+  function invocar(data: TPostBody, onSuccess: () => void): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
+    return postFunc<TResultado, TPostBody>(requestSlice.endpoint, slice.actions, data, onSuccess);
+  }
+
+  function reset(): (dispatch: Dispatch) => void {
+    return cleanErrors;
+  }
+
+  return {
+    selector,
+    reducer,
+    invocar,
+    reset,
   };
 }
