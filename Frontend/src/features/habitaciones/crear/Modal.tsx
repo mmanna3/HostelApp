@@ -28,10 +28,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   const [resetOnChanged, resetForm] = React.useState(0);
   const [camas, setCamas] = React.useState<IRenglonCama[]>([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
 
-  // const { loading, validationErrors, cleanErrors, agregarHabitacion } = api.habitaciones.crear;
   const dispatch = useDispatch();
   const { selector, invocar, reset } = api.habitaciones.crear;
-  const { loading, validationErrors } = useSelector(selector);
+  const { loading, errores } = useSelector(selector);
 
   function onSuccess(): void {
     onSuccessfulSubmit();
@@ -123,7 +122,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
       <Header title="Crear habitación" onHide={hide} />
       <Body>
-        <ValidationSummary errors={validationErrors} />
+        <ValidationSummary errors={errores} />
         <Input label="Nombre" name="nombre" />
 
         <div className="columns">

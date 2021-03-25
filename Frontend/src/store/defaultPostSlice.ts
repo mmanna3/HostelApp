@@ -5,7 +5,7 @@ export const initialState = {
   loading: false,
   requestData: '',
   responseData: '',
-  validationErrors: undefined,
+  errores: undefined,
 };
 
 export const createSlice = (nombre: string): Slice =>
@@ -19,17 +19,17 @@ export const createSlice = (nombre: string): Slice =>
       },
       postSuccess: (state): void => {
         state.loading = false;
-        state.validationErrors = undefined;
+        state.errores = undefined;
       },
       postFailure: (state, { payload }): void => {
         state.loading = false;
-        state.validationErrors = payload?.errors;
+        state.errores = payload?.errors;
       },
       reset: (state): void => {
         state.loading = false;
         state.responseData = '';
         state.requestData = '';
-        state.validationErrors = undefined;
+        state.errores = undefined;
       },
     },
   });
