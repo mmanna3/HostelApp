@@ -1,6 +1,6 @@
 import { createSlice as createSliceRTK, Slice, Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
-import { EstadosFetchEnum as ESTADO } from './interfaces';
+import { EstadosApiRequestEnum as ESTADO } from './interfaces';
 
 export const initialState = {
   estado: ESTADO.inactivo,

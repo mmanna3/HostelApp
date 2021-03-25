@@ -3,7 +3,7 @@ import { Modal, Body, Header, FooterVolver } from 'components/Modal';
 import Display, { SiNo, DisplayLista, DisplayTextarea } from 'components/display/Display';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
+import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
 
 const Detalle = ({ isVisible, onHide, id }) => {
   const dispatch = useDispatch();

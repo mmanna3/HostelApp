@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { fetchCheckoutsDeHoy, checkoutsDeHoySelector } from '../../../store/api/reserva/checkoutsDeHoy/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
+import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
 import { BotonSalir } from 'components/botones/botones';
 
 const CheckoutsDeHoy = () => {

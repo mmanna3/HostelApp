@@ -1,10 +1,10 @@
 export interface IUseListarHookRespuesta {
-  estado: EstadosFetchEnum;
+  estado: EstadosApiRequestEnum;
   datos: any[];
   listar: (...params: any[]) => any;
 }
 
-export enum EstadosFetchEnum {
+export enum EstadosApiRequestEnum {
   cargando = 'cargando',
   inactivo = 'inactivo',
   exitoso = 'exitoso',

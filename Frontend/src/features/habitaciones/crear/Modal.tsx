@@ -10,7 +10,7 @@ import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { EstadosFetchEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/interfaces';
 
 interface IProps {
   isVisible: boolean;
@@ -163,7 +163,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
           <Button text="Agregar cama" onClick={(): void => addCama()} style={{ marginTop: '1em' }} />
         </div>
       </Body>
-      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosFetchEnum.cargando} />
+      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };

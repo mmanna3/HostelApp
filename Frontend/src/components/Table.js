@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTable } from 'react-table';
-import { EstadosFetchEnum as ESTADO } from 'store/interfaces';
+import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
 
 const Table = ({ fetchData, columnas, datos, estado }) => {
   useEffect(() => {
