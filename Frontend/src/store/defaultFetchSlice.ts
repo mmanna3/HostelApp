@@ -49,6 +49,37 @@ export function fetchFunc<T>(
   return funcionAsincronica;
 }
 
+export function fetchFuncConParams<TResultado, TParametros>(
+  endpoint: string,
+  actions: any,
+  parametros: TParametros,
+  onSuccessCallback?: () => void
+): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
+  const { fetchInit, fetchSuccess, fetchFailure } = actions;
+
+  var parametrosUrl = '';
+  Object.keys(parametros).forEach(function (key: string): void {
+    parametrosUrl += `&${key}=${(parametros as any)[key]}`;
+  });
+  parametrosUrl.substring(1);
+
+  const funcionAsincronica = async (dispatch: Dispatch): Promise<any> => {
+    dispatch(fetchInit());
+
+    axios
+      .get<TResultado[]>(`/api${endpoint}?${parametrosUrl}`)
+      .then((res): void => {
+        dispatch(fetchSuccess(res.data));
+        typeof onSuccessCallback === 'function' && onSuccessCallback();
+      })
+      .catch((error): void => {
+        dispatch(fetchFailure(error.response.data));
+      });
+  };
+
+  return funcionAsincronica;
+}
+
 export function obtenerPorIdFunc<T>(
   endpoint: string,
   id: number,

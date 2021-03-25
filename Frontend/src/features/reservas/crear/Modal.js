@@ -7,7 +7,7 @@ import ValidationSummary from 'components/ValidationSummary';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
 import { crearReserva, cleanErrors, crearReservaSelector } from '../../../store/api/reserva/crear/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import useStore from 'store/store';
+import api from 'store/api/api';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
@@ -34,10 +34,10 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   const dispatch = useDispatch();
   const onSubmit = data => dispatch(crearReserva(data, onSuccess));
 
-  const habRequest = useStore.habitaciones.listarConLugaresLibres();
-  const habitacionesEstado = habRequest.estado;
-  const habitaciones = habRequest.datos;
-  const listarHabitacionesConLugaresLibres = habRequest.listar;
+  const habRequest = api.habitaciones.listarConLugaresLibres;
+  const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
+  const habitaciones = habitacionesSelector.datos;
+  const habitacionesEstado = habitacionesSelector.estado;
 
   useEffect(() => {
     function restarUnDiaAlHastaDelCalendarioPorqueElCheckoutNoLocuento() {
@@ -48,9 +48,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     }
 
     let hasta = restarUnDiaAlHastaDelCalendarioPorqueElCheckoutNoLocuento();
-    listarHabitacionesConLugaresLibres(convertirAString(desdeHasta[0]), convertirAString(hasta));
+    dispatch(habRequest.invocar({ desde: convertirAString(desdeHasta[0]), hasta: convertirAString(hasta) }));
     actualizarCantidadDeNoches(restarFechas(desdeHasta[1], desdeHasta[0]));
-  }, [dispatch, listarHabitacionesConLugaresLibres, desdeHasta, cantidadDeNoches]);
+  }, [dispatch, habRequest, desdeHasta, cantidadDeNoches]);
 
   useEffect(() => {
     if (habitaciones.length > 0)

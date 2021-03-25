@@ -1,12 +1,18 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { createSlice, fetchFunc, obtenerPorIdFunc } from 'store/defaultFetchSlice';
+import { createSlice, fetchFunc, fetchFuncConParams, obtenerPorIdFunc } from 'store/defaultFetchSlice';
 import { ISliceHttpGetInfo } from './requestsInterfaces';
 
 interface ISliceHttpGetGenerado {
   selector: (state: any) => any;
   reducer: any;
   invocar: () => any;
+}
+
+interface ISliceHttpGetConParametros<TParametros> {
+  selector: (state: any) => any;
+  reducer: any;
+  invocar: (parametros: TParametros) => any;
 }
 
 interface ISliceObtenerPorId {
@@ -22,6 +28,24 @@ export function generarSliceHttpGet<T>(requestSlice: ISliceHttpGetInfo): ISliceH
 
   function invocar(): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
     return fetchFunc<T>(requestSlice.endpoint, slice.actions);
+  }
+
+  return {
+    selector,
+    reducer,
+    invocar,
+  };
+}
+
+export function generarSliceHttpGetConParams<TResultado, TParametros>(
+  requestSlice: ISliceHttpGetInfo
+): ISliceHttpGetConParametros<TParametros> {
+  const slice = createSlice(requestSlice.nombreDelSlice);
+  const selector = (state: any): any => state[requestSlice.nombreDelSlice];
+  const reducer = slice.reducer;
+
+  function invocar(parametros: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
+    return fetchFuncConParams<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
   }
 
   return {

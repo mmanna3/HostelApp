@@ -1,9 +1,10 @@
-import { listar, obtenerPorId } from './habitacion';
+import { listar, obtenerPorId, listarConLugaresLibres } from './habitacion';
 
 const api = {
   habitaciones: {
     listar: listar,
     obtenerPorId: obtenerPorId,
+    listarConLugaresLibres: listarConLugaresLibres,
   },
 };
 

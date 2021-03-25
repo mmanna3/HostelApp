@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { listar, obtenerPorId } from 'store/api/habitacion';
-import habitacionesConLugaresLibresReducer from 'store/api/habitacion/listarConLugaresLibres/slice';
+import { listar, obtenerPorId, listarConLugaresLibres } from 'store/api/habitacion';
 import crearHabitacionReducer from 'store/api/habitacion/crear/slice';
 
 import huespedesReducer from 'store/api/huespedes/listar/slice';
@@ -20,7 +19,7 @@ const rootReducer = combineReducers({
 
   habitaciones: listar.reducer,
   obtenerHabitacionPorId: obtenerPorId.reducer,
-  habitacionesConLugaresLibres: habitacionesConLugaresLibresReducer,
+  habitacionesConLugaresLibres: listarConLugaresLibres.reducer,
   crearHabitacion: crearHabitacionReducer,
 
   huespedes: huespedesReducer,
