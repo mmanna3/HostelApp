@@ -1,7 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { createSlice as createGetSlice, fetchFunc, fetchFuncConParams, obtenerPorIdFunc } from 'store/defaultFetchSlice';
-import { createSlice as createPostSlice, postFunc, cleanErrors } from 'store/defaultPostSlice';
+import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/defaultPostSlice';
 import { IApiSliceInfo } from './requestsInterfaces';
 
 interface ISliceHttpGetGenerado {
@@ -89,7 +89,7 @@ export function generarSliceHttpPost<TResultado, TPostBody>(requestSlice: IApiSl
   }
 
   function reset(): (dispatch: Dispatch) => void {
-    return cleanErrors;
+    return limpiarErrores;
   }
 
   return {

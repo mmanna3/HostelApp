@@ -60,7 +60,7 @@ export function postFunc<TResultado, TPostBody>(
   return funcionAsincronica;
 }
 
-export function cleanErrors(actions: any): (dispatch: Dispatch) => void {
+export function limpiarErrores(actions: any): (dispatch: Dispatch) => void {
   const { reset } = actions;
 
   return async (dispatch: Dispatch): Promise<any> => {
