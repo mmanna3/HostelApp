@@ -20,7 +20,7 @@ interface ISliceHttpPost<TPostBody> {
   selector: (state: any) => any;
   reducer: any;
   invocar: (body: TPostBody, onSuccess: () => void) => any;
-  reset: () => void;
+  reiniciar: () => void;
 }
 
 interface ISliceObtenerPorId {
@@ -88,7 +88,7 @@ export function generarSliceHttpPost<TResultado, TPostBody>(requestSlice: IApiSl
     return postFunc<TResultado, TPostBody>(requestSlice.endpoint, slice.actions, data, onSuccess);
   }
 
-  function reset(): (dispatch: Dispatch) => void {
+  function reiniciar(): (dispatch: Dispatch) => void {
     return limpiarErrores;
   }
 
@@ -96,6 +96,6 @@ export function generarSliceHttpPost<TResultado, TPostBody>(requestSlice: IApiSl
     selector,
     reducer,
     invocar,
-    reset,
+    reiniciar,
   };
 }

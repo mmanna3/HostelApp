@@ -5,7 +5,7 @@ import { Button } from 'components/botones/botones';
 import Label from 'components/Label';
 import ValidationSummary from 'components/ValidationSummary';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
-import { crearReserva, cleanErrors, crearReservaSelector } from '../../../store/api/reserva/crear/slice';
+import { crearReserva, cleanErrors, crearReservaSelector } from 'store/api/reserva/crear/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';

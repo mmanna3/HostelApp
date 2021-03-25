@@ -30,7 +30,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   const [camas, setCamas] = React.useState<IRenglonCama[]>([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
 
   const dispatch = useDispatch();
-  const { selector, invocar, reset } = api.habitaciones.crear;
+  const { selector, invocar, reiniciar } = api.habitaciones.crear;
   const { estado, errores } = useSelector(selector);
 
   function onSuccess(): void {
@@ -45,7 +45,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
 
   function hide(): void {
     onHide();
-    dispatch(reset());
+    dispatch(reiniciar());
     setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
   }
 
