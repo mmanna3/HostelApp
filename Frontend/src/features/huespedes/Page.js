@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
 import api from 'store/api/api';
-import { EstadosApiRequestEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const HuespedesPage = () => {
   const dispatch = useDispatch();

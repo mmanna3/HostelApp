@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './Page.module.scss';
 import { useHistory } from 'react-router-dom';
 import { siEstaLogueadoEnviarTokenEnTodosLosRequests } from 'features/login/servicio';
-import { EstadosApiRequestEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { actualizarUsuarioEnLocalStorage } from './servicio';
 
 const LoginPage = () => {

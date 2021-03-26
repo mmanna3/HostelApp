@@ -11,7 +11,7 @@ import api from 'store/api/api';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
-import { EstadosApiRequestEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   class RenglonData {

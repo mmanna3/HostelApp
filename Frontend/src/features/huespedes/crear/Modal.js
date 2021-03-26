@@ -4,7 +4,7 @@ import { Input } from 'components/Input';
 import ValidationSummary from 'components/ValidationSummary';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { EstadosApiRequestEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   const { errores, estado } = useSelector(api.huespedes.crear.selector);

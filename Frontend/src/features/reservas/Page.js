@@ -5,7 +5,7 @@ import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
 import SelectorDeVista from './SelectorDeVista/Componente';
 import Tabla from './Tabla/Tabla';
-import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
+import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import CheckoutsDeHoy from './CheckoutsDeHoy/Componente';
 
 const ReservasPage = () => {

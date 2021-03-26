@@ -3,7 +3,7 @@ import Select from 'components/Select';
 import { Input } from 'components/Input';
 import { Icon } from 'components/Icon';
 import Estilos from './Renglon.module.scss';
-import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
+import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
 const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }) => {
   return (

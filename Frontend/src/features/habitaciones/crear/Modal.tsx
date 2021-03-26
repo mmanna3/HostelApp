@@ -10,7 +10,7 @@ import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { EstadosApiRequestEnum } from 'store/interfaces';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
   isVisible: boolean;
