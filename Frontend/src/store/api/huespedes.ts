@@ -1,5 +1,4 @@
-import { IApiSliceInfo } from './requestsInterfaces';
-import { generarSliceHttpGet, generarSliceHttpPost } from './generadorDeSlice';
+import { IApiSliceInfo, generarSliceHttpGet, generarSliceHttpPost } from './utils/generadorDeSlicesParaRequest';
 import { HuespedDTO } from 'interfaces/huesped';
 
 const listarSliceInfo: IApiSliceInfo = {

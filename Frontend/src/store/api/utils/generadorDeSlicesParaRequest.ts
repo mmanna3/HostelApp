@@ -1,8 +1,12 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { createSlice as createGetSlice, fetchFunc, fetchFuncConParams, obtenerPorIdFunc } from 'store/defaultFetchSlice';
-import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/defaultPostSlice';
-import { IApiSliceInfo } from './requestsInterfaces';
+import {
+  createSlice as createGetSlice,
+  fetchFunc,
+  fetchFuncConParams,
+  obtenerPorIdFunc,
+} from 'store/api/utils/httpGetSliceBase';
+import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/api/utils/httpPostSliceBase';
 
 interface ISliceHttpGetGenerado {
   selector: (state: any) => any;
@@ -27,6 +31,11 @@ interface ISliceObtenerPorId {
   selector: (state: any) => any;
   reducer: any;
   invocar: (id: number) => any;
+}
+
+export interface IApiSliceInfo {
+  nombreDelSlice: string;
+  endpoint: string;
 }
 
 export function generarSliceHttpGet<T>(requestSlice: IApiSliceInfo): ISliceHttpGetGenerado {

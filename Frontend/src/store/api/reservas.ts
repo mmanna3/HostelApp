@@ -1,5 +1,9 @@
-import { IApiSliceInfo } from './requestsInterfaces';
-import { generarSliceHttpGet, generarSliceHttpGetConParams, generarSliceHttpPost } from './generadorDeSlice';
+import {
+  IApiSliceInfo,
+  generarSliceHttpGet,
+  generarSliceHttpGetConParams,
+  generarSliceHttpPost,
+} from './utils/generadorDeSlicesParaRequest';
 import { CheckoutsDeHoyDTO, ReservaResumenDTO } from 'interfaces/reserva';
 
 const listarActualesSliceInfo: IApiSliceInfo = {

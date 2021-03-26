@@ -1,5 +1,5 @@
-import habitaciones from './habitacion';
-import reservas from './reserva';
+import habitaciones from './habitaciones';
+import reservas from './reservas';
 import huespedes from './huespedes';
 import usuarios from './usuarios';
 

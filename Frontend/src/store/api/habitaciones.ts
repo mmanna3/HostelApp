@@ -1,10 +1,10 @@
-import { IApiSliceInfo } from './requestsInterfaces';
 import {
+  IApiSliceInfo,
   generarSliceHttpGet,
   generarSliceHttpGetConParams,
   generarSliceHttpPost,
   generarSliceObtenerPorId,
-} from './generadorDeSlice';
+} from './utils/generadorDeSlicesParaRequest';
 import { HabitacionDTO } from 'interfaces/habitacion';
 
 interface ILugaresLibresParams {
