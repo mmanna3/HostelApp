@@ -1,5 +1,5 @@
 import { IApiSliceInfo } from './requestsInterfaces';
-import { generarSliceHttpGet, generarSliceHttpGetConParams } from './generadorDeSlice';
+import { generarSliceHttpGet, generarSliceHttpGetConParams, generarSliceHttpPost } from './generadorDeSlice';
 import { CheckoutsDeHoyDTO, ReservaResumenDTO } from 'interfaces/reserva';
 
 const listarActualesSliceInfo: IApiSliceInfo = {
@@ -17,6 +17,11 @@ const checkoutsDeHoySliceInfo: IApiSliceInfo = {
   endpoint: '/reservas/checkoutsDeHoy',
 };
 
+const crearSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'crearReserva',
+  endpoint: '/reservas',
+};
+
 interface IListarMensualesParams {
   anio: string;
   mes: string;
@@ -30,8 +35,13 @@ const listarMensuales = {
   ...generarSliceHttpGetConParams<ReservaResumenDTO[], IListarMensualesParams>(listarMensualesSliceInfo),
 };
 
+const crear = {
+  ...generarSliceHttpPost<string, ReservaResumenDTO>(crearSliceInfo),
+};
+
 export default {
   listarMensuales,
   listarActuales,
   checkoutsDeHoy,
+  crear,
 };

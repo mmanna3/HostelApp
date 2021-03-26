@@ -5,12 +5,13 @@ import { Button } from 'components/botones/botones';
 import Label from 'components/Label';
 import ValidationSummary from 'components/ValidationSummary';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
-import { crearReserva, cleanErrors, crearReservaSelector } from 'store/api/reserva/crear/slice';
+// import { crearReserva, cleanErrors, crearReservaSelector } from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
+import { EstadosApiRequestEnum } from 'store/interfaces';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   class RenglonData {
@@ -25,14 +26,15 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     }
   }
 
-  const { loading, validationErrors } = useSelector(crearReservaSelector);
+  const { selector, reiniciar } = api.reservas.crear;
+  const { estado, errores } = useSelector(selector);
   const [resetOnChanged, resetForm] = React.useState(0);
   const [desdeHasta, actualizarDesdeHasta] = useState([hoy(), maniana()]);
   const [cantidadDeNoches, actualizarCantidadDeNoches] = useState(1);
   const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
 
   const dispatch = useDispatch();
-  const onSubmit = data => dispatch(crearReserva(data, onSuccess));
+  const onSubmit = data => dispatch(api.reservas.crear.invocar(data, onSuccess));
 
   const habRequest = api.habitaciones.listarConLugaresLibres;
   const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
@@ -67,7 +69,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
 
   function hide() {
     onHide();
-    dispatch(cleanErrors());
+    dispatch(reiniciar());
   }
 
   function onHabitacionChange(indice, id) {
@@ -115,7 +117,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="680px">
       <Header title="Alta de reserva" onHide={hide} />
       <Body minHeight="460px">
-        <ValidationSummary errors={validationErrors} />
+        <ValidationSummary errors={errores} />
         <Input label="Huésped" name="aNombreDe" />
         <DateRangePicker actualizarValor={actualizarDesdeHasta} etiqueta="Check in - Check out" valor={desdeHasta} />
         <p className={Estilos.noches}>
@@ -139,7 +141,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
 
         <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
       </Body>
-      <FooterAcceptCancel onCancel={hide} loading={loading} />
+      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };

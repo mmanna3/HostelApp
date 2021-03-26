@@ -8,8 +8,6 @@ import crearHuespedReducer from 'store/api/huespedes/crear/slice';
 
 import tablaDeReservas from 'store/app/tablaDeReservas/slice';
 
-import crearReservaReducer from 'store/api/reserva/crear/slice';
-
 import loginReducer from 'store/api/usuario/autenticar/slice';
 
 const rootReducer = combineReducers({
@@ -27,7 +25,7 @@ const rootReducer = combineReducers({
 
   reservasActuales: reservas.listarActuales.reducer,
   reservasMensuales: reservas.listarMensuales.reducer,
-  crearReserva: crearReservaReducer,
+  crearReserva: reservas.crear.reducer,
   checkoutsDeHoy: reservas.checkoutsDeHoy.reducer,
 });
 
