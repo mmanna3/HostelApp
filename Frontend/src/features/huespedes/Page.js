@@ -1,16 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import Table from 'components/Table';
-import { fetchHuespedes, huespedesSelector } from '../../store/api/huespedes/listar/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
+import api from 'store/api/api';
+import { EstadosApiRequestEnum } from 'store/interfaces';
 
 const HuespedesPage = () => {
   const dispatch = useDispatch();
-  const { datos, loading, hasErrors } = useSelector(huespedesSelector);
+  const { datos, estado } = useSelector(api.huespedes.listar.selector);
 
   const fetchData = useCallback(() => {
-    dispatch(fetchHuespedes());
+    dispatch(api.huespedes.listar.invocar());
   }, [dispatch]);
 
   const columnas = [
@@ -45,11 +46,11 @@ const HuespedesPage = () => {
       </div>
       <Table
         fetchData={fetchData}
-        selector={huespedesSelector}
+        selector={api.huespedes.selector}
         columnas={columnas}
         datos={datos}
-        loading={loading}
-        hasErrors={hasErrors}
+        loading={estado === EstadosApiRequestEnum.cargando}
+        hasErrors={estado === EstadosApiRequestEnum.huboError}
       />
     </div>
   );

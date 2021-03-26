@@ -2,15 +2,16 @@ import React from 'react';
 import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
 import { Input } from 'components/Input';
 import ValidationSummary from 'components/ValidationSummary';
-import { crearHuesped, cleanErrors, crearHuespedSelector } from '../../../store/api/huespedes/crear/slice';
+import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
+import { EstadosApiRequestEnum } from 'store/interfaces';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
-  const { loading, validationErrors } = useSelector(crearHuespedSelector);
+  const { errores, estado } = useSelector(api.huespedes.crear.selector);
   const [resetOnChanged, resetForm] = React.useState(0);
 
   const dispatch = useDispatch();
-  const onSubmit = data => dispatch(crearHuesped(data, onSuccess));
+  const onSubmit = data => dispatch(api.huespedes.crear.invocar(data, onSuccess));
 
   function onSuccess() {
     onSuccessfulSubmit();
@@ -19,17 +20,17 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
 
   function hide() {
     onHide();
-    dispatch(cleanErrors());
+    dispatch(api.huespedes.crear.reiniciar());
   }
 
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
       <Header title="Alta de huésped" onHide={hide} />
       <Body>
-        <ValidationSummary errors={validationErrors} />
+        <ValidationSummary errors={errores} />
         <Input label="Nombre" name="nombre" />
       </Body>
-      <FooterAcceptCancel onCancel={hide} loading={loading} />
+      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };

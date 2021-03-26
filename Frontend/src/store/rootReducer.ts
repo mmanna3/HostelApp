@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux';
 
-import habitaciones from 'store/api/habitacion';
-import reservas from 'store/api/reserva';
-
-import huespedesReducer from 'store/api/huespedes/listar/slice';
-import crearHuespedReducer from 'store/api/huespedes/crear/slice';
+import api from 'store/api/api';
 
 import tablaDeReservas from 'store/app/tablaDeReservas/slice';
 
@@ -13,20 +9,20 @@ import loginReducer from 'store/api/usuario/autenticar/slice';
 const rootReducer = combineReducers({
   login: loginReducer,
 
-  habitaciones: habitaciones.listar.reducer,
-  obtenerHabitacionPorId: habitaciones.obtenerPorId.reducer,
-  habitacionesConLugaresLibres: habitaciones.listarConLugaresLibres.reducer,
-  crearHabitacion: habitaciones.crear.reducer,
+  habitaciones: api.habitaciones.listar.reducer,
+  obtenerHabitacionPorId: api.habitaciones.obtenerPorId.reducer,
+  habitacionesConLugaresLibres: api.habitaciones.listarConLugaresLibres.reducer,
+  crearHabitacion: api.habitaciones.crear.reducer,
 
-  huespedes: huespedesReducer,
-  crearHuesped: crearHuespedReducer,
+  huespedes: api.huespedes.listar.reducer,
+  crearHuesped: api.huespedes.crear.reducer,
 
   tablaDeReservas: tablaDeReservas,
 
-  reservasActuales: reservas.listarActuales.reducer,
-  reservasMensuales: reservas.listarMensuales.reducer,
-  crearReserva: reservas.crear.reducer,
-  checkoutsDeHoy: reservas.checkoutsDeHoy.reducer,
+  reservasActuales: api.reservas.listarActuales.reducer,
+  reservasMensuales: api.reservas.listarMensuales.reducer,
+  crearReserva: api.reservas.crear.reducer,
+  checkoutsDeHoy: api.reservas.checkoutsDeHoy.reducer,
 });
 
 export default rootReducer;
