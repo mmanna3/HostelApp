@@ -1,11 +1,17 @@
-import { listar, obtenerPorId, listarConLugaresLibres, crear } from './habitacion';
+import habitaciones from './habitacion';
+import reservas from './reserva';
 
 const api = {
   habitaciones: {
-    listar: listar,
-    obtenerPorId: obtenerPorId,
-    listarConLugaresLibres: listarConLugaresLibres,
-    crear: crear,
+    listar: habitaciones.listar,
+    obtenerPorId: habitaciones.obtenerPorId,
+    listarConLugaresLibres: habitaciones.listarConLugaresLibres,
+    crear: habitaciones.crear,
+  },
+  reservas: {
+    listarMensuales: reservas.listarMensuales,
+    listarActuales: reservas.listarActuales,
+    checkoutsDeHoy: reservas.checkoutsDeHoy,
   },
 };
 

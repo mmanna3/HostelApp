@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { fetchCheckoutsDeHoy, checkoutsDeHoySelector } from '../../../store/api/reserva/checkoutsDeHoy/slice';
+import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { EstadosApiRequestEnum as ESTADO } from 'store/interfaces';
 import { BotonSalir } from 'components/botones/botones';
 
 const CheckoutsDeHoy = () => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(checkoutsDeHoySelector);
+  const { datos, estado } = useSelector(api.reservas.checkoutsDeHoy.selector);
   const [visible, mostrar] = useState(true);
 
   const fetchData = useCallback(() => {
-    dispatch(fetchCheckoutsDeHoy());
+    dispatch(api.reservas.checkoutsDeHoy.invocar());
   }, [dispatch]);
 
   useEffect(() => fetchData(), [fetchData]);

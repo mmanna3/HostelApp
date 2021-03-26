@@ -15,6 +15,11 @@ export interface ReservaResumenDTO {
   CamasIds: number[];
 }
 
+export interface CheckoutsDeHoyDTO {
+  id: number;
+  aNombreDe: string;
+}
+
 export interface IHabitacionParaTablaReservas {
   id: number;
   nombre: string;

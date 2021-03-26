@@ -32,11 +32,18 @@ const crearSliceInfo: IApiSliceInfo = {
   endpoint: '/habitaciones',
 };
 
-export const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
-export const listarConLugaresLibres = {
+const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
+const listarConLugaresLibres = {
   ...generarSliceHttpGetConParams<HabitacionDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
 };
-export const obtenerPorId = { ...generarSliceObtenerPorId<HabitacionDTO>(obtenerPorIdSliceInfo) };
-export const crear = {
+const obtenerPorId = { ...generarSliceObtenerPorId<HabitacionDTO>(obtenerPorIdSliceInfo) };
+const crear = {
   ...generarSliceHttpPost<string, HabitacionDTO>(crearSliceInfo),
+};
+
+export default {
+  listar,
+  listarConLugaresLibres,
+  obtenerPorId,
+  crear,
 };

@@ -3,7 +3,7 @@ import Table from 'components/Table';
 import Crear from './crear/Modal';
 import Detalle from './detalle/Modal';
 import { Button } from 'components/botones/botones';
-import { listar } from 'store/api/habitacion';
+import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 
 const HabitacionesPage = (): ReactElement => {
@@ -11,7 +11,7 @@ const HabitacionesPage = (): ReactElement => {
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
   const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
   const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState(null);
-  const { datos, estado } = useSelector(listar.selector);
+  const { datos, estado } = useSelector(api.habitaciones.listar.selector);
 
   const columnas = [
     {
@@ -49,7 +49,7 @@ const HabitacionesPage = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    dispatch(listar.invocar());
+    dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
 
   function cerrarModalDeCreacionYRefrescarTabla(): void {
