@@ -3,24 +3,26 @@ import Form from 'components/Form';
 import { Input } from 'components/Input';
 import ValidationSummary from 'components/ValidationSummary';
 import { SubmitButton } from 'components/botones/botones';
-import { login, loginSelector } from 'store/api/usuario/autenticar/slice';
+import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Page.module.scss';
 import { useHistory } from 'react-router-dom';
 import { siEstaLogueadoEnviarTokenEnTodosLosRequests } from 'features/login/servicio';
+import { EstadosApiRequestEnum } from 'store/interfaces';
+import { actualizarUsuarioEnLocalStorage } from './servicio';
 
 const LoginPage = () => {
-  const { loading, validationErrors } = useSelector(loginSelector);
-
+  const { errores, estado } = useSelector(api.usuarios.autenticar.selector);
   const dispatch = useDispatch();
-  const onSubmit = data => dispatch(login(data, onSuccess));
-
   let history = useHistory();
 
-  function onSuccess() {
+  function onSuccess(response) {
+    actualizarUsuarioEnLocalStorage(response);
     siEstaLogueadoEnviarTokenEnTodosLosRequests();
     history.push('/reservas');
   }
+
+  const onSubmit = data => dispatch(api.usuarios.autenticar.invocar(data, onSuccess));
 
   return (
     <div className={`columns is-gapless is-desktop ${styles.columns}`}>
@@ -29,10 +31,10 @@ const LoginPage = () => {
       </div>
       <div className="column is-flex is-vcentered is-centered">
         <Form onSubmit={onSubmit} className={`login-form ${styles.loginForm}`}>
-          <ValidationSummary errors={validationErrors} />
+          <ValidationSummary errors={errores} />
           <Input label="Usuario" name="username" />
           <Input type="password" label="Contraseña" name="password" />
-          <SubmitButton text="Ingresar" loading={loading}></SubmitButton>
+          <SubmitButton text="Ingresar" loading={estado === EstadosApiRequestEnum.cargando}></SubmitButton>
         </Form>
       </div>
     </div>

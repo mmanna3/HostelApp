@@ -4,10 +4,8 @@ import api from 'store/api/api';
 
 import tablaDeReservas from 'store/app/tablaDeReservas/slice';
 
-import loginReducer from 'store/api/usuario/autenticar/slice';
-
 const rootReducer = combineReducers({
-  login: loginReducer,
+  autenticarUsuario: api.usuarios.autenticar.reducer,
 
   habitaciones: api.habitaciones.listar.reducer,
   obtenerHabitacionPorId: api.habitaciones.obtenerPorId.reducer,

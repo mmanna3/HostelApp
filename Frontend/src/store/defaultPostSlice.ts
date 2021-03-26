@@ -39,7 +39,7 @@ export function postFunc<TResultado, TPostBody>(
   endpoint: string,
   actions: any,
   data: TPostBody,
-  onSuccess?: () => void
+  onSuccess?: (responseData: any) => void
 ): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
   const { postInit, postSuccess, postFailure } = actions;
 
@@ -50,7 +50,7 @@ export function postFunc<TResultado, TPostBody>(
       .post<TResultado>('/api' + endpoint, data)
       .then((res): void => {
         dispatch(postSuccess(res.data));
-        typeof onSuccess === 'function' && onSuccess();
+        typeof onSuccess === 'function' && onSuccess(res.data);
       })
       .catch((error): void => {
         dispatch(postFailure(error.response.data));
