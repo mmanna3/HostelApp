@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inicializarTabla, tablaDeReservasSelector, insertarReserva } from 'store/app/tablaDeReservas/slice';
 import Encabezado from './Encabezado/Encabezado';
 import { obtenerAnio, obtenerMes, obtenerDia } from 'utils/Fecha';
-import Detalle from 'features/habitaciones/detalle/Modal';
+import Detalle from 'pantallas/habitaciones/detalle/Modal';
 import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO } from 'interfaces/reserva';
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 
