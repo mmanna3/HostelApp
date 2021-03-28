@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { inicializarTabla, tablaDeReservasSelector, insertarReserva } from 'store/app/tablaDeReservas/slice';
 import Encabezado from './Encabezado/Encabezado';
 import { obtenerAnio, obtenerMes, obtenerDia } from 'utils/Fecha';
-import Detalle from 'pantallas/habitaciones/detalle/Modal';
+import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
 import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO } from 'interfaces/reserva';
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 
@@ -108,21 +108,21 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.diaMesArray]);
 
-  const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
-  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<number | undefined>();
+  const [seMuestraModalDeDetalleHabitacion, mostrarModalDeDetalleHabitacion] = useState(false);
+  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<number | undefined>();
 
   function mostrarDetalle(id: number): void {
-    cambiarIdSeleccionadoParaDetalle(id);
-    mostrarModalDeDetalle(true);
+    cambiarIdSeleccionadoParaDetalleHabitacion(id);
+    mostrarModalDeDetalleHabitacion(true);
   }
 
   return (
     <>
-      <Detalle
-        id={idSeleccionadoParaDetalle}
-        isVisible={seMuestraModalDeDetalle}
-        onHide={(): void => mostrarModalDeDetalle(false)}
-      ></Detalle>
+      <DetalleHabitacion
+        id={idSeleccionadoParaDetalleHabitacion}
+        isVisible={seMuestraModalDeDetalleHabitacion}
+        onHide={(): void => mostrarModalDeDetalleHabitacion(false)}
+      ></DetalleHabitacion>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth ${Estilos.tabla}`}>
           <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalle} />
