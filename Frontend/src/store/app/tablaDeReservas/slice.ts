@@ -11,27 +11,31 @@ const tablaDeReservasSlice = createSlice({
   name: 'tablaDeReservas',
   initialState,
   reducers: {
-    inicializar: (state, { payload }) => {
+    inicializar: (state, { payload }): void => {
       state.diaMesArray = payload.diaMesArray;
       state.camasIdsArray = payload.camasIdsArray;
       var celdaInicial: ICeldaInicial = {};
 
-      payload.camasIdsArray.forEach((camaId: number) => (celdaInicial[`${camaId}`] = {} as ReservaResumenDTO));
-      payload.diaMesArray.forEach((diaMes: { dia: number }) => (state.tabla[`${diaMes.dia}`] = celdaInicial));
+      payload.camasIdsArray.forEach((camaId: number): void => {
+        celdaInicial[`${camaId}`] = {} as ReservaResumenDTO;
+      });
+      payload.diaMesArray.forEach((diaMes: { dia: number }): void => {
+        state.tabla[`${diaMes.dia}`] = celdaInicial;
+      });
     },
-    modificarCelda: (state, { payload }) => {
+    modificarCelda: (state, { payload }): void => {
       state.tabla[`${payload.dia}`][`${payload.camaId}`] = payload.valor;
     },
-    modificarPorReserva: (state, { payload }) => {
+    modificarPorReserva: (state, { payload }): void => {
       for (let dia = payload.diaInicio; dia <= payload.diaFin; dia++) {
-        payload.camasIds.forEach((camaId: any) => {
+        payload.camasIds.forEach((camaId: any): void => {
           state.tabla[`${dia}`][`${camaId}`] = payload;
         });
       }
     },
-    _seleccionarTodasLasCeldasDeLaReserva: (state, { payload }) => {
-      Object.entries(state.tabla).forEach(([dia, camaIds]) => {
-        Object.entries(camaIds).forEach(([camaId, celda]) => {
+    _seleccionarTodasLasCeldasDeLaReserva: (state, { payload }): void => {
+      Object.entries(state.tabla).forEach(([dia, camaIds]): void => {
+        Object.entries(camaIds).forEach(([camaId, celda]): void => {
           if (celda.id === payload) celda.estaSeleccionada = true;
           else celda.estaSeleccionada = false;
         });
@@ -49,25 +53,25 @@ export const {
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
 export default tablaDeReservasSlice.reducer;
 
-export function inicializarTabla(diaMesArray: IDiaMes[], camasIdsArray: number[]) {
-  return async (dispatch: IDispatch) => {
+export function inicializarTabla(diaMesArray: IDiaMes[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
+  return async (dispatch: IDispatch): Promise<any> => {
     dispatch(inicializar({ diaMesArray, camasIdsArray }));
   };
 }
 
-export function actualizarCelda(dia: number, camaId: number, valor: any) {
-  return async (dispatch: IDispatch) => {
+export function actualizarCelda(dia: number, camaId: number, valor: any): (dispatch: IDispatch) => Promise<any> {
+  return async (dispatch: IDispatch): Promise<any> => {
     dispatch(modificarCelda({ dia, camaId, valor }));
   };
 }
 
-export function actualizarConReserva(reserva: ReservaResumenDTO) {
-  return async (dispatch: IDispatch) => {
+export function actualizarConReserva(reserva: ReservaResumenDTO): (dispatch: IDispatch) => Promise<any> {
+  return async (dispatch: IDispatch): Promise<any> => {
     dispatch(modificarPorReserva(reserva));
   };
 }
-export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number) {
-  return async (dispatch: IDispatch) => {
+export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number): (dispatch: IDispatch) => Promise<any> {
+  return async (dispatch: IDispatch): Promise<any> => {
     dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
   };
 }
