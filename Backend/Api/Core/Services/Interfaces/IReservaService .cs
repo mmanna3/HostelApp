@@ -11,5 +11,6 @@ namespace Api.Core.Services.Interfaces
         Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes);
         Task<IEnumerable<Reserva>> ListarActuales();
         Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
+        Task<Reserva> ObtenerPorId(int id);
     }
 }

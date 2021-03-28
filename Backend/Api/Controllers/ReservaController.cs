@@ -23,7 +23,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ReservaDTO>> Listar()
+        public async Task<IEnumerable<ReservaDTO>> Listar() // Qué onda? este no se usa?
         {
             var reservas = await _service.Listar();
             var reservaDTOs = _mapper.Map<IEnumerable<ReservaDTO>>(reservas);
@@ -86,6 +86,15 @@ namespace Api.Controllers
             var id = await _service.Crear(reserva);
 
             return id;
+        }
+
+        [HttpGet, Route("{id}")]
+        public async Task<ReservaDTO> ObtenerPorId(int id)
+        {
+	        var reserva = await _service.ObtenerPorId(id);
+	        var reservaDTO = _mapper.Map<ReservaDTO>(reserva);
+
+	        return reservaDTO;
         }
     }
 }
