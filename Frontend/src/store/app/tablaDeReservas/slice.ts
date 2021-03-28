@@ -11,7 +11,7 @@ const tablaDeReservasSlice = createSlice({
   name: 'tablaDeReservas',
   initialState,
   reducers: {
-    inicializar: (state, { payload }): void => {
+    _inicializar: (state, { payload }): void => {
       state.diaMesArray = payload.diaMesArray;
       state.camasIdsArray = payload.camasIdsArray;
       var celdaInicial: ICeldaInicial = {};
@@ -23,10 +23,10 @@ const tablaDeReservasSlice = createSlice({
         state.tabla[`${diaMes.dia}`] = celdaInicial;
       });
     },
-    modificarCelda: (state, { payload }): void => {
+    _modificarCelda: (state, { payload }): void => {
       state.tabla[`${payload.dia}`][`${payload.camaId}`] = payload.valor;
     },
-    modificarPorReserva: (state, { payload }): void => {
+    _insertarReserva: (state, { payload }): void => {
       for (let dia = payload.diaInicio; dia <= payload.diaFin; dia++) {
         payload.camasIds.forEach((camaId: any): void => {
           state.tabla[`${dia}`][`${camaId}`] = payload;
@@ -45,9 +45,9 @@ const tablaDeReservasSlice = createSlice({
 });
 
 export const {
-  inicializar,
-  modificarCelda,
-  modificarPorReserva,
+  _inicializar,
+  _modificarCelda,
+  _insertarReserva,
   _seleccionarTodasLasCeldasDeLaReserva,
 } = tablaDeReservasSlice.actions;
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
@@ -55,19 +55,19 @@ export default tablaDeReservasSlice.reducer;
 
 export function inicializarTabla(diaMesArray: IDiaMes[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(inicializar({ diaMesArray, camasIdsArray }));
+    dispatch(_inicializar({ diaMesArray, camasIdsArray }));
   };
 }
 
-export function actualizarCelda(dia: number, camaId: number, valor: any): (dispatch: IDispatch) => Promise<any> {
+export function modificarCelda(dia: number, camaId: number, valor: any): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(modificarCelda({ dia, camaId, valor }));
+    dispatch(_modificarCelda({ dia, camaId, valor }));
   };
 }
 
-export function actualizarConReserva(reserva: ReservaResumenDTO): (dispatch: IDispatch) => Promise<any> {
+export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(modificarPorReserva(reserva));
+    dispatch(_insertarReserva(reserva));
   };
 }
 export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number): (dispatch: IDispatch) => Promise<any> {
