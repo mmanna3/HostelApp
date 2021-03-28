@@ -12,7 +12,7 @@ export interface ReservaResumenDTO {
   diaInicio: number;
   diaFin: number;
   aNombreDe: string;
-  CamasIds: number[];
+  camasIds: number[];
 }
 
 export interface CheckoutsDeHoyDTO {

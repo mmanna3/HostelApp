@@ -5,6 +5,8 @@ export const initialState: IInitialState = {
   diaMesArray: [],
   camasIdsArray: [],
   tabla: {},
+  reservas: {},
+  reservaSeleccionadaId: null,
 };
 
 const tablaDeReservasSlice = createSlice({
@@ -27,19 +29,34 @@ const tablaDeReservasSlice = createSlice({
       state.tabla[`${payload.dia}`][`${payload.camaId}`] = payload.valor;
     },
     _insertarReserva: (state, { payload }): void => {
-      for (let dia = payload.diaInicio; dia <= payload.diaFin; dia++) {
-        payload.camasIds.forEach((camaId: any): void => {
-          state.tabla[`${dia}`][`${camaId}`] = payload;
+      var reserva = payload as ReservaResumenDTO;
+
+      for (let dia = reserva.diaInicio; dia <= reserva.diaFin; dia++) {
+        reserva.camasIds.forEach((camaId: any): void => {
+          state.tabla[`${dia}`][`${camaId}`] = reserva;
+
+          if (!state.reservas[`${reserva.id}`]) state.reservas[`${reserva.id}`] = [];
+          state.reservas[`${reserva.id}`].push({ dia: dia, camaId: camaId });
         });
       }
     },
     _seleccionarTodasLasCeldasDeLaReserva: (state, { payload }): void => {
-      Object.entries(state.tabla).forEach(([dia, camaIds]): void => {
-        Object.entries(camaIds).forEach(([camaId, celda]): void => {
-          if (celda.id === payload) celda.estaSeleccionada = true;
-          else celda.estaSeleccionada = false;
-        });
+      const reservaId = payload;
+
+      state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
+        state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estaSeleccionada = true;
       });
+
+      state.reservaSeleccionadaId = reservaId;
+    },
+    _limpiarCeldasSeleccionadas: (state): void => {
+      if (state.reservaSeleccionadaId) {
+        const reservaId = state.reservaSeleccionadaId;
+
+        state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
+          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estaSeleccionada = false;
+        });
+      }
     },
   },
 });
@@ -49,6 +66,7 @@ export const {
   _modificarCelda,
   _insertarReserva,
   _seleccionarTodasLasCeldasDeLaReserva,
+  _limpiarCeldasSeleccionadas,
 } = tablaDeReservasSlice.actions;
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
 export default tablaDeReservasSlice.reducer;
@@ -70,9 +88,16 @@ export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatc
     dispatch(_insertarReserva(reserva));
   };
 }
+
 export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
     dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
+  };
+}
+
+export function limpiarCeldasSeleccionadas(): (dispatch: IDispatch) => Promise<any> {
+  return async (dispatch: IDispatch): Promise<any> => {
+    dispatch(_limpiarCeldasSeleccionadas());
   };
 }
 
@@ -80,10 +105,24 @@ interface IInitialState {
   diaMesArray: IDiaMes[];
   camasIdsArray: number[];
   tabla: ITabla;
+  reservas: {
+    [id: string]: IDiaCamaId[];
+  };
+  reservaSeleccionadaId: number | null;
 }
 
+interface IDiaCamaId {
+  dia: number;
+  camaId: number;
+}
 export interface ITabla {
   [dia: string]: {
+    [camaId: string]: ReservaResumenDTO;
+  };
+}
+
+export interface IReserva {
+  [id: number]: {
     [camaId: string]: ReservaResumenDTO;
   };
 }
