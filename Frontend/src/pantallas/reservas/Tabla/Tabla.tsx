@@ -8,6 +8,7 @@ import { obtenerAnio, obtenerMes, obtenerDia } from 'utils/Fecha';
 import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
 import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO } from 'interfaces/reserva';
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
+import Detalle from 'pantallas/reservas/detalle/Modal';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;
@@ -74,6 +75,14 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     });
   }, [datos.desde, datos.hasta, datos.reservas, dispatch, habitaciones]);
 
+  const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
+  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<number | undefined>();
+
+  function mostrarDetalleReserva(id: number): void {
+    cambiarIdSeleccionadoParaDetalle(id);
+    mostrarModalDeDetalle(true);
+  }
+
   useEffect((): void => {
     let _filas: any = [];
     var diaDeHoy = new Date().getDate();
@@ -87,7 +96,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
             </th>
             {tablaDeReservas.camasIdsArray.map(
               (id): ReactElement => (
-                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={false} />
+                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={false} onClick={mostrarDetalleReserva} />
               )
             )}
           </tr>
@@ -98,7 +107,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
             <th className={`has-text-weight-medium ${Estilos.hoy}`}>HOY</th>
             {tablaDeReservas.camasIdsArray.map(
               (id): ReactElement => (
-                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={true} />
+                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={true} onClick={mostrarDetalleReserva} />
               )
             )}
           </tr>
@@ -111,7 +120,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const [seMuestraModalDeDetalleHabitacion, mostrarModalDeDetalleHabitacion] = useState(false);
   const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<number | undefined>();
 
-  function mostrarDetalle(id: number): void {
+  function mostrarDetalleDeHabitacion(id: number): void {
     cambiarIdSeleccionadoParaDetalleHabitacion(id);
     mostrarModalDeDetalleHabitacion(true);
   }
@@ -121,11 +130,16 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
       <DetalleHabitacion
         id={idSeleccionadoParaDetalleHabitacion}
         isVisible={seMuestraModalDeDetalleHabitacion}
-        onHide={(): void => mostrarModalDeDetalleHabitacion(false)}
+        onHide={(id: number): void => mostrarDetalleReserva(id)}
       ></DetalleHabitacion>
+      <Detalle
+        id={idSeleccionadoParaDetalle}
+        isVisible={seMuestraModalDeDetalle}
+        onHide={(): void => mostrarModalDeDetalle(false)}
+      ></Detalle>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth ${Estilos.tabla}`}>
-          <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalle} />
+          <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalleDeHabitacion} />
           <tbody>{filas}</tbody>
         </table>
       </div>
