@@ -76,9 +76,9 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   }, [datos.desde, datos.hasta, datos.reservas, dispatch, habitaciones]);
 
   const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
-  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<number | undefined>();
+  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<Nullable<number>>(null);
 
-  function mostrarDetalleReserva(id: number): void {
+  function mostrarDetalleReserva(id: Nullable<number>): void {
     cambiarIdSeleccionadoParaDetalle(id);
     mostrarModalDeDetalle(true);
   }

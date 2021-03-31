@@ -9,7 +9,7 @@ import { ReservaResumenDTO } from 'interfaces/reserva';
 interface IProps {
   isVisible: boolean;
   onHide: () => any;
-  id: number | undefined;
+  id: Nullable<number>;
 }
 
 const Detalle = ({ isVisible, onHide, id }: IProps): ReactElement => {
@@ -20,7 +20,7 @@ const Detalle = ({ isVisible, onHide, id }: IProps): ReactElement => {
   };
 
   const fetchData = useCallback((): any => {
-    if (id !== undefined) if (isVisible) dispatch(api.reservas.obtenerPorId.invocar(id)); // El primer if está al pedo, hay que sacarlo
+    if (id !== null) if (isVisible) dispatch(api.reservas.obtenerPorId.invocar(id)); // El primer if está al pedo, hay que sacarlo
   }, [dispatch, isVisible, id]);
 
   useEffect((): any => fetchData(), [fetchData]);

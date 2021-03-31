@@ -9,7 +9,7 @@ export interface IParams {
   dia: number;
   camaId: number;
   esHoy: boolean;
-  onClick: (id: number) => any;
+  onClick: (id: Nullable<number>) => any;
 }
 
 const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
@@ -41,14 +41,17 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
     var contenido = tabla[`${dia}`][`${camaId}`];
     actualizarContenido(contenido);
 
-    var codigoColorSegunTerminacionDelId = contenido.id % 10;
-    actualizarClaseCssColor(colores.get(codigoColorSegunTerminacionDelId));
+    if (contenido.id !== null) {
+      //Horrible if, hay que sacarlo
+      var codigoColorSegunTerminacionDelId = contenido.id % 10;
+      actualizarClaseCssColor(colores.get(codigoColorSegunTerminacionDelId));
+    }
   }, [tabla, dia, camaId, colores]);
 
   return (
     <>
       <td
-        className={`${claseCssColor} ${contenido.estaSeleccionada ? estilos.estaSeleccionada : ''}`}
+        className={`${claseCssColor} ${contenido.estilo}`}
         data-reserva-id={contenido.id}
         data-dia={dia}
         data-cama-id={camaId}

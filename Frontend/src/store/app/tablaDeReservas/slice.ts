@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
-import { ICeldaPertenecienteAReservaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
+import {
+  CeldaPertenecienteAReservaEstilo,
+  ICeldaPertenecienteAReservaInfo,
+} from 'pantallas/reservas/Tabla/Celda/interfaces';
 
 export const initialState: IInitialState = {
   diaMesArray: [],
@@ -20,7 +23,10 @@ const tablaDeReservasSlice = createSlice({
       var celdaInicial: ICeldaInicial = {};
 
       payload.camasIdsArray.forEach((camaId: number): void => {
-        celdaInicial[`${camaId}`] = {} as ReservaResumenDTO;
+        celdaInicial[`${camaId}`] = {
+          id: null,
+          estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+        } as ICeldaPertenecienteAReservaInfo;
       });
       payload.diaMesArray.forEach((diaMes: { dia: number }): void => {
         state.tabla[`${diaMes.dia}`] = celdaInicial;
@@ -32,7 +38,10 @@ const tablaDeReservasSlice = createSlice({
     _insertarReserva: (state, { payload }): void => {
       var reserva = payload as ReservaResumenDTO;
 
-      var celdaInfo: ICeldaPertenecienteAReservaInfo = reserva;
+      var celdaInfo: ICeldaPertenecienteAReservaInfo = {
+        id: reserva.id,
+        estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+      };
 
       for (let dia = reserva.diaInicio; dia <= reserva.diaFin; dia++) {
         reserva.camasIds.forEach((camaId: any): void => {
@@ -47,7 +56,7 @@ const tablaDeReservasSlice = createSlice({
       const reservaId = payload;
 
       state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
-        state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estaSeleccionada = true;
+        state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.EstaSeleccionada;
       });
 
       state.reservaSeleccionadaId = reservaId;
@@ -59,7 +68,7 @@ const tablaDeReservasSlice = createSlice({
         const reservaId = state.reservaSeleccionadaId;
 
         state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
-          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estaSeleccionada = false;
+          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.Ninguno;
         });
       }
     },
@@ -94,10 +103,10 @@ export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatc
   };
 }
 
-export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number): (dispatch: IDispatch) => Promise<any> {
+export function seleccionarTodasLasCeldasDeLaReserva(reservaId: Nullable<number>): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
     dispatch(_limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva(reservaId));
-    if (reservaId) dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
+    if (reservaId !== null) dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
   };
 }
 
@@ -108,7 +117,7 @@ interface IInitialState {
   reservas: {
     [id: string]: IDiaCamaId[];
   };
-  reservaSeleccionadaId: number | null;
+  reservaSeleccionadaId: Nullable<number>;
 }
 
 interface IDiaCamaId {
@@ -128,7 +137,7 @@ export interface IReserva {
 }
 
 export interface ICeldaInicial {
-  [key: string]: ReservaResumenDTO;
+  [key: string]: ICeldaPertenecienteAReservaInfo;
 }
 
 export interface IDiaMes {

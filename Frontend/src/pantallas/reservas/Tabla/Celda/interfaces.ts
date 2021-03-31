@@ -1,4 +1,10 @@
+import estilo from './Celda.module.scss';
+
+export const CeldaPertenecienteAReservaEstilo = {
+  EstaSeleccionada: estilo.estaSeleccionada,
+  Ninguno: '',
+};
 export interface ICeldaPertenecienteAReservaInfo {
-  estaSeleccionada: boolean;
-  id: number;
+  estilo: string;
+  id: Nullable<number>;
 }
