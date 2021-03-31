@@ -85,7 +85,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   useEffect((): void => {
     let _filas: any = [];
-    var diaDeHoy = new Date().getDate();
+    var diaDeHoy = new Date().getDate(); // Claramente, cuando seleccionás un mes que no es el actual esto no anda
 
     tablaDeReservas.diaMesArray.forEach((diaMes): void => {
       if (diaMes.dia !== diaDeHoy)

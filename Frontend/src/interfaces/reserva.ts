@@ -7,7 +7,6 @@ export interface ReservasDelPeriodoDTO {
 }
 
 export interface ReservaResumenDTO {
-  estaSeleccionada: boolean; //Este atributo no viene del backend
   id: number;
   diaInicio: number;
   diaFin: number;

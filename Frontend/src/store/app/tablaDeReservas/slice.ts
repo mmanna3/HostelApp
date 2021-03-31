@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
+import { ICeldaPertenecienteAReservaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
 
 export const initialState: IInitialState = {
   diaMesArray: [],
@@ -31,9 +32,11 @@ const tablaDeReservasSlice = createSlice({
     _insertarReserva: (state, { payload }): void => {
       var reserva = payload as ReservaResumenDTO;
 
+      var celdaInfo: ICeldaPertenecienteAReservaInfo = reserva;
+
       for (let dia = reserva.diaInicio; dia <= reserva.diaFin; dia++) {
         reserva.camasIds.forEach((camaId: any): void => {
-          state.tabla[`${dia}`][`${camaId}`] = reserva;
+          state.tabla[`${dia}`][`${camaId}`] = celdaInfo;
 
           if (!state.reservas[`${reserva.id}`]) state.reservas[`${reserva.id}`] = [];
           state.reservas[`${reserva.id}`].push({ dia: dia, camaId: camaId });
@@ -114,7 +117,7 @@ interface IDiaCamaId {
 }
 export interface ITabla {
   [dia: string]: {
-    [camaId: string]: ReservaResumenDTO;
+    [camaId: string]: ICeldaPertenecienteAReservaInfo;
   };
 }
 
