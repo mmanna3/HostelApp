@@ -22,6 +22,10 @@ export const createSlice = (nombre: string): Slice =>
       fetchFailure: (state): void => {
         state.estado = ESTADO.huboError;
       },
+      reset: (state): void => {
+        state.estado = ESTADO.inactivo;
+        state.datos = [];
+      },
     },
   });
 
@@ -103,4 +107,12 @@ export function obtenerPorIdFunc<T>(
   };
 
   return funcionAsincronica;
+}
+
+export function reiniciarEstado(actions: any): (dispatch: Dispatch) => void {
+  const { reset } = actions;
+
+  return async (dispatch: Dispatch): Promise<any> => {
+    dispatch(reset());
+  };
 }

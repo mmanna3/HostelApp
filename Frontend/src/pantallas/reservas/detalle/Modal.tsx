@@ -19,14 +19,19 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
   };
 
   const fetchData = useCallback((): any => {
-    if (id !== null) dispatch(api.reservas.obtenerPorId.invocar(id)); // El primer if está al pedo, hay que sacarlo
+    if (id !== null) dispatch(api.reservas.obtenerPorId.invocar(id));
   }, [dispatch, id]);
 
   useEffect((): any => fetchData(), [fetchData]);
 
+  function ocultar(): void {
+    onHide();
+    dispatch(api.reservas.obtenerPorId.reiniciar());
+  }
+
   return (
-    <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={onHide}>
-      <Header title="Detalle de reserva" onHide={onHide} />
+    <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
+      <Header title="Detalle de reserva" onHide={ocultar} />
       <Body>
         <div className="columns">
           <div className="column">
@@ -40,7 +45,7 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
           </div>
         </div>
       </Body>
-      <FooterVolver onClick={onHide} />
+      <FooterVolver onClick={ocultar} />
     </Modal>
   );
 };

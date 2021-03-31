@@ -5,6 +5,7 @@ import {
   fetchFunc,
   fetchFuncConParams,
   obtenerPorIdFunc,
+  reiniciarEstado,
 } from 'store/api/utils/httpGetSliceBase';
 import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/api/utils/httpPostSliceBase';
 
@@ -31,6 +32,7 @@ interface ISliceObtenerPorId {
   selector: (state: any) => any;
   reducer: any;
   invocar: (id: number) => any;
+  reiniciar: () => void;
 }
 
 export interface IApiSliceInfo {
@@ -81,10 +83,15 @@ export function generarSliceObtenerPorId<T>(requestSlice: IApiSliceInfo): ISlice
     return obtenerPorIdFunc<T>(requestSlice.endpoint, id, slice.actions);
   }
 
+  function reiniciar(): (dispatch: Dispatch) => void {
+    return reiniciarEstado(slice.actions);
+  }
+
   return {
     selector,
     reducer,
     invocar,
+    reiniciar,
   };
 }
 
@@ -98,7 +105,7 @@ export function generarSliceHttpPost<TResultado, TPostBody>(requestSlice: IApiSl
   }
 
   function reiniciar(): (dispatch: Dispatch) => void {
-    return limpiarErrores;
+    return limpiarErrores(slice.actions);
   }
 
   return {
