@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, ReactElement } from 'react';
-import {
-  tablaDeReservasSelector,
-  seleccionarTodasLasCeldasDeLaReserva,
-  limpiarCeldasSeleccionadas,
-} from 'store/app/tablaDeReservas/slice';
+import { tablaDeReservasSelector, seleccionarTodasLasCeldasDeLaReserva } from 'store/app/tablaDeReservas/slice';
 import { useSelector, useDispatch } from 'react-redux';
 import estilos from './Celda.module.scss';
 import { ReservaResumenDTO } from 'interfaces/reserva';
@@ -38,8 +34,7 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   ]);
 
   const onMouseOver = (): void => {
-    dispatch(limpiarCeldasSeleccionadas());
-    if (contenido.id) dispatch(seleccionarTodasLasCeldasDeLaReserva(contenido.id));
+    dispatch(seleccionarTodasLasCeldasDeLaReserva(contenido.id));
   };
 
   useEffect((): void => {

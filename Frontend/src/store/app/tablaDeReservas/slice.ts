@@ -49,8 +49,10 @@ const tablaDeReservasSlice = createSlice({
 
       state.reservaSeleccionadaId = reservaId;
     },
-    _limpiarCeldasSeleccionadas: (state): void => {
-      if (state.reservaSeleccionadaId) {
+    _limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva: (state, { payload }): void => {
+      const reservaId = payload;
+
+      if (state.reservaSeleccionadaId && state.reservaSeleccionadaId !== reservaId) {
         const reservaId = state.reservaSeleccionadaId;
 
         state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
@@ -66,7 +68,7 @@ export const {
   _modificarCelda,
   _insertarReserva,
   _seleccionarTodasLasCeldasDeLaReserva,
-  _limpiarCeldasSeleccionadas,
+  _limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva,
 } = tablaDeReservasSlice.actions;
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
 export default tablaDeReservasSlice.reducer;
@@ -91,13 +93,8 @@ export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatc
 
 export function seleccionarTodasLasCeldasDeLaReserva(reservaId: number): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
-  };
-}
-
-export function limpiarCeldasSeleccionadas(): (dispatch: IDispatch) => Promise<any> {
-  return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(_limpiarCeldasSeleccionadas());
+    dispatch(_limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva(reservaId));
+    if (reservaId) dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
   };
 }
 
