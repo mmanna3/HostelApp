@@ -5,13 +5,13 @@ import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
-const Detalle = ({ isVisible, onHide, id }) => {
+const Detalle = ({ onHide, id }) => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.habitaciones.obtenerPorId.selector);
 
   const fetchData = useCallback(() => {
-    if (isVisible) dispatch(api.habitaciones.obtenerPorId.invocar(id));
-  }, [dispatch, isVisible, id]);
+    if (id !== null) dispatch(api.habitaciones.obtenerPorId.invocar(id));
+  }, [dispatch, id]);
 
   useEffect(() => fetchData(), [fetchData]);
 
@@ -29,11 +29,16 @@ const Detalle = ({ isVisible, onHide, id }) => {
       return maximo;
     }
 
+    function ocultar() {
+      onHide();
+      dispatch(api.habitaciones.obtenerPorId.reiniciar());
+    }
+
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
-      <Modal isVisible={isVisible} onHide={onHide}>
-        <Header title="Detalle de habitación" onHide={onHide} />
+      <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
+        <Header title="Detalle de habitación" onHide={ocultar} />
         <Body>
           <div className="columns">
             <div className="column">
@@ -78,7 +83,7 @@ const Detalle = ({ isVisible, onHide, id }) => {
             </div>
           </div>
         </Body>
-        <FooterVolver onClick={onHide} />
+        <FooterVolver onClick={ocultar} />
       </Modal>
     );
   }

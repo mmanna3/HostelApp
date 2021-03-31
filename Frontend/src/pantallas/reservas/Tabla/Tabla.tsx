@@ -85,6 +85,10 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     cambiarIdSeleccionadoParaDetalle(null);
   }
 
+  function ocultarDetalleHabitacion(): void {
+    cambiarIdSeleccionadoParaDetalleHabitacion(null);
+  }
+
   useEffect((): void => {
     let _filas: any = [];
     var diaDeHoy = new Date().getDate(); // Claramente, cuando seleccionás un mes que no es el actual esto no anda
@@ -119,21 +123,15 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.diaMesArray]);
 
-  const [seMuestraModalDeDetalleHabitacion, mostrarModalDeDetalleHabitacion] = useState(false);
-  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<number | undefined>();
+  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<Nullable<number>>();
 
   function mostrarDetalleDeHabitacion(id: number): void {
     cambiarIdSeleccionadoParaDetalleHabitacion(id);
-    mostrarModalDeDetalleHabitacion(true);
   }
 
   return (
     <>
-      <DetalleHabitacion
-        id={idSeleccionadoParaDetalleHabitacion}
-        isVisible={seMuestraModalDeDetalleHabitacion}
-        onHide={(): void => mostrarModalDeDetalleHabitacion(false)}
-      ></DetalleHabitacion>
+      <DetalleHabitacion id={idSeleccionadoParaDetalleHabitacion} onHide={ocultarDetalleHabitacion}></DetalleHabitacion>
       <Detalle id={idSeleccionadoParaDetalle} onHide={ocultarDetalleReserva}></Detalle>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth ${Estilos.tabla}`}>

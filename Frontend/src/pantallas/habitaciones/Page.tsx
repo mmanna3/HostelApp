@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const HabitacionesPage = (): ReactElement => {
   const dispatch = useDispatch();
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
-  const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
   const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState(null);
   const { datos, estado } = useSelector(api.habitaciones.listar.selector);
 
@@ -39,7 +38,6 @@ const HabitacionesPage = (): ReactElement => {
           clases=""
           onClick={(e: any): void => {
             cambiarIdSeleccionadoParaDetalle(e.target.value);
-            mostrarModalDeDetalle(true);
           }}
           value={cell.row.values.id}
           text="Ver detalle"
@@ -64,11 +62,7 @@ const HabitacionesPage = (): ReactElement => {
         onHide={(): void => mostrarModalDeCreacion(false)}
         onSuccessfulSubmit={cerrarModalDeCreacionYRefrescarTabla}
       ></Crear>
-      <Detalle
-        id={idSeleccionadoParaDetalle}
-        isVisible={seMuestraModalDeDetalle}
-        onHide={(): void => mostrarModalDeDetalle(false)}
-      ></Detalle>
+      <Detalle id={idSeleccionadoParaDetalle} onHide={(): void => cambiarIdSeleccionadoParaDetalle(null)}></Detalle>
 
       <h1 className="title is-1">Habitaciones</h1>
       <div className="botonera">
