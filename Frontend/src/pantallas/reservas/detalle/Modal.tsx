@@ -7,12 +7,11 @@ import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiReque
 import { ReservaResumenDTO } from 'interfaces/reserva';
 
 interface IProps {
-  isVisible: boolean;
   onHide: () => any;
   id: Nullable<number>;
 }
 
-const Detalle = ({ isVisible, onHide, id }: IProps): ReactElement => {
+const Detalle = ({ onHide, id }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.obtenerPorId.selector) as {
     datos: ReservaResumenDTO;
@@ -20,33 +19,30 @@ const Detalle = ({ isVisible, onHide, id }: IProps): ReactElement => {
   };
 
   const fetchData = useCallback((): any => {
-    if (id !== null) if (isVisible) dispatch(api.reservas.obtenerPorId.invocar(id)); // El primer if está al pedo, hay que sacarlo
-  }, [dispatch, isVisible, id]);
+    if (id !== null) dispatch(api.reservas.obtenerPorId.invocar(id)); // El primer if está al pedo, hay que sacarlo
+  }, [dispatch, id]);
 
   useEffect((): any => fetchData(), [fetchData]);
 
-  if (estado === ESTADO.exitoso) {
-    return (
-      <Modal isVisible={isVisible} onHide={onHide}>
-        <Header title="Detalle de reserva" onHide={onHide} />
-        <Body>
-          <div className="columns">
-            <div className="column">
-              <Display label="Nombre" valor={datos.aNombreDe} />
-            </div>
-            <div className="column">
-              <Display label="Desde" valor={datos.diaInicio} />
-            </div>
-            <div className="column">
-              <Display label="Hasta" valor={datos.diaFin} />
-            </div>
+  return (
+    <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={onHide}>
+      <Header title="Detalle de reserva" onHide={onHide} />
+      <Body>
+        <div className="columns">
+          <div className="column">
+            <Display label="Nombre" valor={datos.aNombreDe} />
           </div>
-        </Body>
-        <FooterVolver onClick={onHide} />
-      </Modal>
-    );
-  }
-  return <></>;
+          <div className="column">
+            <Display label="Desde" valor={datos.diaInicio} />
+          </div>
+          <div className="column">
+            <Display label="Hasta" valor={datos.diaFin} />
+          </div>
+        </div>
+      </Body>
+      <FooterVolver onClick={onHide} />
+    </Modal>
+  );
 };
 
 export default Detalle;

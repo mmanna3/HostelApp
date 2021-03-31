@@ -75,12 +75,14 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     });
   }, [datos.desde, datos.hasta, datos.reservas, dispatch, habitaciones]);
 
-  const [seMuestraModalDeDetalle, mostrarModalDeDetalle] = useState(false);
   const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<Nullable<number>>(null);
 
   function mostrarDetalleReserva(id: Nullable<number>): void {
     cambiarIdSeleccionadoParaDetalle(id);
-    mostrarModalDeDetalle(true);
+  }
+
+  function ocultarDetalleReserva(): void {
+    cambiarIdSeleccionadoParaDetalle(null);
   }
 
   useEffect((): void => {
@@ -132,11 +134,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
         isVisible={seMuestraModalDeDetalleHabitacion}
         onHide={(): void => mostrarModalDeDetalleHabitacion(false)}
       ></DetalleHabitacion>
-      <Detalle
-        id={idSeleccionadoParaDetalle}
-        isVisible={seMuestraModalDeDetalle}
-        onHide={(): void => mostrarModalDeDetalle(false)}
-      ></Detalle>
+      <Detalle id={idSeleccionadoParaDetalle} onHide={ocultarDetalleReserva}></Detalle>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth ${Estilos.tabla}`}>
           <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalleDeHabitacion} />
