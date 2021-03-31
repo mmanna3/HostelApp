@@ -130,7 +130,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
       <DetalleHabitacion
         id={idSeleccionadoParaDetalleHabitacion}
         isVisible={seMuestraModalDeDetalleHabitacion}
-        onHide={(id: number): void => mostrarDetalleReserva(id)}
+        onHide={(): void => mostrarModalDeDetalleHabitacion(false)}
       ></DetalleHabitacion>
       <Detalle
         id={idSeleccionadoParaDetalle}
