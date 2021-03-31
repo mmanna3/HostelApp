@@ -15,7 +15,7 @@ export interface IParams {
 const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
-  const [contenido, actualizarContenido] = useState<ICeldaPertenecienteAReservaInfo>({} as ICeldaPertenecienteAReservaInfo);
+  const [data, actualizarData] = useState<ICeldaPertenecienteAReservaInfo>({} as ICeldaPertenecienteAReservaInfo);
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
 
   // const claseCssEsHoy = useState<string | undefined>(esHoy ? estilos.esHoy : '');
@@ -34,12 +34,12 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   ]);
 
   const onMouseOver = (): void => {
-    dispatch(seleccionarTodasLasCeldasDeLaReserva(contenido.id));
+    dispatch(seleccionarTodasLasCeldasDeLaReserva(data.id));
   };
 
   useEffect((): void => {
     var contenido = tabla[`${dia}`][`${camaId}`];
-    actualizarContenido(contenido);
+    actualizarData(contenido);
 
     if (contenido.id !== null) {
       //Horrible if, hay que sacarlo
@@ -51,12 +51,12 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   return (
     <>
       <td
-        className={`${claseCssColor} ${contenido.estilo}`}
-        data-reserva-id={contenido.id}
+        className={`${claseCssColor} ${data.estilo}`}
+        data-reserva-id={data.id}
         data-dia={dia}
         data-cama-id={camaId}
         onMouseOver={onMouseOver}
-        onClick={(): void => onClick(contenido.id)}
+        onClick={(): void => onClick(data.id)}
       >
         <div>{/* {contenido.aNombreDe} */}</div>
       </td>
