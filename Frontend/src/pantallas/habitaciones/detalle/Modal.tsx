@@ -1,39 +1,44 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import { Modal, Body, Header, FooterVolver } from 'components/Modal';
 import Display, { SiNo, DisplayLista, DisplayTextarea } from 'components/display/Display';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
-const Detalle = ({ onHide, id }) => {
+interface IProps {
+  onHide: () => any;
+  id: Nullable<number>;
+}
+
+const Detalle = ({ onHide, id }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.habitaciones.obtenerPorId.selector);
 
-  const fetchData = useCallback(() => {
+  const fetchData = useCallback((): any => {
     if (id !== null) dispatch(api.habitaciones.obtenerPorId.invocar(id));
   }, [dispatch, id]);
 
-  useEffect(() => fetchData(), [fetchData]);
+  useEffect((): any => fetchData(), [fetchData]);
+
+  function calcularMaximoDeCamas(): number {
+    var maximo = datos.camasMatrimoniales.length;
+    if (datos.camasIndividuales.length > datos.camasMatrimoniales.length) maximo = datos.camasIndividuales.length;
+    if (datos.camasCuchetas.length > datos.camasIndividuales.length) maximo = datos.camasIndividuales.length;
+
+    return maximo;
+  }
+
+  function ocultar(): void {
+    onHide();
+    dispatch(api.habitaciones.obtenerPorId.reiniciar());
+  }
+
+  var esPrivada = {
+    true: 'Privada',
+    false: 'Compartida',
+  };
 
   if (estado === ESTADO.exitoso) {
-    var esPrivada = {
-      true: 'Privada',
-      false: 'Compartida',
-    };
-
-    function calcularMaximoDeCamas() {
-      var maximo = datos.camasMatrimoniales.length;
-      if (datos.camasIndividuales.length > datos.camasMatrimoniales.length) maximo = datos.camasIndividuales.length;
-      if (datos.camasCuchetas.length > datos.camasIndividuales.length) maximo = datos.camasIndividuales.length;
-
-      return maximo;
-    }
-
-    function ocultar() {
-      onHide();
-      dispatch(api.habitaciones.obtenerPorId.reiniciar());
-    }
-
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
@@ -45,7 +50,7 @@ const Detalle = ({ onHide, id }) => {
               <Display label="Nombre" valor={datos.nombre} />
             </div>
             <div className="column">
-              <Display label="Tipo" valor={esPrivada[datos.esPrivada]} />
+              <Display label="Tipo" valor={esPrivada[datos.esPrivada as keyof typeof esPrivada]} />
             </div>
             <div className="column">
               <SiNo label="Tiene baño" valor={datos.tieneBanio} />

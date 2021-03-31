@@ -76,6 +76,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   }, [datos.desde, datos.hasta, datos.reservas, dispatch, habitaciones]);
 
   const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<Nullable<number>>(null);
+  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<Nullable<number>>(null);
 
   function mostrarDetalleReserva(id: Nullable<number>): void {
     cambiarIdSeleccionadoParaDetalle(id);
@@ -83,6 +84,10 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   function ocultarDetalleReserva(): void {
     cambiarIdSeleccionadoParaDetalle(null);
+  }
+
+  function mostrarDetalleDeHabitacion(id: number): void {
+    cambiarIdSeleccionadoParaDetalleHabitacion(id);
   }
 
   function ocultarDetalleHabitacion(): void {
@@ -122,12 +127,6 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.diaMesArray]);
-
-  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<Nullable<number>>();
-
-  function mostrarDetalleDeHabitacion(id: number): void {
-    cambiarIdSeleccionadoParaDetalleHabitacion(id);
-  }
 
   return (
     <>
