@@ -6,8 +6,7 @@ import * as fechaUtils from '../../../utils/fecha';
 describe('Mostrar reservas', (): void => {
   it('Muestra correctamente reservas', (): void => {
     cy.contains('h1', 'Reservas').should('have.length', 1);
-
-    paginaReservas.obtenerCelda(fechaUtils.diaDeHoy(), 1).should('contain', 'Elliot');
+    paginaReservas.obtenerCelda(fechaUtils.diaDeHoy(), 1).invoke('attr', 'class').should('contain', 'Celda_color');
   });
 });
 
