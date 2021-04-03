@@ -51,7 +51,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     calcularDias();
 
     var camasIdsArray: number[] = [];
-    var habs = [];
+    var habs: IHabitacionParaTablaReservas[] = [];
     for (let i = 0; i < habitaciones.length; i++) {
       var habitacion = habitaciones[i];
       var camasDeLaHabitacion = habitacion.camasIndividuales;
