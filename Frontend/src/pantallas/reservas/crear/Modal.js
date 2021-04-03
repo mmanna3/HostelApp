@@ -123,7 +123,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
           actualizarValor={actualizarDesdeHasta}
           etiqueta="Check in - Check out"
           valor={desdeHasta}
-          desdeName="primeraNoche"
+          desdeName="diaDeCheckin"
           hastaName="diaDeCheckout"
         />
         <p className={Estilos.noches}>

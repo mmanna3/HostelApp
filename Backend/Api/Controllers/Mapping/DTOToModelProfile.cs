@@ -61,6 +61,10 @@ namespace Api.Controllers.Mapping
                     dto => dto.MapFrom(x => UnificarCamasIds(x))
                 )
                 .ForMember(
+	                m => m.PrimeraNoche,
+	                dto => dto.MapFrom(x => x.DiaDeCheckin)
+                )
+                .ForMember(
 	                m => m.UltimaNoche,
 	                dto => dto.MapFrom(x => x.DiaDeCheckout)
                 )

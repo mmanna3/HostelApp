@@ -3,7 +3,7 @@ import { useState, useEffect, ReactElement } from 'react';
 import { tablaDeReservasSelector, seleccionarTodasLasCeldasDeLaReserva } from 'store/app/tablaDeReservas/slice';
 import { useSelector, useDispatch } from 'react-redux';
 import estilos from './Celda.module.scss';
-import { ICeldaPertenecienteAReservaInfo } from './interfaces';
+import { CeldaPertenecienteAReservaEstilo, ICeldaPertenecienteAReservaInfo } from './interfaces';
 
 export interface IParams {
   dia: number;
@@ -34,10 +34,11 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   ]);
 
   const onMouseOver = (): void => {
+    console.log(data.id);
     dispatch(seleccionarTodasLasCeldasDeLaReserva(data.id));
   };
 
-  useEffect((): void => {
+  useEffect((): any => {
     var contenido = tabla[`${dia}`][`${camaId}`];
     actualizarData(contenido);
 
@@ -46,6 +47,15 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
       var codigoColorSegunTerminacionDelId = contenido.id % 10;
       actualizarClaseCssColor(colores.get(codigoColorSegunTerminacionDelId));
     }
+
+    return (): void => {
+      // Por qué esto no anda? Necesito limpiar el estado en la liberación del useEffect, sino después de crear rompe por undefined
+      // También, por otro lado, se invoca a _seleccionarTodasLasCeldasDeLaReserva con la celda sin reserva. Arreglarlo.
+      actualizarData({
+        id: null,
+        estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+      } as ICeldaPertenecienteAReservaInfo);
+    };
   }, [tabla, dia, camaId, colores]);
 
   return (

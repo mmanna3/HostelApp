@@ -43,7 +43,7 @@ const tablaDeReservasSlice = createSlice({
         estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
       };
 
-      for (let dia = reserva.diaInicio; dia <= reserva.diaFin; dia++) {
+      for (let dia = reserva.diaDeCheckin; dia <= reserva.diaDeCheckout; dia++) {
         reserva.camasIds.forEach((camaId: any): void => {
           state.tabla[`${dia}`][`${camaId}`] = celdaInfo;
 

@@ -93,7 +93,7 @@ namespace Api.IntegrationTests
             {
                 ANombreDe = "Un nombre",
                 CamasIds = new List<int?> { camaId },
-                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
                 DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)
             };
 

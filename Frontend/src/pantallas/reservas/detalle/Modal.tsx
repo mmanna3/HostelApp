@@ -38,10 +38,10 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
             <Display label="Nombre" valor={datos.aNombreDe} />
           </div>
           <div className="column">
-            <Display label="Desde" valor={datos.diaInicio} />
+            <Display label="Desde" valor={datos.diaDeCheckin} />
           </div>
           <div className="column">
-            <Display label="Hasta" valor={datos.diaFin} />
+            <Display label="Hasta" valor={datos.diaDeCheckout} />
           </div>
         </div>
       </Body>

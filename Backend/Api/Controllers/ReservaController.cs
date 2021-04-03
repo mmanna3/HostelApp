@@ -79,7 +79,7 @@ namespace Api.Controllers
             if (dto.CamasDeHabitacionesPrivadasIds == null && dto.CamasIds == null)
                 throw new AppException("Se debe reservar al menos una cama");
 
-            if (dto.PrimeraNoche == dto.DiaDeCheckout)
+            if (dto.DiaDeCheckin == dto.DiaDeCheckout)
                 throw new AppException("Se debe reservar al menos una noche");
 
             var reserva = _mapper.Map<Reserva>(dto);

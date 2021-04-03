@@ -108,8 +108,8 @@ namespace Api.UnitTests.Controllers
             reservasDTO.Desde.Should().Be(Utilidades.ConvertirFecha(desde));
             reservasDTO.Hasta.Should().Be(Utilidades.ConvertirFecha(hasta));
 
-            primeraReserva.DiaInicio.Should().Be(1);
-            primeraReserva.DiaFin.Should().Be(31);
+            primeraReserva.DiaDeCheckin.Should().Be(1);
+            primeraReserva.DiaDeCheckout.Should().Be(31);
             primeraReserva.ANombreDe.Should().Be(A_NOMBRE_DE);
             primeraReserva.CamasIds.Should().HaveCount(2);
             primeraReserva.CamasIds.First().Should().Be(1);
@@ -157,7 +157,7 @@ namespace Api.UnitTests.Controllers
             {
                 ANombreDe = A_NOMBRE_DE,
                 CamasIds = new List<int?>{null, UN_CAMA_ID},
-                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
                 DiaDeCheckout = Utilidades.ConvertirFecha(HASTA),
                 CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
             };
@@ -169,7 +169,7 @@ namespace Api.UnitTests.Controllers
             {
                 ANombreDe = A_NOMBRE_DE,
                 CamasIds = new List<int?> { null, UN_CAMA_ID },
-                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
                 DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)
             };
         }        
@@ -187,7 +187,7 @@ namespace Api.UnitTests.Controllers
             _unaReservaDto = new ReservaDTO
             {
                 ANombreDe = A_NOMBRE_DE,
-                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
                 DiaDeCheckout = Utilidades.ConvertirFecha(HASTA),
                 CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
             };

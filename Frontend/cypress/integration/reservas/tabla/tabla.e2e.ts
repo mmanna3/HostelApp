@@ -24,8 +24,8 @@ beforeEach((): void => {
     reservas: [
       {
         id: 1,
-        diaInicio: fechaUtils.diaDeHoy(),
-        diaFin: fechaUtils.diaDeHoy(),
+        diaDeCheckin: fechaUtils.diaDeHoy(),
+        diaDeCheckout: fechaUtils.diaDeHoy(),
         aNombreDe: 'Elliot',
         camasIds: [1, 2],
       },

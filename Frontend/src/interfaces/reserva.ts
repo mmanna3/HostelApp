@@ -8,8 +8,8 @@ export interface ReservasDelPeriodoDTO {
 
 export interface ReservaResumenDTO {
   id: number;
-  diaInicio: number;
-  diaFin: number;
+  diaDeCheckin: number;
+  diaDeCheckout: number;
   aNombreDe: string;
   camasIds: number[];
 }

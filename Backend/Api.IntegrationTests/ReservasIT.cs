@@ -39,8 +39,8 @@ namespace Api.IntegrationTests
             var reserva = reservasDelMes.Reservas.ToList().First();
 
             reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
-            reserva.DiaInicio.Should().Be(17);
-            reserva.DiaFin.Should().Be(17);
+            reserva.DiaDeCheckin.Should().Be(17);
+            reserva.DiaDeCheckout.Should().Be(17);
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
         }
@@ -64,8 +64,8 @@ namespace Api.IntegrationTests
             var reserva = reservasDelMes.Reservas.ToList().First();
 
             reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
-            reserva.DiaInicio.Should().Be(DateTime.Today.AddDays(-1).Day);
-            reserva.DiaFin.Should().Be(DateTime.Today.AddDays(-1).Day);
+            reserva.DiaDeCheckin.Should().Be(DateTime.Today.AddDays(-1).Day);
+            reserva.DiaDeCheckout.Should().Be(DateTime.Today.AddDays(-1).Day);
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
         }
@@ -115,7 +115,7 @@ namespace Api.IntegrationTests
             {
                 ANombreDe = A_NOMBRE_DE,
                 CamasIds = new List<int?> { camaId },
-                PrimeraNoche = Utilidades.ConvertirFecha(desde),
+                DiaDeCheckin = Utilidades.ConvertirFecha(desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(hasta)
             };
 
