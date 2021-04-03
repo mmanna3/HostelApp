@@ -7,6 +7,16 @@
 powershell.exe -ExecutionPolicy Bypass -File C:\Users\matia\source\repos\BlueServant\Scripts\BuenDia.ps1
 ```
 
+# Debuguear backend
+
+Cambiar en package.json la línea y proxy y poner
+
+```
+"proxy": "https://localhost:44372",
+```
+
+o la IP que sea
+
 # Migraciones
 
 ## Agregar migración
@@ -33,7 +43,7 @@ Si querés borrar la última aplicada, tenés que revertir la base a la migraci�
 
 Si querés revertir la primera, en vez de poner el nombre ponele 0.
 
-## PARA SEEDEAR
+## Para seedear
 
 **Add-migration** sin ningún cambio en el DbContext
 
