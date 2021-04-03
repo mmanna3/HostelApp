@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
 import { Input } from 'components/Input';
 import { Button } from 'components/botones/botones';
 import Label from 'components/Label';
 import ValidationSummary from 'components/ValidationSummary';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
-// import { crearReserva, cleanErrors, crearReservaSelector } from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
@@ -13,13 +12,32 @@ import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
-const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
+interface IParams {
+  isVisible: boolean;
+  onHide: () => any;
+  onSuccessfulSubmit: () => any;
+}
+
+const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement => {
   class RenglonData {
-    constructor(indice, habitacionesDisponibles, camasDisponibles, habitacionSeleccionada, camaSeleccionadaId) {
+    public habitacionSeleccionada: Nullable<number>;
+    public camaSeleccionadaId: Nullable<number>; //No sé si esto está súper bien
+    public indice: number;
+    public habitacionesDisponibles: any[];
+    public camasDisponibles: any[];
+
+    public constructor(
+      indice: number,
+      habitacionesDisponibles: any,
+      camasDisponibles: any,
+      habitacionSeleccionada: Nullable<number> = null,
+      camaSeleccionadaId: Nullable<number> = null
+    ) {
       this.habitacionSeleccionada = habitacionSeleccionada;
       this.indice = indice;
       this.habitacionesDisponibles = habitacionesDisponibles;
       this.camasDisponibles = camasDisponibles;
+      this.camaSeleccionadaId = null; //No sé si esto está súper bien
 
       if (camaSeleccionadaId) this.camaSeleccionadaId = camaSeleccionadaId;
       else if (camasDisponibles.length > 0) this.camaSeleccionadaId = camasDisponibles[0].id;
@@ -34,15 +52,22 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
 
   const dispatch = useDispatch();
-  const onSubmit = data => dispatch(api.reservas.crear.invocar(data, onSuccess));
+
+  function onSuccess(): void {
+    actualizarDesdeHasta([new Date(), new Date()]);
+    onSuccessfulSubmit();
+    resetForm(resetOnChanged + 1);
+  }
+
+  const onSubmit = (data: any): any => dispatch(api.reservas.crear.invocar(data, onSuccess));
 
   const habRequest = api.habitaciones.listarConLugaresLibres;
   const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
   const habitaciones = habitacionesSelector.datos;
   const habitacionesEstado = habitacionesSelector.estado;
 
-  useEffect(() => {
-    function restarUnDiaAlHastaDelCalendarioPorqueElCheckoutNoLocuento() {
+  useEffect((): void => {
+    function restarUnDiaAlHastaDelCalendarioPorqueElCheckoutNoLocuento(): Date {
       let milisegundosDeUnDia = 24 * 60 * 60 * 1000 * 1;
       let resultado = new Date(desdeHasta[1]);
       resultado.setTime(resultado.getTime() - milisegundosDeUnDia);
@@ -54,26 +79,20 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     actualizarCantidadDeNoches(restarFechas(desdeHasta[1], desdeHasta[0]));
   }, [dispatch, habRequest, desdeHasta, cantidadDeNoches]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (habitaciones.length > 0)
       actualizarRenglones([new RenglonData(0, habitaciones, habitaciones[0].camas, habitaciones[0])]);
     //PORQUE QUIERE QUE RENGLÓN SEA DEPENDENCIA Y SE ROMPE TODO SI LO PONGO
     // eslint-disable-next-line
   }, [habitaciones]);
 
-  function onSuccess() {
-    actualizarDesdeHasta([new Date(), new Date()]);
-    onSuccessfulSubmit();
-    resetForm(resetOnChanged + 1);
-  }
-
-  function hide() {
+  function hide(): void {
     onHide();
     dispatch(reiniciar());
   }
 
-  function onHabitacionChange(indice, id) {
-    var habitacion = habitaciones.find(hab => hab.id === parseInt(id));
+  function onHabitacionChange(indice: number, id: string): void {
+    var habitacion = habitaciones.find((hab: any): any => hab.id === parseInt(id));
 
     var renglonesCopia = renglones;
     for (let i = 0; i < renglones.length; i++)
@@ -87,7 +106,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     actualizarRenglones([...renglonesCopia]);
   }
 
-  function onCamaChange(indice, id) {
+  function onCamaChange(indice: number, id: number): void {
     var renglonesCopia = renglones;
 
     for (let i = 0; i < renglones.length; i++)
@@ -99,16 +118,18 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
     actualizarRenglones([...renglonesCopia]);
   }
 
-  function agregarRenglon() {
+  function agregarRenglon(): void {
     var ultimoRenglon = renglones.slice(-1).pop();
-    var proximoIndice = ultimoRenglon.indice + 1;
+    var proximoIndice = 0;
+    if (ultimoRenglon) proximoIndice = ultimoRenglon.indice + 1;
+    // Hago esto porque eslint dice que ultimoRenglon puede ser undefined, tiene razón, pero no debería serlo nunca
 
     actualizarRenglones([...renglones, new RenglonData(proximoIndice, habitaciones, habitaciones[0].camas)]);
   }
 
-  function eliminarRenglon(indice) {
+  function eliminarRenglon(indice: number): void {
     if (renglones.length > 1) {
-      var renglonSinElBorrado = renglones.filter(renglon => renglon.indice !== indice);
+      var renglonSinElBorrado = renglones.filter((renglon): any => renglon.indice !== indice);
       actualizarRenglones(renglonSinElBorrado);
     }
   }
@@ -132,18 +153,20 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
         </p>
         <Label text="Camas" />
 
-        {renglones.map(renglon => {
-          return (
-            <Renglon
-              key={`${renglon.indice}`}
-              renglon={renglon}
-              estado={habitacionesEstado}
-              onHabitacionChange={e => onHabitacionChange(renglon.indice, e.target.value)}
-              onCamaChange={e => onCamaChange(renglon.indice, e.target.value)}
-              eliminar={eliminarRenglon}
-            />
-          );
-        })}
+        {renglones.map(
+          (renglon): ReactElement => {
+            return (
+              <Renglon
+                key={`${renglon.indice}`}
+                renglon={renglon}
+                estado={habitacionesEstado}
+                onHabitacionChange={(e: any): void => onHabitacionChange(renglon.indice, e.target.value)}
+                onCamaChange={(e: any): void => onCamaChange(renglon.indice, e.target.value)}
+                eliminar={eliminarRenglon}
+              />
+            );
+          }
+        )}
 
         <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
       </Body>
