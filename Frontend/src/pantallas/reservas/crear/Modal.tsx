@@ -11,6 +11,7 @@ import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import { RenglonData } from './Renglon/RenglonDataClass';
 
 interface IParams {
   isVisible: boolean;
@@ -19,31 +20,6 @@ interface IParams {
 }
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement => {
-  class RenglonData {
-    public habitacionSeleccionada: Nullable<number>;
-    public camaSeleccionadaId: Nullable<number>; //No sé si esto está súper bien
-    public indice: number;
-    public habitacionesDisponibles: any[];
-    public camasDisponibles: any[];
-
-    public constructor(
-      indice: number,
-      habitacionesDisponibles: any,
-      camasDisponibles: any,
-      habitacionSeleccionada: Nullable<number> = null,
-      camaSeleccionadaId: Nullable<number> = null
-    ) {
-      this.habitacionSeleccionada = habitacionSeleccionada;
-      this.indice = indice;
-      this.habitacionesDisponibles = habitacionesDisponibles;
-      this.camasDisponibles = camasDisponibles;
-      this.camaSeleccionadaId = null; //No sé si esto está súper bien
-
-      if (camaSeleccionadaId) this.camaSeleccionadaId = camaSeleccionadaId;
-      else if (camasDisponibles.length > 0) this.camaSeleccionadaId = camasDisponibles[0].id;
-    }
-  }
-
   const { selector, reiniciar } = api.reservas.crear;
   const { estado, errores } = useSelector(selector);
   const [resetOnChanged, resetForm] = React.useState(0);
@@ -106,7 +82,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     actualizarRenglones([...renglonesCopia]);
   }
 
-  function onCamaChange(indice: number, id: number): void {
+  function onCamaChange(indice: number, id: string): void {
     var renglonesCopia = renglones;
 
     for (let i = 0; i < renglones.length; i++)

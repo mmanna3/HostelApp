@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Select from 'components/Select';
 import { Input } from 'components/Input';
 import { Icon } from 'components/Icon';
 import Estilos from './Renglon.module.scss';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
+import { RenglonData } from './RenglonDataClass';
 
-const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }) => {
+interface IParams {
+  renglon: RenglonData;
+  estado: ESTADO;
+  onHabitacionChange: (e: any) => any;
+  onCamaChange: (e: any) => any;
+  eliminar: (id: number) => any;
+}
+
+const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }: IParams): ReactElement => {
   return (
     <div className="field field-body is-grouped">
       <div className="field field-body is-grouped">
@@ -25,13 +34,15 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
                 {estado === ESTADO.cargando ? (
                   <option>Cargando...</option>
                 ) : (
-                  renglon.habitacionesDisponibles.map(habitacion => {
-                    return (
-                      <option key={habitacion.id} value={habitacion.id}>
-                        {habitacion.nombre} ({habitacion.cantidadDeLugaresLibres}) {habitacion.esPrivada ? '\uf023' : ''}
-                      </option>
-                    );
-                  })
+                  renglon.habitacionesDisponibles.map(
+                    (habitacion): ReactElement => {
+                      return (
+                        <option key={habitacion.id} value={habitacion.id}>
+                          {habitacion.nombre} ({habitacion.cantidadDeLugaresLibres}) {habitacion.esPrivada ? '\uf023' : ''}
+                        </option>
+                      );
+                    }
+                  )
                 )}
               </Select>
             </span>
@@ -55,28 +66,33 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
                   value={renglon.camaSeleccionadaId || ''}
                   onChange={onCamaChange}
                 >
-                  {renglon.camasDisponibles.map(cama => {
-                    return (
-                      <option key={cama.id} value={cama.id}>
-                        {cama.tipo} - {cama.nombre}
-                      </option>
-                    );
-                  })}
+                  {renglon.camasDisponibles.map(
+                    (cama): ReactElement => {
+                      return (
+                        <option key={cama.id} value={cama.id}>
+                          {cama.tipo} - {cama.nombre}
+                        </option>
+                      );
+                    }
+                  )}
                 </Select>
               ) : (
                 <>
                   <Select id={`habitacion-privada-renglon-${renglon.indice}`} style={{ minWidth: '260px' }}>
                     <option value={renglon.habitacionSeleccionada.id}>Todas - Habitación privada</option>
                   </Select>
-                  {renglon.camasDisponibles.map((cama, i) => {
-                    return (
-                      <Input
-                        style={{ display: 'none' }}
-                        name={`CamasDeHabitacionesPrivadasIds[${renglon.indice}][${i}]`}
-                        defaultValue={cama.id}
-                      />
-                    );
-                  })}
+                  {renglon.camasDisponibles.map(
+                    (cama, i): ReactElement => {
+                      return (
+                        <Input
+                          key={i}
+                          style={{ display: 'none' }}
+                          name={`CamasDeHabitacionesPrivadasIds[${renglon.indice}][${i}]`}
+                          defaultValue={cama.id}
+                        />
+                      );
+                    }
+                  )}
                 </>
               )}
             </span>
@@ -88,7 +104,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
         className="button has-text-grey has-background-light"
         type="button"
         id={`eliminar-renglon-${renglon.indice}`}
-        onClick={() => eliminar(renglon.indice)}
+        onClick={(): void => eliminar(renglon.indice)}
       >
         <Icon faCode="trash-alt" />
       </button>

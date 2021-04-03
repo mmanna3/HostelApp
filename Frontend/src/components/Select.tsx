@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+
+interface IProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+  register?: () => any;
+  name?: string;
+  children: ReactElement | ReactElement[];
+  onChange?: (e: any) => any;
+  ccsClass?: string;
+}
+
+interface IConLabelProps extends IProps {
+  label: string;
+}
 
 export default function Select({
-  register = () => {},
-  name,
+  register = (): any => {},
+  name = '',
   children = [],
-  onChange = () => {},
+  onChange = (): any => {},
   ccsClass = '',
   ...otrosAtributos
-}) {
+}: IProps): ReactElement {
   return (
     <div className={`select ${ccsClass}`}>
       <select name={name} ref={register} onChange={onChange} {...otrosAtributos}>
@@ -17,7 +29,15 @@ export default function Select({
   );
 }
 
-export function SelectConLabelInline({ register, name, children, onChange, ccsClass, label, ...otrosAtributos }) {
+export function SelectConLabelInline({
+  register,
+  name,
+  children,
+  onChange,
+  ccsClass,
+  label,
+  ...otrosAtributos
+}: IConLabelProps): ReactElement {
   return (
     <div className="field">
       <label style={{ marginBottom: '1em' }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Input({ register = () => {}, label, name, ...otrosAtributos }) {
+export function Input({ register = () => {}, label = '', name, ...otrosAtributos }) {
   return (
     <div className="field">
       <label className="label">{label}</label>
