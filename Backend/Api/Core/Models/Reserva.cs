@@ -11,11 +11,9 @@ namespace Api.Core.Models
 
         public ICollection<ReservaCama> ReservaCamas { get; set; }
         
-        //Primera noche
         public DateTime PrimeraNoche { get; set; }
 
-        //Última noche (puede ser igual a la primera) ¿vas a hacer refactor de nombre?
-        public DateTime UltimaNoche { get; set; }
+        public DateTime UltimaNoche { get; set; } // Puede ser igual a PrimeraNoche
 
         public bool EstaReservado(DateTime dia)
         {
