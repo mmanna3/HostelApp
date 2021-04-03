@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
-import {
-  CeldaPertenecienteAReservaEstilo,
-  ICeldaPertenecienteAReservaInfo,
-} from 'pantallas/reservas/Tabla/Celda/interfaces';
+import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
 
 export const initialState: IInitialState = {
   diaMesArray: [],
@@ -26,7 +23,7 @@ const tablaDeReservasSlice = createSlice({
         celdaInicial[`${camaId}`] = {
           id: null,
           estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
-        } as ICeldaPertenecienteAReservaInfo;
+        } as ICeldaInfo;
       });
       payload.diaMesArray.forEach((diaMes: { dia: number }): void => {
         state.tabla[`${diaMes.dia}`] = celdaInicial;
@@ -38,7 +35,7 @@ const tablaDeReservasSlice = createSlice({
     _insertarReserva: (state, { payload }): void => {
       var reserva = payload as ReservaResumenDTO;
 
-      var celdaInfo: ICeldaPertenecienteAReservaInfo = {
+      var celdaInfo: ICeldaInfo = {
         id: reserva.id,
         estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
       };
@@ -126,7 +123,7 @@ interface IDiaCamaId {
 }
 export interface ITabla {
   [dia: string]: {
-    [camaId: string]: ICeldaPertenecienteAReservaInfo;
+    [camaId: string]: ICeldaInfo;
   };
 }
 
@@ -137,7 +134,7 @@ export interface IReserva {
 }
 
 export interface ICeldaInicial {
-  [key: string]: ICeldaPertenecienteAReservaInfo;
+  [key: string]: ICeldaInfo;
 }
 
 export interface IDiaMes {

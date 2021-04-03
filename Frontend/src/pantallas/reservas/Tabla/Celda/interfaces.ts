@@ -4,7 +4,7 @@ export const CeldaPertenecienteAReservaEstilo = {
   EstaSeleccionada: estilo.estaSeleccionada,
   Ninguno: '',
 };
-export interface ICeldaPertenecienteAReservaInfo {
+export interface ICeldaInfo {
   estilo: string;
   id: Nullable<number>;
 }
