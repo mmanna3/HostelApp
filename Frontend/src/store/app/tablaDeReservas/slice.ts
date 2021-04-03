@@ -51,22 +51,26 @@ const tablaDeReservasSlice = createSlice({
     },
     _seleccionarTodasLasCeldasDeLaReserva: (state, { payload }): void => {
       const reservaId = payload;
-      console.log(reservaId);
-      state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
-        state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.EstaSeleccionada;
-      });
 
-      state.reservaSeleccionadaId = reservaId;
+      if (reservaId !== null) {
+        state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
+          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.EstaSeleccionada;
+        });
+
+        state.reservaSeleccionadaId = reservaId;
+      }
     },
     _limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva: (state, { payload }): void => {
       const reservaId = payload;
 
       if (state.reservaSeleccionadaId && state.reservaSeleccionadaId !== reservaId) {
-        const reservaId = state.reservaSeleccionadaId;
+        const reservaSeleccionadaId = state.reservaSeleccionadaId;
 
-        state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
+        state.reservas[`${reservaSeleccionadaId}`].forEach((diaCamaId: IDiaCamaId): void => {
           state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.Ninguno;
         });
+
+        state.reservaSeleccionadaId = null;
       }
     },
   },
@@ -103,7 +107,7 @@ export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatc
 export function seleccionarTodasLasCeldasDeLaReserva(reservaId: Nullable<number>): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
     dispatch(_limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva(reservaId));
-    if (reservaId !== null) dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
+    dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
   };
 }
 
