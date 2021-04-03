@@ -54,7 +54,7 @@ const tablaDeReservasSlice = createSlice({
     },
     _seleccionarTodasLasCeldasDeLaReserva: (state, { payload }): void => {
       const reservaId = payload;
-
+      console.log(reservaId);
       state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
         state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.EstaSeleccionada;
       });

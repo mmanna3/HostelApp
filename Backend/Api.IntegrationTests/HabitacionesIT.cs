@@ -93,8 +93,8 @@ namespace Api.IntegrationTests
             {
                 ANombreDe = "Un nombre",
                 CamasIds = new List<int?> { camaId },
-                Desde = Utilidades.ConvertirFecha(DESDE),
-                Hasta = Utilidades.ConvertirFecha(HASTA)
+                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)
             };
 
             await _httpClient.PostAsJsonAsync(ENDPOINT_RESERVAS, body);

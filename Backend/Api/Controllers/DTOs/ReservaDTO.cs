@@ -12,10 +12,10 @@ namespace Api.Controllers.DTOs
         public string ANombreDe { get; set; }
 
         //Primera noche
-        public string Desde { get; set; }
+        public string PrimeraNoche { get; set; }
         
         //Día en el que hace checkout (no puede ser igual a Desde) ¿Vas a hacer refactor?
-        public string Hasta { get; set; }
+        public string DiaDeCheckout { get; set; }
         public List<int?> CamasIds { get; set; }
         public List<List<int>> CamasDeHabitacionesPrivadasIds { get; set; }
     }

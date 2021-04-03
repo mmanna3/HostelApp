@@ -26,7 +26,7 @@ namespace Api.Persistence.Repositories
             return await _context.Reservas
                 .Include(x => x.ReservaCamas)
                 .ThenInclude(x => x.Cama)
-                .Where(x => x.Desde <= new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes)) && x.Hasta >= new DateTime(anio, mes, 1))
+                .Where(x => x.PrimeraNoche <= new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes)) && x.UltimaNoche >= new DateTime(anio, mes, 1))
                 .ToListAsync();
         }
 
@@ -35,7 +35,7 @@ namespace Api.Persistence.Repositories
             return await _context.Reservas
                 .Include(x => x.ReservaCamas)
                 .ThenInclude(x => x.Cama)
-                .Where(x => x.Desde <= DateTime.Today.AddDays(15) && x.Hasta >= DateTime.Today.AddDays(-1))
+                .Where(x => x.PrimeraNoche <= DateTime.Today.AddDays(15) && x.UltimaNoche >= DateTime.Today.AddDays(-1))
                 .ToListAsync();
         }
 
@@ -44,7 +44,7 @@ namespace Api.Persistence.Repositories
             return await _context.Reservas
                 .Include(x => x.ReservaCamas)
                 .ThenInclude(x => x.Cama)
-                .Where(x => x.Hasta == DateTime.Today.AddDays(-1))
+                .Where(x => x.UltimaNoche == DateTime.Today.AddDays(-1))
                 .ToListAsync();
         }
     }

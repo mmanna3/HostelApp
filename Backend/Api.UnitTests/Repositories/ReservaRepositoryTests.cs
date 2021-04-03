@@ -28,7 +28,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             _context.CamasIndividuales.Add(cama);
             
-            var reserva = new Reserva {Id = 1, ANombreDe = "Elliot", Desde = DESDE, Hasta = HASTA};
+            var reserva = new Reserva {Id = 1, ANombreDe = "Elliot", PrimeraNoche = DESDE, UltimaNoche = HASTA};
             _context.Reservas.Add(reserva);
 
             //_context.ReservasDeCamas.Add(new ReservaCama {Cama = cama, Reserva = reserva});
@@ -86,7 +86,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { ANombreDe = "Elliot", Desde = desde, Hasta = hasta };
+            var reserva = new Reserva { ANombreDe = "Elliot", PrimeraNoche = desde, UltimaNoche = hasta };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };

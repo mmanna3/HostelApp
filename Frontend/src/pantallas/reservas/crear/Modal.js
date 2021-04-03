@@ -119,7 +119,13 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
       <Body minHeight="460px">
         <ValidationSummary errors={errores} />
         <Input label="Huésped" name="aNombreDe" />
-        <DateRangePicker actualizarValor={actualizarDesdeHasta} etiqueta="Check in - Check out" valor={desdeHasta} />
+        <DateRangePicker
+          actualizarValor={actualizarDesdeHasta}
+          etiqueta="Check in - Check out"
+          valor={desdeHasta}
+          desdeName="primeraNoche"
+          hastaName="diaDeCheckout"
+        />
         <p className={Estilos.noches}>
           <strong>Noches: </strong>
           {cantidadDeNoches}

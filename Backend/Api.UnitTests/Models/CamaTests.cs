@@ -90,8 +90,8 @@ namespace Api.UnitTests.Models
             var cama = new CamaIndividual();
             var reserva1 = new Reserva
             {
-                Desde = INICIO_RESERVA_1,
-                Hasta = FIN_RESERVA_1
+                PrimeraNoche = INICIO_RESERVA_1,
+                UltimaNoche = FIN_RESERVA_1
             };
             var reservaDeCama1 = new ReservaCama
             {
@@ -101,8 +101,8 @@ namespace Api.UnitTests.Models
 
             var reserva2 = new Reserva
             {
-                Desde = INICIO_RESERVA_2,
-                Hasta = FIN_RESERVA_2
+                PrimeraNoche = INICIO_RESERVA_2,
+                UltimaNoche = FIN_RESERVA_2
             };
             var reservaDeCama2 = new ReservaCama
             {

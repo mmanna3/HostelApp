@@ -37,7 +37,7 @@ namespace Api.Core.Models
 
         private bool ElRangoIncluyeAlgunaReserva(DateTime desde, DateTime hasta)
         {
-            return ReservaCamas?.Select(x => x.Reserva).Any(x => x.Desde >= desde && x.Hasta <= hasta) ?? false;
+            return ReservaCamas?.Select(x => x.Reserva).Any(x => x.PrimeraNoche >= desde && x.UltimaNoche <= hasta) ?? false;
         }
 
         public abstract string Tipo();

@@ -60,6 +60,10 @@ namespace Api.Controllers.Mapping
                     m => m.ReservaCamas,
                     dto => dto.MapFrom(x => UnificarCamasIds(x))
                 )
+                .ForMember(
+	                m => m.UltimaNoche,
+	                dto => dto.MapFrom(x => x.DiaDeCheckout)
+                )
                 .AfterMap((model, entity) =>
                 {
                     foreach (var reservaCama in entity.ReservaCamas)
@@ -67,7 +71,7 @@ namespace Api.Controllers.Mapping
                         reservaCama.Reserva = entity;
                     }
 
-                    entity.Hasta = entity.Hasta.AddDays(-1);
+                    entity.UltimaNoche = entity.UltimaNoche.AddDays(-1);
                 });
 
 

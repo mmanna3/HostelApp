@@ -30,7 +30,7 @@ namespace Api.UnitTests.Repositories
 
 
             var indi2 = new CamaIndividual { Id = 5, Nombre = "Azul", HabitacionId = 1 };
-            var reserva = new Reserva {Desde = DESDE.AddDays(1), Hasta = HASTA.AddDays(2)};
+            var reserva = new Reserva {PrimeraNoche = DESDE.AddDays(1), UltimaNoche = HASTA.AddDays(2)};
             var reservasPorCama = new ReservaCama {Reserva = reserva, Cama = indi2};
             reserva.ReservaCamas = new List<ReservaCama> {reservasPorCama};
             await _context.Reservas.AddAsync(reserva);

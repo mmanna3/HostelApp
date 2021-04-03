@@ -49,8 +49,8 @@ namespace Api.UnitTests.Controllers
             var reserva = _mapper.Map<Reserva>(_unaReservaDto);
 
             reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
-            reserva.Desde.Should().Be(DESDE);
-            reserva.Hasta.Should().Be(HASTA.AddDays(-1));
+            reserva.PrimeraNoche.Should().Be(DESDE);
+            reserva.UltimaNoche.Should().Be(HASTA.AddDays(-1));
             reserva.ReservaCamas.Should().HaveCount(4);
 
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == UN_CAMA_ID);
@@ -67,8 +67,8 @@ namespace Api.UnitTests.Controllers
             var reserva = _mapper.Map<Reserva>(_unaReservaDto);
 
             reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
-            reserva.Desde.Should().Be(DESDE);
-            reserva.Hasta.Should().Be(HASTA.AddDays(-1));
+            reserva.PrimeraNoche.Should().Be(DESDE);
+            reserva.UltimaNoche.Should().Be(HASTA.AddDays(-1));
             reserva.ReservaCamas.Should().HaveCount(1);
 
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == UN_CAMA_ID);
@@ -82,8 +82,8 @@ namespace Api.UnitTests.Controllers
             var reserva = _mapper.Map<Reserva>(_unaReservaDto);
 
             reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
-            reserva.Desde.Should().Be(DESDE);
-            reserva.Hasta.Should().Be(HASTA.AddDays(-1));
+            reserva.PrimeraNoche.Should().Be(DESDE);
+            reserva.UltimaNoche.Should().Be(HASTA.AddDays(-1));
             reserva.ReservaCamas.Should().HaveCount(3);
 
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == 100);
@@ -125,16 +125,16 @@ namespace Api.UnitTests.Controllers
             
             var r1 = new Reserva
             {
-                Desde = new DateTime(2020, 07, 17),
-                Hasta = new DateTime(2021, 1, 2),
+                PrimeraNoche = new DateTime(2020, 07, 17),
+                UltimaNoche = new DateTime(2021, 1, 2),
                 ANombreDe = A_NOMBRE_DE,
                 ReservaCamas = new List<ReservaCama> { new ReservaCama{ Cama = cama1, CamaId = cama1.Id}, new ReservaCama{ Cama = cama2, CamaId = cama2.Id } }
             };
 
             var r2 = new Reserva
             {
-                Desde = DESDE,
-                Hasta = HASTA,
+                PrimeraNoche = DESDE,
+                UltimaNoche = HASTA,
                 ANombreDe = A_NOMBRE_DE,
                 ReservaCamas = new List<ReservaCama> { new ReservaCama { Cama = cama1, CamaId = cama1.Id }, new ReservaCama { Cama = cama2, CamaId = cama2.Id } }
             };
@@ -157,8 +157,8 @@ namespace Api.UnitTests.Controllers
             {
                 ANombreDe = A_NOMBRE_DE,
                 CamasIds = new List<int?>{null, UN_CAMA_ID},
-                Desde = Utilidades.ConvertirFecha(DESDE),
-                Hasta = Utilidades.ConvertirFecha(HASTA),
+                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckout = Utilidades.ConvertirFecha(HASTA),
                 CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
             };
         }
@@ -169,8 +169,8 @@ namespace Api.UnitTests.Controllers
             {
                 ANombreDe = A_NOMBRE_DE,
                 CamasIds = new List<int?> { null, UN_CAMA_ID },
-                Desde = Utilidades.ConvertirFecha(DESDE),
-                Hasta = Utilidades.ConvertirFecha(HASTA)
+                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)
             };
         }        
         
@@ -187,8 +187,8 @@ namespace Api.UnitTests.Controllers
             _unaReservaDto = new ReservaDTO
             {
                 ANombreDe = A_NOMBRE_DE,
-                Desde = Utilidades.ConvertirFecha(DESDE),
-                Hasta = Utilidades.ConvertirFecha(HASTA),
+                PrimeraNoche = Utilidades.ConvertirFecha(DESDE),
+                DiaDeCheckout = Utilidades.ConvertirFecha(HASTA),
                 CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
             };
         }
