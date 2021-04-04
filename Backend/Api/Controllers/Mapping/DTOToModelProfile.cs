@@ -21,6 +21,8 @@ namespace Api.Controllers.Mapping
 
             CreateMap<HuespedDTO, Huesped>();
 
+            CreateMap<DatosMinimosDeHuespedDTO, Huesped>();
+
             CreateMap<HabitacionDTO, Habitacion>()
                 .ForMember(
                     dest => dest.CamasIndividuales,
@@ -59,6 +61,10 @@ namespace Api.Controllers.Mapping
                 .ForMember(
                     m => m.ReservaCamas,
                     dto => dto.MapFrom(x => UnificarCamasIds(x))
+                )
+                .ForMember(
+	                m => m.Huesped,
+	                dto => dto.MapFrom(x => x.DatosMinimosDeHuesped)
                 )
                 .ForMember(
 	                m => m.PrimeraNoche,

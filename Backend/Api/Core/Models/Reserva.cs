@@ -6,13 +6,16 @@ namespace Api.Core.Models
 {
     public class Reserva : EntidadConId
     {
-        [Required, MaxLength(30)]
-        public string ANombreDe { get; set; }
+        [Required]
+        public Huesped Huesped { get; set; }
 
+        [Required]
         public ICollection<ReservaCama> ReservaCamas { get; set; }
-        
+
+        [Required]
         public DateTime PrimeraNoche { get; set; }
 
+        [Required]
         public DateTime UltimaNoche { get; set; } // Puede ser igual a PrimeraNoche
 
         public bool EstaReservado(DateTime dia)

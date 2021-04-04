@@ -8,6 +8,7 @@ using Api.Core.Models;
 using AutoMapper;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Api.Controllers
 {
@@ -22,14 +23,14 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<ReservaDTO>> Listar() // Qué onda? este no se usa?
-        {
-            var reservas = await _service.Listar();
-            var reservaDTOs = _mapper.Map<IEnumerable<ReservaDTO>>(reservas);
+        //[HttpGet]
+        //public async Task<IEnumerable<ReservaDTO>> Listar() // Qué onda? este no se usa?
+        //{
+        //    var reservas = await _service.Listar();
+        //    var reservaDTOs = _mapper.Map<IEnumerable<ReservaDTO>>(reservas);
 
-            return reservaDTOs;
-        }
+        //    return reservaDTOs;
+        //}
 
         [HttpGet, Route("checkoutsDeHoy")]
         public async Task<IEnumerable<CheckoutsDeHoyDTO>> ListarCheckoutsDeHoy()
@@ -69,20 +70,20 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<int> Crear([FromBody] ReservaDTO dto)
         {
-            if (dto.CamasIds != null)
-            {
-                var camasIdsSinNulls = dto.CamasIds.Where(x => x.HasValue).ToList();
-                if (camasIdsSinNulls.Count != camasIdsSinNulls.Distinct().Count())
-                    throw new AppException("No puede reservarse dos veces la misma cama");
-            } 
-            
-            if (dto.CamasDeHabitacionesPrivadasIds == null && dto.CamasIds == null)
-                throw new AppException("Se debe reservar al menos una cama");
+			if (dto.CamasIds != null)
+			{
+				var camasIdsSinNulls = dto.CamasIds.Where(x => x.HasValue).ToList();
+				if (camasIdsSinNulls.Count != camasIdsSinNulls.Distinct().Count())
+					throw new AppException("No puede reservarse dos veces la misma cama");
+			}
 
-            if (dto.DiaDeCheckin == dto.DiaDeCheckout)
-                throw new AppException("Se debe reservar al menos una noche");
+			if (dto.CamasDeHabitacionesPrivadasIds == null && dto.CamasIds == null)
+				throw new AppException("Se debe reservar al menos una cama");
 
-            var reserva = _mapper.Map<Reserva>(dto);
+			if (dto.DiaDeCheckin == dto.DiaDeCheckout)
+				throw new AppException("Se debe reservar al menos una noche");
+
+			var reserva = _mapper.Map<Reserva>(dto);
             var id = await _service.Crear(reserva);
 
             return id;

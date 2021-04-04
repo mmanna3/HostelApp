@@ -2,11 +2,18 @@
 
 namespace Api.Core.Models
 {
-    public class Huesped
+    public class Huesped : EntidadConId
     {
-        public int Id { get; set; }
+	    [Required, MaxLength(70)]
+        public string NombreCompleto { get; set; }
 
-        [Required, MaxLength(30)]
-        public string Nombre { get; set; }
+        [Required, MinLength(3), MaxLength(30)]
+        public string DniOPasaporte { get; set; }
+
+        [MaxLength(35)]
+        public string Telefono { get; set; }
+
+        [MaxLength(256)]
+        public string Email { get; set; }
     }
 }

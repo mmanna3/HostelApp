@@ -8,6 +8,7 @@ using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Core;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Api.IntegrationTests
@@ -21,6 +22,13 @@ namespace Api.IntegrationTests
         private const string CAMA_TIPO = "Individual";
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
+        private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
+        {
+	        NombreCompleto = "Elliot",
+	        DniOPasaporte = "123456789",
+	        Email = "mrrobot@fsociety.ong",
+	        Telefono = "5556453",
+        };
 
         [Test]
         public async Task Crea_UnaReserva_Y_ApareceEnListadoMensual()
@@ -38,7 +46,6 @@ namespace Api.IntegrationTests
             reservasDelMes.Reservas.Count().Should().Be(1);
             var reserva = reservasDelMes.Reservas.ToList().First();
 
-            reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
             reserva.DiaDeCheckin.Should().Be(17);
             reserva.DiaDeCheckout.Should().Be(17);
             reserva.CamasIds.Should().HaveCount(1);
@@ -63,7 +70,6 @@ namespace Api.IntegrationTests
             reservasDelMes.Reservas.Count().Should().Be(1);
             var reserva = reservasDelMes.Reservas.ToList().First();
 
-            reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
             reserva.DiaDeCheckin.Should().Be(DateTime.Today.AddDays(-1).Day);
             reserva.DiaDeCheckout.Should().Be(DateTime.Today.AddDays(-1).Day);
             reserva.CamasIds.Should().HaveCount(1);
@@ -84,7 +90,7 @@ namespace Api.IntegrationTests
             reservasConCheckoutHoy.Count().Should().Be(1);
             var reserva = reservasConCheckoutHoy.ToList().First();
 
-            reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
+            //reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
         }
 
         private async Task<int> CrearHabitacionConUnaCama()
@@ -113,7 +119,7 @@ namespace Api.IntegrationTests
         {
             var body = new ReservaDTO
             {
-                ANombreDe = A_NOMBRE_DE,
+                DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 CamasIds = new List<int?> { camaId },
                 DiaDeCheckin = Utilidades.ConvertirFecha(desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(hasta)

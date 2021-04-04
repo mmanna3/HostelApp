@@ -27,14 +27,17 @@ namespace Api.IntegrationTests
 
             huespedes.Count().Should().Be(1);
             var huesped = huespedes.ToList().First();
-            huesped.Nombre.Should().Be("Elliot");
+            huesped.NombreCompleto.Should().Be("Elliot");
         }
 
         private async Task<HttpResponseMessage> CrearUnHuesped()
         {
             var body = new HuespedDTO
             {
-                Nombre = "Elliot"
+	            NombreCompleto = "Elliot",
+	            DniOPasaporte = "123456789",
+	            Email = "mrrobot@fsociety.ong",
+	            Telefono = "5556453",
             };
 
             return await _httpClient.PostAsJsonAsync(ENDPOINT, body);

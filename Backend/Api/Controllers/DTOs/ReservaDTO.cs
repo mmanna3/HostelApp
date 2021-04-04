@@ -7,16 +7,16 @@ namespace Api.Controllers.DTOs
     {
         public int Id { get; set; }
 
-        [YKNRequired, YKNStringLength(Maximo = 30)]
-        [DisplayName("Huésped")]
-        public string ANombreDe { get; set; }
+        public DatosMinimosDeHuespedDTO DatosMinimosDeHuesped { get; set; }
 
-        //Primera noche
+        [YKNRequired, DisplayName("Día de checkin")]
         public string DiaDeCheckin { get; set; }
-        
-        //Día en el que hace checkout (no puede ser igual a Desde) ¿Vas a hacer refactor?
+
+        [YKNRequired, DisplayName("Día de checkout")]
         public string DiaDeCheckout { get; set; }
+        
         public List<int?> CamasIds { get; set; }
+        
         public List<List<int>> CamasDeHabitacionesPrivadasIds { get; set; }
     }
 }

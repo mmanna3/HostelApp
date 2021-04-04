@@ -19,6 +19,13 @@ namespace Api.IntegrationTests
         private const string ENDPOINT_CONLUGARESLIBRES = ENDPOINT + "/conLugaresLibres";
         private readonly DateTime DESDE = new DateTime(2020, 09, 17);
         private readonly DateTime HASTA = new DateTime(2020, 09, 18);
+        private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
+        {
+	        NombreCompleto = "Elliot",
+	        DniOPasaporte = "123456789",
+	        Email = "mrrobot@fsociety.ong",
+	        Telefono = "5556453",
+        };
 
         [Test]
         public async Task CreaHabitacionCorrectamente()
@@ -91,7 +98,7 @@ namespace Api.IntegrationTests
 
             var body = new ReservaDTO
             {
-                ANombreDe = "Un nombre",
+                DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 CamasIds = new List<int?> { camaId },
                 DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
                 DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)

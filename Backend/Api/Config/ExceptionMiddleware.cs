@@ -4,7 +4,6 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace Api.Config
 {
@@ -38,17 +37,6 @@ namespace Api.Config
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             return context.Response.WriteAsync($"{{\"errors\": {{ \"ControlledException\": [\"{exception.Message}\"] }} }}");
-        }
-    }
-
-    public class Error
-    {
-        public int StatusCode { get; set; }
-        public string Mensaje { get; set; }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
         }
     }
 }

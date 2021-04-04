@@ -15,6 +15,8 @@ namespace Api.Controllers.Mapping
         public ModelToDTOProfile()
         {
             CreateMap<Huesped, HuespedDTO>();
+            CreateMap<Huesped, DatosMinimosDeHuespedDTO>();
+
             CreateMap<Habitacion, HabitacionDTO>();
 
             CreateMap<Cama, CamaDTO>()
@@ -85,6 +87,10 @@ namespace Api.Controllers.Mapping
 
             CreateMap<Reserva, ReservaDTO>()
 	            .ForMember(
+		            dest => dest.DatosMinimosDeHuesped,
+		            opt => opt.MapFrom(src => src.Huesped)
+	            )
+                .ForMember(
 		            dest => dest.DiaDeCheckout,
 		            opt => opt.MapFrom(src => src.UltimaNoche)
 	            )

@@ -13,7 +13,6 @@ namespace Api.Controllers.DTOs
 	        public int Id { get; set; }
             public int DiaDeCheckin { get; set; }
             public int DiaDeCheckout { get; set; }
-            public string ANombreDe { get; set; }
             public List<int> CamasIds { get; set; }
         }
     }

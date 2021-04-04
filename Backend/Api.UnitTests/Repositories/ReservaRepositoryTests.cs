@@ -12,8 +12,16 @@ namespace Api.UnitTests.Repositories
     public class ReservaRepositoryTests : BaseRepositoryTests
     {
         private ReservaRepository _repository;
-        private readonly DateTime DESDE = new DateTime(2020, 09, 17);
-        private readonly DateTime HASTA = new DateTime(2020, 09, 17);
+        private readonly DateTime _desde = new DateTime(2020, 09, 17);
+        private readonly DateTime _hasta = new DateTime(2020, 09, 17);
+        private readonly Huesped _huesped = new Huesped
+        {
+            NombreCompleto = "Elliot",
+            DniOPasaporte = "123456789",
+            Email = "mrrobot@fsociety.ong",
+            Telefono = "5556453",
+            Id = 1,
+        };
 
         protected override void Inicializar()
         {
@@ -28,7 +36,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             _context.CamasIndividuales.Add(cama);
             
-            var reserva = new Reserva {Id = 1, ANombreDe = "Elliot", PrimeraNoche = DESDE, UltimaNoche = HASTA};
+            var reserva = new Reserva {Id = 1, Huesped = _huesped, PrimeraNoche = _desde, UltimaNoche = _hasta};
             _context.Reservas.Add(reserva);
 
             //_context.ReservasDeCamas.Add(new ReservaCama {Cama = cama, Reserva = reserva});
@@ -86,7 +94,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { ANombreDe = "Elliot", PrimeraNoche = desde, UltimaNoche = hasta };
+            var reserva = new Reserva { Huesped = _huesped, PrimeraNoche = desde, UltimaNoche = hasta };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };
