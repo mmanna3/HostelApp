@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Api.Core.Models;
 
 namespace Api.Core.Repositories
 {
-    public interface IHuespedRepository
+    public interface IHuespedRepository : IABMRepository<Huesped>
     {
-        Task<IEnumerable<Huesped>> ListAsync();
-        void Create(Huesped habitacion);
-        Task<Huesped> FindByIdAsync(int id);
-        void Modify(Huesped old, Huesped current);
+	    Task<Huesped> ObtenerPorDniOPasaporte(string dniOPasaporte);
     }
 }

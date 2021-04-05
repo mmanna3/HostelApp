@@ -18,6 +18,7 @@ namespace Api.UnitTests.Controllers
     {
         private ReservasController _controller;
         private Mock<IReservaService> _mockService;
+        private Mock<IHuespedService> _mockHuespedService;
         private IMapper _mapper;
 
         private ReservaDTO _unaReservaDto;
@@ -44,7 +45,8 @@ namespace Api.UnitTests.Controllers
             
             _mapper = new Mapper(configuration);
             _mockService = new Mock<IReservaService>();
-            _controller = new ReservasController(_mapper, _mockService.Object);
+            _mockHuespedService = new Mock<IHuespedService>();
+            _controller = new ReservasController(_mapper, _mockService.Object, _mockHuespedService.Object);
         }
 
         [Test]

@@ -47,6 +47,10 @@
     <Compile Remove="Persistence\Migrations\20200920224118_a.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20200920224312_a.cs" />
     <Compile Remove="Persistence\Migrations\20200920224312_a.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210405040400_DniOPasaporte_delHuesped_esKey.cs" />
+    <Compile Remove="Persistence\Migrations\20210405040400_DniOPasaporte_delHuesped_esKey.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210405042846_asdasd.cs" />
+    <Compile Remove="Persistence\Migrations\20210405042846_asdasd.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

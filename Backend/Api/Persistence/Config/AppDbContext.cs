@@ -51,6 +51,10 @@ namespace Api.Persistence.Config
                 .HasOne(x => x.Cama)
                 .WithMany(x => x.ReservaCamas)
                 .HasForeignKey(x => x.CamaId);
+
+            builder.Entity<Huesped>()
+	            .HasIndex(h => h.DniOPasaporte)
+	            .IsUnique();
         }
     }
 }

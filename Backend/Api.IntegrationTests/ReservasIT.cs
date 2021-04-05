@@ -17,8 +17,8 @@ namespace Api.IntegrationTests
     {
         private const string ENDPOINT = "/api/reservas";
         private const string ENDPOINT_HABITACIONES = "/api/habitaciones";
+        private const string ENDPOINT_HUESPEDES = "/api/huespedes";
 
-        private const string A_NOMBRE_DE = "Un nombre";
         private const string CAMA_TIPO = "Individual";
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
@@ -50,6 +50,45 @@ namespace Api.IntegrationTests
             reserva.DiaDeCheckout.Should().Be(17);
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
+        }
+
+        [Test]
+        public async Task DadoQueElHuespedNoexistia_CreaUnaReserva_Y_SeCreaElHuesped()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+
+	        var response = await CrearReserva(camaId, DateTime.Today.AddDays(-1), DateTime.Today);
+	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+	        var huespedesResponse = await ListarHuespedes();
+	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
+	        var huesped = huespedes.First();
+
+	        huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+        }
+
+        [Test]
+        public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+	        var huespedId = await CrearHuesped();
+
+	        var response = await CrearReserva(camaId, DateTime.Today.AddDays(-1), DateTime.Today);
+	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+	        var huespedesResponse = await ListarHuespedes();
+	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
+	        var huesped = huespedes.Single(x => x.Id == huespedId);
+
+	        huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
         }
 
         [Test]
@@ -115,6 +154,23 @@ namespace Api.IntegrationTests
             return habitacionesDTO.First().CamasIndividuales.First().Id;
         }
 
+        private async Task<int> CrearHuesped()
+        {
+	        var body = new HuespedDTO
+	        {
+		        NombreCompleto = "Juan Carlos Papafritarika",
+		        DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte,
+		        Email = _datosMinimosDeUnHuesped.Email,
+		        Telefono = _datosMinimosDeUnHuesped.Telefono,
+            };
+
+	        await _httpClient.PostAsJsonAsync(ENDPOINT_HUESPEDES, body);
+	        var huespedesDtos = await (await _httpClient.GetAsync(ENDPOINT_HUESPEDES)).Content
+		        .ReadAsAsync<IEnumerable<HuespedDTO>>();
+
+	        return huespedesDtos.First().Id;
+        }
+
         private async Task<HttpResponseMessage> CrearReserva(int camaId, DateTime desde, DateTime hasta)
         {
             var body = new ReservaDTO
@@ -131,6 +187,11 @@ namespace Api.IntegrationTests
         private async Task<HttpResponseMessage> ListarReservasMensuales(int anio, int mes)
         {
             return await _httpClient.GetAsync(ENDPOINT + $"/mensuales?mes={mes}&anio={anio}");
+        }
+
+        private async Task<HttpResponseMessage> ListarHuespedes()
+        {
+	        return await _httpClient.GetAsync(ENDPOINT_HUESPEDES);
         }
 
         private async Task<HttpResponseMessage> ListarReservasActuales()

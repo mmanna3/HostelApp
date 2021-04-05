@@ -28,6 +28,15 @@ namespace Api.Controllers
             return huespedesDTO;
         }
 
+        [HttpGet, Route("{id}")]
+        public async Task<HuespedDTO> ObtenerPorId(int id)
+        {
+	        var modelo = await _service.ObtenerPorId(id);
+	        var dto = _mapper.Map<HuespedDTO>(modelo);
+
+	        return dto;
+        }
+
         [HttpPost]
         public async Task<int> Crear([FromBody] HuespedDTO dto)
         {

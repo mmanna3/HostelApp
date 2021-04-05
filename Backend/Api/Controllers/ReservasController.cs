@@ -15,12 +15,14 @@ namespace Api.Controllers
     public class ReservasController : ApiAutenticadoController
     {
         private readonly IReservaService _service;
+        private readonly IHuespedService _huespedService;
         private readonly IMapper _mapper;
 
-        public ReservasController(IMapper mapper, IReservaService service)
+        public ReservasController(IMapper mapper, IReservaService service, IHuespedService huespedService)
         {
             _mapper = mapper;
             _service = service;
+            _huespedService = huespedService;
         }
 
         //[HttpGet]
@@ -84,9 +86,23 @@ namespace Api.Controllers
 				throw new AppException("Se debe reservar al menos una noche");
 
 			var reserva = _mapper.Map<Reserva>(dto);
-            var id = await _service.Crear(reserva);
+
+			await SiElHuespedYaExisteModificarlo(reserva);
+
+			var id = await _service.Crear(reserva);
 
             return id;
+        }
+
+        private async Task SiElHuespedYaExisteModificarlo(Reserva reserva)
+        {
+	        var huesped = await _huespedService.ObtenerPorDniOPasaporte(reserva.Huesped.DniOPasaporte);
+	        if (huesped != null)
+	        {
+		        await _huespedService.ModificarAsync(huesped.Id, reserva.Huesped);
+		        reserva.Huesped = null;
+		        reserva.HuespedId = huesped.Id;
+            }
         }
 
         [HttpGet, Route("{id}")]

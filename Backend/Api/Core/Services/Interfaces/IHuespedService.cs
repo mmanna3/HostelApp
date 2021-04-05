@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs.Habitacion;
 using Api.Core.Models;
 
 namespace Api.Core.Services.Interfaces
@@ -9,5 +8,8 @@ namespace Api.Core.Services.Interfaces
     {
         Task<IEnumerable<Huesped>> ListAsync();
         Task<int> CreateAsync(Huesped huesped);
+        Task<Huesped> ObtenerPorId(int id);
+        Task<Huesped> ObtenerPorDniOPasaporte(string dniOPasaporte);
+        Task ModificarAsync(int id, Huesped habitacion);
     }
 }

@@ -35,7 +35,9 @@ o la IP que sea
 
 Si querés borrar la última sin aplicar, ejecutar:
 
-**dotnet ef migrations remove**
+**Consola:** dotnet ef migrations remove
+
+**NugetConsole:** remove-migration
 
 Si querés borrar la última aplicada, tenés que revertir la base a la migración anterior y después sí borrarla.
 

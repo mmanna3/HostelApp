@@ -10,6 +10,9 @@ namespace Api.Core.Models
         public Huesped Huesped { get; set; }
 
         [Required]
+        public int HuespedId { get; set; }
+
+        [Required]
         public ICollection<ReservaCama> ReservaCamas { get; set; }
 
         [Required]

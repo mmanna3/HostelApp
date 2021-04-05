@@ -7,30 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Persistence.Repositories
 {
-    public class HuespedRepository : BaseRepository, IHuespedRepository
+    public class HuespedRepository : ABMRepository<Huesped>, IHuespedRepository
     {
         public HuespedRepository(AppDbContext context) : base(context)
         {
         }
 
-        public async Task<IEnumerable<Huesped>> ListAsync()
+        public async Task<Huesped> ObtenerPorDniOPasaporte(string dniOPasaporte)
         {
-            return await _context.Huespedes.ToListAsync();
-        }
-
-        public void Create(Huesped huesped)
-        {
-            _context.Huespedes.Add(huesped);
-        }
-
-        public async Task<Huesped> FindByIdAsync(int id)
-        {
-            return await _context.Huespedes.FindAsync(id);
-        }
-
-        public void Modify(Huesped old, Huesped current)
-        {
-            _context.Entry(old).CurrentValues.SetValues(current);
+	        return await _context.Huespedes.SingleOrDefaultAsync(x => x.DniOPasaporte == dniOPasaporte);
         }
     }
 }
