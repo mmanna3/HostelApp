@@ -111,11 +111,28 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   }
 
   return (
-    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="680px">
+    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="900px">
       <Header title="Alta de reserva" onHide={hide} />
       <Body minHeight="460px">
         <ValidationSummary errors={errores} />
-        <Input label="Huésped" name="aNombreDe" />
+
+        <div className="columns">
+          <div className="column is-one-third">
+            <Input label="DNI o Pasaporte" name="DatosMinimosDeHuesped.DNIOPasaporte" />
+          </div>
+          <div className="column">
+            <Input label="Nombre completo" name="DatosMinimosDeHuesped.NombreCompleto" />
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column">
+            <Input label="Teléfono" name="DatosMinimosDeHuesped.Telefono" />
+          </div>
+          <div className="column">
+            <Input label="Email" name="DatosMinimosDeHuesped.Email" />
+          </div>
+        </div>
+
         <DateRangePicker
           actualizarValor={actualizarDesdeHasta}
           etiqueta="Check in - Check out"
