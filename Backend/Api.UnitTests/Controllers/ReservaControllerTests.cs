@@ -127,6 +127,31 @@ namespace Api.UnitTests.Controllers
             primeraReserva.CamasIds.Skip(1).First().Should().Be(2);
         }
 
+        [Test]
+        public void MapeaCorrectamenteElHuesped_DeModelADTO()
+        {
+	        var reserva = new Reserva
+	        {
+		        PrimeraNoche = new DateTime(2020, 07, 17),
+		        UltimaNoche = new DateTime(2021, 1, 2),
+		        ReservaCamas = new List<ReservaCama>(),
+		        Huesped = new Huesped
+		        {
+			        NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto, 
+			        DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte, 
+			        Telefono = _datosMinimosDeUnHuesped.Telefono, 
+			        Email = _datosMinimosDeUnHuesped.Email
+		        }
+            };
+
+	        var reservaDTO = _mapper.Map<ReservaDTO>(reserva);
+
+	        reservaDTO.DatosMinimosDeHuesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        reservaDTO.DatosMinimosDeHuesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        reservaDTO.DatosMinimosDeHuesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        reservaDTO.DatosMinimosDeHuesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+        }
+
         private void DadaUnaListaDeReservas()
         {
             _unaListaDeReservas = new List<Reserva>();

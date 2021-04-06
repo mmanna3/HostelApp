@@ -49,6 +49,18 @@ namespace Api.UnitTests.Repositories
         }
 
         [Test]
+        public async Task ObtenerPorId_Devuelve_ElHuesped()
+        {
+	        var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
+	        var reserva = await _repository.ObtenerPorId(reservaId);
+
+	        reserva.Huesped.DniOPasaporte.Should().Be(_huesped.DniOPasaporte);
+	        reserva.Huesped.NombreCompleto.Should().Be(_huesped.NombreCompleto);
+	        reserva.Huesped.Email.Should().Be(_huesped.Email);
+	        reserva.Huesped.Telefono.Should().Be(_huesped.Telefono);
+        }
+
+        [Test]
         public async Task ListarMensuales_ListaReservaQueContieneDiasDelMes_MesesConsecutivos()
         {
             var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
