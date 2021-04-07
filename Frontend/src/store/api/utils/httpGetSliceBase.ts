@@ -29,6 +29,33 @@ export const createSlice = (nombre: string): Slice =>
     },
   });
 
+const initialStateObtenerPorId = {
+  estado: ESTADO.inactivo,
+  datos: null,
+};
+
+export const createSliceObtenerPorId = (nombre: string): Slice =>
+  createSliceRTK({
+    name: nombre,
+    initialState: initialStateObtenerPorId,
+    reducers: {
+      fetchInit: (state): void => {
+        state.estado = ESTADO.cargando;
+      },
+      fetchSuccess: (state, { payload }): void => {
+        state.datos = payload;
+        state.estado = ESTADO.exitoso;
+      },
+      fetchFailure: (state): void => {
+        state.estado = ESTADO.huboError;
+      },
+      reset: (state): void => {
+        state.estado = ESTADO.inactivo;
+        state.datos = null;
+      },
+    },
+  });
+
 export function fetchFunc<T>(
   endpoint: string,
   actions: any,

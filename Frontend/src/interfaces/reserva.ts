@@ -1,4 +1,5 @@
 import { CamaDTO } from './habitacion';
+import { DatosMinimosDeHuespedDTO } from './huesped';
 
 export interface ReservasDelPeriodoDTO {
   desde: string;
@@ -10,8 +11,16 @@ export interface ReservaResumenDTO {
   id: number;
   diaDeCheckin: number;
   diaDeCheckout: number;
-  aNombreDe: string;
   camasIds: number[];
+}
+
+export interface ReservaDTO {
+  id: number;
+  datosMinimosDeHuesped: DatosMinimosDeHuespedDTO;
+  diaDeCheckin: number;
+  diaDeCheckout: number;
+  camasIds: number[];
+  CamasDeHabitacionesPrivadasIds: number[];
 }
 
 export interface CheckoutsDeHoyDTO {

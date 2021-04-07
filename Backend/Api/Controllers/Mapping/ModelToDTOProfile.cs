@@ -94,6 +94,10 @@ namespace Api.Controllers.Mapping
 		            dest => dest.DiaDeCheckout,
 		            opt => opt.MapFrom(src => src.UltimaNoche)
 	            )
+	            .ForMember(
+		            dest => dest.DiaDeCheckin,
+		            opt => opt.MapFrom(src => src.PrimeraNoche)
+	            )
                 .ForMember(
                     dest => dest.CamasIds,
                     opt => opt.MapFrom(src => src.ReservaCamas.Select(x => x.CamaId))

@@ -2,6 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import {
   createSlice as createGetSlice,
+  createSliceObtenerPorId,
   fetchFunc,
   fetchFuncConParams,
   obtenerPorIdFunc,
@@ -75,7 +76,7 @@ export function generarSliceHttpGetConParams<TResultado, TParametros>(
 }
 
 export function generarSliceObtenerPorId<T>(requestSlice: IApiSliceInfo): ISliceObtenerPorId {
-  const slice = createGetSlice(requestSlice.nombreDelSlice);
+  const slice = createSliceObtenerPorId(requestSlice.nombreDelSlice);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 

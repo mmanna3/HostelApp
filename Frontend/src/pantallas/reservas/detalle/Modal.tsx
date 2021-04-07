@@ -4,7 +4,7 @@ import Display from 'components/display/Display';
 import api from 'store/api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
-import { ReservaResumenDTO } from 'interfaces/reserva';
+import { ReservaDTO } from 'interfaces/reserva';
 
 interface IProps {
   onHide: () => any;
@@ -14,7 +14,7 @@ interface IProps {
 const Detalle = ({ onHide, id }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.obtenerPorId.selector) as {
-    datos: ReservaResumenDTO;
+    datos: ReservaDTO;
     estado: ESTADO;
   };
 
@@ -29,13 +29,13 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     dispatch(api.reservas.obtenerPorId.reiniciar());
   }
 
-  return (
-    <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
+  return id !== null && estado === ESTADO.exitoso && datos !== null ? (
+    <Modal isVisible={true} onHide={ocultar}>
       <Header title="Detalle de reserva" onHide={ocultar} />
       <Body>
         <div className="columns">
           <div className="column">
-            <Display label="Nombre" valor={datos.aNombreDe} />
+            <Display label="Nombre" valor={datos.datosMinimosDeHuesped.nombreCompleto} />
           </div>
           <div className="column">
             <Display label="Desde" valor={datos.diaDeCheckin} />
@@ -47,6 +47,8 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
       </Body>
       <FooterVolver onClick={ocultar} />
     </Modal>
+  ) : (
+    <></>
   );
 };
 
