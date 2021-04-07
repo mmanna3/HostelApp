@@ -47,5 +47,10 @@ namespace Api.Persistence.Repositories
                 .Where(x => x.UltimaNoche == DateTime.Today.AddDays(-1))
                 .ToListAsync();
         }
+
+        public virtual async Task<Reserva> ObtenerPorId(int id)
+        {
+	        return await _context.Set<Reserva>().Include(x => x.Huesped).SingleOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
