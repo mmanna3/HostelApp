@@ -3,7 +3,6 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-
 // // Set your brand colors
 // $purple: #8A4D76;
 // $pink: #FA7C91;
@@ -37,22 +36,22 @@
 // @import "../node_modules/bulma/sass/layout/hero.sass";
 // @import "../node_modules/bulma/sass/layout/section.sass";
 
-$azul-marino:#001f3f;
-$azul: #0074D9;
-$celeste: #7FDBFF;
-$verde-agua:#39CCCC;
-$verde-oliva: #3D9970;
-$verde: #2ECC40;
-$verde-lima: #01FF70;
-$amarillo: #FFDC00;
-$naraja: #FF851B;
-$rojo: #FF4136;
+$azul-marino: #001f3f;
+$azul: #0074d9;
+$celeste: #7fdbff;
+$verde-agua: #39cccc;
+$verde-oliva: #3d9970;
+$verde: #2ecc40;
+$verde-lima: #01ff70;
+$amarillo: #ffdc00;
+$naraja: #ff851b;
+$rojo: #ff4136;
 $bordo: #85144b;
-$fucsia: #F012BE;
-$purpura: #B10DC9;
+$fucsia: #f012be;
+$purpura: #b10dc9;
 $negro: #111111;
-$gris: #AAAAAA;
-$plateado: #DDDDDD;
+$gris: #aaaaaa;
+$plateado: #dddddd;
 
 $blue: #3260a8; //Probar con más azules
 $primary: $blue;
@@ -64,57 +63,72 @@ $primary: $blue;
 /* INICIO: DateRangePicker */
 
 .react-daterange-picker__calendar--open {
-    z-index: 9;
-    top: 0px !important;
-    left: 280px !important;
+  z-index: 9;
+  top: 0px !important;
+  left: 280px !important;
 }
 
 abbr {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 
-.react-calendar__tile--active,.react-calendar__tile--rangeEnd {
-    background: $blue;
-    color: white !important;
+.react-calendar__tile--active,
+.react-calendar__tile--rangeEnd {
+  background: $blue;
+  color: white !important;
 }
 
-.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus, .react-calendar__tile--hasActive:enabled:hover {
-    background: #006edc !important;    
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus,
+.react-calendar__tile--hasActive:enabled:hover {
+  background: #006edc !important;
 }
 
 .react-calendar__month-view__days__day--weekend {
-    color: $blue;
+  color: $blue;
 }
 
 /* FIN: DateRangePicker */
 
 .botonera {
-    height: 30px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+  height: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 /*Inicio Scroll*/
 
 ::-webkit-scrollbar {
-    width: 16px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
-    border-radius: 7px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #ccc; 
-    border-radius: 7px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: $primary; 
-  }
+  width: 16px;
+}
 
-  /*Fin Scroll*/
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 7px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary;
+}
+
+/*Fin Scroll*/
+
+/* INICIO: Le saca las flechitas a los inputs type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+/* FIN: Le saca las flechitas a los inputs type number */
