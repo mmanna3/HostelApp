@@ -37,6 +37,15 @@ namespace Api.Controllers
 	        return dto;
         }
 
+        [HttpGet, Route("{dniopasaporte}")]
+        public async Task<HuespedDTO> ObtenerPorDniOPasaporte(string dniOPasaporte)
+        {
+	        var modelo = await _service.ObtenerPorDniOPasaporte(dniOPasaporte);
+	        var dto = _mapper.Map<HuespedDTO>(modelo);
+
+	        return dto;
+        }
+
         [HttpPost]
         public async Task<int> Crear([FromBody] HuespedDTO dto)
         {
