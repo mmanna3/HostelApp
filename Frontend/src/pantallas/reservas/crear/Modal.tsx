@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
-import { Input } from 'components/Input';
 import { Button } from 'components/botones/botones';
 import Label from 'components/Label';
 import ValidationSummary from 'components/ValidationSummary';
