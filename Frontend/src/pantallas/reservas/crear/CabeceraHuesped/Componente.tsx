@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Input, NumericInput } from 'components/Input';
+import { Input, InputConBoton } from 'components/Input';
 // import Display from 'components/display/Display';
 
 const CabeceraHuesped = (): ReactElement => {
@@ -7,7 +7,13 @@ const CabeceraHuesped = (): ReactElement => {
     <>
       <div className="columns">
         <div className="column is-one-third">
-          <NumericInput label="DNI o Pasaporte" name="DatosMinimosDeHuesped.DNIOPasaporte" />
+          <InputConBoton
+            label="DNI o Pasaporte"
+            textoDelBoton="Buscar"
+            callback={(): void => console.log(1)}
+            name="DatosMinimosDeHuesped.DNIOPasaporte"
+            type="number"
+          />
         </div>
         <div className="column">
           <Input readOnly label="Nombre completo" name="DatosMinimosDeHuesped.NombreCompleto" />
@@ -15,10 +21,10 @@ const CabeceraHuesped = (): ReactElement => {
       </div>
       <div className="columns">
         <div className="column">
-          <NumericInput readOnly label="Teléfono" name="DatosMinimosDeHuesped.Telefono" />
+          <Input readOnly label="Teléfono" name="DatosMinimosDeHuesped.Telefono" type="number" />
         </div>
         <div className="column">
-          <NumericInput readOnly label="Email" name="DatosMinimosDeHuesped.Email" />
+          <Input readOnly label="Email" name="DatosMinimosDeHuesped.Email" type="number" />
         </div>
       </div>
     </>
