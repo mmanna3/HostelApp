@@ -13,7 +13,7 @@ interface IProps {
 
 const Detalle = ({ onHide, id }: IProps): ReactElement => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(api.reservas.obtenerPorId.selector) as {
+  const { datos } = useSelector(api.reservas.obtenerPorId.selector) as {
     datos: ReservaDTO;
     estado: ESTADO;
   };
@@ -29,7 +29,9 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     dispatch(api.reservas.obtenerPorId.reiniciar());
   }
 
-  return id !== null && estado === ESTADO.exitoso && datos !== null ? (
+  // Estaría bueno que haya un spinner que bloquee la pantalla y opere según el estado
+
+  return datos !== null ? (
     <Modal isVisible={true} onHide={ocultar}>
       <Header title="Detalle de reserva" onHide={ocultar} />
       <Body>
