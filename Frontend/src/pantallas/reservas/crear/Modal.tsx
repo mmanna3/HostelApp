@@ -12,6 +12,7 @@ import Renglon from './Renglon/Renglon';
 import Estilos from './Modal.module.scss';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { RenglonData } from './Renglon/RenglonDataClass';
+import CabeceraHuesped from './CabeceraHuesped/Componente';
 
 interface IParams {
   isVisible: boolean;
@@ -116,22 +117,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
       <Body minHeight="460px">
         <ValidationSummary errors={errores} />
 
-        <div className="columns">
-          <div className="column is-one-third">
-            <Input label="DNI o Pasaporte" name="DatosMinimosDeHuesped.DNIOPasaporte" />
-          </div>
-          <div className="column">
-            <Input label="Nombre completo" name="DatosMinimosDeHuesped.NombreCompleto" />
-          </div>
-        </div>
-        <div className="columns">
-          <div className="column">
-            <Input label="Teléfono" name="DatosMinimosDeHuesped.Telefono" />
-          </div>
-          <div className="column">
-            <Input label="Email" name="DatosMinimosDeHuesped.Email" />
-          </div>
-        </div>
+        <CabeceraHuesped />
 
         <DateRangePicker
           actualizarValor={actualizarDesdeHasta}
