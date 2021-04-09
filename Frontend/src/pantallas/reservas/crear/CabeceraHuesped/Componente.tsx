@@ -15,6 +15,9 @@ const CabeceraHuesped = (): ReactElement => {
             type="number"
           />
         </div>
+        <div className="column"></div>
+      </div>
+      <div className="columns">
         <div className="column">
           <Input readOnly label="Nombre completo" name="DatosMinimosDeHuesped.NombreCompleto" />
         </div>
