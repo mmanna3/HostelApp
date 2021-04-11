@@ -28,7 +28,7 @@ namespace Api.Controllers
             return huespedesDTO;
         }
 
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("obtener")]
         public async Task<HuespedDTO> ObtenerPorId(int id)
         {
 	        var modelo = await _service.ObtenerPorId(id);

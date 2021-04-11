@@ -13,6 +13,7 @@ interface ISliceHttpGetGenerado<TParametros = {}> {
   selector: (state: any) => any;
   reducer: any;
   invocar: (parametros?: TParametros) => any;
+  reiniciar: () => void;
 }
 
 interface ISliceHttpPost<TPostBody> {
@@ -32,12 +33,17 @@ interface ISliceObtenerPorId {
 export interface IApiSliceInfo {
   nombreDelSlice: string;
   endpoint: string;
+  dataInicial: any[] | null;
+}
+
+export interface IObtenerPorIdParams {
+  id: number;
 }
 
 export function generarSliceHttpGet<TResultado, TParametros = {}>(
   requestSlice: IApiSliceInfo
 ): ISliceHttpGetGenerado<TParametros> {
-  const slice = createGetSlice(requestSlice.nombreDelSlice);
+  const slice = createGetSlice(requestSlice.nombreDelSlice, requestSlice.dataInicial);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
@@ -45,10 +51,15 @@ export function generarSliceHttpGet<TResultado, TParametros = {}>(
     return fetchFunc<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
   }
 
+  function reiniciar(): (dispatch: Dispatch) => void {
+    return reiniciarEstado(slice.actions);
+  }
+
   return {
     selector,
     reducer,
     invocar,
+    reiniciar,
   };
 }
 

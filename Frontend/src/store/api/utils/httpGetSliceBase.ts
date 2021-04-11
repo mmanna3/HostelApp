@@ -2,13 +2,13 @@ import { createSlice as createSliceRTK, Slice, Dispatch } from '@reduxjs/toolkit
 import axios, { AxiosResponse } from 'axios';
 import { EstadosApiRequestEnum as ESTADO } from './estadosApiRequestEnum';
 
-const initialState = {
-  estado: ESTADO.inactivo,
-  datos: [],
-};
+export const createSlice = (nombre: string, dataInicial: any[] | null): Slice => {
+  const initialState = {
+    estado: ESTADO.inactivo,
+    datos: dataInicial,
+  };
 
-export const createSlice = (nombre: string): Slice =>
-  createSliceRTK({
+  return createSliceRTK({
     name: nombre,
     initialState,
     reducers: {
@@ -24,11 +24,11 @@ export const createSlice = (nombre: string): Slice =>
       },
       reset: (state): void => {
         state.estado = ESTADO.inactivo;
-        state.datos = [];
+        state.datos = dataInicial;
       },
     },
   });
-
+};
 const initialStateObtenerPorId = {
   estado: ESTADO.inactivo,
   datos: null,

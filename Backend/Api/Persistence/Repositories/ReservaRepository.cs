@@ -48,7 +48,7 @@ namespace Api.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public virtual async Task<Reserva> ObtenerPorId(int id)
+        public override async Task<Reserva> ObtenerPorId(int id)
         {
 	        return await _context.Set<Reserva>().Include(x => x.Huesped).SingleOrDefaultAsync(x => x.Id == id);
         }

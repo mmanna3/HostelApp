@@ -19,7 +19,7 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
   };
 
   const fetchData = useCallback((): any => {
-    if (id !== null) dispatch(api.reservas.obtenerPorId.invocar(id));
+    if (id !== null) dispatch(api.reservas.obtenerPorId.invocar({ id }));
   }, [dispatch, id]);
 
   useEffect((): any => fetchData(), [fetchData]);

@@ -4,6 +4,7 @@ import { AutenticarDTO } from 'interfaces/usuario';
 const autenticarSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'autenticarUsuario',
   endpoint: '/usuarios/autenticar',
+  dataInicial: null,
 };
 
 const autenticar = {

@@ -105,7 +105,7 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("obtener")]
         public async Task<ReservaDTO> ObtenerPorId(int id)
         {
 	        var reserva = await _service.ObtenerPorId(id);

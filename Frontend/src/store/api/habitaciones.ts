@@ -14,21 +14,25 @@ interface ILugaresLibresParams {
 const listarSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'habitaciones',
   endpoint: '/habitaciones',
+  dataInicial: [],
 };
 
 const obtenerPorIdSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'obtenerHabitacionPorId',
   endpoint: '/habitaciones',
+  dataInicial: null,
 };
 
 const listarConLugaresLibresSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'habitacionesConLugaresLibres',
   endpoint: '/habitaciones/conLugaresLibres',
+  dataInicial: [],
 };
 
 const crearSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'crearHabitacion',
   endpoint: '/habitaciones',
+  dataInicial: null,
 };
 
 const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
