@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Input, InputConBoton } from 'components/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -12,6 +12,11 @@ const CabeceraHuesped = (): ReactElement => {
     datos: DatosMinimosDeHuespedDTO;
     estado: EstadosApiRequestEnum;
   };
+  const [camposEditables, togglearCamposEditables] = React.useState(false);
+
+  useEffect((): void => {
+    if (estado === EstadosApiRequestEnum.exitoso) togglearCamposEditables(true);
+  }, [estado]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
@@ -66,7 +71,7 @@ const CabeceraHuesped = (): ReactElement => {
       <div className="columns">
         <div className="column">
           <Input
-            readOnly
+            readOnly={!camposEditables}
             label="Nombre completo"
             name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={datos?.nombreCompleto}
@@ -76,7 +81,7 @@ const CabeceraHuesped = (): ReactElement => {
       <div className="columns">
         <div className="column">
           <Input
-            readOnly
+            readOnly={!camposEditables}
             label="Teléfono"
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
@@ -84,7 +89,7 @@ const CabeceraHuesped = (): ReactElement => {
           />
         </div>
         <div className="column">
-          <Input readOnly label="Email" name="DatosMinimosDeHuesped.Email" defaultValue={datos?.email} />
+          <Input readOnly={!camposEditables} label="Email" name="DatosMinimosDeHuesped.Email" defaultValue={datos?.email} />
         </div>
       </div>
     </>

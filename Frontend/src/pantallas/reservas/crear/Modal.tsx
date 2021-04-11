@@ -33,6 +33,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     actualizarDesdeHasta([new Date(), new Date()]);
     onSuccessfulSubmit();
     resetForm(resetOnChanged + 1);
+    dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
   const onSubmit = (data: any): any => dispatch(api.reservas.crear.invocar(data, onSuccess));
