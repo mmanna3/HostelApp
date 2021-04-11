@@ -10,10 +10,10 @@ import {
 } from 'store/api/utils/httpGetSliceBase';
 import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/api/utils/httpPostSliceBase';
 
-interface ISliceHttpGetGenerado {
+interface ISliceHttpGetGenerado<TParametros = {}> {
   selector: (state: any) => any;
   reducer: any;
-  invocar: () => any;
+  invocar: (parametros?: TParametros) => any;
 }
 
 interface ISliceHttpGetConParametros<TParametros> {
@@ -41,13 +41,15 @@ export interface IApiSliceInfo {
   endpoint: string;
 }
 
-export function generarSliceHttpGet<T>(requestSlice: IApiSliceInfo): ISliceHttpGetGenerado {
+export function generarSliceHttpGet<TResultado, TParametros = {}>(
+  requestSlice: IApiSliceInfo
+): ISliceHttpGetGenerado<TParametros> {
   const slice = createGetSlice(requestSlice.nombreDelSlice);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
-  function invocar(): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
-    return fetchFunc<T>(requestSlice.endpoint, slice.actions);
+  function invocar(parametros?: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
+    return fetchFunc<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
   }
 
   return {

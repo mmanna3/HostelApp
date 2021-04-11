@@ -1,7 +1,6 @@
 import {
   IApiSliceInfo,
   generarSliceHttpGet,
-  generarSliceHttpGetConParams,
   generarSliceHttpPost,
   generarSliceObtenerPorId,
 } from './utils/generadorDeSlicesParaRequest';
@@ -42,7 +41,7 @@ const listarActuales = { ...generarSliceHttpGet<ReservaResumenDTO[]>(listarActua
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
 const listarMensuales = {
-  ...generarSliceHttpGetConParams<ReservaResumenDTO[], IListarMensualesParams>(listarMensualesSliceInfo),
+  ...generarSliceHttpGet<ReservaResumenDTO[], IListarMensualesParams>(listarMensualesSliceInfo),
 };
 
 const crear = {

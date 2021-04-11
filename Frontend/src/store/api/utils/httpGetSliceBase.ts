@@ -56,18 +56,29 @@ export const createSliceObtenerPorId = (nombre: string): Slice =>
     },
   });
 
-export function fetchFunc<T>(
+export function fetchFunc<TResultado, TParametros>(
   endpoint: string,
   actions: any,
+  parametros?: TParametros,
   onSuccessCallback?: () => void
-): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
+): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
   const { fetchInit, fetchSuccess, fetchFailure } = actions;
+
+  var parametrosUrl = '';
+  if (parametros) {
+    Object.keys(parametros).forEach(function (key: string): void {
+      parametrosUrl += `&${key}=${(parametros as any)[key]}`;
+    });
+
+    parametrosUrl = parametrosUrl.substring(1);
+    parametrosUrl = '?'.concat(parametrosUrl);
+  }
 
   const funcionAsincronica = async (dispatch: Dispatch): Promise<any> => {
     dispatch(fetchInit());
 
     axios
-      .get<T[]>('/api' + endpoint)
+      .get<TResultado[]>(`/api${endpoint}${parametrosUrl}`)
       .then((res): void => {
         dispatch(fetchSuccess(res.data));
         typeof onSuccessCallback === 'function' && onSuccessCallback();
