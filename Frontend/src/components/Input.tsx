@@ -7,7 +7,7 @@ interface InputProps extends InputWithoutLabelProps {
 
 interface InputConBotonProps extends InputProps {
   textoDelBoton: string;
-  callback: (valor: string) => any;
+  onClick: (valor: string) => any;
 }
 
 interface InputWithoutLabelProps {
@@ -39,19 +39,31 @@ export function InputConBoton({
   label = '',
   name,
   textoDelBoton,
-  callback,
+  onClick,
   type,
   ...otrosAtributos
 }: InputConBotonProps): ReactElement {
+  const [valor, actualizarValor] = React.useState('');
+
   return (
     <>
       <label className="label">{label}</label>
       <div className="field has-addons">
         <div className="control">
-          <input className="input" type={type} name={name} ref={register} {...otrosAtributos} />
+          <input
+            className="input"
+            type={type}
+            name={name}
+            ref={register}
+            defaultValue={valor}
+            onChange={(e: any): void => {
+              actualizarValor(e.target.value);
+            }}
+            {...otrosAtributos}
+          />
         </div>
         <div className="control">
-          <Button text={textoDelBoton} onClick={callback} />
+          <Button text={textoDelBoton} onClick={(): void => onClick(valor)} />
         </div>
       </div>
     </>

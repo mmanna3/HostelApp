@@ -16,8 +16,12 @@ const HuespedesPage = () => {
 
   const columnas = [
     {
+      Header: 'DNI o Pasaporte',
+      accessor: 'dniOPasaporte',
+    },
+    {
       Header: 'Nombre',
-      accessor: 'nombre',
+      accessor: 'nombreCompleto',
     },
   ];
 

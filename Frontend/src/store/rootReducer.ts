@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
 
   huespedes: api.huespedes.listar.reducer,
   crearHuesped: api.huespedes.crear.reducer,
+  obtenerHuespedPorDniOPasaporte: api.huespedes.obtenerPorDniOPasaporte.reducer,
 
   tablaDeReservas: tablaDeReservas,
 

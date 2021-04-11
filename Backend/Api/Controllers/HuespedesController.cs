@@ -37,7 +37,7 @@ namespace Api.Controllers
 	        return dto;
         }
 
-        [HttpGet, Route("{dniopasaporte}")]
+        [HttpGet, Route("obtenerPorDniOPasaporte")]
         public async Task<HuespedDTO> ObtenerPorDniOPasaporte(string dniOPasaporte)
         {
 	        var modelo = await _service.ObtenerPorDniOPasaporte(dniOPasaporte);

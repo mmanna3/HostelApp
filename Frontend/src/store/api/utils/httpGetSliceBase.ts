@@ -16,6 +16,7 @@ export const createSlice = (nombre: string, dataInicial: any[] | null): Slice =>
         state.estado = ESTADO.cargando;
       },
       fetchSuccess: (state, { payload }): void => {
+        if (payload === '') payload = dataInicial;
         state.datos = payload;
         state.estado = ESTADO.exitoso;
       },
