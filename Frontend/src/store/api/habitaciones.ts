@@ -1,7 +1,6 @@
 import {
   IApiSliceInfo,
   generarSliceHttpGet,
-  generarSliceHttpGetConParams,
   generarSliceHttpPost,
   generarSliceObtenerPorId,
 } from './utils/generadorDeSlicesParaRequest';
@@ -34,7 +33,7 @@ const crearSliceInfo: IApiSliceInfo = {
 
 const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
 const listarConLugaresLibres = {
-  ...generarSliceHttpGetConParams<HabitacionDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
+  ...generarSliceHttpGet<HabitacionDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
 };
 const obtenerPorId = { ...generarSliceObtenerPorId<HabitacionDTO>(obtenerPorIdSliceInfo) };
 const crear = {

@@ -4,7 +4,6 @@ import {
   createSlice as createGetSlice,
   createSliceObtenerPorId,
   fetchFunc,
-  fetchFuncConParams,
   obtenerPorIdFunc,
   reiniciarEstado,
 } from 'store/api/utils/httpGetSliceBase';
@@ -14,12 +13,6 @@ interface ISliceHttpGetGenerado<TParametros = {}> {
   selector: (state: any) => any;
   reducer: any;
   invocar: (parametros?: TParametros) => any;
-}
-
-interface ISliceHttpGetConParametros<TParametros> {
-  selector: (state: any) => any;
-  reducer: any;
-  invocar: (parametros: TParametros) => any;
 }
 
 interface ISliceHttpPost<TPostBody> {
@@ -50,24 +43,6 @@ export function generarSliceHttpGet<TResultado, TParametros = {}>(
 
   function invocar(parametros?: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
     return fetchFunc<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
-  }
-
-  return {
-    selector,
-    reducer,
-    invocar,
-  };
-}
-
-export function generarSliceHttpGetConParams<TResultado, TParametros>(
-  requestSlice: IApiSliceInfo
-): ISliceHttpGetConParametros<TParametros> {
-  const slice = createGetSlice(requestSlice.nombreDelSlice);
-  const selector = (state: any): any => state[requestSlice.nombreDelSlice];
-  const reducer = slice.reducer;
-
-  function invocar(parametros: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
-    return fetchFuncConParams<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
   }
 
   return {
