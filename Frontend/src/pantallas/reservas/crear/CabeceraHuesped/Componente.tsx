@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { DatosMinimosDeHuespedDTO } from 'interfaces/huesped';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import Label from 'components/Label';
 
 const CabeceraHuesped = (): ReactElement => {
   const dispatch = useDispatch();
@@ -18,11 +19,34 @@ const CabeceraHuesped = (): ReactElement => {
   };
 
   const mensaje = (): ReactElement => {
-    if (estado === EstadosApiRequestEnum.inactivo) return <div>Si el huésped está registrado, traeremos sus datos.</div>;
+    if (estado === EstadosApiRequestEnum.inactivo)
+      return (
+        <>
+          <Label text=""></Label>
+          <div className="notification is-primary is-light">
+            Si el huésped <strong>está registrado</strong>, traeremos sus datos.
+          </div>
+        </>
+      );
 
-    if (datos != null) return <div>El huésped está registrado. De todas formas, podés editar sus datos.</div>;
+    if (datos != null)
+      return (
+        <>
+          <Label text=""></Label>
+          <div className="notification is-success is-light">
+            El huésped está <strong>registrado</strong>. De ser necesario, podés editar sus datos.
+          </div>
+        </>
+      );
 
-    return <div>El huésped NO está registrado. Llená sus datos para registrarlo.</div>;
+    return (
+      <>
+        <Label text=""></Label>
+        <div className="notification is-warning is-light">
+          El huésped <strong>no está registrado</strong>. Llená sus datos para registrarlo.
+        </div>
+      </>
+    );
   };
 
   return (

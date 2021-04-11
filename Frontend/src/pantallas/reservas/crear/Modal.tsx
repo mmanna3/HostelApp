@@ -65,6 +65,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   function hide(): void {
     onHide();
     dispatch(reiniciar());
+    dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
   function onHabitacionChange(indice: number, id: string): void {
