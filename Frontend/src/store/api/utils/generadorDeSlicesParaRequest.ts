@@ -1,12 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import {
-  createSlice as createGetSlice,
-  createSliceObtenerPorId,
-  fetchFunc,
-  obtenerPorIdFunc,
-  reiniciarEstado,
-} from 'store/api/utils/httpGetSliceBase';
+import { createSlice as createGetSlice, fetchFunc, reiniciarEstado } from 'store/api/utils/httpGetSliceBase';
 import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/api/utils/httpPostSliceBase';
 
 interface ISliceHttpGetGenerado<TParametros = {}> {
@@ -20,13 +14,6 @@ interface ISliceHttpPost<TPostBody> {
   selector: (state: any) => any;
   reducer: any;
   invocar: (body: TPostBody, onSuccess: () => void) => any;
-  reiniciar: () => void;
-}
-
-interface ISliceObtenerPorId {
-  selector: (state: any) => any;
-  reducer: any;
-  invocar: (id: number) => any;
   reiniciar: () => void;
 }
 
@@ -49,27 +36,6 @@ export function generarSliceHttpGet<TResultado, TParametros = {}>(
 
   function invocar(parametros?: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
     return fetchFunc<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
-  }
-
-  function reiniciar(): (dispatch: Dispatch) => void {
-    return reiniciarEstado(slice.actions);
-  }
-
-  return {
-    selector,
-    reducer,
-    invocar,
-    reiniciar,
-  };
-}
-
-export function generarSliceObtenerPorId<T>(requestSlice: IApiSliceInfo): ISliceObtenerPorId {
-  const slice = createSliceObtenerPorId(requestSlice.nombreDelSlice);
-  const selector = (state: any): any => state[requestSlice.nombreDelSlice];
-  const reducer = slice.reducer;
-
-  function invocar(id: number): (dispatch: Dispatch) => Promise<AxiosResponse<T>> {
-    return obtenerPorIdFunc<T>(requestSlice.endpoint, id, slice.actions);
   }
 
   function reiniciar(): (dispatch: Dispatch) => void {

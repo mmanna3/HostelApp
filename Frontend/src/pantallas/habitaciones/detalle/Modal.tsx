@@ -15,7 +15,7 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
   const { datos, estado } = useSelector(api.habitaciones.obtenerPorId.selector);
 
   const fetchData = useCallback((): any => {
-    if (id !== null) dispatch(api.habitaciones.obtenerPorId.invocar(id));
+    if (id !== null) dispatch(api.habitaciones.obtenerPorId.invocar({ id }));
   }, [dispatch, id]);
 
   useEffect((): any => fetchData(), [fetchData]);
@@ -38,7 +38,8 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     false: 'Compartida',
   };
 
-  if (estado === ESTADO.exitoso) {
+  if (datos !== null) {
+    debugger;
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
