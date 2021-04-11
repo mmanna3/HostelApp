@@ -58,9 +58,9 @@ namespace Api.IntegrationTests
             var response = await CrearUnaHabitacion();
             var habitacionId = await response.Content.ReadAsAsync<int>();
 
-            var consultarHabitacionesResponse = await _httpClient.GetAsync($"{ENDPOINT}/{habitacionId}");
-            consultarHabitacionesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var habitacion = await consultarHabitacionesResponse.Content.ReadAsAsync<HabitacionDTO>();
+            var obtenerPorIdResponse = await _httpClient.GetAsync($"{ENDPOINT}/obtener?id={habitacionId}");
+            obtenerPorIdResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            var habitacion = await obtenerPorIdResponse.Content.ReadAsAsync<HabitacionDTO>();
 
             habitacion.EsPrivada.Should().BeTrue();
             habitacion.TieneBanio.Should().BeTrue();
