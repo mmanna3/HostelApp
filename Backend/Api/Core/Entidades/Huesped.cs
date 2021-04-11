@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.Core.Models
+namespace Api.Core.Entidades
 {
     public class Huesped : EntidadConId
     {

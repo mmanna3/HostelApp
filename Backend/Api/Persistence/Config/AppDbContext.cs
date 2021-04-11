@@ -1,4 +1,4 @@
-﻿using Api.Core.Models;
+﻿using Api.Core.Entidades;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Persistence.Config

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Api.Core.Models;
+using Api.Core.Entidades;
 
 namespace Api.Core.Services.Interfaces
 {

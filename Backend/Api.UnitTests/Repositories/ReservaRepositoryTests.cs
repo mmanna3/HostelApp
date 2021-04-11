@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Persistence.Repositories;
 using FluentAssertions;
 using NUnit.Framework;

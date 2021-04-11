@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Api.Controllers;
 using Api.Controllers.DTOs.Usuario;
 using Api.Core;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using AutoMapper;
 using FluentAssertions;

@@ -6,7 +6,7 @@ using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.DTOs.Usuario;
 using Api.Core;
 using AutoMapper;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Controllers.Mapping

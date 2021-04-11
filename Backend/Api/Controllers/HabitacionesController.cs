@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs.Habitacion;
 using AutoMapper;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

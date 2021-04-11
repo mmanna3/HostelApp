@@ -3,7 +3,7 @@ using Api.Controllers.DTOs.Usuario;
 using Api.Controllers.Otros;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 

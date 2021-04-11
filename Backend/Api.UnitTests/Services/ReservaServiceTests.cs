@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Api.Core;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Repositories;
 using Api.Core.Services;
 using Api.Core.Services.Interfaces;

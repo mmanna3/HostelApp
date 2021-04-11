@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Api.Config;
 using Api.Core;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Repositories;
 using Api.Core.Services;
 using FluentAssertions;

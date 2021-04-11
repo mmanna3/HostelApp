@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Repositories;
 using Api.Core.Services.Interfaces;
 

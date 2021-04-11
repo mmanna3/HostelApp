@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Api.Core.Models
+namespace Api.Core.Entidades
 {
     public class Habitacion : EntidadConId
     {

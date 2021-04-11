@@ -5,7 +5,7 @@ using Api.Controllers;
 using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Core;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using AutoMapper;
 using FluentAssertions;

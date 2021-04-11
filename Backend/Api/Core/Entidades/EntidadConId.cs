@@ -1,4 +1,4 @@
-﻿namespace Api.Core.Models
+﻿namespace Api.Core.Entidades
 {
     public abstract class EntidadConId
     {

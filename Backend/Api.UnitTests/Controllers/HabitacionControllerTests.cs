@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers;
 using Api.Controllers.DTOs.Habitacion;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using AutoMapper;
 using FluentAssertions;

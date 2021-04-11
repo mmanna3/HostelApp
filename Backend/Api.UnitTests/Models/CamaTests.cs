@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Api.Core.Models;
+using Api.Core.Entidades;
 using FluentAssertions;
 using NUnit.Framework;
 

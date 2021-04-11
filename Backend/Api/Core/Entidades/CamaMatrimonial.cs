@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Api.Core.Models
+namespace Api.Core.Entidades
 {
     public class CamaMatrimonial : Cama
     {
