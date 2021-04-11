@@ -35,7 +35,6 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
   ]);
 
   const onMouseOver = (): void => {
-    console.log(data.id);
     dispatch(seleccionarTodasLasCeldasDeLaReserva(data.id));
   };
 

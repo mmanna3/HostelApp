@@ -20,7 +20,6 @@ const CabeceraHuesped = (): ReactElement => {
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
-    console.log(dniOPasaporte);
   };
 
   const mensaje = (): ReactElement => {
