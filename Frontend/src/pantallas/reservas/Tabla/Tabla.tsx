@@ -9,6 +9,7 @@ import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
 import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO } from 'interfaces/reserva';
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import Detalle from 'pantallas/reservas/detalle/Modal';
+import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;
@@ -133,9 +134,10 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
       <DetalleHabitacion id={idSeleccionadoParaDetalleHabitacion} onHide={ocultarDetalleHabitacion}></DetalleHabitacion>
       <Detalle id={idSeleccionadoParaDetalle} onHide={ocultarDetalleReserva}></Detalle>
       <div className={Estilos.contenedor}>
-        <table className={`table is-hoverable is-bordered is-fullwidth ${Estilos.tabla}`}>
-          <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalleDeHabitacion} />
-          <tbody>{filas}</tbody>
+        <table className={`table is-hoverable is-bordered is-fullwidth`}>
+          <EncabezadoDias fechaInicio={datos.desde} cantidadDeDias={15} />
+          {/* <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalleDeHabitacion} /> */}
+          {/* <tbody>{filas}</tbody> */}
         </table>
       </div>
     </>
