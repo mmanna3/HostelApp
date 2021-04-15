@@ -18,8 +18,8 @@ interface IParams {
 const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const [habitacionesConCamasUnificadas, setHabitacionesConCamasUnificadas] = useState<IHabitacionParaTablaReservas[]>([]);
-  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState<Nullable<number>>(null);
-  const [idSeleccionadoParaDetalleHabitacion, cambiarIdSeleccionadoParaDetalleHabitacion] = useState<Nullable<number>>(null);
+  const [idDetalleReserva, cambiarIdDetalleReserva] = useState<Nullable<number>>(null);
+  const [idDetalleHabitacion, cambiarIdDetalleHabitacion] = useState<Nullable<number>>(null);
 
   useEffect((): void => {
     var _dias: Date[] = obtenerDias(datos.desde, 15);
@@ -34,33 +34,17 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     });
   }, [datos.desde, datos.hasta, datos.reservas, dispatch, habitaciones]);
 
-  function mostrarDetalleDeReserva(id: Nullable<number>): void {
-    cambiarIdSeleccionadoParaDetalle(id);
-  }
-
-  function ocultarDetalleReserva(): void {
-    cambiarIdSeleccionadoParaDetalle(null);
-  }
-
-  function mostrarDetalleDeHabitacion(id: Nullable<number>): void {
-    cambiarIdSeleccionadoParaDetalleHabitacion(id);
-  }
-
-  function ocultarDetalleHabitacion(): void {
-    cambiarIdSeleccionadoParaDetalleHabitacion(null);
-  }
-
   return (
     <>
-      <DetalleHabitacion id={idSeleccionadoParaDetalleHabitacion} onHide={ocultarDetalleHabitacion}></DetalleHabitacion>
-      <DetalleReserva id={idSeleccionadoParaDetalle} onHide={ocultarDetalleReserva}></DetalleReserva>
+      <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleReserva(null)}></DetalleHabitacion>
+      <DetalleReserva id={idDetalleReserva} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleReserva>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth`}>
           <EncabezadoDias fechaInicio={datos.desde} cantidadDeDias={15} />
           <Cuerpo
             habitacionesConCamasUnificadas={habitacionesConCamasUnificadas}
-            mostrarDetalleDeReserva={mostrarDetalleDeReserva}
-            mostrarDetalleDeHabitacion={mostrarDetalleDeHabitacion}
+            mostrarDetalleDeReserva={(id: Nullable<number>): void => cambiarIdDetalleReserva(id)}
+            mostrarDetalleDeHabitacion={(id: Nullable<number>): void => cambiarIdDetalleHabitacion(id)}
           ></Cuerpo>
         </table>
       </div>
