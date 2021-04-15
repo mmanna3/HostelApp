@@ -8,7 +8,7 @@ import { inicializarTabla, insertarReserva } from 'store/app/tablaDeReservas/sli
 import Cuerpo from './Cuerpo/Cuerpo';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
 import Estilos from './Tabla.module.scss';
-import { obtenerCamasIdsYHabitacionesConCamasUnificadas, obtenerDias } from './utils/funcionesUtiles';
+import { calcularCamasIdsYHabitacionesConCamasUnificadas, calcularDiasDeReservasVisibles } from './utils/funcionesUtiles';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;
@@ -22,12 +22,12 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const [idDetalleHabitacion, cambiarIdDetalleHabitacion] = useState<Nullable<number>>(null);
 
   useEffect((): void => {
-    var _dias: Date[] = obtenerDias(datos.desde, 15);
-    var [camasIds, habs] = obtenerCamasIdsYHabitacionesConCamasUnificadas(habitaciones);
+    var dias: Date[] = calcularDiasDeReservasVisibles(datos.desde, 15);
+    var [camasIds, habs] = calcularCamasIdsYHabitacionesConCamasUnificadas(habitaciones);
 
     setHabitacionesConCamasUnificadas(habs);
 
-    dispatch(inicializarTabla(_dias, camasIds));
+    dispatch(inicializarTabla(dias, camasIds));
 
     datos.reservas.forEach((reserva: ReservaResumenDTO): void => {
       dispatch(insertarReserva(reserva));

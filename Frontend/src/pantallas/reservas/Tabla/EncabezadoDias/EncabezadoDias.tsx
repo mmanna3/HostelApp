@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
+import { nombreAbreviadoDelDiaDeLaSemana, nombreAbreviadoDelMes } from 'utils/Fecha';
+import { calcularDiasDeReservasVisibles } from '../utils/funcionesUtiles';
 import Estilos from './EncabezadoDias.module.scss';
-import { nombreAbreviadoDelMes, nombreAbreviadoDelDiaDeLaSemana } from 'utils/Fecha';
-import { obtenerDias } from '../utils/funcionesUtiles';
 
 interface IParams {
   fechaInicio: string;
   cantidadDeDias: number;
 }
 const EncabezadoDias = ({ fechaInicio, cantidadDeDias }: IParams): ReactElement => {
-  const dias = obtenerDias(fechaInicio, cantidadDeDias);
+  const dias = calcularDiasDeReservasVisibles(fechaInicio, cantidadDeDias);
 
   return (
     <thead className="is-bordered">

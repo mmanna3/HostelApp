@@ -2,7 +2,7 @@ import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
 import { convertirADate, sumarDiasALaFecha } from 'utils/Fecha';
 
-export function obtenerDias(fechaInicio: string, cantidadDeDias: number): Date[] {
+export function calcularDiasDeReservasVisibles(fechaInicio: string, cantidadDeDias: number): Date[] {
   var dias: Date[] = [];
   for (let i = 0; i < cantidadDeDias; i++) {
     var nuevaFecha = sumarDiasALaFecha(convertirADate(fechaInicio), i);
@@ -13,7 +13,7 @@ export function obtenerDias(fechaInicio: string, cantidadDeDias: number): Date[]
   return dias;
 }
 
-export function obtenerCamasIdsYHabitacionesConCamasUnificadas(habitaciones: HabitacionDTO[]): any {
+export function calcularCamasIdsYHabitacionesConCamasUnificadas(habitaciones: HabitacionDTO[]): any {
   var camasIds: number[] = [];
   var habitacionesConCamasUnificadas: IHabitacionParaTablaReservas[] = [];
 
