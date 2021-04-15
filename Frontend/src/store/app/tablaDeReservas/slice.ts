@@ -15,7 +15,7 @@ const tablaDeReservasSlice = createSlice({
   initialState,
   reducers: {
     _inicializar: (state, { payload }): void => {
-      state.diaMesArray = payload.diaMesArray;
+      state.diaMesArray = payload.dias;
       state.camasIdsArray = payload.camasIdsArray;
       var celdaInicial: ICeldaInicial = {};
 
@@ -25,8 +25,8 @@ const tablaDeReservasSlice = createSlice({
           estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
         } as ICeldaInfo;
       });
-      payload.diaMesArray.forEach((diaMes: { dia: number }): void => {
-        state.tabla[`${diaMes.dia}`] = celdaInicial;
+      payload.dias.forEach((diaTipoDate: Date): void => {
+        state.tabla[`${diaTipoDate.getDate()}`] = celdaInicial;
       });
     },
     _modificarCelda: (state, { payload }): void => {
@@ -86,9 +86,9 @@ export const {
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
 export default tablaDeReservasSlice.reducer;
 
-export function inicializarTabla(diaMesArray: IDiaMes[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
+export function inicializarTabla(dias: Date[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(_inicializar({ diaMesArray, camasIdsArray }));
+    dispatch(_inicializar({ dias, camasIdsArray }));
   };
 }
 

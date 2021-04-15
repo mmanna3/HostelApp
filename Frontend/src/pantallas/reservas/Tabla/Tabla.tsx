@@ -3,22 +3,16 @@ import Celda from './Celda/Celda';
 import Estilos from './Tabla.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { inicializarTabla, tablaDeReservasSelector, insertarReserva } from 'store/app/tablaDeReservas/slice';
-import Encabezado from './Encabezado/Encabezado';
-import { obtenerAnio, obtenerMes, obtenerDia } from 'utils/Fecha';
 import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
 import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO } from 'interfaces/reserva';
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import Detalle from 'pantallas/reservas/detalle/Modal';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
+import { obtenerDias } from './utils/funcionesUtiles';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;
   habitaciones: HabitacionDTO[];
-}
-
-interface IDiaMes {
-  dia: number;
-  mes: number;
 }
 
 const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
@@ -28,28 +22,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const tablaDeReservas = useSelector(tablaDeReservasSelector);
 
   useEffect((): void => {
-    var _dias: IDiaMes[] = [];
-
-    function calcularDias(): void {
-      var mesDesde = obtenerMes(datos.desde);
-      var mesHasta = obtenerMes(datos.hasta);
-
-      if (mesDesde === mesHasta) {
-        for (let dia = obtenerDia(datos.desde); dia <= obtenerDia(datos.hasta); dia++) {
-          _dias.push({ dia: dia, mes: mesDesde });
-        }
-      } else {
-        var diasDelPrimerMes = new Date(obtenerAnio(datos.desde), obtenerMes(datos.desde), 0).getDate(); //dia 0 es el último día del mes anterior
-        for (let dia = obtenerDia(datos.desde); dia <= diasDelPrimerMes; dia++) {
-          _dias.push({ dia: dia, mes: mesDesde });
-        }
-        for (let dia = 1; dia <= obtenerDia(datos.hasta); dia++) {
-          _dias.push({ dia: dia, mes: mesHasta });
-        }
-      }
-    }
-
-    calcularDias();
+    var _dias: Date[] = obtenerDias(datos.desde, 15);
 
     var camasIdsArray: number[] = [];
     var habs: IHabitacionParaTablaReservas[] = [];
