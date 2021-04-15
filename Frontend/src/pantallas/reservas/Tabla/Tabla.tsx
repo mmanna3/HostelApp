@@ -97,34 +97,36 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   useEffect((): void => {
     let _filas: any = [];
-    var diaDeHoy = new Date().getDate(); // Claramente, cuando seleccionás un mes que no es el actual esto no anda
 
-    tablaDeReservas.diaMesArray.forEach((diaMes): void => {
-      if (diaMes.dia !== diaDeHoy)
-        _filas.push(
-          <tr key={diaMes.dia}>
-            <th className={`has-text-weight-medium ${Estilos.fecha}`}>
-              {diaMes.dia}/{diaMes.mes}
-            </th>
-            {tablaDeReservas.camasIdsArray.map(
-              (id): ReactElement => (
-                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={false} onClick={mostrarDetalleReserva} />
-              )
-            )}
+    habitacionesConCamasUnificadas.forEach((habitacion): void => {
+      _filas.push(
+        <>
+          <tr>
+            <td rowSpan={habitacion.camas.length}>{habitacion.nombre}</td>
+            <td>
+              {habitacion.camas[0].nombre} - {habitacion.camas[0].tipo}
+            </td>
           </tr>
-        );
-      else
-        _filas.push(
-          <tr key={diaMes.dia}>
-            <th className={`has-text-weight-medium ${Estilos.hoy}`}>HOY</th>
-            {tablaDeReservas.camasIdsArray.map(
-              (id): ReactElement => (
-                <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={true} onClick={mostrarDetalleReserva} />
-              )
-            )}
-          </tr>
-        );
+          {habitacion.camas.slice(1).map(
+            (cama, i): ReactElement => (
+              <tr key={i}>
+                <td>
+                  {cama.nombre} - {cama.tipo}
+                </td>
+              </tr>
+            )
+          )}
+        </>
+      );
     });
+
+    {
+      /* {tablaDeReservas.camasIdsArray.map(
+            (id): ReactElement => (
+              <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={false} onClick={mostrarDetalleReserva} />
+            )
+          )} */
+    }
 
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.diaMesArray]);
@@ -136,8 +138,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth`}>
           <EncabezadoDias fechaInicio={datos.desde} cantidadDeDias={15} />
-          {/* <Encabezado habitaciones={habitacionesConCamasUnificadas} mostrarDetalle={mostrarDetalleDeHabitacion} /> */}
-          {/* <tbody>{filas}</tbody> */}
+          <tbody>{filas}</tbody>
         </table>
       </div>
     </>
