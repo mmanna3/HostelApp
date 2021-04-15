@@ -6,7 +6,6 @@ import { Button } from 'components/botones/botones';
 import SelectorDeVista from './SelectorDeVista/Componente';
 import Tabla from './Tabla/Tabla';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
-import CheckoutsDeHoy from './CheckoutsDeHoy/Componente';
 
 const ReservasPage = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ const ReservasPage = () => {
   const [IsModalVisible, setModalVisibility] = useState(false);
 
   const fetchData = useCallback(() => {
-    // dispatch(fetchReservasMensuales(2020, mes));
     dispatch(api.reservas.listarActuales.invocar());
     dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
@@ -65,10 +63,6 @@ const ReservasPage = () => {
       {IsModalVisible && (
         <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
       )}
-
-      <h1 className="title is-1">Reservas</h1>
-
-      <CheckoutsDeHoy />
 
       {/* ESTO DEBERÍA ESTAR HECHO CON LOS BULMA LEVEL, DESPUÉS CHUSMEALOS */}
       <div className="botonera is-fullwidth">
