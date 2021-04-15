@@ -8,7 +8,7 @@ import { ReservasDelPeriodoDTO, IHabitacionParaTablaReservas, ReservaResumenDTO 
 import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import Detalle from 'pantallas/reservas/detalle/Modal';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
-import { obtenerDias } from './utils/funcionesUtiles';
+import { obtenerCamasIdsYHabitacionesConCamasUnificadas, obtenerDias } from './utils/funcionesUtiles';
 import { obtenerDia } from 'utils/Fecha';
 
 interface IParams {
@@ -24,26 +24,11 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   useEffect((): void => {
     var _dias: Date[] = obtenerDias(datos.desde, 15);
+    var [camasIds, habs] = obtenerCamasIdsYHabitacionesConCamasUnificadas(habitaciones);
 
-    var camasIdsArray: number[] = [];
-    var habs: IHabitacionParaTablaReservas[] = [];
-    for (let i = 0; i < habitaciones.length; i++) {
-      var habitacion = habitaciones[i];
-      var camasDeLaHabitacion = habitacion.camasIndividuales;
-      camasDeLaHabitacion = camasDeLaHabitacion.concat(habitacion.camasMatrimoniales);
-      camasDeLaHabitacion = camasDeLaHabitacion.concat(habitacion.camasCuchetas.map((cucheta): CamaDTO => cucheta.abajo));
-      camasDeLaHabitacion = camasDeLaHabitacion.concat(habitacion.camasCuchetas.map((cucheta): CamaDTO => cucheta.arriba));
-      habs.push({
-        nombre: habitacion.nombre,
-        id: habitacion.id,
-        esPrivada: habitacion.esPrivada,
-        camas: camasDeLaHabitacion,
-      });
-      camasIdsArray = camasIdsArray.concat(camasDeLaHabitacion.map((cama): number => cama.id));
-    }
     setHabitacionesConCamasUnificadas(habs);
 
-    dispatch(inicializarTabla(_dias, camasIdsArray));
+    dispatch(inicializarTabla(_dias, camasIds));
 
     datos.reservas.forEach((reserva: ReservaResumenDTO): void => {
       dispatch(insertarReserva(reserva));
