@@ -69,6 +69,27 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     cambiarIdSeleccionadoParaDetalleHabitacion(null);
   }
 
+  const renderizarCeldasDeLaFila = (cama: CamaDTO): ReactElement => {
+    return (
+      <>
+        <td>
+          {cama.nombre} - {cama.tipo}
+        </td>
+        {tablaDeReservas.dias.map(
+          (dia): ReactElement => (
+            <Celda
+              key={`${obtenerDia(dia)}-${cama.id}`}
+              dia={obtenerDia(dia)}
+              camaId={cama.id}
+              esHoy={false}
+              onClick={mostrarDetalleReserva}
+            />
+          )
+        )}
+      </>
+    );
+  };
+
   useEffect((): void => {
     let _filas: any = [];
 
@@ -77,47 +98,16 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
         <>
           <tr>
             <td rowSpan={habitacion.camas.length}>{habitacion.nombre}</td>
-            <td>
-              {habitacion.camas[0].nombre} - {habitacion.camas[0].tipo}
-            </td>
-            {tablaDeReservas.dias.map(
-              (dia): ReactElement => (
-                <Celda
-                  key={`${obtenerDia(dia)}-${habitacion.camas[0].id}`}
-                  dia={obtenerDia(dia)}
-                  camaId={habitacion.camas[0].id}
-                  esHoy={false}
-                  onClick={mostrarDetalleReserva}
-                />
-              )
-            )}
+            {renderizarCeldasDeLaFila(habitacion.camas[0])}
           </tr>
           {habitacion.camas.slice(1).map(
             (cama, i): ReactElement => (
-              <tr key={i}>
-                <td>
-                  {cama.nombre} - {cama.tipo}
-                </td>
-                {tablaDeReservas.dias.map(
-                  (dia): ReactElement => (
-                    <Celda
-                      key={`${obtenerDia(dia)}-${cama.id}`}
-                      dia={obtenerDia(dia)}
-                      camaId={cama.id}
-                      esHoy={false}
-                      onClick={mostrarDetalleReserva}
-                    />
-                  )
-                )}
-              </tr>
+              <tr key={i}>{renderizarCeldasDeLaFila(cama)}</tr>
             )
           )}
         </>
       );
     });
-
-    {
-    }
 
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.dias]);
