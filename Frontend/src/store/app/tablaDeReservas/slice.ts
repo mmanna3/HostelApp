@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
 import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
+import { convertirAString, obtenerDia } from 'utils/Fecha';
 
 export const initialState: IInitialState = {
-  diaMesArray: [],
+  dias: [],
   camasIdsArray: [],
   tabla: {},
   reservas: {},
@@ -15,7 +16,7 @@ const tablaDeReservasSlice = createSlice({
   initialState,
   reducers: {
     _inicializar: (state, { payload }): void => {
-      state.diaMesArray = payload.dias;
+      state.dias = payload.dias;
       state.camasIdsArray = payload.camasIdsArray;
       var celdaInicial: ICeldaInicial = {};
 
@@ -25,8 +26,8 @@ const tablaDeReservasSlice = createSlice({
           estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
         } as ICeldaInfo;
       });
-      payload.dias.forEach((diaTipoDate: Date): void => {
-        state.tabla[`${diaTipoDate.getDate()}`] = celdaInicial;
+      payload.dias.forEach((dia: string): void => {
+        state.tabla[`${obtenerDia(dia)}`] = celdaInicial;
       });
     },
     _modificarCelda: (state, { payload }): void => {
@@ -88,7 +89,8 @@ export default tablaDeReservasSlice.reducer;
 
 export function inicializarTabla(dias: Date[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
   return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(_inicializar({ dias, camasIdsArray }));
+    const diasString = dias.map((dia): string => convertirAString(dia));
+    dispatch(_inicializar({ dias: diasString, camasIdsArray }));
   };
 }
 
@@ -112,7 +114,7 @@ export function seleccionarTodasLasCeldasDeLaReserva(reservaId: Nullable<number>
 }
 
 interface IInitialState {
-  diaMesArray: IDiaMes[];
+  dias: string[];
   camasIdsArray: number[];
   tabla: ITabla;
   reservas: {

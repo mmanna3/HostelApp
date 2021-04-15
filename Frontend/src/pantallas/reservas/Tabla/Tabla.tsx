@@ -9,6 +9,7 @@ import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import Detalle from 'pantallas/reservas/detalle/Modal';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
 import { obtenerDias } from './utils/funcionesUtiles';
+import { obtenerDia } from 'utils/Fecha';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;
@@ -79,6 +80,17 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
             <td>
               {habitacion.camas[0].nombre} - {habitacion.camas[0].tipo}
             </td>
+            {tablaDeReservas.dias.map(
+              (dia): ReactElement => (
+                <Celda
+                  key={`${obtenerDia(dia)}-${habitacion.camas[0].id}`}
+                  dia={obtenerDia(dia)}
+                  camaId={habitacion.camas[0].id}
+                  esHoy={false}
+                  onClick={mostrarDetalleReserva}
+                />
+              )
+            )}
           </tr>
           {habitacion.camas.slice(1).map(
             (cama, i): ReactElement => (
@@ -86,6 +98,17 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
                 <td>
                   {cama.nombre} - {cama.tipo}
                 </td>
+                {tablaDeReservas.dias.map(
+                  (dia): ReactElement => (
+                    <Celda
+                      key={`${obtenerDia(dia)}-${cama.id}`}
+                      dia={obtenerDia(dia)}
+                      camaId={cama.id}
+                      esHoy={false}
+                      onClick={mostrarDetalleReserva}
+                    />
+                  )
+                )}
               </tr>
             )
           )}
@@ -94,15 +117,10 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
     });
 
     {
-      /* {tablaDeReservas.camasIdsArray.map(
-            (id): ReactElement => (
-              <Celda key={id} dia={diaMes.dia} camaId={id} esHoy={false} onClick={mostrarDetalleReserva} />
-            )
-          )} */
     }
 
     actualizarFilas(_filas);
-  }, [tablaDeReservas.camasIdsArray, tablaDeReservas.diaMesArray]);
+  }, [tablaDeReservas.camasIdsArray, tablaDeReservas.dias]);
 
   return (
     <>
