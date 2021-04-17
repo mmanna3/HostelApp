@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import Crear from './crear/Modal';
-import SelectorDeVista from './SelectorDeVista/Componente';
+import Estilos from './Page.module.scss';
 import Tabla from './Tabla/Tabla';
 
 const ReservasPage = (): ReactElement => {
@@ -37,13 +37,13 @@ const ReservasPage = (): ReactElement => {
     modificarEstado(estadoReservasMensuales);
   }, [datosReservasMensuales, estadoReservasMensuales]);
 
-  function obtenerReservasMensuales(anio: any, mes: any): void {
-    dispatch(api.reservas.listarMensuales.invocar({ anio, mes }));
-  }
+  // function obtenerReservasMensuales(anio: any, mes: any): void {
+  //   dispatch(api.reservas.listarMensuales.invocar({ anio, mes }));
+  // }
 
-  function obtenerReservasActuales(): void {
-    dispatch(api.reservas.listarActuales.invocar());
-  }
+  // function obtenerReservasActuales(): void {
+  //   dispatch(api.reservas.listarActuales.invocar());
+  // }
 
   function hideModal(): void {
     setModalVisibility(false);
@@ -62,13 +62,26 @@ const ReservasPage = (): ReactElement => {
     <div className="container is-fluid">
       <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
 
-      {/* ESTO DEBERÍA ESTAR HECHO CON LOS BULMA LEVEL, DESPUÉS CHUSMEALOS */}
-      <div className="botonera is-fullwidth">
+      <div className="level container">
+        <div className="level-left">
+          <div className={`buttons has-addons ${Estilos.botones}`}>
+            <Button onClick={showModal} text="Semana" className="button is-selected" />
+            <Button onClick={showModal} text="Dos semanas" className="button" />
+            <Button onClick={showModal} text="Mes" className="button" />
+          </div>
+          <div>{/* <Input name="a" /> */}</div>
+        </div>
+        <div className="level-right">
+          <Button onClick={showModal} text="Cargar nueva" />
+        </div>
+      </div>
+
+      {/* <div className="botonera is-fullwidth">
         <SelectorDeVista onFechaChanged={obtenerReservasMensuales} onDisabled={obtenerReservasActuales} />
         <div className="field is-pulled-right">
           <Button onClick={showModal} text="Cargar nueva" />
         </div>
-      </div>
+      </div> */}
       <div>
         {estado === ESTADO.huboError ? (
           'Hubo un error.'
