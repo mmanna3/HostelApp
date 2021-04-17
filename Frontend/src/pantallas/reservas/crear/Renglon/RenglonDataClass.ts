@@ -1,8 +1,8 @@
-import { HabitacionDTO } from 'interfaces/habitacion';
+import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
 
 export class RenglonData {
-  public habitacionSeleccionada: Nullable<HabitacionDTO>;
-  public camaSeleccionadaId: Nullable<string>; //No sé si esto está súper bien
+  public habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas>;
+  public camaSeleccionadaId: Nullable<number>; //No sé si esto está súper bien
   public indice: number;
   public habitacionesDisponibles: any[];
   public camasDisponibles: any[];
@@ -11,8 +11,8 @@ export class RenglonData {
     indice: number,
     habitacionesDisponibles: any,
     camasDisponibles: any,
-    habitacionSeleccionada: Nullable<HabitacionDTO> = null,
-    camaSeleccionadaId: Nullable<string> = null
+    habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
+    camaSeleccionadaId: Nullable<number> = null
   ) {
     this.habitacionSeleccionada = habitacionSeleccionada;
     this.indice = indice;

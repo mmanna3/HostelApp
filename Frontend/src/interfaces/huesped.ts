@@ -1,6 +1,5 @@
-export interface HuespedDTO {
+export interface HuespedDTO extends DatosMinimosDeHuespedDTO {
   id: number;
-  nombre: string;
 }
 
 export interface DatosMinimosDeHuespedDTO {

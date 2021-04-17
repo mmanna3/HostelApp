@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
-import { Modal, Body, Header, FooterVolver } from 'components/Modal';
-import Display, { SiNo, DisplayLista, DisplayTextarea } from 'components/display/Display';
-import api from 'store/api/api';
+import Display, { DisplayLista, DisplayTextarea, SiNo } from 'components/display/Display';
+import { Body, FooterVolver, Header, Modal } from 'components/Modal';
+import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
@@ -33,10 +33,10 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     dispatch(api.habitaciones.obtenerPorId.reiniciar());
   }
 
-  var esPrivada = {
-    true: 'Privada',
-    false: 'Compartida',
-  };
+  var textoTipo = new Map<boolean, string>([
+    [true, 'Privada'],
+    [false, 'Compartida'],
+  ]);
 
   if (datos !== null) {
     debugger;
@@ -51,7 +51,7 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
               <Display label="Nombre" valor={datos.nombre} />
             </div>
             <div className="column">
-              <Display label="Tipo" valor={esPrivada[datos.esPrivada as keyof typeof esPrivada]} />
+              <Display label="Tipo" valor={textoTipo.get(datos.esPrivada)} />
             </div>
             <div className="column">
               <SiNo label="Tiene baño" valor={datos.tieneBanio} />

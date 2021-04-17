@@ -1,10 +1,10 @@
+import { CheckoutsDeHoyDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'interfaces/reserva';
 import {
-  IApiSliceInfo,
   generarSliceHttpGet,
   generarSliceHttpPost,
+  IApiSliceInfo,
   IObtenerPorIdParams,
 } from './utils/generadorDeSlicesParaRequest';
-import { CheckoutsDeHoyDTO, ReservaResumenDTO } from 'interfaces/reserva';
 
 const listarActualesSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'reservasActuales',
@@ -41,12 +41,12 @@ const obtenerPorIdSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
-const listarActuales = { ...generarSliceHttpGet<ReservaResumenDTO[]>(listarActualesSliceInfo) };
+const listarActuales = { ...generarSliceHttpGet<ReservasDelPeriodoDTO>(listarActualesSliceInfo) };
 
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
 const listarMensuales = {
-  ...generarSliceHttpGet<ReservaResumenDTO[], IListarMensualesParams>(listarMensualesSliceInfo),
+  ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarMensualesParams>(listarMensualesSliceInfo),
 };
 
 const crear = {

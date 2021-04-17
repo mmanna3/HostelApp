@@ -1,13 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import api from 'store/api/api';
-import { useDispatch, useSelector } from 'react-redux';
-import Crear from './crear/Modal';
 import { Button } from 'components/botones/botones';
+import { ReservasDelPeriodoDTO } from 'interfaces/reserva';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
+import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
+import Crear from './crear/Modal';
 import SelectorDeVista from './SelectorDeVista/Componente';
 import Tabla from './Tabla/Tabla';
-import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
-const ReservasPage = () => {
+const ReservasPage = (): ReactElement => {
   const dispatch = useDispatch();
   const habitaciones = useSelector(api.habitaciones.listar.selector);
   const { datos: datosReservasActuales, estado: estadoReservasActuales } = useSelector(api.reservas.listarActuales.selector);
@@ -15,46 +16,46 @@ const ReservasPage = () => {
     api.reservas.listarMensuales.selector
   );
 
-  const [datos, modificarDatos] = useState([]);
-  const [estado, modificarEstado] = useState();
+  const [datos, modificarDatos] = useState<ReservasDelPeriodoDTO>();
+  const [estado, modificarEstado] = useState<ESTADO>();
   const [IsModalVisible, setModalVisibility] = useState(false);
 
-  const fetchData = useCallback(() => {
+  const fetchData = useCallback((): void => {
     dispatch(api.reservas.listarActuales.invocar());
     dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
 
-  useEffect(() => fetchData(), [fetchData]);
+  useEffect((): void => fetchData(), [fetchData]);
 
-  useEffect(() => {
+  useEffect((): void => {
     modificarDatos(datosReservasActuales);
     modificarEstado(estadoReservasActuales);
   }, [datosReservasActuales, estadoReservasActuales]);
 
-  useEffect(() => {
+  useEffect((): void => {
     modificarDatos(datosReservasMensuales);
     modificarEstado(estadoReservasMensuales);
   }, [datosReservasMensuales, estadoReservasMensuales]);
 
-  function obtenerReservasMensuales(anio, mes) {
+  function obtenerReservasMensuales(anio: any, mes: any): void {
     dispatch(api.reservas.listarMensuales.invocar({ anio, mes }));
   }
 
-  function obtenerReservasActuales() {
+  function obtenerReservasActuales(): void {
     dispatch(api.reservas.listarActuales.invocar());
   }
 
-  function closeModalAndRefreshTable() {
-    hideModal();
-    fetchData();
-  }
-
-  function hideModal() {
+  function hideModal(): void {
     setModalVisibility(false);
   }
 
-  function showModal() {
+  function showModal(): void {
     setModalVisibility(true);
+  }
+
+  function closeModalAndRefreshTable(): void {
+    hideModal();
+    fetchData();
   }
 
   return (
@@ -76,7 +77,7 @@ const ReservasPage = () => {
           'Hubo un error.'
         ) : estado === ESTADO.cargando ? (
           'Cargando...'
-        ) : estado === ESTADO.exitoso ? (
+        ) : estado === ESTADO.exitoso && datos ? (
           <Tabla datos={datos} habitaciones={habitaciones.datos} />
         ) : (
           <></>

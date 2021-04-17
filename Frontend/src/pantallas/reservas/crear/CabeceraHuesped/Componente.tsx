@@ -1,17 +1,13 @@
-import React, { ReactElement, useEffect } from 'react';
 import { Input, InputConBoton } from 'components/Input';
+import Label from 'components/Label';
+import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { DatosMinimosDeHuespedDTO } from 'interfaces/huesped';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
-import Label from 'components/Label';
 
 const CabeceraHuesped = (): ReactElement => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector) as {
-    datos: DatosMinimosDeHuespedDTO;
-    estado: EstadosApiRequestEnum;
-  };
+  const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
   const [camposEditables, togglearCamposEditables] = React.useState(false);
 
   useEffect((): void => {
