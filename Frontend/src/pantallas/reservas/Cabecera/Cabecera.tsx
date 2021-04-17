@@ -1,6 +1,6 @@
 import { Button } from 'components/botones/botones';
+import SelectorDeFecha from 'components/selectorDeFecha/selectorDeFecha';
 import React, { ReactElement, useState } from 'react';
-import DatePicker from 'react-date-picker';
 import Estilos from './Cabecera.module.scss';
 
 interface IProps {
@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Cabecera = ({ showModal }: IProps): ReactElement => {
-  const [value, onChange] = useState<Date[] | Date>(new Date());
+  const [fechaInicio, modificarFechaInicio] = useState<Date[] | Date>(new Date());
 
   const seleccionarSemana = (): void => {};
   const seleccionarDosSemanas = (): void => {};
@@ -22,14 +22,8 @@ const Cabecera = ({ showModal }: IProps): ReactElement => {
           <Button onClick={(): void => seleccionarDosSemanas()} text="Dos semanas" className="button" />
           <Button onClick={(): void => seleccionarMes()} text="Mes" className="button" />
         </div>
-        <div className="control">
-          <DatePicker
-            onChange={onChange}
-            value={value}
-            className={Estilos.selectorDeFecha}
-            calendarClassName={Estilos.calendario}
-            clearAriaLabel="Reiniciar"
-          />
+        <div>
+          <SelectorDeFecha onChange={modificarFechaInicio} value={fechaInicio} />
         </div>
       </div>
       <div className="level-right">
