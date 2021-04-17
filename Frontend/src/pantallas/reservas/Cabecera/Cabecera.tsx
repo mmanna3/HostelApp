@@ -1,37 +1,43 @@
 import { Button } from 'components/botones/botones';
 import SelectorDeFecha from 'components/selectorDeFecha/selectorDeFecha';
 import React, { ReactElement, useState } from 'react';
+import { convertirAString } from 'utils/Fecha';
 import Estilos from './Cabecera.module.scss';
 
 interface IProps {
   showModal: () => void;
+  onFechaChange: (primeraNoche: string, dias: number) => void;
 }
 
-const Cabecera = ({ showModal }: IProps): ReactElement => {
+const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
   const [fechaInicio, modificarFechaInicio] = useState<Date[] | Date>(new Date());
   const [estiloBotonSemana, modificarEstiloBotonSemana] = useState('');
   const [estiloBotonDosSemanas, modificarEstiloBotonDosSemanas] = useState('');
   const [estiloBotonMes, modificarEstiloBotonMes] = useState('');
 
-  const invocarApi = (dias: number): void => {
-    console.log(dias);
-    console.log(fechaInicio);
+  const onChange = (dias: number): void => {
+    var fecha: Date;
+
+    if (Array.isArray(fechaInicio)) fecha = fechaInicio[0];
+    else fecha = fechaInicio;
+
+    onFechaChange(convertirAString(fecha), dias);
   };
 
   const seleccionarSemana = (): void => {
-    invocarApi(7);
+    onChange(7);
     modificarEstiloBotonSemana('is-primary is-selected');
     modificarEstiloBotonDosSemanas('');
     modificarEstiloBotonMes('');
   };
   const seleccionarDosSemanas = (): void => {
-    invocarApi(14);
+    onChange(14);
     modificarEstiloBotonSemana('');
     modificarEstiloBotonDosSemanas('is-primary is-selected');
     modificarEstiloBotonMes('');
   };
   const seleccionarMes = (): void => {
-    invocarApi(28);
+    onChange(28);
     modificarEstiloBotonSemana('');
     modificarEstiloBotonDosSemanas('');
     modificarEstiloBotonMes('is-primary is-selected');

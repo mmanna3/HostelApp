@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux';
-
 import api from 'store/api/api';
-
 import tablaDeReservas from 'store/app/tablaDeReservas/slice';
 
 const rootReducer = combineReducers({
@@ -19,8 +17,7 @@ const rootReducer = combineReducers({
   tablaDeReservas: tablaDeReservas,
 
   obtenerReservaPorId: api.reservas.obtenerPorId.reducer,
-  reservasActuales: api.reservas.listarActuales.reducer,
-  reservasMensuales: api.reservas.listarMensuales.reducer,
+  reservas: api.reservas.listar.reducer,
   crearReserva: api.reservas.crear.reducer,
   checkoutsDeHoy: api.reservas.checkoutsDeHoy.reducer,
 });

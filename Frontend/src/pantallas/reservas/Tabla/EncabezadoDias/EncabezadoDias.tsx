@@ -4,11 +4,11 @@ import { calcularDiasDeReservasVisibles } from '../utils/funcionesUtiles';
 import Estilos from './EncabezadoDias.module.scss';
 
 interface IParams {
-  fechaInicio: string;
-  cantidadDeDias: number;
+  fechaDesde: string;
+  fechaHasta: string;
 }
-const EncabezadoDias = ({ fechaInicio, cantidadDeDias }: IParams): ReactElement => {
-  const dias = calcularDiasDeReservasVisibles(fechaInicio, cantidadDeDias);
+const EncabezadoDias = ({ fechaDesde, fechaHasta }: IParams): ReactElement => {
+  const dias = calcularDiasDeReservasVisibles(fechaDesde, fechaHasta);
 
   return (
     <thead className="is-bordered">

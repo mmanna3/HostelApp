@@ -1,4 +1,3 @@
-import { ReservasDelPeriodoDTO } from 'interfaces/reserva';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -10,39 +9,19 @@ import Tabla from './Tabla/Tabla';
 const ReservasPage = (): ReactElement => {
   const dispatch = useDispatch();
   const habitaciones = useSelector(api.habitaciones.listar.selector);
-  const { datos: datosReservasActuales, estado: estadoReservasActuales } = useSelector(api.reservas.listarActuales.selector);
-  const { datos: datosReservasMensuales, estado: estadoReservasMensuales } = useSelector(
-    api.reservas.listarMensuales.selector
-  );
-
-  const [datos, modificarDatos] = useState<ReservasDelPeriodoDTO>();
-  const [estado, modificarEstado] = useState<ESTADO>();
+  const { datos, estado } = useSelector(api.reservas.listar.selector);
   const [IsModalVisible, setModalVisibility] = useState(false);
 
   const fetchData = useCallback((): void => {
-    dispatch(api.reservas.listarActuales.invocar());
+    dispatch(api.reservas.listar.invocar());
     dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
 
   useEffect((): void => fetchData(), [fetchData]);
 
-  useEffect((): void => {
-    modificarDatos(datosReservasActuales);
-    modificarEstado(estadoReservasActuales);
-  }, [datosReservasActuales, estadoReservasActuales]);
-
-  useEffect((): void => {
-    modificarDatos(datosReservasMensuales);
-    modificarEstado(estadoReservasMensuales);
-  }, [datosReservasMensuales, estadoReservasMensuales]);
-
-  // function obtenerReservasMensuales(anio: any, mes: any): void {
-  //   dispatch(api.reservas.listarMensuales.invocar({ anio, mes }));
-  // }
-
-  // function obtenerReservasActuales(): void {
-  //   dispatch(api.reservas.listarActuales.invocar());
-  // }
+  function onFechaChange(primeraNoche: string, dias: number): void {
+    dispatch(api.reservas.listar.invocar({ primeraNoche, dias }));
+  }
 
   function hideModal(): void {
     setModalVisibility(false);
@@ -61,7 +40,7 @@ const ReservasPage = (): ReactElement => {
     <div className="container is-fluid">
       <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
 
-      <Cabecera showModal={showModal} />
+      <Cabecera showModal={showModal} onFechaChange={onFechaChange} />
 
       <div>
         {estado === ESTADO.huboError ? (

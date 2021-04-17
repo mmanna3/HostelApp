@@ -22,7 +22,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const [idDetalleHabitacion, cambiarIdDetalleHabitacion] = useState<Nullable<number>>(null);
 
   useEffect((): void => {
-    var dias: Date[] = calcularDiasDeReservasVisibles(datos.desde, 15);
+    var dias: Date[] = calcularDiasDeReservasVisibles(datos.desde, datos.hasta);
     var [camasIds, habs] = calcularCamasIdsYHabitacionesConCamasUnificadas(habitaciones);
 
     setHabitacionesConCamasUnificadas(habs);
@@ -40,7 +40,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
       <DetalleReserva id={idDetalleReserva} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleReserva>
       <div className={Estilos.contenedor}>
         <table className={`table is-hoverable is-bordered is-fullwidth`}>
-          <EncabezadoDias fechaInicio={datos.desde} cantidadDeDias={15} />
+          <EncabezadoDias fechaDesde={datos.desde} fechaHasta={datos.hasta} />
           <Cuerpo
             habitacionesConCamasUnificadas={habitacionesConCamasUnificadas}
             mostrarDetalleDeReserva={(id: Nullable<number>): void => cambiarIdDetalleReserva(id)}

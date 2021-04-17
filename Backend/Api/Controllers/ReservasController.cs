@@ -79,7 +79,7 @@ namespace Api.Controllers
 	        var reservaDTOs = _mapper.Map<ReservasDelPeriodoDTO>(reservas, op =>
 	        {
 		        op.Items["desde"] = primeraNocheDateTime;
-		        op.Items["hasta"] = ultimaNoche;
+		        op.Items["hasta"] = ultimaNoche.AddDays(1);
 	        });
 
 	        return reservaDTOs;

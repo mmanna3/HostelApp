@@ -2,12 +2,14 @@ import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
 import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
 import { convertirADate, sumarDiasALaFecha } from 'utils/Fecha';
 
-export function calcularDiasDeReservasVisibles(fechaInicio: string, cantidadDeDias: number): Date[] {
+export function calcularDiasDeReservasVisibles(fechaDesde: string, fechaHasta: string): Date[] {
   var dias: Date[] = [];
-  for (let i = 0; i < cantidadDeDias; i++) {
-    var nuevaFecha = sumarDiasALaFecha(convertirADate(fechaInicio), i);
-    var nuevoArray = dias;
-    nuevoArray.push(nuevaFecha);
+
+  var nuevaFecha = convertirADate(fechaDesde);
+  var fechaFinDate = convertirADate(fechaHasta);
+  while (nuevaFecha < fechaFinDate) {
+    dias.push(nuevaFecha);
+    nuevaFecha = sumarDiasALaFecha(nuevaFecha, 1);
   }
 
   return dias;
