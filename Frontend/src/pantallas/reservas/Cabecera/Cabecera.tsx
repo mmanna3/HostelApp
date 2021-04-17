@@ -10,9 +10,20 @@ interface IProps {
 const Cabecera = ({ showModal }: IProps): ReactElement => {
   const [fechaInicio, modificarFechaInicio] = useState<Date[] | Date>(new Date());
 
-  const seleccionarSemana = (): void => {};
-  const seleccionarDosSemanas = (): void => {};
-  const seleccionarMes = (): void => {};
+  const invocarApi = (dias: number): void => {
+    console.log(dias);
+    console.log(fechaInicio);
+  };
+
+  const seleccionarSemana = (): void => {
+    invocarApi(7);
+  };
+  const seleccionarDosSemanas = (): void => {
+    invocarApi(14);
+  };
+  const seleccionarMes = (): void => {
+    invocarApi(28);
+  };
 
   return (
     <div className="level container">
