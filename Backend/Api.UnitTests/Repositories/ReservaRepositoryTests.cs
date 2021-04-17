@@ -61,44 +61,54 @@ namespace Api.UnitTests.Repositories
         }
 
         [Test]
-        public async Task ListarMensuales_ListaReservaQueContieneDiasDelMes_MesesConsecutivos()
+        public async Task Listar_ListaSiReservaTerminaDiaInicial()
         {
-            var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
-            var listadoDeSeptiembre = await _repository.ListarMensuales(2020, 9);
-            var listadoDeOctubre = await _repository.ListarMensuales(2020, 10);
-            var listadoDeAgosto = await _repository.ListarMensuales(2020, 8);
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
+	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18));
 
-            listadoDeSeptiembre.Count().Should().Be(1);
-            listadoDeOctubre.Count().Should().Be(1);
-            listadoDeAgosto.Count().Should().Be(0);
+	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task ListarActuales_ListaCorrectamenteDesdeAyerHastaDentroDe15Dias()
+        public async Task Listar_ListaSiReservaEmpiezaUltimaNoche()
         {
-            AgregarReservaDeUnaCamaParaLaFecha(DateTime.Today.AddDays(-3), DateTime.Today.AddDays(1));
-            AgregarReservaDeUnaCamaParaLaFecha(DateTime.Today.AddDays(15), DateTime.Today.AddDays(16));
-            AgregarReservaDeUnaCamaParaLaFecha(DateTime.Today.AddDays(16), DateTime.Today.AddDays(17));
-            var listado = await _repository.ListarActuales();
-            listado.Count().Should().Be(2);
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 10, 30));
+	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 27));
+
+	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task ListarMensuales_ListaReservaQueContieneDiasDelMes_MesesIncluidos()
+        public async Task Listar_ListaSiReservaEmpiezaMesAnteriorYTerminaEnElRango()
         {
-            var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
-            var listadoDeSeptiembre = await _repository.ListarMensuales(2020, 9);
-            var listadoDeOctubre = await _repository.ListarMensuales(2020, 10);
-            var listadoDeAgosto = await _repository.ListarMensuales(2020, 8);
-            var listadoDeJulio = await _repository.ListarMensuales(2020, 7);
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
+	        var listado = await _repository.ListarEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 1));
 
-            listadoDeSeptiembre.Count().Should().Be(1);
-            listadoDeOctubre.Count().Should().Be(1);
-            listadoDeAgosto.Count().Should().Be(1);
-            listadoDeJulio.Count().Should().Be(0);
+	        listado.Count().Should().Be(1);
         }
 
-        private int AgregarReservaDeUnaCamaParaLaFecha(DateTime desde, DateTime hasta)
+        [Test]
+        public async Task Listar_ListaSiReservaEmpiezaAntesYTerminaDespuesDelRango()
+        {
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
+	        var listado = await _repository.ListarEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 2));
+
+	        listado.Count().Should().Be(1);
+        }
+
+        [Test]
+        public async Task Listar_NoListaReservasFueraDeRango()
+        {
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
+	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
+	        listado.Count().Should().Be(0);
+
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 9, 27), new DateTime(2020, 9, 30));
+	        listado = await _repository.ListarEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
+            listado.Count().Should().Be(0);
+        }
+
+        private int AgregarReservaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
         {
             var habitacion = new Habitacion {Nombre = "Azul"};
             _context.Habitaciones.Add(habitacion);
@@ -106,7 +116,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { Huesped = _huesped, PrimeraNoche = desde, UltimaNoche = hasta };
+            var reserva = new Reserva { Huesped = _huesped, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };

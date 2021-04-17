@@ -14,10 +14,12 @@ namespace Api.Persistence.Repositories
         public ReservaRepository(AppDbContext context) : base(context)
         {
         }
-        public override async Task<IEnumerable<Reserva>> Listar()
+        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
             return await _context.Reservas
-                .Include(x => x.ReservaCamas)
+	            .Include(x => x.ReservaCamas)
+	            .ThenInclude(x => x.Cama)
+	            .Where(x => x.PrimeraNoche <= ultimaNoche && x.UltimaNoche >= primeraNoche)
                 .ToListAsync();
         }
 
