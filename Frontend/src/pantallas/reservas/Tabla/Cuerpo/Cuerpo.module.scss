@@ -1,0 +1,21 @@
+@import 'universal.scss';
+
+.habitacion {
+  width: 150px;
+  left: 0;
+  z-index: 9;
+  position: sticky;
+  background-color: #eee;
+  color: #222 !important;
+}
+
+.cama {
+  position: sticky;
+  left: 150px;
+  top: auto;
+  width: 200px;
+  z-index: 9;
+  background-color: #eee;
+  color: #222 !important;
+  border: solid #222 1px;
+}

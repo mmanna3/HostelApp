@@ -13,10 +13,10 @@ const EncabezadoDias = ({ fechaDesde, fechaHasta }: IParams): ReactElement => {
   return (
     <thead className="is-bordered">
       <tr>
-        <th className={Estilos.th}>
+        <th className={`${Estilos.th} ${Estilos.habitacion}`}>
           <div className={Estilos.encabezado}>Habitación</div>
         </th>
-        <th className={Estilos.th}>
+        <th className={`${Estilos.th} ${Estilos.cama}`}>
           <div className={Estilos.encabezado}>Cama</div>
         </th>
 

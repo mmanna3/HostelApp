@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import { obtenerDia } from 'utils/Fecha';
 import Celda from '../Celda/Celda';
+import Estilos from './Cuerpo.module.scss';
 
 interface IParams {
   habitacionesConCamasUnificadas: IHabitacionParaTablaReservas[];
@@ -24,7 +25,7 @@ const Cuerpo = ({
     const renderizarCeldasDeLaFila = (cama: CamaDTO): ReactElement => {
       return (
         <>
-          <td>
+          <td className={Estilos.cama}>
             {cama.nombre} - {cama.tipo}
           </td>
           {tablaDeReservas.dias.map(
@@ -48,7 +49,9 @@ const Cuerpo = ({
       _filas.push(
         <>
           <tr>
-            <td rowSpan={habitacion.camas.length}>{habitacion.nombre}</td>
+            <td rowSpan={habitacion.camas.length} className={Estilos.habitacion}>
+              {habitacion.nombre}
+            </td>
             {renderizarCeldasDeLaFila(habitacion.camas[0])}
           </tr>
           {habitacion.camas.slice(1).map(
