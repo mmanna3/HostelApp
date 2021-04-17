@@ -69,6 +69,22 @@ namespace Api.Controllers
             return reservaDTOs;
         }
 
+        [HttpGet]
+        public async Task<ReservasDelPeriodoDTO> ListarEntre(string primeraNoche, int dias)
+        {
+	        var primeraNocheDateTime = Utilidades.ConvertirFecha(primeraNoche);
+	        var ultimaNoche = primeraNocheDateTime.AddDays(dias - 1);
+
+            var reservas = await _service.ListarEntre(primeraNocheDateTime, ultimaNoche);
+	        var reservaDTOs = _mapper.Map<ReservasDelPeriodoDTO>(reservas, op =>
+	        {
+		        op.Items["desde"] = primeraNocheDateTime;
+		        op.Items["hasta"] = ultimaNoche;
+	        });
+
+	        return reservaDTOs;
+        }
+
         [HttpPost]
         public async Task<int> Crear([FromBody] ReservaDTO dto)
         {

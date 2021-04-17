@@ -8,7 +8,6 @@ using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Core;
 using FluentAssertions;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Api.IntegrationTests
@@ -39,7 +38,7 @@ namespace Api.IntegrationTests
             var response = await CrearReserva(camaId, _desde, _hasta);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var consultaResponse = await ListarReservasMensuales(_desde.Year, _desde.Month);
+            var consultaResponse = await ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var reservasDelMes = await consultaResponse.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
 
@@ -184,9 +183,9 @@ namespace Api.IntegrationTests
             return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
         }
 
-        private async Task<HttpResponseMessage> ListarReservasMensuales(int anio, int mes)
+        private async Task<HttpResponseMessage> ListarEntre(string primeraNoche, int dias)
         {
-            return await _httpClient.GetAsync(ENDPOINT + $"/mensuales?mes={mes}&anio={anio}");
+	        return await _httpClient.GetAsync(ENDPOINT + $"?primeraNoche={primeraNoche}&dias={dias}");
         }
 
         private async Task<HttpResponseMessage> ListarHuespedes()

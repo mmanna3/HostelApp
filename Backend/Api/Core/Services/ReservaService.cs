@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
@@ -21,6 +22,11 @@ namespace Api.Core.Services
         public async Task<IEnumerable<Reserva>> Listar()
         {
             return await _repository.Listar();
+        }
+
+        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        {
+	        return await _repository.ListarEntre(primeraNoche, ultimaNoche);
         }
 
         public async Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes)
