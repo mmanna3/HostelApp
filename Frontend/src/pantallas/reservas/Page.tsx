@@ -60,10 +60,7 @@ const ReservasPage = (): ReactElement => {
 
   return (
     <div className="container is-fluid">
-      {/* HAY QUE SACAR EL ISVISIBLE DEL MODAL, ME PARECE O AL MENOS REPENSARLO */}
-      {IsModalVisible && (
-        <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
-      )}
+      <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
 
       {/* ESTO DEBERÍA ESTAR HECHO CON LOS BULMA LEVEL, DESPUÉS CHUSMEALOS */}
       <div className="botonera is-fullwidth">
