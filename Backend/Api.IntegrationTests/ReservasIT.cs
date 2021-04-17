@@ -30,7 +30,7 @@ namespace Api.IntegrationTests
         };
 
         [Test]
-        public async Task Crea_UnaReserva_Y_ApareceEnListadoMensual()
+        public async Task Crea_UnaReserva_Y_ApareceEnListado()
         {
 
             var camaId = await CrearHabitacionConUnaCama();
@@ -88,30 +88,6 @@ namespace Api.IntegrationTests
 	        huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
 	        huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
 	        huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
-        }
-
-        [Test]
-        public async Task Crea_UnaReserva_Y_ApareceEnListadoActual()
-        {
-            var camaId = await CrearHabitacionConUnaCama();
-
-            var response = await CrearReserva(camaId, DateTime.Today.AddDays(-1), DateTime.Today);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            var consultaResponse = await ListarReservasActuales();
-            consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var reservasDelMes = await consultaResponse.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
-            
-            reservasDelMes.Desde.Should().Be(Utilidades.ConvertirFecha(DateTime.Today.AddDays(-1)));
-            reservasDelMes.Hasta.Should().Be(Utilidades.ConvertirFecha(DateTime.Today.AddDays(15)));
-
-            reservasDelMes.Reservas.Count().Should().Be(1);
-            var reserva = reservasDelMes.Reservas.ToList().First();
-
-            reserva.DiaDeCheckin.Should().Be(DateTime.Today.AddDays(-1).Day);
-            reserva.DiaDeCheckout.Should().Be(DateTime.Today.AddDays(-1).Day);
-            reserva.CamasIds.Should().HaveCount(1);
-            reserva.CamasIds.First().Should().Be(camaId);
         }
 
         [Test]
@@ -191,11 +167,6 @@ namespace Api.IntegrationTests
         private async Task<HttpResponseMessage> ListarHuespedes()
         {
 	        return await _httpClient.GetAsync(ENDPOINT_HUESPEDES);
-        }
-
-        private async Task<HttpResponseMessage> ListarReservasActuales()
-        {
-            return await _httpClient.GetAsync(ENDPOINT + "/actuales");
         }
 
         private async Task<HttpResponseMessage> ListarCheckoutsDeHoy()

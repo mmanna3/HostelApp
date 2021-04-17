@@ -8,7 +8,6 @@ using Api.Core.Entidades;
 using AutoMapper;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace Api.Controllers
 {
@@ -25,46 +24,11 @@ namespace Api.Controllers
             _huespedService = huespedService;
         }
 
-        //[HttpGet]
-        //public async Task<IEnumerable<ReservaDTO>> Listar() // Qué onda? este no se usa?
-        //{
-        //    var reservas = await _service.Listar();
-        //    var reservaDTOs = _mapper.Map<IEnumerable<ReservaDTO>>(reservas);
-
-        //    return reservaDTOs;
-        //}
-
         [HttpGet, Route("checkoutsDeHoy")]
         public async Task<IEnumerable<CheckoutsDeHoyDTO>> ListarCheckoutsDeHoy()
         {
             var reservas = await _service.ListarCheckoutsDeHoy();
             var reservaDTOs = _mapper.Map<IEnumerable<CheckoutsDeHoyDTO>>(reservas);
-
-            return reservaDTOs;
-        }
-
-        [HttpGet, Route("mensuales")]
-        public async Task<ReservasDelPeriodoDTO> ListarMensuales(int anio, int mes)
-        {
-            var reservas = await _service.ListarMensuales(anio, mes);
-            var reservaDTOs = _mapper.Map<ReservasDelPeriodoDTO>(reservas, op =>
-            {
-                op.Items["desde"] = new DateTime(anio, mes, 1);
-                op.Items["hasta"] = new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes));
-            });
-
-            return reservaDTOs;
-        }
-
-        [HttpGet, Route("actuales")]
-        public async Task<ReservasDelPeriodoDTO> ListarActuales()
-        {
-            var reservas = await _service.ListarActuales();
-            var reservaDTOs = _mapper.Map<ReservasDelPeriodoDTO>(reservas, op =>
-            {
-                op.Items["desde"] = DateTime.Today.AddDays(-1);
-                op.Items["hasta"] = DateTime.Today.AddDays(15);
-            });
 
             return reservaDTOs;
         }

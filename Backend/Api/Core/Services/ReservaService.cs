@@ -19,24 +19,9 @@ namespace Api.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Reserva>> Listar()
-        {
-            return await _repository.Listar();
-        }
-
         public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
 	        return await _repository.ListarEntre(primeraNoche, ultimaNoche);
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes)
-        {
-            return await _repository.ListarMensuales(anio, mes);
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarActuales()
-        {
-            return await _repository.ListarActuales();
         }
 
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()

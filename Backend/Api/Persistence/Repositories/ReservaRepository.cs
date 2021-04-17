@@ -23,24 +23,6 @@ namespace Api.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes)
-        {
-            return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-                .ThenInclude(x => x.Cama)
-                .Where(x => x.PrimeraNoche <= new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes)) && x.UltimaNoche >= new DateTime(anio, mes, 1))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarActuales()
-        {
-            return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-                .ThenInclude(x => x.Cama)
-                .Where(x => x.PrimeraNoche <= DateTime.Today.AddDays(15) && x.UltimaNoche >= DateTime.Today.AddDays(-1))
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()
         {
             return await _context.Reservas

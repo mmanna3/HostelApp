@@ -8,8 +8,6 @@ namespace Api.Core.Repositories
     public interface IReservaRepository : IABMRepository<Reserva>
     {
 	    Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche);
-	    Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes);
-        Task<IEnumerable<Reserva>> ListarActuales();
-        Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
+	    Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
     }
 }
