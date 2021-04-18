@@ -21,6 +21,13 @@ export function hoy(): Date {
   return new Date();
 }
 
+export function esHoy(fecha: Date): boolean {
+  const hoy = new Date();
+  return (
+    fecha.getDate() === hoy.getDate() && fecha.getMonth() === hoy.getMonth() && fecha.getFullYear() === hoy.getFullYear()
+  );
+}
+
 export function maniana(): Date {
   let maniana = new Date();
   maniana.setDate(maniana.getDate() + 1);

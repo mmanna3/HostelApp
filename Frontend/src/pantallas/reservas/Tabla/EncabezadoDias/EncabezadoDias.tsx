@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { nombreAbreviadoDelDiaDeLaSemana, nombreAbreviadoDelMes } from 'utils/Fecha';
+import { esHoy, nombreAbreviadoDelDiaDeLaSemana, nombreAbreviadoDelMes } from 'utils/Fecha';
 import { calcularDiasDeReservasVisibles } from '../utils/funcionesUtiles';
 import Estilos from './EncabezadoDias.module.scss';
 
@@ -14,16 +14,16 @@ const EncabezadoDias = ({ fechaDesde, fechaHasta }: IParams): ReactElement => {
     <thead className="is-bordered">
       <tr>
         <th className={`${Estilos.th} ${Estilos.habitacion}`}>
-          <div className={Estilos.encabezado}>Habitación</div>
+          <div className={Estilos.contenedor}>Habitación</div>
         </th>
         <th className={`${Estilos.th} ${Estilos.cama}`}>
-          <div className={Estilos.encabezado}>Cama</div>
+          <div className={Estilos.contenedor}>Cama</div>
         </th>
 
         {dias.map(
           (fecha, i): ReactElement => (
-            <th key={i} className={Estilos.th}>
-              <div className={Estilos.encabezado}>
+            <th key={i} className={esHoy(fecha) ? Estilos.thHoy : Estilos.th}>
+              <div className={Estilos.contenedor}>
                 <div className={Estilos.numero}>{fecha.getDate()}</div>
                 <div className={Estilos.diaDeLaSemana}>{nombreAbreviadoDelDiaDeLaSemana(fecha)}</div>
                 <div className={Estilos.mes}>{nombreAbreviadoDelMes(fecha)}</div>
