@@ -1,7 +1,7 @@
 import { Button } from 'components/botones/botones';
 import SelectorDeFecha from 'components/selectorDeFecha/selectorDeFecha';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { convertirAString } from 'utils/Fecha';
+import { convertirAString, hoy, sumarDiasALaFecha } from 'utils/Fecha';
 import Estilos from './Cabecera.module.scss';
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
-  const [fechaInicio, modificarFechaInicio] = useState<Date[] | Date>(new Date());
+  const [fechaInicio, modificarFechaInicio] = useState<Date[] | Date>(sumarDiasALaFecha(hoy(), -1));
   const [dias, modificarDias] = useState(14);
   const [estiloBotonSemana, modificarEstiloBotonSemana] = useState('');
   const [estiloBotonDosSemanas, modificarEstiloBotonDosSemanas] = useState('is-primary is-selected');
