@@ -72,7 +72,7 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
           />
           <Button onClick={(): void => seleccionarMes()} text="Mes" className={`button ${estiloBotonMes}`} />
         </div>
-        <div>
+        <div className={Estilos.selectorDeFechaContenedor}>
           <SelectorDeFecha onChange={onFechaDeSelectorChange} value={fechaInicio} />
         </div>
         <div>

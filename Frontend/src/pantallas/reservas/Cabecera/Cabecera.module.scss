@@ -8,6 +8,11 @@
   margin-bottom: 0 !important;
 }
 
+.selectorDeFechaContenedor {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .selectorDeFecha > div {
   @extend .input;
 }
