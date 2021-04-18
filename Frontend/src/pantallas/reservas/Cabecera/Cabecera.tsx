@@ -52,6 +52,10 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
     modificarEstiloBotonMes('is-primary is-selected');
   };
 
+  const seleccionarHoy = (): void => {
+    modificarFechaInicio(sumarDiasALaFecha(hoy(), -1));
+  };
+
   const onFechaDeSelectorChange = (nuevaFecha: Date | Date[]): void => {
     modificarFechaInicio(nuevaFecha);
   };
@@ -70,6 +74,9 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
         </div>
         <div>
           <SelectorDeFecha onChange={onFechaDeSelectorChange} value={fechaInicio} />
+        </div>
+        <div>
+          <Button onClick={(): void => seleccionarHoy()} text="Hoy" className="button is-success" />
         </div>
       </div>
       <div className="level-right">
