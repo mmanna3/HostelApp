@@ -22,11 +22,32 @@ const Cuerpo = ({
   const [filas, actualizarFilas] = useState([]);
 
   useEffect((): void => {
+    const iconosCamas = {
+      Individual: 'individual',
+      Matrimonial: 'matrimonial',
+      'Cucheta Abajo': 'cucheta-abajo',
+      'Cucheta Arriba': 'cucheta-arriba',
+    };
+
+    const estilosIconoCama = new Map<string, string>([
+      ['Individual', Estilos.iconoCamaIndividual],
+      ['Matrimonial', Estilos.iconoCamaMatrimonial],
+      ['Cucheta Abajo', Estilos.iconoCamaCucheta],
+      ['Cucheta Arriba', Estilos.iconoCamaCucheta],
+    ]);
+
     const renderizarCeldasDeLaFila = (cama: CamaDTO, esPrimeraCamaDeLaHabitacion: boolean = false): ReactElement => {
       return (
         <>
           <td className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
             {cama.nombre} - {cama.tipo}
+            <img
+              style={{ display: 'none' }} // Lo dejo así hasta decidir si lo queremos con dibujito o con palabras
+              data-tip={`Cama '${cama.nombre}' - ${cama.tipo}`}
+              className={estilosIconoCama.get(cama.tipo)}
+              src={`images/icons/camas/${iconosCamas[cama.tipo]}.svg`}
+              alt={cama.tipo}
+            />
           </td>
           {tablaDeReservas.dias.map(
             (dia): ReactElement => (

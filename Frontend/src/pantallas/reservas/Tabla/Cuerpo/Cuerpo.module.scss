@@ -23,3 +23,20 @@
 td[data-es-primera-cama='true'] {
   border-top: 1px solid #666 !important;
 }
+
+.iconoCamaIndividual {
+  height: 14px;
+  margin-top: 5px;
+  margin-left: 3px;
+  filter: contrast(0.8);
+}
+
+.iconoCamaMatrimonial {
+  @extend .iconoCamaIndividual;
+  height: 18px;
+}
+
+.iconoCamaCucheta {
+  @extend .iconoCamaIndividual;
+  height: 23px;
+}
