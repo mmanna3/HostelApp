@@ -39,7 +39,6 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
   ]);
 
   if (datos !== null) {
-    debugger;
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (

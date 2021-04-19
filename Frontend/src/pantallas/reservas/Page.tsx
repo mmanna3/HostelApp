@@ -13,7 +13,6 @@ const ReservasPage = (): ReactElement => {
   const [IsModalVisible, setModalVisibility] = useState(false);
 
   const fetchData = useCallback((): void => {
-    dispatch(api.reservas.listar.invocar());
     dispatch(api.habitaciones.listar.invocar());
   }, [dispatch]);
 
@@ -38,7 +37,9 @@ const ReservasPage = (): ReactElement => {
 
   return (
     <div className="container is-fluid">
-      <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
+      {IsModalVisible && (
+        <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
+      )}
 
       <Cabecera showModal={showModal} onFechaChange={onFechaChange} />
 

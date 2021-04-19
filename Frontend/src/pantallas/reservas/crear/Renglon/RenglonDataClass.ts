@@ -10,7 +10,7 @@ export class RenglonData {
   public constructor(
     indice: number,
     habitacionesDisponibles: any,
-    camasDisponibles: any,
+    camasDisponibles: any[],
     habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
     camaSeleccionadaId: Nullable<number> = null
   ) {

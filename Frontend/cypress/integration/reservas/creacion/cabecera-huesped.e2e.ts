@@ -1,4 +1,6 @@
 import 'cypress-localstorage-commands';
+import { CamaTipo } from '../../../../src/interfaces/habitacion';
+import { IHabitacionParaTablaReservas } from '../../../../src/interfaces/reserva';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 describe('Cabecera con datos del huésped', (): void => {
@@ -71,7 +73,7 @@ before((): void => {
 beforeEach((): void => {
   cy.restoreLocalStorage();
 
-  cy.intercept('/api/habitaciones/conLugaresLibres**', [
+  const habitacionesConLugaresLibres: IHabitacionParaTablaReservas[] = [
     {
       id: 1,
       nombre: 'Roja',
@@ -80,12 +82,13 @@ beforeEach((): void => {
         {
           id: 33,
           nombre: '1',
-          tipo: 'Individual',
+          tipo: CamaTipo.Individual,
         },
       ],
-      cantidadDeLugaresLibres: 1,
     },
-  ]).as('conLugaresLibres');
+  ];
+
+  cy.intercept('/api/habitaciones/conLugaresLibres**', habitacionesConLugaresLibres).as('conLugaresLibres');
 
   cy.visit('/reservas');
 
