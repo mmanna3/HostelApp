@@ -157,5 +157,5 @@ beforeEach(() => {
 
   cy.visit('/reservas');
 
-  paginaReservas.abrirModalCargarNueva();
+  paginaReservas.abrirModalNuevaReserva();
 });

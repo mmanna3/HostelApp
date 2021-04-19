@@ -89,5 +89,5 @@ beforeEach((): void => {
 
   cy.visit('/reservas');
 
-  paginaReservas.abrirModalCargarNueva();
+  paginaReservas.abrirModalNuevaReserva();
 });
