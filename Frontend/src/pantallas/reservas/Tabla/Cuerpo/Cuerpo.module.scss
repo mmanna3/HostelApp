@@ -19,3 +19,7 @@
   color: #222 !important;
   border: solid #222 1px;
 }
+
+td[data-es-primera-cama='true'] {
+  border-top: 1px solid #666 !important;
+}

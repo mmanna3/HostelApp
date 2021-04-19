@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { useState, useEffect, ReactElement } from 'react';
-import { tablaDeReservasSelector, seleccionarTodasLasCeldasDeLaReserva } from 'store/app/tablaDeReservas/slice';
-import { useSelector, useDispatch } from 'react-redux';
+import { ReactElement, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
 import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from './interfaces';
 
 export interface IParams {
   dia: number;
   camaId: number;
-  esHoy: boolean;
+  esPrimeraCamaDeLaHabitacion: boolean;
   onClick: (id: Nullable<number>) => any;
 }
 
-const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
+const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
   const [data, actualizarData] = useState<ICeldaInfo>({
@@ -56,6 +56,7 @@ const Celda = ({ dia, camaId, onClick }: IParams): ReactElement => {
         data-reserva-id={data.id}
         data-dia={dia}
         data-cama-id={camaId}
+        data-es-primera-cama={esPrimeraCamaDeLaHabitacion}
         onMouseOver={onMouseOver}
         onClick={(): void => onClick(data.id)}
       >

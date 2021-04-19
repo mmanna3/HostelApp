@@ -22,10 +22,10 @@ const Cuerpo = ({
   const [filas, actualizarFilas] = useState([]);
 
   useEffect((): void => {
-    const renderizarCeldasDeLaFila = (cama: CamaDTO): ReactElement => {
+    const renderizarCeldasDeLaFila = (cama: CamaDTO, esPrimeraCamaDeLaHabitacion: boolean = false): ReactElement => {
       return (
         <>
-          <td className={Estilos.cama}>
+          <td className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
             {cama.nombre} - {cama.tipo}
           </td>
           {tablaDeReservas.dias.map(
@@ -34,7 +34,7 @@ const Cuerpo = ({
                 key={`${obtenerDia(dia)}-${cama.id}`}
                 dia={obtenerDia(dia)}
                 camaId={cama.id}
-                esHoy={false}
+                esPrimeraCamaDeLaHabitacion={esPrimeraCamaDeLaHabitacion}
                 onClick={mostrarDetalleDeReserva}
               />
             )
@@ -49,10 +49,10 @@ const Cuerpo = ({
       _filas.push(
         <>
           <tr>
-            <td rowSpan={habitacion.camas.length} className={Estilos.habitacion}>
+            <td rowSpan={habitacion.camas.length} className={Estilos.habitacion} data-es-primera-cama="true">
               {habitacion.nombre}
             </td>
-            {renderizarCeldasDeLaFila(habitacion.camas[0])}
+            {renderizarCeldasDeLaFila(habitacion.camas[0], true)}
           </tr>
           {habitacion.camas.slice(1).map(
             (cama, i): ReactElement => (
