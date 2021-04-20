@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import Select from 'components/Select';
-import { Input } from 'components/Input';
 import { Icon } from 'components/Icon';
-import Estilos from './Renglon.module.scss';
+import { Input } from 'components/Input';
+import Select from 'components/Select';
+import React, { ReactElement } from 'react';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
+import Estilos from './Renglon.module.scss';
 import { RenglonData } from './RenglonDataClass';
 
 interface IParams {

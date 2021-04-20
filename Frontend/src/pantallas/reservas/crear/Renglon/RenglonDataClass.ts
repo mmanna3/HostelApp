@@ -1,15 +1,15 @@
-import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
+import { IHabitacionParaReservaDTO, IHabitacionParaTablaReservas } from 'interfaces/reserva';
 
 export class RenglonData {
   public habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas>;
   public camaSeleccionadaId: Nullable<number>; //No sé si esto está súper bien
   public indice: number;
-  public habitacionesDisponibles: any[];
+  public habitacionesDisponibles: IHabitacionParaReservaDTO[];
   public camasDisponibles: any[];
 
   public constructor(
     indice: number,
-    habitacionesDisponibles: any,
+    habitacionesDisponibles: IHabitacionParaReservaDTO[],
     camasDisponibles: any[],
     habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
     camaSeleccionadaId: Nullable<number> = null
