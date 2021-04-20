@@ -64,7 +64,7 @@ describe('Crear reservas', () => {
   it('Si la primera es una habitación privada, figura la leyenda correspondiente', () => {
     mockearSoloUnaHabitacionPrivada();
 
-    paginaReservas.abrirModalCargarNueva();
+    paginaReservas.abrirModalNuevaReserva();
 
     cy.get('#habitacion-privada-renglon-0').should('contain.value', 1);
 
@@ -74,7 +74,7 @@ describe('Crear reservas', () => {
   it('Si la primera es una habitación sin camas, figura la leyenda correspondiente', () => {
     mockearSoloUnaHabitacionSinCamas();
 
-    paginaReservas.abrirModalCargarNueva();
+    paginaReservas.abrirModalNuevaReserva();
 
     cy.get('#habitacion-renglon-0').should('contain.value', 1);
 

@@ -1,26 +1,23 @@
 @import 'universal.scss';
 
 .contenedor {
-  height: 80vh; 
+  height: 80vh;
   overflow: scroll;
 }
 
-.tabla thead tr th {
-    border: 1px solid $primary-invert;
-    background-color: $primary;
-    color: $primary-invert;
+table {
+  text-align: center;
+  border-collapse: separate !important;
 }
 
-table { 
-  text-align: center; 
-}
-
-table th, table td {
+table th,
+table td {
   white-space: nowrap;
-  padding: 10px 20px;  
+  padding: 10px 20px;
 }
 
-table td div, table th div {
+table td div,
+table th div {
   min-width: 25px;
   max-width: fit-content;
 }
@@ -42,12 +39,7 @@ table td div, table th div {
 
 .celdaHoy {
   // background-color: #9cd4ff;
-  //background-color: #a1d6ff;  
+  //background-color: #a1d6ff;
   background-color: #d9e8ff;
   //#d9e8ff
 }
-
-
-
-
-

@@ -62,8 +62,12 @@ $primary: $blue;
 
 /* INICIO: DateRangePicker */
 
+.react-date-picker__calendar--open {
+  z-index: 15;
+}
+
 .react-daterange-picker__calendar--open {
-  z-index: 9;
+  z-index: 15;
   top: 0px !important;
   left: 280px !important;
 }

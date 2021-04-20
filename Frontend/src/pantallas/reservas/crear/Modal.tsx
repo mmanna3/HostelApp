@@ -1,17 +1,17 @@
-import React, { useState, useEffect, ReactElement } from 'react';
-import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
 import { Button } from 'components/botones/botones';
-import Label from 'components/Label';
-import ValidationSummary from 'components/ValidationSummary';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
+import Label from 'components/Label';
+import { Body, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import ValidationSummary from 'components/ValidationSummary';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
-import Renglon from './Renglon/Renglon';
-import Estilos from './Modal.module.scss';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
-import { RenglonData } from './Renglon/RenglonDataClass';
+import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import CabeceraHuesped from './CabeceraHuesped/Componente';
+import Estilos from './Modal.module.scss';
+import Renglon from './Renglon/Renglon';
+import { RenglonData } from './Renglon/RenglonDataClass';
 
 interface IParams {
   isVisible: boolean;
@@ -72,19 +72,22 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   function onHabitacionChange(indice: number, id: string): void {
     var habitacion = habitaciones.find((hab: any): any => hab.id === parseInt(id));
 
-    var renglonesCopia = renglones;
-    for (let i = 0; i < renglones.length; i++)
-      if (renglonesCopia[i].indice === indice) {
-        renglonesCopia[i].habitacionSeleccionada = habitacion;
-        renglonesCopia[i].camasDisponibles = habitacion.camas;
-        if (habitacion.camas.length > 0) renglonesCopia[i].camaSeleccionadaId = habitacion.camas[0].id;
+    if (habitacion) {
+      // Innecesario if pero bueno
+      var renglonesCopia = renglones;
+      for (let i = 0; i < renglones.length; i++)
+        if (renglonesCopia[i].indice === indice) {
+          renglonesCopia[i].habitacionSeleccionada = habitacion;
+          renglonesCopia[i].camasDisponibles = habitacion.camas;
+          if (habitacion.camas.length > 0) renglonesCopia[i].camaSeleccionadaId = habitacion.camas[0].id;
 
-        break;
-      }
-    actualizarRenglones([...renglonesCopia]);
+          break;
+        }
+      actualizarRenglones([...renglonesCopia]);
+    }
   }
 
-  function onCamaChange(indice: number, id: string): void {
+  function onCamaChange(indice: number, id: number): void {
     var renglonesCopia = renglones;
 
     for (let i = 0; i < renglones.length; i++)

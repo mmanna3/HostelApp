@@ -1,10 +1,16 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { createSlice as createGetSlice, fetchFunc, reiniciarEstado } from 'store/api/utils/httpGetSliceBase';
-import { createSlice as createPostSlice, postFunc, limpiarErrores } from 'store/api/utils/httpPostSliceBase';
+import { createSlice as createPostSlice, limpiarErrores, postFunc } from 'store/api/utils/httpPostSliceBase';
+import { EstadosApiRequestEnum } from './estadosApiRequestEnum';
 
-interface ISliceHttpGetGenerado<TParametros = {}> {
-  selector: (state: any) => any;
+interface Selector<T> {
+  datos: T;
+  estado: EstadosApiRequestEnum;
+}
+
+interface ISliceHttpGetGenerado<TResultado, TParametros = {}> {
+  selector: (state: any) => Selector<TResultado>;
   reducer: any;
   invocar: (parametros?: TParametros) => any;
   reiniciar: () => void;
@@ -29,7 +35,7 @@ export interface IObtenerPorIdParams {
 
 export function generarSliceHttpGet<TResultado, TParametros = {}>(
   requestSlice: IApiSliceInfo
-): ISliceHttpGetGenerado<TParametros> {
+): ISliceHttpGetGenerado<TResultado, TParametros> {
   const slice = createGetSlice(requestSlice.nombreDelSlice, requestSlice.dataInicial);
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;

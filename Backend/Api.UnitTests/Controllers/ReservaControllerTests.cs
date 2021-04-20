@@ -117,7 +117,7 @@ namespace Api.UnitTests.Controllers
         }
 
         [Test]
-        public void MapeaCorrectamenteEnLaConsultaMensual()
+        public void MapeaCorrectamenteEnLaConsulta()
         {
             DadaUnaListaDeReservas();
             var desde = new DateTime(2020, 8, 1);

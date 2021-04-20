@@ -1,0 +1,49 @@
+@import 'universal.scss';
+
+.numero {
+  font-size: 17px;
+  text-align: center;
+}
+
+.diaDeLaSemana {
+  font-size: 13px;
+  text-align: center;
+}
+
+.mes {
+  font-size: 11px;
+  text-align: center;
+}
+
+.contenedor {
+  margin: auto;
+}
+
+.th {
+  border: 1px solid #ccc !important;
+  background-color: #eee;
+  color: #222 !important;
+  top: 0;
+  position: sticky;
+  z-index: 8;
+}
+
+.thHoy {
+  @extend .th;
+  background-color: #ccc;
+}
+
+.habitacion {
+  position: sticky;
+  left: 0;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  z-index: 12;
+}
+
+.cama {
+  position: sticky;
+  left: 150px;
+  width: 200px;
+  z-index: 12;
+}

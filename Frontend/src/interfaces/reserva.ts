@@ -28,6 +28,14 @@ export interface CheckoutsDeHoyDTO {
   aNombreDe: string;
 }
 
+export interface IHabitacionParaReservaDTO {
+  id: number;
+  nombre: string;
+  esPrivada: boolean;
+  camas: CamaDTO[];
+  cantidadDeLugaresLibres: number;
+}
+
 export interface IHabitacionParaTablaReservas {
   id: number;
   nombre: string;

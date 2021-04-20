@@ -1,0 +1,23 @@
+@import 'universal.scss';
+
+.botones {
+  margin-bottom: 0 !important;
+}
+
+.botones button {
+  margin-bottom: 0 !important;
+}
+
+.selectorDeFechaContenedor {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.selectorDeFecha > div {
+  @extend .input;
+}
+
+.calendario {
+  border-radius: 4px;
+  border-color: #dbdbdb;
+}

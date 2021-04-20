@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
@@ -18,19 +19,9 @@ namespace Api.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Reserva>> Listar()
+        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
-            return await _repository.Listar();
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes)
-        {
-            return await _repository.ListarMensuales(anio, mes);
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarActuales()
-        {
-            return await _repository.ListarActuales();
+	        return await _repository.ListarEntre(primeraNoche, ultimaNoche);
         }
 
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()

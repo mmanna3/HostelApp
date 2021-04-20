@@ -1,0 +1,20 @@
+@import 'universal.scss';
+
+.botones {
+  margin-bottom: 0 !important;
+}
+
+.botones button {
+  margin-bottom: 0 !important;
+}
+
+@import 'universal.scss';
+
+.dateRangePicker > div {
+  @extend .input;
+}
+
+.calendar {
+  border-radius: 4px;
+  border-color: #dbdbdb;
+}

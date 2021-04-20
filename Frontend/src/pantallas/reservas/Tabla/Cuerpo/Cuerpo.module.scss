@@ -1,0 +1,42 @@
+@import 'universal.scss';
+
+.habitacion {
+  width: 150px;
+  left: 0;
+  z-index: 9;
+  position: sticky;
+  background-color: #eee;
+  color: #222 !important;
+}
+
+.cama {
+  position: sticky;
+  left: 150px;
+  top: auto;
+  width: 200px;
+  z-index: 9;
+  background-color: #eee;
+  color: #222 !important;
+  border: solid #222 1px;
+}
+
+td[data-es-primera-cama='true'] {
+  border-top: 1px solid #666 !important;
+}
+
+.iconoCamaIndividual {
+  height: 14px;
+  margin-top: 5px;
+  margin-left: 3px;
+  filter: contrast(0.8);
+}
+
+.iconoCamaMatrimonial {
+  @extend .iconoCamaIndividual;
+  height: 18px;
+}
+
+.iconoCamaCucheta {
+  @extend .iconoCamaIndividual;
+  height: 23px;
+}

@@ -21,10 +21,21 @@ export function hoy(): Date {
   return new Date();
 }
 
+export function esHoy(fecha: Date): boolean {
+  const hoy = new Date();
+  return (
+    fecha.getDate() === hoy.getDate() && fecha.getMonth() === hoy.getMonth() && fecha.getFullYear() === hoy.getFullYear()
+  );
+}
+
 export function maniana(): Date {
   let maniana = new Date();
   maniana.setDate(maniana.getDate() + 1);
   return maniana;
+}
+
+export function convertirADate(fecha: string): Date {
+  return new Date(obtenerAnio(fecha), obtenerMes(fecha) - 1, obtenerDia(fecha));
 }
 
 export function restarFechas(b: Date, a: Date): number {
@@ -35,8 +46,42 @@ export function restarFechas(b: Date, a: Date): number {
 
   return Math.floor((utc2 - utc1) / _milisegundosQueTieneCadaDia);
 }
+
 export function sumarDiasALaFecha(fecha: Date, cantidadDeDias: number): Date {
   var resultado = new Date(fecha);
   resultado.setDate(resultado.getDate() + cantidadDeDias);
   return resultado;
+}
+
+export function nombreAbreviadoDelMes(fecha: Date): string {
+  const meses = new Map<number, string>([
+    [0, 'ENE'],
+    [1, 'FEB'],
+    [2, 'MAR'],
+    [3, 'ABR'],
+    [4, 'MAY'],
+    [5, 'JUN'],
+    [6, 'JUL'],
+    [7, 'AGO'],
+    [8, 'SEP'],
+    [9, 'OCT'],
+    [10, 'NOV'],
+    [11, 'DIC'],
+  ]);
+
+  return meses.get(fecha.getMonth()) || '';
+}
+
+export function nombreAbreviadoDelDiaDeLaSemana(fecha: Date): string {
+  const meses = new Map<number, string>([
+    [0, 'DOM'],
+    [1, 'LUN'],
+    [2, 'MAR'],
+    [3, 'MIÉ'],
+    [4, 'JUE'],
+    [5, 'VIE'],
+    [6, 'SÁB'],
+  ]);
+
+  return meses.get(fecha.getDay()) || '';
 }

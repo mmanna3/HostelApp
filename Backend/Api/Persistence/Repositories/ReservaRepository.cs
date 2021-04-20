@@ -14,28 +14,12 @@ namespace Api.Persistence.Repositories
         public ReservaRepository(AppDbContext context) : base(context)
         {
         }
-        public override async Task<IEnumerable<Reserva>> Listar()
+        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
             return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarMensuales(int anio, int mes)
-        {
-            return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-                .ThenInclude(x => x.Cama)
-                .Where(x => x.PrimeraNoche <= new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes)) && x.UltimaNoche >= new DateTime(anio, mes, 1))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Reserva>> ListarActuales()
-        {
-            return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-                .ThenInclude(x => x.Cama)
-                .Where(x => x.PrimeraNoche <= DateTime.Today.AddDays(15) && x.UltimaNoche >= DateTime.Today.AddDays(-1))
+	            .Include(x => x.ReservaCamas)
+	            .ThenInclude(x => x.Cama)
+	            .Where(x => x.PrimeraNoche <= ultimaNoche && x.UltimaNoche >= primeraNoche)
                 .ToListAsync();
         }
 

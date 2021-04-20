@@ -1,12 +1,12 @@
 import 'cypress-localstorage-commands';
+import { ReservasDelPeriodoDTO } from '../../../../src/interfaces/reserva';
+import * as fechaUtils from '../../../../src/utils/Fecha';
 import habitaciones from '../../../mocks/habitaciones/2-habitaciones-5-camas';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
-import * as fechaUtils from '../../../utils/fecha';
 
 describe('Mostrar reservas', (): void => {
   it('Muestra correctamente reservas', (): void => {
-    cy.contains('h1', 'Reservas').should('have.length', 1);
-    paginaReservas.obtenerCelda(fechaUtils.diaDeHoy(), 1).invoke('attr', 'class').should('contain', 'Celda_color');
+    paginaReservas.obtenerCelda(fechaUtils.hoy().getDate(), 1).invoke('attr', 'class').should('contain', 'Celda_color');
   });
 });
 
@@ -20,19 +20,23 @@ beforeEach((): void => {
 
   cy.intercept('/api/habitaciones', habitaciones).as('habitaciones');
 
-  cy.intercept('/api/reservas/actuales', {
+  const ayer = fechaUtils.sumarDiasALaFecha(fechaUtils.hoy(), -1);
+  const ayerString = fechaUtils.convertirAString(ayer);
+
+  const url = `/api/reservas?primeraNoche=${ayerString}&dias=14`;
+  const reservasDelPeriodo: ReservasDelPeriodoDTO = {
     reservas: [
       {
         id: 1,
-        diaDeCheckin: fechaUtils.diaDeHoy(),
-        diaDeCheckout: fechaUtils.diaDeHoy(),
-        aNombreDe: 'Elliot',
+        diaDeCheckin: ayer.getDate(),
+        diaDeCheckout: ayer.getDate() + 1,
         camasIds: [1, 2],
       },
     ],
-    desde: fechaUtils.fechaDeHoy(),
-    hasta: fechaUtils.fechaDentroDe30Dias(),
-  }).as('reservasActuales');
+    desde: fechaUtils.convertirAString(ayer),
+    hasta: fechaUtils.convertirAString(fechaUtils.sumarDiasALaFecha(ayer, 14)),
+  };
+  cy.intercept(url, reservasDelPeriodo).as('reservasActuales');
 
   cy.visit('/reservas');
 
