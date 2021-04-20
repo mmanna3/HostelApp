@@ -91,3 +91,7 @@ VALUES (N'prueba-prueba', N'esuserypass', N'prueba', 0x4D959FA1DCA42C13CEDBD5539
 ```
 yarn cy-run --spec 'cypress/integration/reservas/creacion/cabecera-huesped.e2e.ts'
 ```
+
+# Crear enum
+
+Es una property más de la clase en cuestión, pero tenés que decirle por FluentApi en AppDbContext cuál es el valor default (sino es 0)

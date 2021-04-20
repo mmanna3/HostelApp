@@ -51,6 +51,8 @@
     <Compile Remove="Persistence\Migrations\20210405040400_DniOPasaporte_delHuesped_esKey.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20210405042846_asdasd.cs" />
     <Compile Remove="Persistence\Migrations\20210405042846_asdasd.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210420045320_Agrega_Estado_a_Reserva.cs" />
+    <Compile Remove="Persistence\Migrations\20210420045320_Agrega_Estado_a_Reserva.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

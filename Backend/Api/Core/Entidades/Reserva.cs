@@ -7,6 +7,9 @@ namespace Api.Core.Entidades
     public class Reserva : EntidadConId
     {
         [Required]
+        public ReservaEstadoEnum Estado { get; set; }
+
+        [Required]
         public Huesped Huesped { get; set; }
 
         [Required]

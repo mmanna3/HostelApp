@@ -55,6 +55,10 @@ namespace Api.Persistence.Config
             builder.Entity<Huesped>()
 	            .HasIndex(h => h.DniOPasaporte)
 	            .IsUnique();
+
+            builder.Entity<Reserva>()
+	            .Property(x => x.Estado)
+	            .HasDefaultValue(ReservaEstadoEnum.CheckinPendiente);
         }
     }
 }
