@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Core;
+using Api.Core.Entidades;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -49,6 +50,7 @@ namespace Api.IntegrationTests
             reserva.DiaDeCheckout.Should().Be(17);
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
+            reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
         }
 
         [Test]
