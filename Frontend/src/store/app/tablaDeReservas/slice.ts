@@ -38,6 +38,7 @@ const tablaDeReservasSlice = createSlice({
 
       var celdaInfo: ICeldaInfo = {
         id: reserva.id,
+        estado: reserva.estado,
         estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
       };
 

@@ -1,4 +1,4 @@
-import { CheckoutsDeHoyDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'interfaces/reserva';
+import { CheckoutsDeHoyDTO, ReservaDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'interfaces/reserva';
 import {
   generarSliceHttpGet,
   generarSliceHttpPost,
@@ -45,7 +45,7 @@ const crear = {
   ...generarSliceHttpPost<string, ReservaResumenDTO>(crearSliceInfo),
 };
 
-const obtenerPorId = { ...generarSliceHttpGet<ReservaResumenDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
+const obtenerPorId = { ...generarSliceHttpGet<ReservaDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
 export default {
   listar,

@@ -1,3 +1,4 @@
+import { ReservaEstadoEnum } from 'interfaces/reserva';
 import * as React from 'react';
 import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,20 +19,14 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   const [data, actualizarData] = useState<ICeldaInfo>({
     id: null,
     estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+    estado: ReservaEstadoEnum.CheckinPendiente,
   });
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
 
-  const colores = new Map<number, string>([
-    [0, estilos.colorCero],
-    [1, estilos.colorUno],
-    [2, estilos.colorDos],
-    [3, estilos.colorTres],
-    [4, estilos.colorCuatro],
-    [5, estilos.colorCinco],
-    [6, estilos.colorSeis],
-    [7, estilos.colorSiete],
-    [8, estilos.colorOcho],
-    [9, estilos.colorNueve],
+  const colores = new Map<ReservaEstadoEnum, string>([
+    [ReservaEstadoEnum.CheckinPendiente, estilos.colorCero],
+    [ReservaEstadoEnum.InHouse, estilos.colorUno],
+    [ReservaEstadoEnum.HizoCheckout, estilos.colorDos],
   ]);
 
   const onMouseOver = (): void => {
@@ -42,10 +37,9 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
     var contenido = tabla[`${dia}`][`${camaId}`];
     actualizarData(contenido);
 
-    if (contenido.id !== null) {
+    if (contenido.estado !== null) {
       //Horrible if, hay que sacarlo
-      var codigoColorSegunTerminacionDelId = contenido.id % 10;
-      actualizarClaseCssColor(colores.get(codigoColorSegunTerminacionDelId));
+      actualizarClaseCssColor(colores.get(contenido.estado));
     }
   }, [tabla, dia, camaId, colores]);
 

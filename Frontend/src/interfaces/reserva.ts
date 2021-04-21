@@ -7,15 +7,22 @@ export interface ReservasDelPeriodoDTO {
   reservas: ReservaResumenDTO[];
 }
 
+export enum ReservaEstadoEnum {
+  CheckinPendiente = 1,
+  InHouse = 2,
+  HizoCheckout = 3,
+}
 export interface ReservaResumenDTO {
   id: number;
   diaDeCheckin: number;
   diaDeCheckout: number;
   camasIds: number[];
+  estado: ReservaEstadoEnum;
 }
 
 export interface ReservaDTO {
   id: number;
+  estado: ReservaEstadoEnum;
   datosMinimosDeHuesped: DatosMinimosDeHuespedDTO;
   diaDeCheckin: number;
   diaDeCheckout: number;

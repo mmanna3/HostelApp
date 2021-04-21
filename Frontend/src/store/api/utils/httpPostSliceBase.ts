@@ -1,4 +1,4 @@
-import { createSlice as createSliceRTK, Slice, Dispatch } from '@reduxjs/toolkit';
+import { createSlice as createSliceRTK, Dispatch, Slice } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { EstadosApiRequestEnum as ESTADO } from './estadosApiRequestEnum';
 
@@ -24,7 +24,7 @@ export const createSlice = (nombre: string): Slice =>
       },
       postFailure: (state, { payload }): void => {
         state.estado = ESTADO.huboError;
-        state.errores = payload?.errors;
+        state.errores = payload?.response?.data?.errors || payload.response;
       },
       reset: (state): void => {
         state.estado = ESTADO.inactivo;
@@ -53,7 +53,8 @@ export function postFunc<TResultado, TPostBody>(
         typeof onSuccess === 'function' && onSuccess(res.data);
       })
       .catch((error): void => {
-        dispatch(postFailure(error.response.data));
+        console.log(error);
+        dispatch(postFailure(error));
       });
   };
 
