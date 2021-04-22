@@ -9,22 +9,23 @@
   cursor: copy;
 }
 
+.estaHovereada {
+  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+}
+
 .colorCero {
-  // background-color: $azul-marino;
+  @extend .estaHovereada;
   background-color: #aff8db;
-  border: 0 !important;
 }
 
 .colorUno {
-  // background-color: $azul;
+  @extend .estaHovereada;
   background-color: #6eb5ff;
-  border: 0 !important;
 }
 
 .colorDos {
-  // background-color: $verde-agua;
+  @extend .estaHovereada;
   background-color: #ffabab;
-  border: 0 !important;
 }
 
 .colorTres {
