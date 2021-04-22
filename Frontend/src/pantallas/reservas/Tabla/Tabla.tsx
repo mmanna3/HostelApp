@@ -36,8 +36,8 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   return (
     <>
-      <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleReserva(null)}></DetalleHabitacion>
-      <DetalleReserva id={idDetalleReserva} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleReserva>
+      <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleHabitacion>
+      <DetalleReserva id={idDetalleReserva} onHide={(): void => cambiarIdDetalleReserva(null)}></DetalleReserva>
       <div className={Estilos.contenedor}>
         <table className="table is-hoverable is-bordered is-fullwidth">
           <EncabezadoDias fechaDesde={datos.desde} fechaHasta={datos.hasta} />
