@@ -24,9 +24,9 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
 
   const colores = new Map<ReservaEstadoEnum, string>([
-    [ReservaEstadoEnum.CheckinPendiente, estilos.colorCero],
-    [ReservaEstadoEnum.InHouse, estilos.colorUno],
-    [ReservaEstadoEnum.HizoCheckout, estilos.colorDos],
+    [ReservaEstadoEnum.CheckinPendiente, estilos.estadoCheckin],
+    [ReservaEstadoEnum.InHouse, estilos.estadoInhouse],
+    [ReservaEstadoEnum.HizoCheckout, estilos.estadoHizoCheckout],
   ]);
 
   const onMouseOver = (): void => {

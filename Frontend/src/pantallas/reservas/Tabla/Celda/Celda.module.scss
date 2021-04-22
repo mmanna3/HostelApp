@@ -1,71 +1,25 @@
 @import 'universal.scss';
 
-.esHoy {
-  filter: drop-shadow(1px 7px 3px black);
-}
-
 .estaSeleccionada {
   filter: brightness(40%);
   cursor: copy;
 }
 
 .estaHovereada {
-  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
 }
 
-.colorCero {
+.estadoCheckin {
   @extend .estaHovereada;
-  background-color: #aff8db;
+  background-color: $color-pastel-verde;
 }
 
-.colorUno {
+.estadoInhouse {
   @extend .estaHovereada;
-  background-color: #6eb5ff;
+  background-color: $color-pastel-azul;
 }
 
-.colorDos {
+.estadoHizoCheckout {
   @extend .estaHovereada;
-  background-color: #ffabab;
-}
-
-.colorTres {
-  // background-color: $celeste;
-  background-color: #ace7ff;
-  border: 0 !important;
-}
-
-.colorCuatro {
-  // background-color: $amarillo;
-  background-color: #fff5ba;
-  border: 0 !important;
-}
-
-.colorCinco {
-  // background-color: $verde;
-  background-color: #bffcc6;
-  border: 0 !important;
-}
-
-.colorSeis {
-  // background-color: $purpura;
-  background-color: #b28dff;
-  border: 0 !important;
-}
-
-.colorSiete {
-  // background-color: $bordo;
-  background-color: #ffabab;
-  border: 0 !important;
-}
-
-.colorOcho {
-  // background-color: $naraja;
-  background-color: #ffcbc1;
-  border: 0 !important;
-}
-
-.colorNueve {
-  // background-color: $fucsia;
-  background-color: #ffccf9;
-  border: 0 !important;
+  background-color: $color-pastel-rojo;
 }
