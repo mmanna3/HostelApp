@@ -53,7 +53,7 @@ const Cuerpo = ({
             (dia): ReactElement => (
               <Celda
                 key={`${obtenerDia(dia)}-${cama.id}`}
-                dia={obtenerDia(dia)}
+                dia={dia}
                 camaId={cama.id}
                 esPrimeraCamaDeLaHabitacion={esPrimeraCamaDeLaHabitacion}
                 onClick={mostrarDetalleDeReserva}

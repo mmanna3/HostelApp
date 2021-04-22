@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
 import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
-import { convertirAString, obtenerDia } from 'utils/Fecha';
+import { convertirADate, convertirAString, sumarDiasALaFecha } from 'utils/Fecha';
 
 export const initialState: IInitialState = {
   dias: [],
@@ -18,20 +18,17 @@ const tablaDeReservasSlice = createSlice({
     _inicializar: (state, { payload }): void => {
       state.dias = payload.dias;
       state.camasIdsArray = payload.camasIdsArray;
-      var celdaInicial: ICeldaInicial = {};
+      var columnaInicial: ICeldaInicial = {};
 
       payload.camasIdsArray.forEach((camaId: number): void => {
-        celdaInicial[`${camaId}`] = {
+        columnaInicial[`${camaId}`] = {
           id: null,
           estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
         } as ICeldaInfo;
       });
       payload.dias.forEach((dia: string): void => {
-        state.tabla[`${obtenerDia(dia)}`] = celdaInicial;
+        state.tabla[dia] = columnaInicial;
       });
-    },
-    _modificarCelda: (state, { payload }): void => {
-      state.tabla[`${payload.dia}`][`${payload.camaId}`] = payload.valor;
     },
     _insertarReserva: (state, { payload }): void => {
       var reserva = payload as ReservaResumenDTO;
@@ -42,12 +39,16 @@ const tablaDeReservasSlice = createSlice({
         estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
       };
 
-      for (let dia = reserva.diaDeCheckin; dia <= reserva.diaDeCheckout; dia++) {
-        reserva.camasIds.forEach((camaId: any): void => {
-          state.tabla[`${dia}`][`${camaId}`] = celdaInfo;
+      var diaCheckin = convertirADate(reserva.diaDeCheckin);
+      var diaCheckout = convertirADate(reserva.diaDeCheckout);
+
+      for (let dia = diaCheckin; dia <= diaCheckout; dia = sumarDiasALaFecha(dia, 1)) {
+        reserva.camasIds.forEach((camaId: number): void => {
+          var diaString = convertirAString(dia);
+          state.tabla[diaString][`${camaId}`] = celdaInfo;
 
           if (!state.reservas[`${reserva.id}`]) state.reservas[`${reserva.id}`] = [];
-          state.reservas[`${reserva.id}`].push({ dia: dia, camaId: camaId });
+          state.reservas[`${reserva.id}`].push({ dia: diaString, camaId: camaId });
         });
       }
     },
@@ -80,7 +81,6 @@ const tablaDeReservasSlice = createSlice({
 
 export const {
   _inicializar,
-  _modificarCelda,
   _insertarReserva,
   _seleccionarTodasLasCeldasDeLaReserva,
   _limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva,
@@ -92,12 +92,6 @@ export function inicializarTabla(dias: Date[], camasIdsArray: number[]): (dispat
   return async (dispatch: IDispatch): Promise<any> => {
     const diasString = dias.map((dia): string => convertirAString(dia));
     dispatch(_inicializar({ dias: diasString, camasIdsArray }));
-  };
-}
-
-export function modificarCelda(dia: number, camaId: number, valor: any): (dispatch: IDispatch) => Promise<any> {
-  return async (dispatch: IDispatch): Promise<any> => {
-    dispatch(_modificarCelda({ dia, camaId, valor }));
   };
 }
 
@@ -125,9 +119,10 @@ interface IInitialState {
 }
 
 interface IDiaCamaId {
-  dia: number;
+  dia: string;
   camaId: number;
 }
+
 export interface ITabla {
   [dia: string]: {
     [camaId: string]: ICeldaInfo;

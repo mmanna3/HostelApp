@@ -133,8 +133,8 @@ namespace Api.UnitTests.Controllers
             reservasDTO.Desde.Should().Be(Utilidades.ConvertirFecha(desde));
             reservasDTO.Hasta.Should().Be(Utilidades.ConvertirFecha(hasta));
 
-            primeraReserva.DiaDeCheckin.Should().Be(1);
-            primeraReserva.DiaDeCheckout.Should().Be(31);
+            primeraReserva.DiaDeCheckin.Should().Be("2020-08-01");
+            primeraReserva.DiaDeCheckout.Should().Be("2020-08-31");
             primeraReserva.CamasIds.Should().HaveCount(2);
             primeraReserva.CamasIds.First().Should().Be(1);
             primeraReserva.CamasIds.Skip(1).First().Should().Be(2);

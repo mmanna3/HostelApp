@@ -46,8 +46,8 @@ namespace Api.IntegrationTests
             reservasDelMes.Reservas.Count().Should().Be(1);
             var reserva = reservasDelMes.Reservas.ToList().First();
 
-            reserva.DiaDeCheckin.Should().Be(17);
-            reserva.DiaDeCheckout.Should().Be(17);
+            reserva.DiaDeCheckin.Should().Be("2020-09-17");
+            reserva.DiaDeCheckout.Should().Be("2020-09-17");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);

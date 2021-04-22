@@ -13,8 +13,8 @@ namespace Api.Controllers.DTOs
         {
 	        public int Id { get; set; }
 	        public ReservaEstadoEnum Estado { get; set; }
-            public int DiaDeCheckin { get; set; }
-            public int DiaDeCheckout { get; set; }
+            public string DiaDeCheckin { get; set; }
+            public string DiaDeCheckout { get; set; }
             public List<int> CamasIds { get; set; }
         }
     }

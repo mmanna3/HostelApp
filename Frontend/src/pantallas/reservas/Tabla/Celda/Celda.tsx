@@ -7,7 +7,7 @@ import estilos from './Celda.module.scss';
 import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from './interfaces';
 
 export interface IParams {
-  dia: number;
+  dia: string;
   camaId: number;
   esPrimeraCamaDeLaHabitacion: boolean;
   onClick: (id: Nullable<number>) => any;
@@ -34,7 +34,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   };
 
   useEffect((): any => {
-    var contenido = tabla[`${dia}`][`${camaId}`];
+    var contenido = tabla[dia][`${camaId}`];
     actualizarData(contenido);
 
     if (contenido.estado !== null) {
