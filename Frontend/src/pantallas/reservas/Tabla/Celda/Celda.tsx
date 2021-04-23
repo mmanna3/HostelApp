@@ -18,6 +18,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   const { tabla } = useSelector(tablaDeReservasSelector);
   const [data, actualizarData] = useState<ICeldaInfo>({
     id: null,
+    nombreAbreviadoDelHuesped: '',
     estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
     estado: ReservaEstadoEnum.CheckinPendiente,
   });
@@ -54,7 +55,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
         onMouseOver={onMouseOver}
         onClick={(): void => onClick(data.id)}
       >
-        <div>{/* {contenido.aNombreDe} */}</div>
+        <div>{data.nombreAbreviadoDelHuesped}</div>
       </td>
     </>
   );

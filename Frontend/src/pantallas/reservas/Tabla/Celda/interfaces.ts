@@ -8,5 +8,6 @@ export const CeldaPertenecienteAReservaEstilo = {
 export interface ICeldaInfo {
   estilo: string;
   id: Nullable<number>;
+  nombreAbreviadoDelHuesped: string;
   estado: ReservaEstadoEnum;
 }

@@ -14,6 +14,7 @@ export enum ReservaEstadoEnum {
 }
 export interface ReservaResumenDTO {
   id: number;
+  nombreAbreviadoDelHuesped: string;
   diaDeCheckin: string;
   diaDeCheckout: string;
   camasIds: number[];

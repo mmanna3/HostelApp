@@ -24,6 +24,7 @@ const tablaDeReservasSlice = createSlice({
         columnaInicial[`${camaId}`] = {
           id: null,
           estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+          nombreAbreviadoDelHuesped: '',
         } as ICeldaInfo;
       });
       payload.dias.forEach((dia: string): void => {
@@ -35,6 +36,7 @@ const tablaDeReservasSlice = createSlice({
 
       var celdaInfo: ICeldaInfo = {
         id: reserva.id,
+        nombreAbreviadoDelHuesped: reserva.nombreAbreviadoDelHuesped,
         estado: reserva.estado,
         estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
       };
