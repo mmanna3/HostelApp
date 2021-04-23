@@ -20,27 +20,19 @@
   border: solid #222 1px;
 }
 
-td {
-  min-width: 70px;
-}
+// .iconoCamaIndividual {
+//   height: 14px;
+//   margin-top: 5px;
+//   margin-left: 3px;
+//   filter: contrast(0.8);
+// }
 
-td[data-es-primera-cama='true'] {
-  border-top: 1px solid #666 !important;
-}
+// .iconoCamaMatrimonial {
+//   @extend .iconoCamaIndividual;
+//   height: 18px;
+// }
 
-.iconoCamaIndividual {
-  height: 14px;
-  margin-top: 5px;
-  margin-left: 3px;
-  filter: contrast(0.8);
-}
-
-.iconoCamaMatrimonial {
-  @extend .iconoCamaIndividual;
-  height: 18px;
-}
-
-.iconoCamaCucheta {
-  @extend .iconoCamaIndividual;
-  height: 23px;
-}
+// .iconoCamaCucheta {
+//   @extend .iconoCamaIndividual;
+//   height: 23px;
+// }

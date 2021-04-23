@@ -23,3 +23,15 @@
   @extend .estaHovereada;
   background-color: $color-pastel-rojo;
 }
+
+td {
+  min-width: 70px;
+}
+
+td[data-es-primera-cama='true'] {
+  border-top: 1px solid #666 !important;
+}
+
+td div {
+  margin: auto;
+}
