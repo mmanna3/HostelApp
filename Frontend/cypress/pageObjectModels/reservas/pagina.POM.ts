@@ -1,4 +1,4 @@
-export function obtenerCelda(dia: number, camaId: number): Cypress.Chainable<JQuery<HTMLElement>> {
+export function obtenerCelda(dia: string, camaId: number): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.get(`[data-dia="${dia}"][data-cama-id="${camaId}"]`);
 }
 

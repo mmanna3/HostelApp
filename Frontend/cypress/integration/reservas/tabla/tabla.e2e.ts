@@ -6,7 +6,19 @@ import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 describe('Mostrar reservas', (): void => {
   it('Muestra correctamente reservas', (): void => {
-    paginaReservas.obtenerCelda(fechaUtils.hoy().getDate(), 1).invoke('attr', 'class').should('contain', 'Celda_color');
+    // Leé por favor la doc de cypress y reescribí esto con callbacks
+
+    paginaReservas
+      .obtenerCelda(fechaUtils.convertirAString(fechaUtils.hoy()), 1)
+      .invoke('attr', 'class')
+      .should('contain', 'estadoCheckin');
+
+    paginaReservas
+      .obtenerCelda(fechaUtils.convertirAString(fechaUtils.hoy()), 1)
+      .invoke('attr', 'data-reserva-id')
+      .should('eq', '123');
+
+    paginaReservas.obtenerCelda(fechaUtils.convertirAString(fechaUtils.hoy()), 1).should('contain', 'Semil..');
   });
 });
 
@@ -27,9 +39,11 @@ beforeEach((): void => {
   const reservasDelPeriodo: ReservasDelPeriodoDTO = {
     reservas: [
       {
-        id: 1,
-        diaDeCheckin: ayer.getDate(),
-        diaDeCheckout: ayer.getDate() + 1,
+        id: 123,
+        estado: 1,
+        nombreAbreviadoDelHuesped: 'Semil..',
+        diaDeCheckin: fechaUtils.convertirAString(ayer),
+        diaDeCheckout: fechaUtils.convertirAString(fechaUtils.sumarDiasALaFecha(ayer, 1)),
         camasIds: [1, 2],
       },
     ],
