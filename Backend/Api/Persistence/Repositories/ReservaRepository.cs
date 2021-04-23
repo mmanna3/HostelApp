@@ -17,8 +17,9 @@ namespace Api.Persistence.Repositories
         public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
             return await _context.Reservas
-	            .Include(x => x.ReservaCamas)
-	            .ThenInclude(x => x.Cama)
+	            .Include(x => x.Huesped)
+                .Include(x => x.ReservaCamas)
+					.ThenInclude(x => x.Cama)
 	            .Where(x => x.PrimeraNoche <= ultimaNoche && x.UltimaNoche >= primeraNoche)
                 .ToListAsync();
         }
@@ -27,7 +28,7 @@ namespace Api.Persistence.Repositories
         {
             return await _context.Reservas
                 .Include(x => x.ReservaCamas)
-                .ThenInclude(x => x.Cama)
+					.ThenInclude(x => x.Cama)
                 .Where(x => x.UltimaNoche == DateTime.Today.AddDays(-1))
                 .ToListAsync();
         }

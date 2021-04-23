@@ -28,5 +28,10 @@ namespace Api.Core.Entidades
         {
             return dia >= PrimeraNoche && dia <= UltimaNoche;
         }
+
+        public string ObtenerNombreAbreviadoDelHuesped()
+        {
+	        return Huesped.ObtenerNombreAbreviado();
+        }
     }
 }

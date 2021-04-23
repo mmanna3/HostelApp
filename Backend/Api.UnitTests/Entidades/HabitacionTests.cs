@@ -5,7 +5,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
-namespace Api.UnitTests.Models
+namespace Api.UnitTests.Entidades
 {
     public class HabitacionTests
     {

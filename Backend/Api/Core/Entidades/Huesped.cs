@@ -15,5 +15,16 @@ namespace Api.Core.Entidades
 
         [MaxLength(256)]
         public string Email { get; set; }
+
+        public string ObtenerNombreAbreviado()
+        {
+	        var primeraPalabra = NombreCompleto.Split(" ")[0];
+
+	        if (primeraPalabra.Length <= 6)
+		        return primeraPalabra;
+	        
+	        return primeraPalabra.Substring(0, 5) + "..";
+
+        }
     }
 }

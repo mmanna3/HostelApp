@@ -24,7 +24,7 @@ namespace Api.IntegrationTests
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
         private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
         {
-	        NombreCompleto = "Elliot",
+	        NombreCompleto = "Elliot Alderson",
 	        DniOPasaporte = "123456789",
 	        Email = "mrrobot@fsociety.ong",
 	        Telefono = "5556453",
@@ -50,6 +50,7 @@ namespace Api.IntegrationTests
             reserva.DiaDeCheckout.Should().Be("2020-09-17");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
+            reserva.NombreAbreviadoDelHuesped.Should().Be("Elliot");
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
         }
 

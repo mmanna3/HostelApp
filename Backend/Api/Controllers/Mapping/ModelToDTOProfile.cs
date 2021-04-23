@@ -106,7 +106,11 @@ namespace Api.Controllers.Mapping
             CreateMap<Reserva, CheckoutsDeHoyDTO>();
 
             CreateMap<Reserva, ReservasDelPeriodoDTO.ReservaResumenDTO>()
-                .ForMember(
+	            .ForMember(
+                    dest => dest.NombreAbreviadoDelHuesped,
+                    opt => opt.MapFrom(src => src.ObtenerNombreAbreviadoDelHuesped())
+                )
+	            .ForMember(
                     dest => dest.DiaDeCheckin,
                     opt => opt.MapFrom((src, dest, _, context) => src.PrimeraNoche < ((DateTime)context.Options.Items["desde"]) ? ((DateTime)context.Options.Items["desde"]) : src.PrimeraNoche)
                 )
