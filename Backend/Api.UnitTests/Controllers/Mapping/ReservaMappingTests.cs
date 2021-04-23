@@ -1,25 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Api.Controllers;
 using Api.Controllers.DTOs;
-using Api.Controllers.DTOs.Habitacion;
 using Api.Core;
 using Api.Core.Entidades;
-using Api.Core.Services.Interfaces;
 using AutoMapper;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
-namespace Api.UnitTests.Controllers
+namespace Api.UnitTests.Controllers.Mapping
 {
-    public class ReservaControllerTests
+    public class ReservaMappingTests
     {
-        private ReservasController _controller;
-        private Mock<IReservaService> _mockService;
-        private Mock<IHuespedService> _mockHuespedService;
-        private IMapper _mapper;
+	    private IMapper _mapper;
 
         private ReservaDTO _unaReservaDto;
         private IList<Reserva> _unaListaDeReservas;
@@ -44,9 +37,6 @@ namespace Api.UnitTests.Controllers
             });
             
             _mapper = new Mapper(configuration);
-            _mockService = new Mock<IReservaService>();
-            _mockHuespedService = new Mock<IHuespedService>();
-            _controller = new ReservasController(_mapper, _mockService.Object, _mockHuespedService.Object);
         }
 
         [Test]

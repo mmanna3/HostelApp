@@ -1,21 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using Api.Controllers;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Core.Entidades;
-using Api.Core.Services.Interfaces;
 using AutoMapper;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 
-namespace Api.UnitTests.Controllers
+namespace Api.UnitTests.Controllers.Mapping
 {
-    public class HabitacionControllerTests
+    public class HabitacionMappingTests
     {
-        private HabitacionesController _controller;
-        private Mock<IHabitacionService> _mockService;
-        private IMapper _mapper;
+	    private IMapper _mapper;
 
         private HabitacionDTO _unaHabitacionDTO;
         private IList<Habitacion> _unaListaDeHabitaciones;
@@ -30,8 +25,6 @@ namespace Api.UnitTests.Controllers
             });
             
             _mapper = new Mapper(configuration);
-            _mockService = new Mock<IHabitacionService>();
-            _controller = new HabitacionesController(_mapper, _mockService.Object);
         }
 
         [Test]
