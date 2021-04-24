@@ -113,12 +113,14 @@ abbr {
 /*Inicio Scroll*/
 
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 14px; // De la scrollbar vertical
+  height: 14px; // De la scrollbar horizontal
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
+  // box-shadow: inset 0 0 5px grey;
+  background: #eee;
   border-radius: 7px;
 }
 
