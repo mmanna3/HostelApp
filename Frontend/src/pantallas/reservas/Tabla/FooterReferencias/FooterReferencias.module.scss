@@ -1,0 +1,33 @@
+@import 'universal.scss';
+
+.footerReferencias {
+  @extend .content;
+  @extend .has-text-centered;
+  padding-top: 25px;
+  cursor: pointer;
+}
+
+.estado {
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 13px;
+}
+
+.checkinPendiente {
+  @extend .estado;
+  background-color: $color-pastel-verde;
+}
+
+.inHouse {
+  @extend .estado;
+  background-color: $color-pastel-azul;
+}
+
+.hizoCheckout {
+  @extend .estado;
+  background-color: $color-pastel-rojo;
+}

@@ -4,6 +4,7 @@ import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import Cabecera from './Cabecera/Cabecera';
 import Crear from './crear/Modal';
+import Estilos from './Page.module.scss';
 import Tabla from './Tabla/Tabla';
 
 const ReservasPage = (): ReactElement => {
@@ -36,7 +37,7 @@ const ReservasPage = (): ReactElement => {
   }
 
   return (
-    <div className="container is-fluid">
+    <div className={Estilos.contenedorDeTabla}>
       {IsModalVisible && (
         <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
       )}

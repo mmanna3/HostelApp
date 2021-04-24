@@ -18,3 +18,10 @@
   border-radius: 4px;
   border-color: #dbdbdb;
 }
+
+.contenedorDeTabla {
+  @extend .container;
+  @extend .is-fluid;
+  padding-right: 5px !important;
+  padding-left: 0px !important;
+}

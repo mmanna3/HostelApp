@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { inicializarTabla, insertarReserva } from 'store/app/tablaDeReservas/slice';
 import Cuerpo from './Cuerpo/Cuerpo';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
+import FooterReferencias from './FooterReferencias/FooterReferencias';
 import Estilos from './Tabla.module.scss';
 import { calcularCamasIdsYHabitacionesConCamasUnificadas, calcularDiasDeReservasVisibles } from './utils/funcionesUtiles';
 
@@ -48,6 +49,7 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
           ></Cuerpo>
         </table>
       </div>
+      <FooterReferencias />
     </>
   );
 };
