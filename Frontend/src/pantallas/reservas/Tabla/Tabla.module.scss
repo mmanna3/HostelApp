@@ -16,40 +16,16 @@
   cursor: pointer;
 }
 
-.estado {
-  border: 1px solid #aaa;
-  border-radius: 10px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 13px;
-}
-
-.checkinPendiente {
-  @extend .estado;
-  background-color: $color-pastel-verde;
-}
-
-.inHouse {
-  @extend .estado;
-  background-color: $color-pastel-azul;
-}
-
-.hizoCheckout {
-  @extend .estado;
-  background-color: $color-pastel-rojo;
-}
-
 table {
   text-align: center;
   border-collapse: separate !important;
+  font-size: 15px;
 }
 
 table th,
 table td {
   white-space: nowrap;
-  padding: 10px 20px;
+  padding: 10px 20px; // Esto me parece que no anda
 }
 
 table td div,
