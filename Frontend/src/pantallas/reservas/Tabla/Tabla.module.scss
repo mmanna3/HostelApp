@@ -1,7 +1,11 @@
 @import 'universal.scss';
 
 .contenedor {
-  height: 75vh;
+  // navbar: 3.5rem + 1rem paddingBottom
+  // botonera: 2.5rem + 1rem paddingBottom
+  // footer: 4rem
+  // TOTAL: 12.5rem
+  height: calc(100vh - 12rem);
   overflow: scroll;
 }
 

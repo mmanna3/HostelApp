@@ -1,13 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-
-import 'utils/FontAwesomeLibrary';
-import HuespedesPage from 'pantallas/huespedes/Page';
-import ReservasPage from 'pantallas/reservas/Page';
-import HabitacionesPage from 'pantallas/habitaciones/Page';
-import LoginPage from 'pantallas/login/Page';
 import Navbar from 'components/navbar/Navbar';
-import { siEstaLogueadoEnviarTokenEnTodosLosRequests, estaLogueado } from 'pantallas/login/servicio';
+import HabitacionesPage from 'pantallas/habitaciones/Page';
+import HuespedesPage from 'pantallas/huespedes/Page';
+import LoginPage from 'pantallas/login/Page';
+import { estaLogueado, siEstaLogueadoEnviarTokenEnTodosLosRequests } from 'pantallas/login/servicio';
+import ReservasPage from 'pantallas/reservas/Page';
+import React from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import 'utils/FontAwesomeLibrary';
 
 const App = () => {
   siEstaLogueadoEnviarTokenEnTodosLosRequests();

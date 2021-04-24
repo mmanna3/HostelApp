@@ -61,7 +61,7 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
   };
 
   return (
-    <div className="level container">
+    <div className={Estilos.contenedor}>
       <div className="level-left">
         <div className={`buttons has-addons ${Estilos.botones}`}>
           <Button onClick={(): void => seleccionarSemana()} text="Semana" className={`button ${estiloBotonSemana}`} />

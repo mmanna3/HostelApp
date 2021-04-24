@@ -1,5 +1,11 @@
 @import 'universal.scss';
 
+.contenedor {
+  @extend .level;
+  @extend .container;
+  margin-bottom: 1rem !important;
+}
+
 .botones {
   margin-bottom: 0 !important;
 }
