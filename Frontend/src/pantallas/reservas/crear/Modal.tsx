@@ -1,7 +1,7 @@
 import { Button } from 'components/botones/botones';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
 import Label from 'components/Label';
-import { Body, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -118,7 +118,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="900px">
       <Header title="Alta de reserva" onHide={hide} />
-      <Body minHeight="460px">
+      <CardBody minHeight="460px">
         <ValidationSummary errors={errores} />
 
         <CabeceraHuesped />
@@ -152,7 +152,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         )}
 
         <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
-      </Body>
+      </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );

@@ -1,16 +1,16 @@
-import React, { ReactElement } from 'react';
-import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
-import { Input } from 'components/Input';
 import { Button } from 'components/botones/botones';
-import Select from 'components/Select';
-import ValidationSummary from 'components/ValidationSummary';
+import { Input } from 'components/Input';
 import Label from 'components/Label';
-import SelectCama from './SelectCama';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import Select from 'components/Select';
 import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';
-import api from 'store/api/api';
+import ValidationSummary from 'components/ValidationSummary';
+import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import SelectCama from './SelectCama';
 
 interface IProps {
   isVisible: boolean;
@@ -122,7 +122,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
       <Header title="Crear habitación" onHide={hide} />
-      <Body>
+      <CardBody>
         <ValidationSummary errors={errores} />
         <Input label="Nombre" name="nombre" />
 
@@ -162,7 +162,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
           )}
           <Button text="Agregar cama" onClick={(): void => addCama()} style={{ marginTop: '1em' }} />
         </div>
-      </Body>
+      </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );

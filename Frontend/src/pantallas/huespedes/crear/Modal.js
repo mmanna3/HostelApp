@@ -1,9 +1,9 @@
-import React from 'react';
-import { ModalForm, Body, Header, FooterAcceptCancel } from 'components/Modal';
 import { Input } from 'components/Input';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import api from 'store/api/api';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
@@ -26,10 +26,10 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
       <Header title="Alta de huésped" onHide={hide} />
-      <Body>
+      <CardBody>
         <ValidationSummary errors={errores} />
         <Input label="Nombre" name="nombre" />
-      </Body>
+      </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );

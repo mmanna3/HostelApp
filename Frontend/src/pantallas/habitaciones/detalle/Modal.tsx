@@ -1,5 +1,5 @@
 import Display, { DisplayLista, DisplayTextarea, SiNo } from 'components/display/Display';
-import { Body, FooterVolver, Header, Modal } from 'components/Modal';
+import { CardBody, FooterVolver, Header, ModalCard } from 'components/Modal';
 import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -42,9 +42,9 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
-      <Modal isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
+      <ModalCard isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
         <Header title="Detalle de habitación" onHide={ocultar} />
-        <Body>
+        <CardBody>
           <div className="columns">
             <div className="column">
               <Display label="Nombre" valor={datos.nombre} />
@@ -87,9 +87,9 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
               <DisplayTextarea label="Información adicional" valor={datos.informacionAdicional} />
             </div>
           </div>
-        </Body>
+        </CardBody>
         <FooterVolver onClick={ocultar} />
-      </Modal>
+      </ModalCard>
     );
   }
   return <></>;

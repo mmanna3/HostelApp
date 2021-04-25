@@ -9,7 +9,7 @@ interface IModalParams {
   minWidth?: string;
 }
 
-export const Modal = ({ children, onHide, isVisible, minWidth = '' }: IModalParams): ReactElement => {
+export const ModalCard = ({ children, onHide, isVisible, minWidth = '' }: IModalParams): ReactElement => {
   const visibilidad = new Map<boolean, string>([
     [true, 'is-active'],
     [false, ''],
@@ -21,6 +21,20 @@ export const Modal = ({ children, onHide, isVisible, minWidth = '' }: IModalPara
       <div className="modal-card" style={{ minWidth: minWidth }}>
         {children}
       </div>
+    </div>
+  );
+};
+
+export const Modal = ({ children, onHide, isVisible }: IModalParams): ReactElement => {
+  const visibilidad = new Map<boolean, string>([
+    [true, 'is-active'],
+    [false, ''],
+  ]);
+
+  return (
+    <div className={`modal ${visibilidad.get(isVisible)}`}>
+      <div className="modal-background" onClick={onHide}></div>
+      {children}
     </div>
   );
 };
@@ -39,11 +53,11 @@ export const ModalForm = ({
   minWidth = '',
 }: IModalFormParams): ReactElement => {
   return (
-    <Modal onHide={onHide} isVisible={isVisible} minWidth={minWidth}>
+    <ModalCard onHide={onHide} isVisible={isVisible} minWidth={minWidth}>
       <Form defaultValues={undefined} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
         {children}
       </Form>
-    </Modal>
+    </ModalCard>
   );
 };
 
@@ -105,15 +119,29 @@ export const FooterVolver = ({ onClick }: IFooterVolver): ReactElement => {
   );
 };
 
-interface IBody {
+interface ICardBody {
   children: ReactNode;
   minHeight?: string;
 }
 
-export const Body = ({ children, minHeight = '' }: IBody): ReactElement => {
+export const CardBody = ({ children, minHeight = '' }: ICardBody): ReactElement => {
   return (
     <section className="modal-card-body" style={{ width: 'inherit', minHeight: minHeight, maxHeight: '480px' }}>
       <div className="content">{children}</div>
     </section>
+  );
+};
+
+interface IBody {
+  children: ReactNode;
+  width?: string;
+  minHeight?: string;
+}
+
+export const Body = ({ children, width = 'inherit', minHeight = '' }: IBody): ReactElement => {
+  return (
+    <div className="modal-content" style={{ width: width, minHeight: minHeight, maxHeight: '480px' }}>
+      {children}
+    </div>
   );
 };
