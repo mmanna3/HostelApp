@@ -25,7 +25,7 @@ const Cuerpo = ({
     const renderizarCeldasDeLaFila = (cama: CamaDTO, esPrimeraCamaDeLaHabitacion: boolean = false): ReactElement => {
       return (
         <>
-          <td className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
+          <td key={cama.id} className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
             {cama.nombre} - {cama.tipo}
           </td>
           {tablaDeReservas.dias.map(
@@ -43,20 +43,29 @@ const Cuerpo = ({
       );
     };
 
+    const renderizarPrimeraFila = (habitacion: IHabitacionParaTablaReservas): ReactElement => (
+      <tr key={habitacion.camas[0].id}>
+        <td
+          key={habitacion.camas[0].id}
+          rowSpan={habitacion.camas.length}
+          className={Estilos.habitacion}
+          data-es-primera-cama="true"
+        >
+          {habitacion.nombre}
+        </td>
+        {renderizarCeldasDeLaFila(habitacion.camas[0], true)}
+      </tr>
+    );
+
     let _filas: any = [];
 
     habitacionesConCamasUnificadas.forEach((habitacion): void => {
       _filas.push(
         <>
-          <tr>
-            <td rowSpan={habitacion.camas.length} className={Estilos.habitacion} data-es-primera-cama="true">
-              {habitacion.nombre}
-            </td>
-            {renderizarCeldasDeLaFila(habitacion.camas[0], true)}
-          </tr>
+          {renderizarPrimeraFila(habitacion)}
           {habitacion.camas.slice(1).map(
-            (cama, i): ReactElement => (
-              <tr key={i}>{renderizarCeldasDeLaFila(cama)}</tr>
+            (cama): ReactElement => (
+              <tr key={cama.id}>{renderizarCeldasDeLaFila(cama)}</tr>
             )
           )}
         </>
