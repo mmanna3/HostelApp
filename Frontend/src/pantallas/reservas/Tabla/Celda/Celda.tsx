@@ -4,19 +4,19 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
-import { crearCeldaDataVacio, EstadoSinReservar, ICeldaData } from './interfaces';
+import { crearCeldaDataVacia, EstadoSinReservar, ICeldaData } from './interfaces';
 
 export interface IParams {
   dia: string;
   camaId: number;
   esPrimeraCamaDeLaHabitacion: boolean;
-  onClick: (id: Nullable<number>) => any;
+  onClick: (id: Nullable<number>) => void;
 }
 
 const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
-  const [data, actualizarData] = useState<ICeldaData>(crearCeldaDataVacio());
+  const [data, actualizarData] = useState<ICeldaData>(crearCeldaDataVacia());
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
 
   const colores = new Map<ReservaEstadoEnum | EstadoSinReservar, string>([
@@ -30,10 +30,10 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
     dispatch(seleccionarTodasLasCeldasDeLaReserva(data.reservaId));
   };
 
-  useEffect((): any => {
-    var contenido = tabla[dia][`${camaId}`];
-    actualizarData(contenido);
-    actualizarClaseCssColor(colores.get(contenido.estado));
+  useEffect((): void => {
+    var data = tabla[dia][`${camaId}`];
+    actualizarData(data);
+    actualizarClaseCssColor(colores.get(data.estado));
   }, [tabla, dia, camaId, colores]);
 
   return (

@@ -3,7 +3,7 @@ import { ReservaResumenDTO } from 'interfaces/reserva';
 import {
   ClaseCssEstaHovereadaONo,
   crearCeldaData,
-  crearCeldaDataVacio,
+  crearCeldaDataVacia,
   ICeldaData,
 } from 'pantallas/reservas/Tabla/Celda/interfaces';
 import { convertirADate, convertirAString, sumarDiasALaFecha } from 'utils/Fecha';
@@ -26,7 +26,7 @@ const tablaDeReservasSlice = createSlice({
       var columnaInicial: IColumna = {};
 
       payload.camasIdsArray.forEach((camaId: number): void => {
-        columnaInicial[`${camaId}`] = crearCeldaDataVacio();
+        columnaInicial[`${camaId}`] = crearCeldaDataVacia();
       });
       payload.dias.forEach((dia: string): void => {
         state.tabla[dia] = columnaInicial;
@@ -87,21 +87,21 @@ export const {
 export const tablaDeReservasSelector = (state: any): IInitialState => state.tablaDeReservas;
 export default tablaDeReservasSlice.reducer;
 
-export function inicializarTabla(dias: Date[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<any> {
-  return async (dispatch: IDispatch): Promise<any> => {
+export function inicializarTabla(dias: Date[], camasIdsArray: number[]): (dispatch: IDispatch) => Promise<void> {
+  return async (dispatch: IDispatch): Promise<void> => {
     const diasString = dias.map((dia): string => convertirAString(dia));
     dispatch(_inicializar({ dias: diasString, camasIdsArray }));
   };
 }
 
-export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatch) => Promise<any> {
-  return async (dispatch: IDispatch): Promise<any> => {
+export function insertarReserva(reserva: ReservaResumenDTO): (dispatch: IDispatch) => Promise<void> {
+  return async (dispatch: IDispatch): Promise<void> => {
     dispatch(_insertarReserva(reserva));
   };
 }
 
-export function seleccionarTodasLasCeldasDeLaReserva(reservaId: Nullable<number>): (dispatch: IDispatch) => Promise<any> {
-  return async (dispatch: IDispatch): Promise<any> => {
+export function seleccionarTodasLasCeldasDeLaReserva(reservaId: Nullable<number>): (dispatch: IDispatch) => Promise<void> {
+  return async (dispatch: IDispatch): Promise<void> => {
     dispatch(_limpiarCeldasSeleccionadasSiLaCeldaNoPerteneceALaReserva(reservaId));
     dispatch(_seleccionarTodasLasCeldasDeLaReserva(reservaId));
   };

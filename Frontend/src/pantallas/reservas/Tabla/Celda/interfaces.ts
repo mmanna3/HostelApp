@@ -17,7 +17,7 @@ export interface ICeldaData {
   estado: ReservaEstadoEnum | EstadoSinReservar;
 }
 
-export const crearCeldaDataVacio = (): ICeldaData => {
+export const crearCeldaDataVacia = (): ICeldaData => {
   return {
     claseCssEstaHovereadaONo: '',
     reservaId: null,
