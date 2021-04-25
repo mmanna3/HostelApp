@@ -19,7 +19,6 @@ interface IParams {
 const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const [habitacionesConCamasUnificadas, setHabitacionesConCamasUnificadas] = useState<IHabitacionParaTablaReservas[]>([]);
-  const [idDetalleReserva, cambiarIdDetalleReserva] = useState<Nullable<number>>(null);
   const [idDetalleHabitacion, cambiarIdDetalleHabitacion] = useState<Nullable<number>>(null);
 
   useEffect((): void => {
@@ -38,13 +37,12 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   return (
     <>
       <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleHabitacion>
-      <DetalleReserva id={idDetalleReserva} onHide={(): void => cambiarIdDetalleReserva(null)}></DetalleReserva>
+      <DetalleReserva />
       <div className={Estilos.contenedor}>
         <table className="table is-hoverable is-bordered is-fullwidth">
           <EncabezadoDias fechaDesde={datos.desde} fechaHasta={datos.hasta} />
           <Cuerpo
             habitacionesConCamasUnificadas={habitacionesConCamasUnificadas}
-            mostrarDetalleDeReserva={(id: Nullable<number>): void => cambiarIdDetalleReserva(id)}
             mostrarDetalleDeHabitacion={(id: Nullable<number>): void => cambiarIdDetalleHabitacion(id)}
           ></Cuerpo>
         </table>

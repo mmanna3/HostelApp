@@ -9,15 +9,10 @@ import Estilos from './Cuerpo.module.scss';
 
 interface IParams {
   habitacionesConCamasUnificadas: IHabitacionParaTablaReservas[];
-  mostrarDetalleDeReserva: (id: Nullable<number>) => void;
   mostrarDetalleDeHabitacion: (id: Nullable<number>) => void;
 }
 
-const Cuerpo = ({
-  habitacionesConCamasUnificadas,
-  mostrarDetalleDeReserva,
-  mostrarDetalleDeHabitacion,
-}: IParams): ReactElement => {
+const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: IParams): ReactElement => {
   const tablaDeReservas = useSelector(tablaDeReservasSelector);
   const [filas, actualizarFilas] = useState([]);
 
@@ -35,7 +30,6 @@ const Cuerpo = ({
                 dia={dia}
                 camaId={cama.id}
                 esPrimeraCamaDeLaHabitacion={esPrimeraCamaDeLaHabitacion}
-                onClick={mostrarDetalleDeReserva}
               />
             )
           )}
@@ -73,7 +67,7 @@ const Cuerpo = ({
     });
 
     actualizarFilas(_filas);
-  }, [tablaDeReservas.camasIdsArray, tablaDeReservas.dias, habitacionesConCamasUnificadas, mostrarDetalleDeReserva]);
+  }, [tablaDeReservas.camasIdsArray, tablaDeReservas.dias, habitacionesConCamasUnificadas]);
 
   return <tbody>{filas}</tbody>;
 };

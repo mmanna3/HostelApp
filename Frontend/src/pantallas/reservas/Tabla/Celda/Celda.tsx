@@ -2,18 +2,17 @@ import { ReservaEstadoEnum } from 'interfaces/reserva';
 import * as React from 'react';
 import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
 import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
 import { crearCeldaDataVacia, EstadoSinReservar, ICeldaData } from './interfaces';
-
 export interface IParams {
   dia: string;
   camaId: number;
   esPrimeraCamaDeLaHabitacion: boolean;
-  onClick: (id: Nullable<number>) => void;
 }
 
-const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): ReactElement => {
+const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
   const [data, actualizarData] = useState<ICeldaData>(crearCeldaDataVacia());
@@ -28,6 +27,10 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
 
   const onMouseOver = (): void => {
     dispatch(seleccionarTodasLasCeldasDeLaReserva(data.reservaId));
+  };
+
+  const onClick = (): void => {
+    if (data.reservaId !== null) dispatch(api.reservas.obtenerPorId.invocar({ id: data.reservaId }));
   };
 
   useEffect((): void => {
@@ -45,7 +48,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
         data-cama-id={camaId}
         data-es-primera-cama={esPrimeraCamaDeLaHabitacion}
         onMouseOver={onMouseOver}
-        onClick={(): void => onClick(data.reservaId)}
+        onClick={onClick}
       >
         <div>{data.nombreAbreviadoDelHuesped}</div>
       </td>
