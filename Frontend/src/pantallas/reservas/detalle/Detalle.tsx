@@ -1,10 +1,11 @@
+import { Icon } from 'components/Icon';
 import { Body, Modal } from 'components/Modal';
 import { ReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
-import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes } from 'utils/Fecha';
+import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Estilos from './Detalle.module.scss';
 
 const Detalle = (): ReactElement => {
@@ -25,6 +26,17 @@ const Detalle = (): ReactElement => {
     return `${nombreDelDiaDeLaSemana(fechaDate)} ${fechaDate.getDate()} ${nombreDelMes(fechaDate)}`;
   };
 
+  const calcularCantidadDeNoches = (fechaCheckout: string, fechaCheckin: string): number => {
+    var checkoutDate = convertirADate(fechaCheckout);
+    var checkinDate = convertirADate(fechaCheckin);
+    return restarFechas(checkoutDate, checkinDate);
+  };
+
+  const textoNoches = (fechaCheckout: string, fechaCheckin: string): string => {
+    var cantidadDeNoches = calcularCantidadDeNoches(fechaCheckout, fechaCheckin);
+    return cantidadDeNoches === 1 ? '1 noche' : `${cantidadDeNoches} noches`;
+  };
+
   return datos !== null ? (
     <Modal isVisible={true} onHide={ocultar}>
       <Body width={'400px'}>
@@ -33,6 +45,11 @@ const Detalle = (): ReactElement => {
           <p className={Estilos.fechas}>
             {fechaParaMostrar(datos.diaDeCheckin)} - {fechaParaMostrar(datos.diaDeCheckout)}
           </p>
+          <div className={Estilos.cuerpo}>
+            <p className={Estilos.noches}>
+              <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
+            </p>
+          </div>
         </div>
       </Body>
     </Modal>
