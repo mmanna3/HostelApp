@@ -92,7 +92,7 @@ namespace Api.Controllers.Mapping
 	            )
                 .ForMember(
 		            dest => dest.DiaDeCheckout,
-		            opt => opt.MapFrom(src => src.UltimaNoche)
+		            opt => opt.MapFrom(src => src.UltimaNoche.AddDays(1))
 	            )
 	            .ForMember(
 		            dest => dest.DiaDeCheckin,

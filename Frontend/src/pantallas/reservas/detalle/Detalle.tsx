@@ -43,7 +43,7 @@ const Detalle = (): ReactElement => {
         <div className={Estilos.contenedor}>
           <p className={Estilos.nombre}>{datos.datosMinimosDeHuesped.nombreCompleto}</p>
           <p className={Estilos.fechas}>
-            {fechaParaMostrar(datos.diaDeCheckin)} - {fechaParaMostrar(datos.diaDeCheckout)}
+            {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
           </p>
           <div className={Estilos.cuerpo}>
             <p className={Estilos.noches}>
