@@ -36,7 +36,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  const onSubmit = (data: any): any => dispatch(api.reservas.crear.invocar(data, onSuccess));
+  const onSubmit = (data: any): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
 
   const habRequest = api.habitaciones.listarConLugaresLibres;
   const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
