@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
-import { ClaseCssEstaHovereadaONo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
+import {
+  ClaseCssEstaHovereadaONo,
+  crearCeldaData,
+  crearCeldaDataVacio,
+  ICeldaData,
+} from 'pantallas/reservas/Tabla/Celda/interfaces';
 import { convertirADate, convertirAString, sumarDiasALaFecha } from 'utils/Fecha';
 
 export const initialState: IInitialState = {
@@ -18,14 +23,10 @@ const tablaDeReservasSlice = createSlice({
     _inicializar: (state, { payload }): void => {
       state.dias = payload.dias;
       state.camasIdsArray = payload.camasIdsArray;
-      var columnaInicial: ICeldaInicial = {};
+      var columnaInicial: IColumna = {};
 
       payload.camasIdsArray.forEach((camaId: number): void => {
-        columnaInicial[`${camaId}`] = {
-          reservaId: null,
-          claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
-          nombreAbreviadoDelHuesped: '',
-        } as ICeldaInfo;
+        columnaInicial[`${camaId}`] = crearCeldaDataVacio();
       });
       payload.dias.forEach((dia: string): void => {
         state.tabla[dia] = columnaInicial;
@@ -34,20 +35,14 @@ const tablaDeReservasSlice = createSlice({
     _insertarReserva: (state, { payload }): void => {
       var reserva = payload as ReservaResumenDTO;
 
-      var celdaInfo: ICeldaInfo = {
-        reservaId: reserva.id,
-        nombreAbreviadoDelHuesped: reserva.nombreAbreviadoDelHuesped,
-        estado: reserva.estado,
-        claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
-      };
-
+      var celdaData = crearCeldaData(reserva);
       var diaCheckin = convertirADate(reserva.diaDeCheckin);
       var diaCheckout = convertirADate(reserva.diaDeCheckout);
 
       for (let dia = diaCheckin; dia <= diaCheckout; dia = sumarDiasALaFecha(dia, 1)) {
         reserva.camasIds.forEach((camaId: number): void => {
           var diaString = convertirAString(dia);
-          state.tabla[diaString][`${camaId}`] = celdaInfo;
+          state.tabla[diaString][`${camaId}`] = celdaData;
 
           if (!state.reservas[`${reserva.id}`]) state.reservas[`${reserva.id}`] = [];
           state.reservas[`${reserva.id}`].push({ dia: diaString, camaId: camaId });
@@ -129,7 +124,7 @@ interface IDiaCamaId {
 
 export interface ITabla {
   [dia: string]: {
-    [camaId: string]: ICeldaInfo;
+    [camaId: string]: ICeldaData;
   };
 }
 
@@ -139,8 +134,8 @@ export interface IReserva {
   };
 }
 
-export interface ICeldaInicial {
-  [key: string]: ICeldaInfo;
+export interface IColumna {
+  [key: string]: ICeldaData;
 }
 
 export interface IDiaMes {

@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
-import { ClaseCssEstaHovereadaONo, ICeldaInfo } from './interfaces';
+import { crearCeldaDataVacio, EstadoSinReservar, ICeldaData } from './interfaces';
 
 export interface IParams {
   dia: string;
@@ -16,15 +16,11 @@ export interface IParams {
 const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
-  const [data, actualizarData] = useState<ICeldaInfo>({
-    reservaId: null,
-    nombreAbreviadoDelHuesped: '',
-    claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
-    estado: ReservaEstadoEnum.CheckinPendiente,
-  });
+  const [data, actualizarData] = useState<ICeldaData>(crearCeldaDataVacio());
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
 
-  const colores = new Map<ReservaEstadoEnum, string>([
+  const colores = new Map<ReservaEstadoEnum | EstadoSinReservar, string>([
+    [EstadoSinReservar.SinReservar, ''],
     [ReservaEstadoEnum.CheckinPendiente, estilos.estadoCheckin],
     [ReservaEstadoEnum.InHouse, estilos.estadoInhouse],
     [ReservaEstadoEnum.HizoCheckout, estilos.estadoHizoCheckout],
@@ -37,11 +33,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   useEffect((): any => {
     var contenido = tabla[dia][`${camaId}`];
     actualizarData(contenido);
-
-    if (contenido.estado !== null) {
-      //Horrible if, hay que sacarlo
-      actualizarClaseCssColor(colores.get(contenido.estado));
-    }
+    actualizarClaseCssColor(colores.get(contenido.estado));
   }, [tabla, dia, camaId, colores]);
 
   return (
