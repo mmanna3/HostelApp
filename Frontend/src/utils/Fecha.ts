@@ -72,6 +72,25 @@ export function nombreAbreviadoDelMes(fecha: Date): string {
   return meses.get(fecha.getMonth()) || '';
 }
 
+export function nombreDelMes(fecha: Date): string {
+  const meses = new Map<number, string>([
+    [0, 'Enero'],
+    [1, 'Febrero'],
+    [2, 'Marzo'],
+    [3, 'Abril'],
+    [4, 'Mayo'],
+    [5, 'Junio'],
+    [6, 'Julio'],
+    [7, 'Agosto'],
+    [8, 'Septiembre'],
+    [9, 'Octubre'],
+    [10, 'Noviembre'],
+    [11, 'Diciiembre'],
+  ]);
+
+  return meses.get(fecha.getMonth()) || '';
+}
+
 export function nombreAbreviadoDelDiaDeLaSemana(fecha: Date): string {
   const meses = new Map<number, string>([
     [0, 'DOM'],
@@ -81,6 +100,20 @@ export function nombreAbreviadoDelDiaDeLaSemana(fecha: Date): string {
     [4, 'JUE'],
     [5, 'VIE'],
     [6, 'SÁB'],
+  ]);
+
+  return meses.get(fecha.getDay()) || '';
+}
+
+export function nombreDelDiaDeLaSemana(fecha: Date): string {
+  const meses = new Map<number, string>([
+    [0, 'Domingo'],
+    [1, 'Lunes'],
+    [2, 'Martes'],
+    [3, 'Miércoles'],
+    [4, 'Jueves'],
+    [5, 'Viernes'],
+    [6, 'Sábado'],
   ]);
 
   return meses.get(fecha.getDay()) || '';

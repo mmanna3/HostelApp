@@ -1,7 +1,7 @@
 import { HabitacionDTO } from 'interfaces/habitacion';
 import { IHabitacionParaTablaReservas, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'interfaces/reserva';
 import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
-import DetalleReserva from 'pantallas/reservas/detalle/Modal';
+import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { inicializarTabla, insertarReserva } from 'store/app/tablaDeReservas/slice';

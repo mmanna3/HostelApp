@@ -25,8 +25,8 @@ export interface ReservaDTO {
   id: number;
   estado: ReservaEstadoEnum;
   datosMinimosDeHuesped: DatosMinimosDeHuespedDTO;
-  diaDeCheckin: number;
-  diaDeCheckout: number;
+  diaDeCheckin: string;
+  diaDeCheckout: string;
   camasIds: number[];
   CamasDeHabitacionesPrivadasIds: number[];
 }
