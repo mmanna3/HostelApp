@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
-import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from './interfaces';
+import { ClaseCssEstaHovereadaONo, ICeldaInfo } from './interfaces';
 
 export interface IParams {
   dia: string;
@@ -17,9 +17,9 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   const dispatch = useDispatch();
   const { tabla } = useSelector(tablaDeReservasSelector);
   const [data, actualizarData] = useState<ICeldaInfo>({
-    id: null,
+    reservaId: null,
     nombreAbreviadoDelHuesped: '',
-    estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+    claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
     estado: ReservaEstadoEnum.CheckinPendiente,
   });
   const [claseCssColor, actualizarClaseCssColor] = useState<string | undefined>('');
@@ -31,7 +31,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   ]);
 
   const onMouseOver = (): void => {
-    dispatch(seleccionarTodasLasCeldasDeLaReserva(data.id));
+    dispatch(seleccionarTodasLasCeldasDeLaReserva(data.reservaId));
   };
 
   useEffect((): any => {
@@ -47,13 +47,13 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion, onClick }: IParams): 
   return (
     <>
       <td
-        className={`${claseCssColor} ${data.estilo}`}
-        data-reserva-id={data.id}
+        className={`${claseCssColor} ${data.claseCssEstaHovereadaONo}`}
+        data-reserva-id={data.reservaId}
         data-dia={dia}
         data-cama-id={camaId}
         data-es-primera-cama={esPrimeraCamaDeLaHabitacion}
         onMouseOver={onMouseOver}
-        onClick={(): void => onClick(data.id)}
+        onClick={(): void => onClick(data.reservaId)}
       >
         <div>{data.nombreAbreviadoDelHuesped}</div>
       </td>

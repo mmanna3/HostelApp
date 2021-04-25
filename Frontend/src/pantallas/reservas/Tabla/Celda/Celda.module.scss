@@ -1,26 +1,26 @@
 @import 'universal.scss';
 
-.estaSeleccionada {
+.estaHovereada {
   filter: brightness(40%);
   cursor: pointer;
 }
 
-.estaHovereada {
+.estaReservada {
   border: 1px solid rgba(0, 0, 0, 0.2) !important;
 }
 
 .estadoCheckin {
-  @extend .estaHovereada;
+  @extend .estaReservada;
   background-color: $color-pastel-verde;
 }
 
 .estadoInhouse {
-  @extend .estaHovereada;
+  @extend .estaReservada;
   background-color: $color-pastel-azul;
 }
 
 .estadoHizoCheckout {
-  @extend .estaHovereada;
+  @extend .estaReservada;
   background-color: $color-pastel-rojo;
 }
 

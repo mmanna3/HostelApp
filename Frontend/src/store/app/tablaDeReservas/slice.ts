@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReservaResumenDTO } from 'interfaces/reserva';
-import { CeldaPertenecienteAReservaEstilo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
+import { ClaseCssEstaHovereadaONo, ICeldaInfo } from 'pantallas/reservas/Tabla/Celda/interfaces';
 import { convertirADate, convertirAString, sumarDiasALaFecha } from 'utils/Fecha';
 
 export const initialState: IInitialState = {
@@ -22,8 +22,8 @@ const tablaDeReservasSlice = createSlice({
 
       payload.camasIdsArray.forEach((camaId: number): void => {
         columnaInicial[`${camaId}`] = {
-          id: null,
-          estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+          reservaId: null,
+          claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
           nombreAbreviadoDelHuesped: '',
         } as ICeldaInfo;
       });
@@ -35,10 +35,10 @@ const tablaDeReservasSlice = createSlice({
       var reserva = payload as ReservaResumenDTO;
 
       var celdaInfo: ICeldaInfo = {
-        id: reserva.id,
+        reservaId: reserva.id,
         nombreAbreviadoDelHuesped: reserva.nombreAbreviadoDelHuesped,
         estado: reserva.estado,
-        estilo: CeldaPertenecienteAReservaEstilo.Ninguno,
+        claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
       };
 
       var diaCheckin = convertirADate(reserva.diaDeCheckin);
@@ -59,7 +59,8 @@ const tablaDeReservasSlice = createSlice({
 
       if (reservaId !== null) {
         state.reservas[`${reservaId}`].forEach((diaCamaId: IDiaCamaId): void => {
-          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.EstaSeleccionada;
+          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].claseCssEstaHovereadaONo =
+            ClaseCssEstaHovereadaONo.EstaHovereada;
         });
 
         state.reservaSeleccionadaId = reservaId;
@@ -72,7 +73,8 @@ const tablaDeReservasSlice = createSlice({
         const reservaSeleccionadaId = state.reservaSeleccionadaId;
 
         state.reservas[`${reservaSeleccionadaId}`].forEach((diaCamaId: IDiaCamaId): void => {
-          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].estilo = CeldaPertenecienteAReservaEstilo.Ninguno;
+          state.tabla[`${diaCamaId.dia}`][`${diaCamaId.camaId}`].claseCssEstaHovereadaONo =
+            ClaseCssEstaHovereadaONo.NoEstaHovereada;
         });
 
         state.reservaSeleccionadaId = null;
