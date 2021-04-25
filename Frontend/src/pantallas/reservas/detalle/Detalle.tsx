@@ -1,6 +1,6 @@
 import { Icon } from 'components/Icon';
 import { Body, Modal } from 'components/Modal';
-import { ReservaDTO } from 'interfaces/reserva';
+import { ReservaDTO, ReservaEstadoEnum } from 'interfaces/reserva';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -19,8 +19,6 @@ const Detalle = (): ReactElement => {
     dispatch(api.reservas.obtenerPorId.reiniciar());
   }
 
-  // Estaría bueno que haya un spinner que bloquee la pantalla y opere según el estado
-
   const fechaParaMostrar = (fecha: string): string => {
     var fechaDate = convertirADate(fecha);
     return `${nombreDelDiaDeLaSemana(fechaDate)} ${fechaDate.getDate()} ${nombreDelMes(fechaDate)}`;
@@ -37,11 +35,25 @@ const Detalle = (): ReactElement => {
     return cantidadDeNoches === 1 ? '1 noche' : `${cantidadDeNoches} noches`;
   };
 
+  interface IEstilo {
+    estilo: string;
+    descripcion: string;
+  }
+
+  const estilosEstado = new Map<ReservaEstadoEnum, IEstilo>([
+    [ReservaEstadoEnum.CheckinPendiente, { estilo: Estilos.estadoCheckinPendiente, descripcion: 'Check-In Pendiente' }],
+    [ReservaEstadoEnum.InHouse, { estilo: Estilos.estadoInHouse, descripcion: 'In-House' }],
+    [ReservaEstadoEnum.HizoCheckout, { estilo: Estilos.estadoHizoCheckout, descripcion: 'Hizo Checkout' }],
+  ]);
+
   return datos !== null ? (
     <Modal isVisible={true} onHide={ocultar}>
-      <Body width={'400px'}>
+      <Body width={'500px'}>
         <div className={Estilos.contenedor}>
-          <p className={Estilos.nombre}>{datos.datosMinimosDeHuesped.nombreCompleto}</p>
+          <p className={Estilos.nombre}>
+            {datos.datosMinimosDeHuesped.nombreCompleto}
+            <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
+          </p>
           <p className={Estilos.fechas}>
             {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
           </p>

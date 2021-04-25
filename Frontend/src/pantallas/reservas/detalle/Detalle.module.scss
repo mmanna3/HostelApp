@@ -10,11 +10,35 @@
 .nombre {
   font-size: 20px;
   font-weight: bold;
-  text-align: center;
+}
+
+.estado {
+  font-size: 14px;
+  font-weight: normal;
+  float: right;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.estadoCheckinPendiente {
+  @extend .estado;
+  background-color: $color-pastel-verde;
+}
+
+.estadoInHouse {
+  @extend .estado;
+  background-color: $color-pastel-azul;
+}
+
+.estadoHizoCheckout {
+  @extend .estado;
+  background-color: $color-pastel-rojo;
 }
 
 .fechas {
-  text-align: center;
+  // text-align: center;
 }
 
 .cuerpo {
