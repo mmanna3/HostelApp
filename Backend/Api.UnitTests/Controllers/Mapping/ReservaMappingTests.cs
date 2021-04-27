@@ -100,7 +100,7 @@ namespace Api.UnitTests.Controllers.Mapping
                         
 	        var reservaDTO = _mapper.Map<ReservaDTO>(_unaListaDeReservas.Skip(1).First());
 	        reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
-	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta));
+	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
 	        reservaDTO.CamasIds.Should().HaveCount(2);
 	        reservaDTO.CamasIds.First().Should().Be(1);
 	        reservaDTO.CamasIds.Skip(1).First().Should().Be(2);
