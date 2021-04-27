@@ -58,9 +58,9 @@ const Detalle = (): ReactElement => {
             {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
           </p>
           <div className={Estilos.cuerpo}>
-            <p className={Estilos.noches}>
+            <div className={Estilos.noches}>
               <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
-            </p>
+            </div>
           </div>
         </div>
       </Body>
