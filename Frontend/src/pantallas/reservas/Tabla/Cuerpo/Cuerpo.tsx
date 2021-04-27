@@ -1,6 +1,6 @@
 import { CamaDTO } from 'interfaces/habitacion';
 import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { Fragment, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import { obtenerDia } from 'utils/Fecha';
@@ -14,10 +14,13 @@ interface IParams {
 
 const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: IParams): ReactElement => {
   const tablaDeReservas = useSelector(tablaDeReservasSelector);
-  const [filas, actualizarFilas] = useState([]);
+  const [filas, actualizarFilas] = useState<ReactElement[]>([]);
 
   useEffect((): void => {
-    const renderizarCeldasDeLaFila = (cama: CamaDTO, esPrimeraCamaDeLaHabitacion: boolean = false): ReactElement => {
+    const renderizarEncabezadoCamaYCeldasDeDatosDeLaFila = (
+      cama: CamaDTO,
+      esPrimeraCamaDeLaHabitacion: boolean = false
+    ): ReactElement => {
       return (
         <>
           <td key={cama.id} className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
@@ -37,7 +40,7 @@ const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: 
       );
     };
 
-    const renderizarPrimeraFila = (habitacion: IHabitacionParaTablaReservas): ReactElement => (
+    const renderizarPrimeraFilaDeLaHabitacion = (habitacion: IHabitacionParaTablaReservas): ReactElement => (
       <tr key={habitacion.camas[0].id}>
         <td
           key={habitacion.camas[0].id}
@@ -47,24 +50,25 @@ const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: 
         >
           {habitacion.nombre}
         </td>
-        {renderizarCeldasDeLaFila(habitacion.camas[0], true)}
+        {renderizarEncabezadoCamaYCeldasDeDatosDeLaFila(habitacion.camas[0], true)}
       </tr>
     );
 
-    let _filas: any = [];
+    const renderizarDemasFilas = (habitacion: IHabitacionParaTablaReservas): ReactElement[] =>
+      habitacion.camas
+        .slice(1)
+        .map((cama): ReactElement => <tr key={cama.id}>{renderizarEncabezadoCamaYCeldasDeDatosDeLaFila(cama)}</tr>);
 
-    habitacionesConCamasUnificadas.forEach((habitacion): void => {
-      _filas.push(
-        <>
-          {renderizarPrimeraFila(habitacion)}
-          {habitacion.camas.slice(1).map(
-            (cama): ReactElement => (
-              <tr key={cama.id}>{renderizarCeldasDeLaFila(cama)}</tr>
-            )
-          )}
-        </>
-      );
-    });
+    const _filas = habitacionesConCamasUnificadas.map(
+      (habitacion): ReactElement => {
+        return (
+          <Fragment key={habitacion.id}>
+            {renderizarPrimeraFilaDeLaHabitacion(habitacion)}
+            {renderizarDemasFilas(habitacion)}
+          </Fragment>
+        );
+      }
+    );
 
     actualizarFilas(_filas);
   }, [tablaDeReservas.camasIdsArray, tablaDeReservas.dias, habitacionesConCamasUnificadas]);
