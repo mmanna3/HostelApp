@@ -28,6 +28,7 @@ namespace Api.IntegrationTests
 	        DniOPasaporte = "123456789",
 	        Email = "mrrobot@fsociety.ong",
 	        Telefono = "5556453",
+            Pais = "AR",
         };
 
         [Test]
@@ -52,6 +53,35 @@ namespace Api.IntegrationTests
             reserva.CamasIds.First().Should().Be(camaId);
             reserva.NombreAbreviadoDelHuesped.Should().Be("Elliot");
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
+        }
+
+        [Test]
+        public async Task Crea_UnaReserva_Y_LaObtienePorId()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+
+	        var response = await CrearReserva(camaId, _desde, _hasta);
+	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var reservaId = await response.Content.ReadAsAsync<int>();
+            
+	        var consultaResponse = await ObtenerPorId(reservaId);
+	        consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDTO>();
+
+	        reserva.DiaDeCheckin.Should().Be("2020-09-17");
+	        reserva.DiaDeCheckout.Should().Be("2020-09-18");
+	        reserva.HoraEstimadaDeLlegada.Should().Be("11:30:00");
+	        reserva.CantidadDePasajeros.Should().Be(2);
+            reserva.CamasIds.Should().HaveCount(1);
+            reserva.CamasIds.First().Should().Be(camaId);
+	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
+
+	        reserva.DatosMinimosDeHuesped.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
+	        reserva.DatosMinimosDeHuesped.Telefono = _datosMinimosDeUnHuesped.Telefono;
+            reserva.DatosMinimosDeHuesped.Email = _datosMinimosDeUnHuesped.Email;
+            reserva.DatosMinimosDeHuesped.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
+            reserva.DatosMinimosDeHuesped.Pais = _datosMinimosDeUnHuesped.Pais;
+
         }
 
         [Test]
@@ -156,7 +186,9 @@ namespace Api.IntegrationTests
                 DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 CamasIds = new List<int?> { camaId },
                 DiaDeCheckin = Utilidades.ConvertirFecha(desde),
-                DiaDeCheckout = Utilidades.ConvertirFecha(hasta)
+                DiaDeCheckout = Utilidades.ConvertirFecha(hasta),
+                HoraEstimadaDeLlegada = "11:30:00",
+                CantidadDePasajeros = 2,
             };
 
             return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
@@ -165,6 +197,11 @@ namespace Api.IntegrationTests
         private async Task<HttpResponseMessage> ListarEntre(string primeraNoche, int dias)
         {
 	        return await _httpClient.GetAsync(ENDPOINT + $"?primeraNoche={primeraNoche}&dias={dias}");
+        }
+
+        private async Task<HttpResponseMessage> ObtenerPorId(int id)
+        {
+            return await _httpClient.GetAsync(ENDPOINT + $"/obtener?id={id}");
         }
 
         private async Task<HttpResponseMessage> ListarHuespedes()

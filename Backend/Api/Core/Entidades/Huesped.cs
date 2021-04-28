@@ -7,6 +7,9 @@ namespace Api.Core.Entidades
 	    [Required, MaxLength(70)]
         public string NombreCompleto { get; set; }
 
+        [Required, MinLength(2), MaxLength(2)]
+        public string Pais { get; set; }
+
         [Required, MinLength(3), MaxLength(30)]
         public string DniOPasaporte { get; set; }
 

@@ -22,6 +22,7 @@ namespace Api.UnitTests.Controllers.Mapping
 	        DniOPasaporte = "123456789",
 	        Email = "mrrobot@fsociety.ong",
 	        Telefono = "5556453",
+            Pais = "AR",
         };
         private const int UN_CAMA_ID = 1;
         private readonly DateTime _desde = new DateTime(2020, 07, 17);
@@ -50,6 +51,7 @@ namespace Api.UnitTests.Controllers.Mapping
             reserva.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
             reserva.Huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
             reserva.Huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+            reserva.Huesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
 
             reserva.PrimeraNoche.Should().Be(_desde);
             reserva.UltimaNoche.Should().Be(_hasta.AddDays(-1));
@@ -99,7 +101,10 @@ namespace Api.UnitTests.Controllers.Mapping
 	        DadaUnaListaDeReservas();
                         
 	        var reservaDTO = _mapper.Map<ReservaDTO>(_unaListaDeReservas.Skip(1).First());
-	        reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
+	        reservaDTO.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00:00");
+	        reservaDTO.CantidadDePasajeros.Should().Be(1);
+            reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
 	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
 	        reservaDTO.CamasIds.Should().HaveCount(2);
 	        reservaDTO.CamasIds.First().Should().Be(1);
@@ -174,6 +179,9 @@ namespace Api.UnitTests.Controllers.Mapping
             {
                 PrimeraNoche = _desde,
                 UltimaNoche = _hasta,
+                CantidadDePasajeros = 1,
+                HoraEstimadaDeLlegada = new TimeSpan(11, 0, 0),
+                Estado = ReservaEstadoEnum.InHouse,
                 ReservaCamas = new List<ReservaCama> { new ReservaCama { Cama = cama1, CamaId = cama1.Id }, new ReservaCama { Cama = cama2, CamaId = cama2.Id } },
                 Huesped = new Huesped { NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto }
             };

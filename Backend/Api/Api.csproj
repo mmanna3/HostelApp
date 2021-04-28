@@ -53,6 +53,8 @@
     <Compile Remove="Persistence\Migrations\20210405042846_asdasd.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20210420045320_Agrega_Estado_a_Reserva.cs" />
     <Compile Remove="Persistence\Migrations\20210420045320_Agrega_Estado_a_Reserva.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210428043113_Agrega_Pais_AlHuesped.cs" />
+    <Compile Remove="Persistence\Migrations\20210428043113_Agrega_Pais_AlHuesped.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
