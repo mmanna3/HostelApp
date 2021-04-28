@@ -6,6 +6,8 @@ import { Button } from './botones/botones';
 interface InputProps extends InputWithoutLabelProps {
   label?: string;
   faIconCode?: IconProp;
+  textoDelBoton?: string;
+  onButtonClick?: (valor: string) => any;
 }
 
 interface InputConBotonProps extends InputProps {
@@ -26,19 +28,38 @@ export function Input({
   label,
   faIconCode,
   name,
+  textoDelBoton,
+  onButtonClick,
   ...otrosAtributos
 }: InputProps): ReactElement {
+  const [valor, actualizarValor] = React.useState('');
+
   return (
-    <div className="field">
+    <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
       {label && <label className="label">{label}</label>}
-      <div className={`control ${faIconCode ? 'has-icons-left' : ''}`}>
-        <input className="input" name={name} type={type} ref={register} {...otrosAtributos} />
+      <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
+        <input
+          defaultValue={valor}
+          className="input"
+          name={name}
+          type={type}
+          ref={register}
+          onChange={(e: any): void => {
+            actualizarValor(e.target.value);
+          }}
+          {...otrosAtributos}
+        />
         {faIconCode && (
           <span className="icon is-small is-left">
             <FontAwesomeIcon icon={faIconCode} />
           </span>
         )}
       </div>
+      {onButtonClick && (
+        <div className="control">
+          <Button text={textoDelBoton} onClick={(): void => onButtonClick(valor)} />
+        </div>
+      )}
     </div>
   );
 }

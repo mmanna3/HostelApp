@@ -1,5 +1,4 @@
-import { Input, InputConBoton } from 'components/Input';
-import Label from 'components/Label';
+import { Input } from 'components/Input';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -18,76 +17,89 @@ const CabeceraHuesped = (): ReactElement => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
 
-  const mensaje = (): ReactElement => {
-    if (estado === EstadosApiRequestEnum.inactivo)
-      return (
-        <>
-          <Label text=""></Label>
-          <div className="notification is-primary is-light">
-            Si el huésped <strong>está registrado</strong>, traeremos sus datos.
-          </div>
-        </>
-      );
+  // const mensaje = (): ReactElement => {
+  //   if (estado === EstadosApiRequestEnum.inactivo)
+  //     return (
+  //       <>
+  //         <Label text=""></Label>
+  //         <div className="notification is-primary is-light">
+  //           Si el huésped <strong>está registrado</strong>, traeremos sus datos.
+  //         </div>
+  //       </>
+  //     );
 
-    if (datos != null)
-      return (
-        <>
-          <Label text=""></Label>
-          <div className="notification is-success is-light">
-            El huésped está <strong>registrado</strong>. De ser necesario, podés editar sus datos.
-          </div>
-        </>
-      );
+  //   if (datos != null)
+  //     return (
+  //       <>
+  //         <Label text=""></Label>
+  //         <div className="notification is-success is-light">
+  //           El huésped está <strong>registrado</strong>. De ser necesario, podés editar sus datos.
+  //         </div>
+  //       </>
+  //     );
 
-    return (
-      <>
-        <Label text=""></Label>
-        <div className="notification is-warning is-light">
-          El huésped <strong>no está registrado</strong>. Llená sus datos para registrarlo.
-        </div>
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       <Label text=""></Label>
+  //       <div className="notification is-warning is-light">
+  //         El huésped <strong>no está registrado</strong>. Llená sus datos para registrarlo.
+  //       </div>
+  //     </>
+  //   );
+  // };
 
   return (
     <>
       <div className="columns">
         <div className="column is-one-third">
-          <InputConBoton
-            label="DNI o Pasaporte"
+          <Input
+            placeHolder="DNI o Pasaporte"
             textoDelBoton="Buscar"
-            onClick={buscarDniOPasaporte}
+            onButtonClick={buscarDniOPasaporte}
             name="DatosMinimosDeHuesped.DNIOPasaporte"
             type="number"
+            faIconCode="id-card"
           />
         </div>
-        <div className="column">{mensaje()}</div>
-      </div>
-      <div className="columns">
+        {/* <div className="column">{mensaje()}</div> */}
         <div className="column">
           <Input
             readOnly={!camposEditables}
-            label="Nombre completo"
+            placeHolder="Nombre completo"
             name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={datos?.nombreCompleto}
+            faIconCode="user"
           />
-        </div>
-        <div className="column">
-          <Input readOnly={!camposEditables} label="Nacionalidad" name="DatosMinimosDeHuesped.Pais" defaultValue={'AR'} />
         </div>
       </div>
       <div className="columns">
-        <div className="column">
+        <div className="column is-one-quarter">
           <Input
             readOnly={!camposEditables}
-            label="Teléfono"
+            name="DatosMinimosDeHuesped.Pais"
+            // defaultValue={'AR'}
+            placeHolder="Nacionalidad"
+            faIconCode="globe"
+          />
+        </div>
+        <div className="column is-one-fifth">
+          <Input
+            readOnly={!camposEditables}
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
             defaultValue={datos?.telefono}
+            placeHolder="Teléfono"
+            faIconCode="phone"
           />
         </div>
         <div className="column">
-          <Input readOnly={!camposEditables} label="Email" name="DatosMinimosDeHuesped.Email" defaultValue={datos?.email} />
+          <Input
+            readOnly={!camposEditables}
+            name="DatosMinimosDeHuesped.Email"
+            defaultValue={datos?.email}
+            placeHolder="Email"
+            faIconCode="envelope"
+          />
         </div>
       </div>
     </>
