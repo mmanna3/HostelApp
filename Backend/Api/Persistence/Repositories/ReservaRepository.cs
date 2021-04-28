@@ -35,7 +35,11 @@ namespace Api.Persistence.Repositories
 
         public override async Task<Reserva> ObtenerPorId(int id)
         {
-	        return await _context.Set<Reserva>().Include(x => x.Huesped).SingleOrDefaultAsync(x => x.Id == id);
+	        return await _context.Set<Reserva>()
+							.Include(x => x.Huesped)
+							.Include(x => x.ReservaCamas)
+								.ThenInclude(x => x.Cama)
+							.SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }

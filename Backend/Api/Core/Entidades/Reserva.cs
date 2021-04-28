@@ -24,6 +24,11 @@ namespace Api.Core.Entidades
         [Required]
         public DateTime UltimaNoche { get; set; } // Puede ser igual a PrimeraNoche
 
+        [Required]
+        public TimeSpan HoraEstimadaDeLlegada { get; set; }
+        
+        [Required]
+        public int CantidadDePasajeros { get; set; }
         public bool EstaReservado(DateTime dia)
         {
             return dia >= PrimeraNoche && dia <= UltimaNoche;

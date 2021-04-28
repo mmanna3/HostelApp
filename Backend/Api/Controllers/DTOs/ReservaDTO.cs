@@ -8,6 +8,8 @@ namespace Api.Controllers.DTOs
     {
         public int Id { get; set; }
         public ReservaEstadoEnum Estado { get; set; }
+        public string HoraEstimadaDeLlegada { get; set; }
+        public int CantidadDePasajeros { get; set; }
         public DatosMinimosDeHuespedDTO DatosMinimosDeHuesped { get; set; }
 
         [YKNRequired, DisplayName("Día de checkin")]
