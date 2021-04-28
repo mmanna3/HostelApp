@@ -1,8 +1,11 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement } from 'react';
 import { Button } from './botones/botones';
 
 interface InputProps extends InputWithoutLabelProps {
   label?: string;
+  faIconCode?: IconProp;
 }
 
 interface InputConBotonProps extends InputProps {
@@ -20,15 +23,21 @@ interface InputWithoutLabelProps {
 export function Input({
   register = (): void => {},
   type = 'text',
-  label = '',
+  label,
+  faIconCode,
   name,
   ...otrosAtributos
 }: InputProps): ReactElement {
   return (
     <div className="field">
-      <label className="label">{label}</label>
-      <div className="control">
+      {label && <label className="label">{label}</label>}
+      <div className={`control ${faIconCode ? 'has-icons-left' : ''}`}>
         <input className="input" name={name} type={type} ref={register} {...otrosAtributos} />
+        {faIconCode && (
+          <span className="icon is-small is-left">
+            <FontAwesomeIcon icon={faIconCode} />
+          </span>
+        )}
       </div>
     </div>
   );
