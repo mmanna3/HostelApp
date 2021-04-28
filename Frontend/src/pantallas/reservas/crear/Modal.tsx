@@ -1,5 +1,6 @@
 import { Button } from 'components/botones/botones';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
+import { Input } from 'components/Input';
 import Label from 'components/Label';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
@@ -121,19 +122,33 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
       <CardBody minHeight="460px">
         <ValidationSummary errors={errores} />
 
+        <div className="columns">
+          <div className="column">
+            <DateRangePicker
+              actualizarValor={actualizarDesdeHasta}
+              etiqueta="Check in - Check out"
+              valor={desdeHasta}
+              desdeName="diaDeCheckin"
+              hastaName="diaDeCheckout"
+            />
+            <p className={Estilos.noches}>
+              <strong>Noches: </strong>
+              {cantidadDeNoches}
+            </p>
+          </div>
+          <div className="column is-one-fifth">
+            <Input label="Cant. de pasajeros" name="cantidadDePasajeros" defaultValue={1} />
+          </div>
+          <div className="column is-one-fifth">
+            <Input label="Hora de llegada" name="horaEstimadaDeLlegada" defaultValue="11:00" step="1800" type="time" />
+          </div>
+          <div className="column">
+            <Input label="Canal" name="canal" defaultValue="Personal" />
+          </div>
+        </div>
+
         <CabeceraHuesped />
 
-        <DateRangePicker
-          actualizarValor={actualizarDesdeHasta}
-          etiqueta="Check in - Check out"
-          valor={desdeHasta}
-          desdeName="diaDeCheckin"
-          hastaName="diaDeCheckout"
-        />
-        <p className={Estilos.noches}>
-          <strong>Noches: </strong>
-          {cantidadDeNoches}
-        </p>
         <Label text="Camas" />
 
         {renglones.map(

@@ -29,6 +29,8 @@ export interface ReservaDTO {
   diaDeCheckout: string;
   camasIds: number[];
   CamasDeHabitacionesPrivadasIds: number[];
+  cantidadDePasajeros: number;
+  horaEstimadaDeLlegada: string;
 }
 
 export interface CheckoutsDeHoyDTO {

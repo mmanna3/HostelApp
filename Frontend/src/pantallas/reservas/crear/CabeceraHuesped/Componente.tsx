@@ -72,6 +72,9 @@ const CabeceraHuesped = (): ReactElement => {
             defaultValue={datos?.nombreCompleto}
           />
         </div>
+        <div className="column">
+          <Input readOnly={!camposEditables} label="Nacionalidad" name="DatosMinimosDeHuesped.Pais" defaultValue={'AR'} />
+        </div>
       </div>
       <div className="columns">
         <div className="column">
