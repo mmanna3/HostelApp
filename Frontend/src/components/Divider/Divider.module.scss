@@ -1,0 +1,7 @@
+@import 'universal.scss';
+
+.divider {
+  @extend .divider;
+  @extend .is-primary;
+  color: $primary;
+}

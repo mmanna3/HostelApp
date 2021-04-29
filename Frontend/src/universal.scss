@@ -55,6 +55,8 @@ $plateado: #dddddd;
 
 $blue: #3260a8; //Probar con más azules
 $primary: $blue;
+$input-icon-color: #222;
+$input-icon-active-color: $primary;
 
 $color-tipografia: #222;
 
@@ -71,6 +73,7 @@ $color-pastel-naranja: #ffabab;
 @import '../node_modules/bulma/bulma.sass';
 @import '../node_modules/bulma-switch/dist/css/bulma-switch.sass';
 @import '../node_modules/bulma-checkradio/dist/css/bulma-checkradio.sass';
+@import '~@creativebulma/bulma-divider';
 
 /* INICIO: DateRangePicker */
 

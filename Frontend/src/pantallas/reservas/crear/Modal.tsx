@@ -1,7 +1,7 @@
 import { Button } from 'components/botones/botones';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
+import { Divider } from 'components/Divider/Divider';
 import { Input } from 'components/Input';
-import Label from 'components/Label';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -147,9 +147,11 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
           </div>
         </div>
 
+        <Divider texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
+
         <CabeceraHuesped />
 
-        <Label text="Camas" />
+        <Divider texto="HABITACIONES Y CAMAS" />
 
         {renglones.map(
           (renglon): ReactElement => {
