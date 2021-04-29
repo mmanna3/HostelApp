@@ -1,3 +1,4 @@
+import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,13 +75,14 @@ const CabeceraHuesped = (): ReactElement => {
       </div>
       <div className="columns">
         <div className="column is-one-quarter">
-          <Input
+          {/* <Input
             readOnly={!camposEditables}
             name="DatosMinimosDeHuesped.Pais"
             // defaultValue={'AR'}
             placeHolder="Nacionalidad"
             faIconCode="globe"
-          />
+          /> */}
+          <Autocomplete />
         </div>
         <div className="column is-one-fifth">
           <Input
