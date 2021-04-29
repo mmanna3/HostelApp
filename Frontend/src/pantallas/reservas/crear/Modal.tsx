@@ -1,6 +1,6 @@
 import { Button } from 'components/botones/botones';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
-import { Divider } from 'components/Divider/Divider';
+import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
@@ -118,7 +118,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="900px">
-      <Header title="Alta de reserva" onHide={hide} />
+      <Header title="Nueva reserva" onHide={hide} />
       <CardBody minHeight="460px">
         <ValidationSummary errors={errores} />
 
@@ -136,10 +136,16 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
               {cantidadDeNoches}
             </p>
           </div>
-          <div className="column is-one-fifth">
-            <Input label="Cant. de pasajeros" name="cantidadDePasajeros" defaultValue={1} />
+          <div className="column is-narrow">
+            <Input
+              label="Nº de pasajeros"
+              name="cantidadDePasajeros"
+              style={{ width: '117px' }}
+              type="number"
+              defaultValue={1}
+            />
           </div>
-          <div className="column is-one-fifth">
+          <div className="column is-narrow">
             <Input label="Hora de llegada" name="horaEstimadaDeLlegada" defaultValue="11:00" step="1800" type="time" />
           </div>
           <div className="column">
@@ -147,11 +153,11 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
           </div>
         </div>
 
-        <Divider texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
+        <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
         <CabeceraHuesped />
 
-        <Divider texto="HABITACIONES Y CAMAS" />
+        <LineaDivisoria texto="HABITACIONES Y CAMAS" />
 
         {renglones.map(
           (renglon): ReactElement => {
