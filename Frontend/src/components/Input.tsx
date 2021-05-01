@@ -1,6 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { Button } from './botones/botones';
 
 interface InputProps extends InputWithoutLabelProps {
@@ -16,14 +17,14 @@ interface InputConBotonProps extends InputProps {
 }
 
 interface InputWithoutLabelProps {
-  register?: () => any;
+  // register?: () => any;
   name: string;
   type?: string;
   [otrosAtributos: string]: any;
 }
 
 export function Input({
-  register = (): void => {},
+  // register = (): void => {},
   type = 'text',
   label,
   faIconCode,
@@ -33,6 +34,7 @@ export function Input({
   ...otrosAtributos
 }: InputProps): ReactElement {
   const [valor, actualizarValor] = React.useState('');
+  const { register } = useFormContext();
 
   return (
     <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
@@ -41,9 +43,8 @@ export function Input({
         <input
           defaultValue={valor}
           className="input"
-          name={name}
           type={type}
-          ref={register}
+          {...register(name)}
           onChange={(e: any): void => {
             actualizarValor(e.target.value);
           }}
@@ -65,7 +66,7 @@ export function Input({
 }
 
 export function InputConBoton({
-  register = (): void => {},
+  // register = (): void => {},
   label = '',
   name,
   textoDelBoton,
@@ -84,7 +85,7 @@ export function InputConBoton({
             className="input"
             type={type}
             name={name}
-            ref={register}
+            // ref={register}
             defaultValue={valor}
             onChange={(e: any): void => {
               actualizarValor(e.target.value);
@@ -100,6 +101,6 @@ export function InputConBoton({
   );
 }
 
-export function InputWithoutLabel({ register, name, ...otrosAtributos }: InputWithoutLabelProps): ReactElement {
-  return <input className="input" name={name} ref={register} {...otrosAtributos} />;
+export function InputWithoutLabel({ name, ...otrosAtributos }: InputWithoutLabelProps): ReactElement {
+  return <input className="input" name={name} {...otrosAtributos} />;
 }

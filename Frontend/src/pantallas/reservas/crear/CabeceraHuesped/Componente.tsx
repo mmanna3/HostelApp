@@ -49,6 +49,12 @@ const CabeceraHuesped = (): ReactElement => {
   //   );
   // };
 
+  const paises = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   return (
     <>
       <div className="columns">
@@ -82,7 +88,12 @@ const CabeceraHuesped = (): ReactElement => {
             placeHolder="Nacionalidad"
             faIconCode="globe"
           /> */}
-          <Autocomplete />
+          <Autocomplete
+            name="DatosMinimosDeHuesped.Pais"
+            opciones={paises}
+            opcionInicialIndex={2}
+            placeholder="Nacionalidad"
+          />
         </div>
         <div className="column is-one-fifth">
           <Input
