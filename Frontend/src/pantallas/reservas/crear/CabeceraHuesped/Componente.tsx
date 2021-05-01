@@ -60,7 +60,7 @@ const CabeceraHuesped = (): ReactElement => {
       <div className="columns">
         <div className="column is-one-third">
           <Input
-            placeHolder="DNI o Pasaporte"
+            placeholder="DNI o Pasaporte"
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
             name="DatosMinimosDeHuesped.DNIOPasaporte"
@@ -72,7 +72,7 @@ const CabeceraHuesped = (): ReactElement => {
         <div className="column">
           <Input
             readOnly={!camposEditables}
-            placeHolder="Nombre completo"
+            placeholder="Nombre completo"
             name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={datos?.nombreCompleto}
             faIconCode="user"
@@ -81,17 +81,10 @@ const CabeceraHuesped = (): ReactElement => {
       </div>
       <div className="columns">
         <div className="column is-one-quarter">
-          {/* <Input
-            readOnly={!camposEditables}
-            name="DatosMinimosDeHuesped.Pais"
-            // defaultValue={'AR'}
-            placeHolder="Nacionalidad"
-            faIconCode="globe"
-          /> */}
           <Autocomplete
             name="DatosMinimosDeHuesped.Pais"
             opciones={paises}
-            opcionInicialIndex={2}
+            opcionInicial={paises[0]}
             placeholder="Nacionalidad"
           />
         </div>
@@ -101,7 +94,7 @@ const CabeceraHuesped = (): ReactElement => {
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
             defaultValue={datos?.telefono}
-            placeHolder="Teléfono"
+            placeholder="Teléfono"
             faIconCode="phone"
           />
         </div>
@@ -110,7 +103,7 @@ const CabeceraHuesped = (): ReactElement => {
             readOnly={!camposEditables}
             name="DatosMinimosDeHuesped.Email"
             defaultValue={datos?.email}
-            placeHolder="Email"
+            placeholder="Email"
             faIconCode="envelope"
           />
         </div>

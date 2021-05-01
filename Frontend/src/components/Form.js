@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 export default function Form({ defaultValues, children, onSubmit, resetOnChanged, ...otherAttr }) {
-  const { handleSubmit, register, reset, control } = useForm({ defaultValues });
+  const { handleSubmit, register, reset, control, setValue } = useForm({ defaultValues });
 
   useEffect(() => {
     reset();
   }, [resetOnChanged, reset]);
 
   return (
-    <FormProvider control={control} register={register}>
+    <FormProvider control={control} register={register} setValue={setValue}>
       <form onSubmit={handleSubmit(onSubmit)} {...otherAttr}>
         {/* {processContent(children)} */}
         {children}
