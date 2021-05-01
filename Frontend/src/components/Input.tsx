@@ -17,14 +17,12 @@ interface InputConBotonProps extends InputProps {
 }
 
 interface InputWithoutLabelProps {
-  // register?: () => any;
   name: string;
   type?: string;
   [otrosAtributos: string]: any;
 }
 
 export function Input({
-  // register = (): void => {},
   type = 'text',
   label,
   faIconCode,
@@ -66,7 +64,6 @@ export function Input({
 }
 
 export function InputConBoton({
-  // register = (): void => {},
   label = '',
   name,
   textoDelBoton,
@@ -85,7 +82,6 @@ export function InputConBoton({
             className="input"
             type={type}
             name={name}
-            // ref={register}
             defaultValue={valor}
             onChange={(e: any): void => {
               actualizarValor(e.target.value);
