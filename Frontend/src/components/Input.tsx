@@ -9,6 +9,10 @@ interface InputProps extends InputWithoutLabelProps {
   faIconCode?: IconProp;
   textoDelBoton?: string;
   onButtonClick?: (valor: string) => any;
+  handleOnChange?: (e: any) => void;
+  defaultValue?: string | number;
+  placeholder?: string;
+  style?: object;
 }
 
 interface InputConBotonProps extends InputProps {
@@ -29,24 +33,36 @@ export function Input({
   name,
   textoDelBoton,
   onButtonClick,
-  ...otrosAtributos
+  defaultValue,
+  placeholder,
+  style,
+  handleOnChange = () => {},
 }: InputProps): ReactElement {
   const [valor, actualizarValor] = React.useState('');
-  const { register } = useFormContext();
+  const { onChange, ref, onBlur } = useFormContext().register(name);
+
+  // useEffect((): void => {
+  //   handleOnChange(valor);
+  // }, [valor]);
 
   return (
     <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
       {label && <label className="label">{label}</label>}
       <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
         <input
-          defaultValue={valor}
+          defaultValue={defaultValue}
+          style={style}
           className="input"
           type={type}
-          {...register(name)}
+          name={name}
+          ref={ref}
+          onBlur={onBlur}
           onChange={(e: any): void => {
             actualizarValor(e.target.value);
+            onChange(e);
+            handleOnChange(e.target.value);
           }}
-          {...otrosAtributos}
+          placeholder={placeholder}
         />
         {faIconCode && (
           <span className="icon is-small is-left">
@@ -69,6 +85,7 @@ export function InputConBoton({
   textoDelBoton,
   onClick,
   type,
+  handleOnChange = () => {},
   ...otrosAtributos
 }: InputConBotonProps): ReactElement {
   const [valor, actualizarValor] = React.useState('');
@@ -85,6 +102,7 @@ export function InputConBoton({
             defaultValue={valor}
             onChange={(e: any): void => {
               actualizarValor(e.target.value);
+              handleOnChange(e);
             }}
             {...otrosAtributos}
           />
