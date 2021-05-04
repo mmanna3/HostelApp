@@ -48,7 +48,7 @@ export function Input({
           <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
             <input
               {...field}
-              value={field.value || ''}
+              value={field.value || ''} // así React sabe que el input es Controlled
               onChange={(e: any): void => {
                 field.onChange(e);
                 handleOnChange(e);
