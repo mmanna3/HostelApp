@@ -1,12 +1,20 @@
 import Drp from '@wojtekmaj/react-daterange-picker';
 import { Input } from 'components/Input';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { convertirAString } from 'utils/Fecha';
 import Styles from './DateRangePicker.module.scss';
 
+// interface IProps {
+//   valor: Date[];
+//   etiqueta: string;
+//   actualizarValor: (valor: Date[]) => void;
+//   desdeName: string;
+//   hastaName: string;
+// }
+
 const DateRangePicker = ({ valor, etiqueta, actualizarValor, desdeName, hastaName }) => {
-  const { setValue } = useForm();
+  const { setValue } = useFormContext();
 
   return (
     <div className="field">
@@ -25,8 +33,8 @@ const DateRangePicker = ({ valor, etiqueta, actualizarValor, desdeName, hastaNam
           minDate={new Date()}
         />
       </div>
-      <Input style={{ display: 'none' }} name={desdeName} defaultValue={convertirAString(valor[0])} />
-      <Input style={{ display: 'none' }} name={hastaName} defaultValue={convertirAString(valor[1])} />
+      <Input style={{ display: 'none' }} name={desdeName} />
+      <Input style={{ display: 'none' }} name={hastaName} />
     </div>
   );
 };
