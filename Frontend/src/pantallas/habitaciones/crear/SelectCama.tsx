@@ -7,7 +7,7 @@ interface IProps {
   cama: IRenglonCama;
   actualizarIdentificadorDeLaCama: (globalIndex: number, identificadorDeLaCama: string) => void;
   actualizarTipo: (index: number, oldTipo: string, newTipo: string) => void;
-  eliminarRenglonDeLaCama: (globalIndex: number) => any;
+  eliminarRenglon: (globalIndex: number) => any;
 }
 
 interface IIdentificarProps {
@@ -20,11 +20,11 @@ const Identificador = ({ cama, setValue }: IIdentificarProps): ReactElement => {
     <div className="field">
       <span className="control is-expanded">
         <Input
-          key={cama.globalIndex}
-          name={`camas${cama.tipo}[${cama.index}].nombre`}
+          key={cama.indiceGlobal}
+          name={`camas${cama.tipo}[${cama.indiceDelTipo}].nombre`}
           placeholder="Identificador"
           handleOnChange={(e: any): void => {
-            setValue(cama.globalIndex, e.target.value);
+            setValue(cama.indiceGlobal, e.target.value);
           }}
         />
       </span>
@@ -32,14 +32,9 @@ const Identificador = ({ cama, setValue }: IIdentificarProps): ReactElement => {
   );
 };
 
-const SelectCama = ({
-  cama,
-  actualizarTipo,
-  eliminarRenglonDeLaCama,
-  actualizarIdentificadorDeLaCama,
-}: IProps): ReactElement => {
+const SelectCama = ({ cama, actualizarTipo, eliminarRenglon, actualizarIdentificadorDeLaCama }: IProps): ReactElement => {
   const onTipoCamaChanged = (e: any): void => {
-    actualizarTipo(cama.index, cama.tipo, e.target.value);
+    actualizarTipo(cama.indiceDelTipo, cama.tipo, e.target.value);
   };
 
   return (
@@ -62,7 +57,7 @@ const SelectCama = ({
       <button
         className="button has-text-grey has-background-light"
         type="button"
-        onClick={(): void => eliminarRenglonDeLaCama(cama.globalIndex)}
+        onClick={(): void => eliminarRenglon(cama.indiceGlobal)}
       >
         {/* El onClick de arriba funciona pero no tiene sentido. Algún día lo arreglaré. */}
         <Icon faCode="trash-alt" />

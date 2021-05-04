@@ -19,16 +19,16 @@ interface IProps {
 }
 
 export interface IRenglonCama {
-  index: number;
+  indiceDelTipo: number;
   tipo: string;
-  globalIndex: number;
+  indiceGlobal: number;
   identificadorDeLaCama: Nullable<string>;
 }
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement => {
   const [resetOnChanged, resetForm] = React.useState(0);
-  const [camas, setCamas] = React.useState<IRenglonCama[]>([
-    { index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null },
+  const [camas, actualizarCamas] = React.useState<IRenglonCama[]>([
+    { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null },
   ]);
 
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function onSuccess(): void {
     onSuccessfulSubmit();
     resetForm(resetOnChanged + 1);
-    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null }]);
+    actualizarCamas([{ indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null }]);
   }
 
   const onSubmit = (data: any): void => {
@@ -48,27 +48,28 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function hide(): void {
     onHide();
     dispatch(reiniciar());
-    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null }]);
+    actualizarCamas([{ indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null }]);
   }
 
-  function getNextCamaIndex(array: IRenglonCama[], tipo: string): number {
+  function proximoindiceDelTipo(array: IRenglonCama[], tipo: string): number {
     var cama = array
       .slice()
       .reverse()
       .find((x: IRenglonCama): boolean => x.tipo === tipo);
-    return cama ? cama.index + 1 : 0;
+    return cama ? cama.indiceDelTipo + 1 : 0;
   }
 
-  function getNextGlobalIndex(array: IRenglonCama[]): number {
+  function proximoIndiceGlobal(array: IRenglonCama[]): number {
     var camasReverse = array.slice().reverse();
-    return camasReverse[0].globalIndex + 1;
+    return camasReverse[0].indiceGlobal + 1;
   }
 
-  function updateCamaIndexes(array: IRenglonCama[]): void {
+  function arreglarIndicesParaQueSeanConsecutivosSegunElTipo(array: IRenglonCama[]): void {
     function updatePorTipo(array: IRenglonCama[], tipo: string): void {
       var arrayDelTipo = array.filter((x): boolean => x.tipo === tipo);
 
-      for (let i = 0; i < arrayDelTipo.length; i++) if (arrayDelTipo[i].index !== i) arrayDelTipo[i].index = i;
+      for (let i = 0; i < arrayDelTipo.length; i++)
+        if (arrayDelTipo[i].indiceDelTipo !== i) arrayDelTipo[i].indiceDelTipo = i;
     }
 
     updatePorTipo(array, 'Individuales');
@@ -76,19 +77,24 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     updatePorTipo(array, 'Cuchetas');
   }
 
-  function addCama(): void {
-    var nextIndex = getNextCamaIndex(camas, 'Individuales');
-    setCamas((prevIndexes: IRenglonCama[]): IRenglonCama[] => [
+  function agregarRenglon(): void {
+    var nextIndex = proximoindiceDelTipo(camas, 'Individuales');
+    actualizarCamas((prevIndexes: IRenglonCama[]): IRenglonCama[] => [
       ...prevIndexes,
-      { index: nextIndex, tipo: 'Individuales', globalIndex: getNextGlobalIndex(camas), identificadorDeLaCama: null },
+      {
+        indiceDelTipo: nextIndex,
+        tipo: 'Individuales',
+        indiceGlobal: proximoIndiceGlobal(camas),
+        identificadorDeLaCama: null,
+      },
     ]);
   }
 
-  const eliminarRenglonDeLaCama = (globalIndex: number): void => {
+  const eliminarRenglon = (globalIndex: number): void => {
     if (camas.length > 1) {
-      var newArray = camas.filter((item): boolean => item.globalIndex !== globalIndex);
-      updateCamaIndexes(newArray);
-      setCamas(newArray);
+      var newArray = camas.filter((item): boolean => item.indiceGlobal !== globalIndex);
+      arreglarIndicesParaQueSeanConsecutivosSegunElTipo(newArray);
+      actualizarCamas(newArray);
     }
   };
 
@@ -96,29 +102,29 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     var newArray = [...camas];
 
     for (var i = 0; i < newArray.length; i++) {
-      if (newArray[i].globalIndex === globalIndex) {
+      if (newArray[i].indiceGlobal === globalIndex) {
         newArray[i].identificadorDeLaCama = identificadorDeLaCama;
         break;
       }
     }
 
-    setCamas(newArray);
+    actualizarCamas(newArray);
   }
 
   function actualizarTipo(index: number, oldTipo: string, newTipo: string): void {
     var newArray = [...camas];
 
     for (var i = 0; i < newArray.length; i++) {
-      if (newArray[i].index === index && newArray[i].tipo === oldTipo) {
-        newArray[i].index = getNextCamaIndex(newArray, newTipo);
+      if (newArray[i].indiceDelTipo === index && newArray[i].tipo === oldTipo) {
+        newArray[i].indiceDelTipo = proximoindiceDelTipo(newArray, newTipo);
         newArray[i].tipo = newTipo;
         newArray[i].identificadorDeLaCama = null;
         break;
       }
     }
 
-    updateCamaIndexes(newArray);
-    setCamas(newArray);
+    arreglarIndicesParaQueSeanConsecutivosSegunElTipo(newArray);
+    actualizarCamas(newArray);
   }
 
   return (
@@ -153,16 +159,16 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
             (cama): ReactElement => {
               return (
                 <SelectCama
-                  key={cama.globalIndex}
+                  key={cama.indiceGlobal}
                   cama={cama}
                   actualizarTipo={actualizarTipo}
-                  eliminarRenglonDeLaCama={eliminarRenglonDeLaCama}
+                  eliminarRenglon={eliminarRenglon}
                   actualizarIdentificadorDeLaCama={actualizarIdentificadorDeLaCama}
                 />
               );
             }
           )}
-          <Button text="Agregar cama" onClick={(): void => addCama()} style={{ marginTop: '1em' }} />
+          <Button text="Agregar cama" onClick={(): void => agregarRenglon()} style={{ marginTop: '1em' }} />
         </div>
       </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
