@@ -26,10 +26,9 @@ export interface IRenglonCama {
 }
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement => {
+  const camaInicial = { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null };
   const [resetOnChanged, resetForm] = React.useState(0);
-  const [camas, actualizarCamas] = React.useState<IRenglonCama[]>([
-    { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null },
-  ]);
+  const [camas, actualizarCamas] = React.useState<IRenglonCama[]>([camaInicial]);
 
   const dispatch = useDispatch();
   const { selector, invocar, reiniciar } = api.habitaciones.crear;
@@ -38,7 +37,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function onSuccess(): void {
     onSuccessfulSubmit();
     resetForm(resetOnChanged + 1);
-    actualizarCamas([{ indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null }]);
+    actualizarCamas([camaInicial]);
   }
 
   const onSubmit = (data: any): void => {
@@ -48,7 +47,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function hide(): void {
     onHide();
     dispatch(reiniciar());
-    actualizarCamas([{ indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null }]);
+    actualizarCamas([camaInicial]);
   }
 
   function proximoindiceDelTipo(array: IRenglonCama[], tipo: string): number {
@@ -82,10 +81,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     actualizarCamas((prevIndexes: IRenglonCama[]): IRenglonCama[] => [
       ...prevIndexes,
       {
+        ...camaInicial,
         indiceDelTipo: nextIndex,
-        tipo: 'Individuales',
         indiceGlobal: proximoIndiceGlobal(camas),
-        identificadorDeLaCama: null,
       },
     ]);
   }
