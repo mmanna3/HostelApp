@@ -140,7 +140,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
           <div className="column is-two-fifths">
             <div className="field">
               <Label text="Información adicional" />
-              <Textarea rows="3" name="informacionAdicional" placeholder="Ej.: tiene rampa para discapacitados" />
+              <Textarea rows={3} name="informacionAdicional" placeholder="Ej.: tiene rampa para discapacitados" />
             </div>
           </div>
         </div>
