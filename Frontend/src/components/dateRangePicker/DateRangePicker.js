@@ -33,8 +33,8 @@ const DateRangePicker = ({ valor, etiqueta, actualizarValor, desdeName, hastaNam
           minDate={new Date()}
         />
       </div>
-      <Input style={{ display: 'none' }} name={desdeName} />
-      <Input style={{ display: 'none' }} name={hastaName} />
+      <Input style={{ display: 'none' }} name={desdeName} defaultValue={convertirAString(valor[0])} />
+      <Input style={{ display: 'none' }} name={hastaName} defaultValue={convertirAString(valor[1])} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Button } from './botones/botones';
 
-interface InputProps extends InputWithoutLabelProps {
+interface InputProps {
   label?: string;
   faIconCode?: IconProp;
   textoDelBoton?: string;
@@ -13,17 +13,10 @@ interface InputProps extends InputWithoutLabelProps {
   defaultValue?: string | number;
   placeholder?: string;
   style?: object;
-}
-
-interface InputConBotonProps extends InputProps {
-  textoDelBoton: string;
-  onClick: (valor: string) => any;
-}
-
-interface InputWithoutLabelProps {
   name: string;
   type?: string;
-  [otrosAtributos: string]: any;
+  readOnly?: boolean;
+  step?: string;
 }
 
 export function Input({
@@ -36,7 +29,8 @@ export function Input({
   defaultValue,
   placeholder,
   style,
-  handleOnChange = () => {},
+  readOnly,
+  step,
 }: InputProps): ReactElement {
   const { setValue, getValues } = useFormContext();
 
@@ -51,7 +45,7 @@ export function Input({
         <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
           {label && <label className="label">{label}</label>}
           <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
-            <input style={style} className="input" type={type} {...field} placeholder={placeholder} />
+            <input style={style} readOnly={readOnly} className="input" type={type} {...field} placeholder={placeholder} />
             {faIconCode && (
               <span className="icon is-small is-left">
                 <FontAwesomeIcon icon={faIconCode} />
@@ -67,44 +61,4 @@ export function Input({
       )}
     />
   );
-}
-
-export function InputConBoton({
-  label = '',
-  name,
-  textoDelBoton,
-  onClick,
-  type,
-  handleOnChange = () => {},
-  ...otrosAtributos
-}: InputConBotonProps): ReactElement {
-  const [valor, actualizarValor] = React.useState('');
-
-  return (
-    <>
-      <label className="label">{label}</label>
-      <div className="field has-addons">
-        <div className="control">
-          <input
-            className="input"
-            type={type}
-            name={name}
-            defaultValue={valor}
-            onChange={(e: any): void => {
-              actualizarValor(e.target.value);
-              handleOnChange(e);
-            }}
-            {...otrosAtributos}
-          />
-        </div>
-        <div className="control">
-          <Button text={textoDelBoton} onClick={(): void => onClick(valor)} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-export function InputWithoutLabel({ name, ...otrosAtributos }: InputWithoutLabelProps): ReactElement {
-  return <input className="input" name={name} {...otrosAtributos} />;
 }
