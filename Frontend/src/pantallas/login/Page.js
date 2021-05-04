@@ -33,8 +33,8 @@ const LoginPage = () => {
         <Form onSubmit={onSubmit} className={`login-form ${styles.loginForm}`}>
           <ValidationSummary errors={errores} />
           <Input label="Usuario" name="username" />
-          <Input type="password" label="Contraseña" name="password" />
-          <SubmitButton text="Ingresar" loading={estado === EstadosApiRequestEnum.cargando}></SubmitButton>
+          <Input label="Contraseña" name="password" type="password" />
+          <SubmitButton text="Ingresar" loading={estado === EstadosApiRequestEnum.cargando} />
         </Form>
       </div>
     </div>
