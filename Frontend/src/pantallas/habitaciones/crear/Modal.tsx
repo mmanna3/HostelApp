@@ -18,7 +18,7 @@ interface IProps {
   onSuccessfulSubmit: () => void;
 }
 
-interface IRenglonCama {
+export interface IRenglonCama {
   index: number;
   tipo: string;
   globalIndex: number;
@@ -49,15 +49,15 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
   }
 
-  function getNextCamaIndex(array: any, tipo: string): number {
+  function getNextCamaIndex(array: IRenglonCama[], tipo: string): number {
     var cama = array
       .slice()
       .reverse()
-      .find((x: any): boolean => x.tipo === tipo);
+      .find((x: IRenglonCama): boolean => x.tipo === tipo);
     return cama ? cama.index + 1 : 0;
   }
 
-  function getNextGlobalIndex(array: any): number {
+  function getNextGlobalIndex(array: IRenglonCama[]): number {
     var camasReverse = array.slice().reverse();
     return camasReverse[0].globalIndex + 1;
   }
@@ -82,7 +82,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     ]);
   }
 
-  const removeCama = (globalIndex: number): (() => void) => (): void => {
+  const removeCama = (globalIndex: number): void => {
     if (camas.length > 1) {
       var newArray = camas.filter((item): boolean => item.globalIndex !== globalIndex);
       updateCamaIndexes(newArray);

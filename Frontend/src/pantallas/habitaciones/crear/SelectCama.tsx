@@ -1,17 +1,30 @@
 import { Icon } from 'components/Icon';
 import { Input } from 'components/Input';
 import Select from 'components/Select';
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { IRenglonCama } from './Modal';
 
-const SelectCama = ({ cama, setTipoCama, removeCama, setValue }) => {
-  const Identificador = ({ cama, setValue }) => {
+interface IProps {
+  cama: IRenglonCama;
+  setValue: (globalIndex: number, value: object) => void;
+  setTipoCama: (index: number, oldTipo: string, newTipo: string) => void;
+  removeCama: (globalIndex: number) => any;
+}
+
+const SelectCama = ({ cama, setTipoCama, removeCama, setValue }: IProps): ReactElement => {
+  interface IIdentificarProps {
+    cama: IRenglonCama;
+    setValue: (globalIndex: number, value: object) => void;
+  }
+
+  const Identificador = ({ cama, setValue }: IIdentificarProps): ReactElement => {
     return (
       <div className="field">
         <span className="control is-expanded">
           <Input
             name={`camas${cama.tipo}[${cama.index}].nombre`}
             placeholder="Identificador"
-            handleOnChange={valor => {
+            handleOnChange={(valor: string): void => {
               setValue(cama.globalIndex, { nombre: valor });
             }}
             // value={cama.value?.nombre}
@@ -21,7 +34,7 @@ const SelectCama = ({ cama, setTipoCama, removeCama, setValue }) => {
     );
   };
 
-  const onTipoCamaChanged = e => {
+  const onTipoCamaChanged = (e: any): void => {
     setTipoCama(cama.index, cama.tipo, e.target.value);
   };
 
@@ -42,7 +55,12 @@ const SelectCama = ({ cama, setTipoCama, removeCama, setValue }) => {
 
       <Identificador cama={cama} setValue={setValue} />
 
-      <button className="button has-text-grey has-background-light" type="button" onClick={removeCama(cama.globalIndex)}>
+      <button
+        className="button has-text-grey has-background-light"
+        type="button"
+        onClick={(): void => removeCama(cama.globalIndex)}
+      >
+        {/* El onClick de arriba funciona pero no tiene sentido. Algún día lo arreglaré. */}
         <Icon faCode="trash-alt" />
       </button>
     </div>
