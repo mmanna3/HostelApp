@@ -22,11 +22,11 @@ export interface IRenglonCama {
   indiceDelTipo: number;
   tipo: string;
   indiceGlobal: number;
-  identificadorDeLaCama: Nullable<string>;
+  identificadorDeLaCama: string;
 }
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement => {
-  const camaInicial = { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: null };
+  const camaInicial = { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: '' };
   const [resetOnChanged, resetForm] = React.useState(0);
   const [camas, actualizarCamas] = React.useState<IRenglonCama[]>([camaInicial]);
 
@@ -41,7 +41,23 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   }
 
   const onSubmit = (data: any): void => {
-    dispatch(invocar(data, onSuccess));
+    let newData = data;
+
+    let camasIndividuales: any[] = [];
+    let camasMatrimoniales: any[] = [];
+    let camasCuchetas: any[] = [];
+
+    camas.forEach((cama: IRenglonCama): any => {
+      if (cama.tipo === 'Individuales') camasIndividuales.push({ nombre: cama.identificadorDeLaCama });
+      if (cama.tipo === 'Matrimoniales') camasMatrimoniales.push({ nombre: cama.identificadorDeLaCama });
+      if (cama.tipo === 'Cuchetas') camasCuchetas.push({ nombre: cama.identificadorDeLaCama });
+    });
+
+    if (camasIndividuales.length > 0) newData['camasIndividuales'] = camasIndividuales;
+    if (camasMatrimoniales.length > 0) newData['camasMatrimoniales'] = camasMatrimoniales;
+    if (camasCuchetas.length > 0) newData['camasCuchetas'] = camasCuchetas;
+
+    dispatch(invocar(newData, onSuccess));
   };
 
   function hide(): void {
@@ -127,7 +143,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
       if (newArray[i].indiceDelTipo === index && newArray[i].tipo === oldTipo) {
         newArray[i].indiceDelTipo = proximoindiceDelTipo(newArray, newTipo);
         newArray[i].tipo = newTipo;
-        newArray[i].identificadorDeLaCama = null;
+        newArray[i].identificadorDeLaCama = '';
         break;
       }
     }

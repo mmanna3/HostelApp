@@ -1,5 +1,4 @@
 import { Icon } from 'components/Icon';
-import { Input } from 'components/Input';
 import React, { ReactElement } from 'react';
 import { IRenglonCama } from './Modal';
 
@@ -12,19 +11,21 @@ interface IProps {
 
 interface IIdentificarProps {
   cama: IRenglonCama;
-  setValue: (globalIndex: number, identificadorDeLaCama: string) => void;
+  actualizarIdentificadorDeLaCama: (globalIndex: number, identificadorDeLaCama: string) => void;
 }
 
-const Identificador = ({ cama, setValue }: IIdentificarProps): ReactElement => {
+const Identificador = ({ cama, actualizarIdentificadorDeLaCama }: IIdentificarProps): ReactElement => {
   return (
     <div className="field">
       <span className="control is-expanded">
-        <Input
+        <input
           key={cama.indiceGlobal}
-          name={`camas${cama.tipo}[${cama.indiceDelTipo}].nombre`}
+          className="input"
+          // name={`camas${cama.tipo}[${cama.indiceDelTipo}].nombre`}
           placeholder="Identificador"
-          handleOnChange={(e: any): void => {
-            setValue(cama.indiceGlobal, e.target.value);
+          value={cama.identificadorDeLaCama !== null ? cama.identificadorDeLaCama : ''}
+          onChange={(e: any): void => {
+            actualizarIdentificadorDeLaCama(cama.indiceGlobal, e.target.value);
           }}
         />
       </span>
@@ -52,7 +53,7 @@ const SelectCama = ({ cama, actualizarTipo, eliminarRenglon, actualizarIdentific
         </span>
       </div>
 
-      <Identificador cama={cama} setValue={actualizarIdentificadorDeLaCama} />
+      <Identificador cama={cama} actualizarIdentificadorDeLaCama={actualizarIdentificadorDeLaCama} />
 
       <button
         className="button has-text-grey has-background-light"
