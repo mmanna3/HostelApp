@@ -84,7 +84,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     ]);
   }
 
-  const removeCama = (globalIndex: number): void => {
+  const eliminarRenglonDeLaCama = (globalIndex: number): void => {
     if (camas.length > 1) {
       var newArray = camas.filter((item): boolean => item.globalIndex !== globalIndex);
       updateCamaIndexes(newArray);
@@ -92,7 +92,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     }
   };
 
-  function setValue(globalIndex: number, identificadorDeLaCama: string): void {
+  function actualizarIdentificadorDeLaCama(globalIndex: number, identificadorDeLaCama: string): void {
     var newArray = [...camas];
 
     for (var i = 0; i < newArray.length; i++) {
@@ -105,7 +105,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     setCamas(newArray);
   }
 
-  function setTipoCama(index: number, oldTipo: string, newTipo: string): void {
+  function actualizarTipo(index: number, oldTipo: string, newTipo: string): void {
     var newArray = [...camas];
 
     for (var i = 0; i < newArray.length; i++) {
@@ -155,9 +155,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
                 <SelectCama
                   key={cama.globalIndex}
                   cama={cama}
-                  setTipoCama={setTipoCama}
-                  removeCama={removeCama}
-                  setValue={setValue}
+                  actualizarTipo={actualizarTipo}
+                  eliminarRenglonDeLaCama={eliminarRenglonDeLaCama}
+                  actualizarIdentificadorDeLaCama={actualizarIdentificadorDeLaCama}
                 />
               );
             }

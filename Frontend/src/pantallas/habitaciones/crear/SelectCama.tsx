@@ -5,9 +5,9 @@ import { IRenglonCama } from './Modal';
 
 interface IProps {
   cama: IRenglonCama;
-  setValue: (globalIndex: number, identificadorDeLaCama: string) => void;
-  setTipoCama: (index: number, oldTipo: string, newTipo: string) => void;
-  removeCama: (globalIndex: number) => any;
+  actualizarIdentificadorDeLaCama: (globalIndex: number, identificadorDeLaCama: string) => void;
+  actualizarTipo: (index: number, oldTipo: string, newTipo: string) => void;
+  eliminarRenglonDeLaCama: (globalIndex: number) => any;
 }
 
 interface IIdentificarProps {
@@ -32,9 +32,14 @@ const Identificador = ({ cama, setValue }: IIdentificarProps): ReactElement => {
   );
 };
 
-const SelectCama = ({ cama, setTipoCama, removeCama, setValue }: IProps): ReactElement => {
+const SelectCama = ({
+  cama,
+  actualizarTipo,
+  eliminarRenglonDeLaCama,
+  actualizarIdentificadorDeLaCama,
+}: IProps): ReactElement => {
   const onTipoCamaChanged = (e: any): void => {
-    setTipoCama(cama.index, cama.tipo, e.target.value);
+    actualizarTipo(cama.index, cama.tipo, e.target.value);
   };
 
   return (
@@ -52,12 +57,12 @@ const SelectCama = ({ cama, setTipoCama, removeCama, setValue }: IProps): ReactE
         </span>
       </div>
 
-      <Identificador cama={cama} setValue={setValue} />
+      <Identificador cama={cama} setValue={actualizarIdentificadorDeLaCama} />
 
       <button
         className="button has-text-grey has-background-light"
         type="button"
-        onClick={(): void => removeCama(cama.globalIndex)}
+        onClick={(): void => eliminarRenglonDeLaCama(cama.globalIndex)}
       >
         {/* El onClick de arriba funciona pero no tiene sentido. Algún día lo arreglaré. */}
         <Icon faCode="trash-alt" />
