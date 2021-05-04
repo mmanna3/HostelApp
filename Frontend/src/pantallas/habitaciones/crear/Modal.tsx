@@ -22,12 +22,14 @@ export interface IRenglonCama {
   index: number;
   tipo: string;
   globalIndex: number;
-  value?: object;
+  identificadorDeLaCama: Nullable<string>;
 }
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement => {
   const [resetOnChanged, resetForm] = React.useState(0);
-  const [camas, setCamas] = React.useState<IRenglonCama[]>([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
+  const [camas, setCamas] = React.useState<IRenglonCama[]>([
+    { index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null },
+  ]);
 
   const dispatch = useDispatch();
   const { selector, invocar, reiniciar } = api.habitaciones.crear;
@@ -36,7 +38,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function onSuccess(): void {
     onSuccessfulSubmit();
     resetForm(resetOnChanged + 1);
-    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
+    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null }]);
   }
 
   const onSubmit = (data: any): void => {
@@ -46,7 +48,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   function hide(): void {
     onHide();
     dispatch(reiniciar());
-    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, value: {} }]);
+    setCamas([{ index: 0, tipo: 'Individuales', globalIndex: 0, identificadorDeLaCama: null }]);
   }
 
   function getNextCamaIndex(array: IRenglonCama[], tipo: string): number {
@@ -78,7 +80,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     var nextIndex = getNextCamaIndex(camas, 'Individuales');
     setCamas((prevIndexes: IRenglonCama[]): IRenglonCama[] => [
       ...prevIndexes,
-      { index: nextIndex, tipo: 'Individuales', globalIndex: getNextGlobalIndex(camas) },
+      { index: nextIndex, tipo: 'Individuales', globalIndex: getNextGlobalIndex(camas), identificadorDeLaCama: null },
     ]);
   }
 
@@ -90,12 +92,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     }
   };
 
-  function setValue(globalIndex: number, value: object): void {
+  function setValue(globalIndex: number, identificadorDeLaCama: string): void {
     var newArray = [...camas];
 
     for (var i = 0; i < newArray.length; i++) {
       if (newArray[i].globalIndex === globalIndex) {
-        newArray[i].value = value;
+        newArray[i].identificadorDeLaCama = identificadorDeLaCama;
         break;
       }
     }
@@ -110,7 +112,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
       if (newArray[i].index === index && newArray[i].tipo === oldTipo) {
         newArray[i].index = getNextCamaIndex(newArray, newTipo);
         newArray[i].tipo = newTipo;
-        newArray[i].value = {};
+        newArray[i].identificadorDeLaCama = null;
         break;
       }
     }
@@ -151,7 +153,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
             (cama): ReactElement => {
               return (
                 <SelectCama
-                  key={`${cama.globalIndex}`}
+                  key={cama.globalIndex}
                   cama={cama}
                   setTipoCama={setTipoCama}
                   removeCama={removeCama}

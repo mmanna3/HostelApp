@@ -31,6 +31,7 @@ export function Input({
   style,
   readOnly,
   step,
+  handleOnChange = (e: any): void => {},
 }: InputProps): ReactElement {
   const { setValue, getValues } = useFormContext();
 
@@ -45,7 +46,19 @@ export function Input({
         <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
           {label && <label className="label">{label}</label>}
           <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
-            <input style={style} readOnly={readOnly} className="input" type={type} {...field} placeholder={placeholder} />
+            <input
+              {...field}
+              onChange={(e: any): void => {
+                field.onChange(e);
+                handleOnChange(e);
+              }}
+              className="input"
+              style={style}
+              readOnly={readOnly}
+              type={type}
+              placeholder={placeholder}
+              step={step}
+            />
             {faIconCode && (
               <span className="icon is-small is-left">
                 <FontAwesomeIcon icon={faIconCode} />
