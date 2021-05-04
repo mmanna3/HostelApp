@@ -63,17 +63,28 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
     return camasReverse[0].indiceGlobal + 1;
   }
 
-  function arreglarIndicesParaQueSeanConsecutivosSegunElTipo(array: IRenglonCama[]): void {
-    function updatePorTipo(array: IRenglonCama[], tipo: string): void {
-      var arrayDelTipo = array.filter((x): boolean => x.tipo === tipo);
+  function arreglarIndicesParaQueSeanConsecutivosSegunElTipo(array: IRenglonCama[]): IRenglonCama[] {
+    let ultimoIndiceDelTipoIndividuales = -1;
+    let ultimoIndiceDelTipoMatrimoniales = -1;
+    let ultimoIndiceDelTipoCuchetas = -1;
 
-      for (let i = 0; i < arrayDelTipo.length; i++)
-        if (arrayDelTipo[i].indiceDelTipo !== i) arrayDelTipo[i].indiceDelTipo = i;
-    }
+    let resultado = array.map(
+      (cama: IRenglonCama): IRenglonCama => {
+        if (cama.tipo === 'Individuales') {
+          ultimoIndiceDelTipoIndividuales++;
+          if (cama.indiceDelTipo !== ultimoIndiceDelTipoIndividuales) cama.indiceDelTipo = ultimoIndiceDelTipoIndividuales;
+        } else if (cama.tipo === 'Matrimoniales') {
+          ultimoIndiceDelTipoMatrimoniales++;
+          if (cama.indiceDelTipo !== ultimoIndiceDelTipoMatrimoniales) cama.indiceDelTipo = ultimoIndiceDelTipoMatrimoniales;
+        } else {
+          ultimoIndiceDelTipoCuchetas++;
+          if (cama.indiceDelTipo !== ultimoIndiceDelTipoCuchetas) cama.indiceDelTipo = ultimoIndiceDelTipoCuchetas;
+        }
+        return cama;
+      }
+    );
 
-    updatePorTipo(array, 'Individuales');
-    updatePorTipo(array, 'Matrimoniales');
-    updatePorTipo(array, 'Cuchetas');
+    return resultado;
   }
 
   function agregarRenglon(): void {
@@ -90,9 +101,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
 
   const eliminarRenglon = (globalIndex: number): void => {
     if (camas.length > 1) {
-      var newArray = camas.filter((item): boolean => item.indiceGlobal !== globalIndex);
-      arreglarIndicesParaQueSeanConsecutivosSegunElTipo(newArray);
-      actualizarCamas(newArray);
+      var camasSinLaEliminada = camas.filter((item): boolean => item.indiceGlobal !== globalIndex);
+      let camasConIndicesArreglados = arreglarIndicesParaQueSeanConsecutivosSegunElTipo(camasSinLaEliminada);
+      actualizarCamas(camasConIndicesArreglados);
     }
   };
 
@@ -121,8 +132,9 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
       }
     }
 
-    arreglarIndicesParaQueSeanConsecutivosSegunElTipo(newArray);
-    actualizarCamas(newArray);
+    let camasConIndicesArreglados = arreglarIndicesParaQueSeanConsecutivosSegunElTipo(newArray);
+    console.log(camasConIndicesArreglados);
+    actualizarCamas(camasConIndicesArreglados);
   }
 
   return (
