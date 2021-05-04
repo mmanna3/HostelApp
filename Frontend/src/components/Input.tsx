@@ -1,7 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { ReactElement, useEffect } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Button } from './botones/botones';
 
 interface InputProps extends InputWithoutLabelProps {
@@ -38,44 +38,34 @@ export function Input({
   style,
   handleOnChange = () => {},
 }: InputProps): ReactElement {
-  const [valor, actualizarValor] = React.useState('');
-  const { onChange, ref, onBlur } = useFormContext().register(name);
+  const { setValue, getValues } = useFormContext();
 
-  // useEffect((): void => {
-  //   handleOnChange(valor);
-  // }, [valor]);
+  useEffect((): void => {
+    if (!getValues(name)) setValue(name, defaultValue);
+  });
 
   return (
-    <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
-      {label && <label className="label">{label}</label>}
-      <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
-        <input
-          defaultValue={defaultValue}
-          style={style}
-          className="input"
-          type={type}
-          name={name}
-          ref={ref}
-          onBlur={onBlur}
-          onChange={(e: any): void => {
-            actualizarValor(e.target.value);
-            onChange(e);
-            handleOnChange(e.target.value);
-          }}
-          placeholder={placeholder}
-        />
-        {faIconCode && (
-          <span className="icon is-small is-left">
-            <FontAwesomeIcon icon={faIconCode} />
-          </span>
-        )}
-      </div>
-      {onButtonClick && (
-        <div className="control">
-          <Button text={textoDelBoton} onClick={(): void => onButtonClick(valor)} />
+    <Controller
+      name={name}
+      render={({ field }): ReactElement => (
+        <div className={`field ${textoDelBoton ? 'has-addons' : ''}`}>
+          {label && <label className="label">{label}</label>}
+          <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
+            <input style={style} className="input" type={type} {...field} placeholder={placeholder} />
+            {faIconCode && (
+              <span className="icon is-small is-left">
+                <FontAwesomeIcon icon={faIconCode} />
+              </span>
+            )}
+          </div>
+          {onButtonClick && (
+            <div className="control">
+              <Button text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    />
   );
 }
 
