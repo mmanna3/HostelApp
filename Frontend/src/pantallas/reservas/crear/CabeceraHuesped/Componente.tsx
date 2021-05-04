@@ -50,7 +50,7 @@ const CabeceraHuesped = (): ReactElement => {
   // };
 
   const paises = [
-    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'AR', label: 'Argentina' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
