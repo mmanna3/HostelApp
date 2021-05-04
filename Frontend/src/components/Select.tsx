@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 interface IProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
   register?: () => any;
@@ -13,16 +14,17 @@ interface IConLabelProps extends IProps {
 }
 
 export default function Select({
-  register = (): any => {},
   name = '',
   children = [],
   onChange = (): any => {},
   ccsClass = '',
   ...otrosAtributos
 }: IProps): ReactElement {
+  const { register } = useFormContext();
+
   return (
     <div className={`select ${ccsClass}`}>
-      <select name={name} ref={register} onChange={onChange} {...otrosAtributos}>
+      <select {...register(name)} onChange={onChange} {...otrosAtributos}>
         {children}
       </select>
     </div>
