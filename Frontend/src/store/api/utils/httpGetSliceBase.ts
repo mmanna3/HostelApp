@@ -1,4 +1,4 @@
-import { createSlice as createSliceRTK, Slice, Dispatch } from '@reduxjs/toolkit';
+import { createSlice as createSliceRTK, Dispatch, Slice } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { EstadosApiRequestEnum as ESTADO } from './estadosApiRequestEnum';
 
@@ -6,6 +6,7 @@ export const createSlice = (nombre: string, dataInicial: any[] | null): Slice =>
   const initialState = {
     estado: ESTADO.inactivo,
     datos: dataInicial,
+    errores: undefined,
   };
 
   return createSliceRTK({
@@ -19,13 +20,16 @@ export const createSlice = (nombre: string, dataInicial: any[] | null): Slice =>
         if (payload === '') payload = dataInicial;
         state.datos = payload;
         state.estado = ESTADO.exitoso;
+        state.errores = undefined;
       },
-      fetchFailure: (state): void => {
+      fetchFailure: (state, { payload }): void => {
         state.estado = ESTADO.huboError;
+        state.errores = payload;
       },
       reset: (state): void => {
         state.estado = ESTADO.inactivo;
         state.datos = dataInicial;
+        state.errores = undefined;
       },
     },
   });
@@ -59,7 +63,7 @@ export function fetchFunc<TResultado, TParametros>(
         typeof onSuccessCallback === 'function' && onSuccessCallback();
       })
       .catch((error): void => {
-        dispatch(fetchFailure(error.response.data));
+        dispatch(fetchFailure(error.message));
       });
   };
 

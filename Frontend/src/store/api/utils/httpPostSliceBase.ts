@@ -24,7 +24,7 @@ export const createSlice = (nombre: string): Slice =>
       },
       postFailure: (state, { payload }): void => {
         state.estado = ESTADO.huboError;
-        state.errores = payload?.response?.data?.errors || payload.response;
+        state.errores = payload;
       },
       reset: (state): void => {
         state.estado = ESTADO.inactivo;
@@ -53,8 +53,7 @@ export function postFunc<TResultado, TPostBody>(
         typeof onSuccess === 'function' && onSuccess(res.data);
       })
       .catch((error): void => {
-        console.log(error);
-        dispatch(postFailure(error));
+        dispatch(postFailure(error.response.data?.errors || error.response));
       });
   };
 
