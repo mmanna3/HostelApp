@@ -10,6 +10,7 @@ import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 import SelectCama from './SelectCama';
 
 interface IProps {
@@ -27,7 +28,7 @@ export interface IRenglonCama {
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement => {
   const camaInicial = { indiceDelTipo: 0, tipo: 'Individuales', indiceGlobal: 0, identificadorDeLaCama: '' };
-  const [resetOnChanged, resetForm] = React.useState(0);
+  const [modalKey, reiniciarModal] = useCounterKey();
   const [camas, actualizarCamas] = React.useState<IRenglonCama[]>([camaInicial]);
 
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
 
   function onSuccess(): void {
     onSuccessfulSubmit();
-    resetForm(resetOnChanged + 1);
+    reiniciarModal();
     actualizarCamas([camaInicial]);
   }
 
@@ -62,6 +63,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
 
   function hide(): void {
     onHide();
+    reiniciarModal();
     dispatch(reiniciar());
     actualizarCamas([camaInicial]);
   }
@@ -154,7 +156,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
   }
 
   return (
-    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
+    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} key={modalKey}>
       <Header title="Crear habitación" onHide={hide} />
       <CardBody>
         <ValidationSummary errors={errores} />

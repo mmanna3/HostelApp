@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 import CabeceraHuesped from './CabeceraHuesped/Componente';
 import Estilos from './Modal.module.scss';
 import Renglon from './Renglon/Renglon';
@@ -23,7 +24,7 @@ interface IParams {
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement => {
   const { selector, reiniciar } = api.reservas.crear;
   const { estado, errores } = useSelector(selector);
-  const [resetOnChanged, resetForm] = React.useState(0);
+  const [modalKey, reiniciarModal] = useCounterKey();
   const [desdeHasta, actualizarDesdeHasta] = useState([hoy(), maniana()]);
   const [cantidadDeNoches, actualizarCantidadDeNoches] = useState(1);
   const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
@@ -33,7 +34,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   function onSuccess(): void {
     actualizarDesdeHasta([new Date(), new Date()]);
     onSuccessfulSubmit();
-    resetForm(resetOnChanged + 1);
+    reiniciarModal();
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
@@ -67,6 +68,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   function hide(): void {
     onHide();
     dispatch(reiniciar());
+    reiniciarModal();
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
@@ -117,7 +119,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   }
 
   return (
-    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged} minWidth="900px">
+    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
       <Header title="Nueva reserva" onHide={hide} />
       <CardBody minHeight="460px">
         <ValidationSummary errors={errores} />

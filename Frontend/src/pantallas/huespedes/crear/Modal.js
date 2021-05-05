@@ -5,26 +5,28 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   const { errores, estado } = useSelector(api.huespedes.crear.selector);
-  const [resetOnChanged, resetForm] = React.useState(0);
+  const [modalKey, reiniciarModal] = useCounterKey();
 
   const dispatch = useDispatch();
   const onSubmit = data => dispatch(api.huespedes.crear.invocar(data, onSuccess));
 
   function onSuccess() {
     onSuccessfulSubmit();
-    resetForm(resetOnChanged + 1);
+    reiniciarModal();
   }
 
   function hide() {
     onHide();
+    reiniciarModal();
     dispatch(api.huespedes.crear.reiniciar());
   }
 
   return (
-    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
+    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} key={modalKey}>
       <Header title="Alta de huésped" onHide={hide} />
       <CardBody>
         <ValidationSummary errors={errores} />

@@ -40,21 +40,13 @@ export const Modal = ({ children, onHide, isVisible }: IModalParams): ReactEleme
 };
 
 interface IModalFormParams extends IModalParams {
-  resetOnChanged: number;
   onSubmit: (data: any) => void;
 }
 
-export const ModalForm = ({
-  children,
-  onHide,
-  isVisible,
-  onSubmit,
-  resetOnChanged,
-  minWidth = '',
-}: IModalFormParams): ReactElement => {
+export const ModalForm = ({ children, onHide, isVisible, onSubmit, minWidth = '' }: IModalFormParams): ReactElement => {
   return (
     <ModalCard onHide={onHide} isVisible={isVisible} minWidth={minWidth}>
-      <Form defaultValues={undefined} onSubmit={onSubmit} resetOnChanged={resetOnChanged}>
+      <Form defaultValues={undefined} onSubmit={onSubmit}>
         {children}
       </Form>
     </ModalCard>

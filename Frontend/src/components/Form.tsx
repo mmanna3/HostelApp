@@ -5,22 +5,15 @@ interface IProps {
   defaultValues: any;
   children: ReactNode;
   onSubmit: (data: any) => void;
-  resetOnChanged: number;
 }
 
-export default function Form({
-  defaultValues,
-  children,
-  onSubmit,
-  resetOnChanged,
-  ...otrosAtributos
-}: IProps): ReactElement {
+export default function Form({ defaultValues, children, onSubmit, ...otrosAtributos }: IProps): ReactElement {
   const methods = useForm({ defaultValues });
 
   useEffect((): void => {
     methods.reset();
     // eslint-disable-next-line
-  }, [resetOnChanged, methods.reset]);
+  }, [methods.reset]);
 
   return (
     <FormProvider {...methods}>
