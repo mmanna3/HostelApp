@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Cabecera from './Cabecera/Cabecera';
 import Crear from './crear/Modal';
 import Estilos from './Page.module.scss';
@@ -12,6 +13,7 @@ const ReservasPage = (): ReactElement => {
   const habitaciones = useSelector(api.habitaciones.listar.selector);
   const { datos, estado } = useSelector(api.reservas.listar.selector);
   const [IsModalVisible, setModalVisibility] = useState(false);
+  const [cabeceraKey, reiniciarCabecera] = useCounterKey();
 
   const fetchData = useCallback((): void => {
     dispatch(api.habitaciones.listar.invocar());
@@ -32,6 +34,7 @@ const ReservasPage = (): ReactElement => {
   }
 
   function closeModalAndRefreshTable(): void {
+    reiniciarCabecera();
     hideModal();
     fetchData();
   }
@@ -42,7 +45,7 @@ const ReservasPage = (): ReactElement => {
         <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
       )}
 
-      <Cabecera showModal={showModal} onFechaChange={onFechaChange} />
+      <Cabecera key={cabeceraKey} showModal={showModal} onFechaChange={onFechaChange} />
 
       <div>
         {estado === ESTADO.huboError ? (
