@@ -1,5 +1,6 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
+import { obtenerPaisesParaAutocomplete } from 'pantallas/reservas/crear/CabeceraHuesped/ListaDePaises';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -49,11 +50,7 @@ const CabeceraHuesped = (): ReactElement => {
   //   );
   // };
 
-  const paises = [
-    { value: 'AR', label: 'Argentina' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  const paises = obtenerPaisesParaAutocomplete();
 
   return (
     <>
@@ -84,7 +81,7 @@ const CabeceraHuesped = (): ReactElement => {
           <Autocomplete
             name="DatosMinimosDeHuesped.Pais"
             opciones={paises}
-            opcionInicial={paises[0]}
+            opcionInicial={paises[8]}
             placeholder="Nacionalidad"
           />
         </div>
