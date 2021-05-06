@@ -31,6 +31,8 @@ namespace Api.IntegrationTests
             await InicializarBaseDeDatos();
 
             await InicializarHttpClientAutenticado();
+
+            EjecutarUnaSolaVez();
         }
 
         [SetUp]
@@ -131,6 +133,11 @@ namespace Api.IntegrationTests
             };
 
             return await _httpClient.PostAsJsonAsync("/api/usuarios/autenticar", body);
+        }
+
+        protected virtual void EjecutarUnaSolaVez()
+        {
+
         }
     }
 }

@@ -15,11 +15,9 @@ namespace Api.IntegrationTests
 {
     public class ReservasIT : BaseAutenticadoIT
     {
-        private const string ENDPOINT = "/api/reservas";
-        private const string ENDPOINT_HABITACIONES = "/api/habitaciones";
-        private const string ENDPOINT_HUESPEDES = "/api/huespedes";
+	    private const string ENDPOINT_HABITACIONES = "/api/habitaciones";
 
-        private const string CAMA_TIPO = "Individual";
+	    private const string CAMA_TIPO = "Individual";
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
         private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
@@ -31,16 +29,23 @@ namespace Api.IntegrationTests
             Pais = "AR",
         };
 
+        private ReservasHttpClient _reservasHttpClient;
+
+        protected override void EjecutarUnaSolaVez()
+        {
+	        _reservasHttpClient = new ReservasHttpClient(_httpClient);
+        }
+
         [Test]
         public async Task Crea_UnaReserva_Y_ApareceEnListado()
         {
 
             var camaId = await CrearHabitacionConUnaCama();
 
-            var response = await CrearReserva(camaId, _desde, _hasta);
+            var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, _desde, _hasta);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var consultaResponse = await ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
+            var consultaResponse = await _reservasHttpClient.ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var reservasDelMes = await consultaResponse.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
 
@@ -60,11 +65,11 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await CrearReserva(camaId, _desde, _hasta);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, _desde, _hasta);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var reservaId = await response.Content.ReadAsAsync<int>();
             
-	        var consultaResponse = await ObtenerPorId(reservaId);
+	        var consultaResponse = await _reservasHttpClient.ObtenerPorId(reservaId);
 	        consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDTO>();
 
@@ -89,10 +94,10 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await CrearReserva(camaId, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-	        var huespedesResponse = await ListarHuespedes();
+	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
 	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
 	        var huesped = huespedes.First();
@@ -107,12 +112,12 @@ namespace Api.IntegrationTests
         public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
-	        var huespedId = await CrearHuesped();
+	        var huespedId = await _reservasHttpClient.CrearHuesped(_datosMinimosDeUnHuesped);
 
-	        var response = await CrearReserva(camaId, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-	        var huespedesResponse = await ListarHuespedes();
+	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
 	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
 	        var huesped = huespedes.Single(x => x.Id == huespedId);
@@ -128,9 +133,9 @@ namespace Api.IntegrationTests
         {
             var camaId = await CrearHabitacionConUnaCama();
 
-            await CrearReserva(camaId, DateTime.Today.AddDays(-3), DateTime.Today);
+            await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-3), DateTime.Today);
 
-            var consultaResponse = await ListarCheckoutsDeHoy();
+            var consultaResponse = await _reservasHttpClient.ListarCheckoutsDeHoy();
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var reservasConCheckoutHoy = await consultaResponse.Content.ReadAsAsync<List<CheckoutsDeHoyDTO>>();
 
@@ -160,59 +165,6 @@ namespace Api.IntegrationTests
                 .ReadAsAsync<IEnumerable<HabitacionDTO>>();
 
             return habitacionesDTO.First().CamasIndividuales.First().Id;
-        }
-
-        private async Task<int> CrearHuesped()
-        {
-	        var body = new HuespedDTO
-	        {
-		        NombreCompleto = "Juan Carlos Papafritarika",
-		        DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte,
-		        Email = _datosMinimosDeUnHuesped.Email,
-		        Telefono = _datosMinimosDeUnHuesped.Telefono,
-                Pais = "AR",
-            };
-
-	        await _httpClient.PostAsJsonAsync(ENDPOINT_HUESPEDES, body);
-	        var huespedesDtos = await (await _httpClient.GetAsync(ENDPOINT_HUESPEDES)).Content
-		        .ReadAsAsync<IEnumerable<HuespedDTO>>();
-
-	        return huespedesDtos.First().Id;
-        }
-
-        private async Task<HttpResponseMessage> CrearReserva(int camaId, DateTime desde, DateTime hasta)
-        {
-            var body = new ReservaDTO
-            {
-                DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
-                CamasIds = new List<int?> { camaId },
-                DiaDeCheckin = Utilidades.ConvertirFecha(desde),
-                DiaDeCheckout = Utilidades.ConvertirFecha(hasta),
-                HoraEstimadaDeLlegada = "11:30:00",
-                CantidadDePasajeros = 2,
-            };
-
-            return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
-        }
-
-        private async Task<HttpResponseMessage> ListarEntre(string primeraNoche, int dias)
-        {
-	        return await _httpClient.GetAsync(ENDPOINT + $"?primeraNoche={primeraNoche}&dias={dias}");
-        }
-
-        private async Task<HttpResponseMessage> ObtenerPorId(int id)
-        {
-            return await _httpClient.GetAsync(ENDPOINT + $"/obtener?id={id}");
-        }
-
-        private async Task<HttpResponseMessage> ListarHuespedes()
-        {
-	        return await _httpClient.GetAsync(ENDPOINT_HUESPEDES);
-        }
-
-        private async Task<HttpResponseMessage> ListarCheckoutsDeHoy()
-        {
-            return await _httpClient.GetAsync(ENDPOINT + "/checkoutsDeHoy");
         }
     }
 }

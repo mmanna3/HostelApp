@@ -15,7 +15,7 @@ namespace Api.IntegrationTests
     public class HabitacionesIT : BaseAutenticadoIT
     {
         private const string ENDPOINT = "/api/habitaciones";
-        private const string ENDPOINT_RESERVAS = "/api/reservas";
+
         private const string ENDPOINT_CONLUGARESLIBRES = ENDPOINT + "/conLugaresLibres";
         private readonly DateTime DESDE = new DateTime(2020, 09, 17);
         private readonly DateTime HASTA = new DateTime(2020, 09, 18);
@@ -25,7 +25,15 @@ namespace Api.IntegrationTests
 	        DniOPasaporte = "123456789",
 	        Email = "mrrobot@fsociety.ong",
 	        Telefono = "5556453",
+	        Pais = "AR",
         };
+
+        private ReservasHttpClient _reservasHttpClient;
+
+        protected override void EjecutarUnaSolaVez()
+        {
+	        _reservasHttpClient = new ReservasHttpClient(_httpClient);
+        }
 
         [Test]
         public async Task CreaHabitacionCorrectamente()
@@ -96,15 +104,7 @@ namespace Api.IntegrationTests
 
             var camaId = habitacion.CamasIndividuales.First().Id;
 
-            var body = new ReservaDTO
-            {
-                DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
-                CamasIds = new List<int?> { camaId },
-                DiaDeCheckin = Utilidades.ConvertirFecha(DESDE),
-                DiaDeCheckout = Utilidades.ConvertirFecha(HASTA)
-            };
-
-            await _httpClient.PostAsJsonAsync(ENDPOINT_RESERVAS, body);
+            await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DESDE, HASTA);
         }
 
         public async Task<HttpResponseMessage> CrearUnaHabitacion()
