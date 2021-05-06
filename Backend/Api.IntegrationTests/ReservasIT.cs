@@ -170,6 +170,7 @@ namespace Api.IntegrationTests
 		        DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte,
 		        Email = _datosMinimosDeUnHuesped.Email,
 		        Telefono = _datosMinimosDeUnHuesped.Telefono,
+                Pais = "AR",
             };
 
 	        await _httpClient.PostAsJsonAsync(ENDPOINT_HUESPEDES, body);
