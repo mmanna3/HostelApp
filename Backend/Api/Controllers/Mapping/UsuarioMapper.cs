@@ -14,5 +14,15 @@ namespace Api.Controllers.Mapping
 				Username = entidad.Username
 			};
 		}
+
+		public static Usuario Map(RegistrarDTO entidad)
+		{
+			return new Usuario
+			{
+				Nombre = entidad.Nombre,
+				Apellido = entidad.Apellido,
+				Username = entidad.Username
+			};
+		}
 	}
 }

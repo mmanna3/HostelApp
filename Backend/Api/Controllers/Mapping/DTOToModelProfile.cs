@@ -7,7 +7,6 @@ using Api.Controllers.DTOs.Usuario;
 using Api.Core;
 using AutoMapper;
 using Api.Core.Entidades;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Controllers.Mapping
 {
@@ -17,7 +16,6 @@ namespace Api.Controllers.Mapping
         {
             CreateMap<string, DateTime>().ConvertUsing(new StringADateTimeConverter());
 
-            CreateMap<RegistrarDTO, Usuario>();
 
             CreateMap<HuespedDTO, Huesped>();
 

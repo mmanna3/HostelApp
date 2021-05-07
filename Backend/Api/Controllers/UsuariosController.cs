@@ -1,25 +1,20 @@
 ﻿using System.Threading.Tasks;
 using Api.Controllers.DTOs.Usuario;
 using Api.Controllers.Mapping;
-using Api.Controllers.Otros;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 
 namespace Api.Controllers
 {
-    public class UsuariosController : ApiAutenticadoController
+	public class UsuariosController : ApiAutenticadoController
     {
         private readonly IUsuarioService _userService;
-        private readonly IMapper _mapper;
 
-        public UsuariosController(IUsuarioService userService, IMapper mapper)
+        public UsuariosController(IUsuarioService userService)
         {
             _userService = userService;
-            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -44,7 +39,7 @@ namespace Api.Controllers
         [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegistrarDTO dto)
         {
-            var usuario = _mapper.Map<RegistrarDTO, Usuario>(dto);
+            var usuario = UsuarioMapper.Map(dto);
 
             var usuarioCreado = await _userService.Crear(usuario, dto.Password);
 
