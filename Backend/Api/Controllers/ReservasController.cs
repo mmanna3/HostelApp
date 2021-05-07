@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
 using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
-using AutoMapper;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
-    public class ReservasController : ApiAutenticadoController
+	public class ReservasController : ApiAutenticadoController
     {
         private readonly IReservaService _service;
         private readonly IHuespedService _huespedService;

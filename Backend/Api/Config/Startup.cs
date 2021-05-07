@@ -1,6 +1,5 @@
 using System.IO;
 using Api.Persistence.Config;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +32,6 @@ namespace Api.Config
             services.ConfigurarAutenticacionJWT(Configuration);
 
             services.ConfigurarInyeccionDeDependecias();
-
-            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
