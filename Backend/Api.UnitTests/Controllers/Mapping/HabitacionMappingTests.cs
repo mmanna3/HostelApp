@@ -3,7 +3,6 @@ using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.Mapping;
 using Api.Core.Entidades;
-using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -11,28 +10,15 @@ namespace Api.UnitTests.Controllers.Mapping
 {
     public class HabitacionMappingTests
     {
-	    private IMapper _mapper;
-
-        private HabitacionDTO _unaHabitacionDTO;
+	    private HabitacionDTO _unaHabitacionDTO;
         private IList<Habitacion> _unaListaDeHabitaciones;
-
-        [SetUp]
-        public void Inicializar()
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new DtoToModelTestProfile());
-            });
-            
-            _mapper = new Mapper(configuration);
-        }
 
         [Test]
         public void MapeaCorrectamenteEnLaCreacion()
         {
             DadoUnHabitacionDto();
 
-            var habitacion = _mapper.Map<Habitacion>(_unaHabitacionDTO);
+            var habitacion = HabitacionMapper.Map(_unaHabitacionDTO);
 
             habitacion.CamasMatrimoniales.Count.Should().Be(1);
             habitacion.CamasIndividuales.Count.Should().Be(1);

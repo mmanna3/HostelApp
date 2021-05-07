@@ -1,5 +1,4 @@
-﻿using Api.Controllers.DTOs;
-using Api.Core.Entidades;
+﻿using Api.Core.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +63,36 @@ namespace Api.Controllers.Mapping
 				EsPrivada = habitacion.EsPrivada,
 				CantidadDeLugaresLibres = habitacion.LugaresLibresEntre(desde, hasta),
 				Camas = camas.Select(x => new CamaDTO{ Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
+			};
+		}
+
+		public static Habitacion Map(HabitacionDTO dto)
+		{
+			return new Habitacion
+			{
+				Nombre = dto.Nombre,
+				TieneBanio = dto.TieneBanio,
+				EsPrivada = dto.EsPrivada,
+				InformacionAdicional = dto.InformacionAdicional,
+				CamasIndividuales = dto.CamasIndividuales?.ConvertAll(camaIndividual => new CamaIndividual
+				{
+					Nombre = camaIndividual.Nombre
+				}),
+				CamasMatrimoniales = dto.CamasMatrimoniales?.ConvertAll(camaMatrimonial => new CamaMatrimonial
+				{
+					Nombre = camaMatrimonial.Nombre
+				}),
+				CamasCuchetas = dto.CamasCuchetas?.ConvertAll(dtoCamasCucheta => new CamaCucheta
+				{
+					Abajo = new CamaCuchetaDeAbajo
+					{
+						Nombre = dtoCamasCucheta.Nombre
+					},
+					Arriba = new CamaCuchetaDeArriba
+					{
+						Nombre = dtoCamasCucheta.Nombre
+					}
+				}),
 			};
 		}
 

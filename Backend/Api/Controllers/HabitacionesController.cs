@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.Mapping;
-using AutoMapper;
-using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +11,10 @@ namespace Api.Controllers
     public class HabitacionesController : ApiAutenticadoController
     {
         private readonly IHabitacionService _habitacionService;
-        private readonly IMapper _mapper;
 
-        public HabitacionesController(IMapper mapper, IHabitacionService habitacionService)
+        public HabitacionesController(IHabitacionService habitacionService)
         {
-            _mapper = mapper;
-            _habitacionService = habitacionService;
+	        _habitacionService = habitacionService;
         }
 
         [HttpGet]
@@ -39,7 +34,7 @@ namespace Api.Controllers
         [HttpGet, Route("conLugaresLibres")]
         public async Task<IEnumerable<HabitacionParaReservaDTO>> ListarConLugaresLibres(DateTime desde, DateTime hasta)
         {
-            // Esto está malísimo. Con razón anda lento, salame.
+            // Esto está malísimo. Con razón anda lento, salame. Mentira, te quiero.
 	        var habitaciones = await _habitacionService.ListarConLugaresLibres();
             return HabitacionMapper.MapHabitacionParaReservaDTO(habitaciones, desde, hasta);
         }
@@ -47,14 +42,14 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<int> Crear([FromBody] HabitacionDTO dto)
         {
-            var habitacion = _mapper.Map<Habitacion>(dto);
+            var habitacion = HabitacionMapper.Map(dto);
             return await _habitacionService.CrearAsync(habitacion);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Modificar(int id, [FromBody] HabitacionDTO dto)
         {
-            var habitacion = _mapper.Map<Habitacion>(dto);
+            var habitacion = HabitacionMapper.Map(dto);
             await _habitacionService.ModificarAsync(id, habitacion);
 
             return Ok();

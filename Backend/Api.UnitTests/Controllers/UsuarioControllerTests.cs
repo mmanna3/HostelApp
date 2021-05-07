@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
 using Api.Controllers;
 using Api.Controllers.DTOs.Usuario;
-using Api.Core;
 using Api.Core.Entidades;
 using Api.Core.Services.Interfaces;
-using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -19,7 +17,6 @@ namespace Api.UnitTests.Controllers
 
         private UsuariosController _controller;
         private Mock<IUsuarioService> _mockService;
-        private IMapper _mapper;
 
         private Usuario _unUsuario;
         private RegistrarDTO _unRegistrarDto;
@@ -27,13 +24,7 @@ namespace Api.UnitTests.Controllers
         [SetUp]
         public void Inicializar()
         {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new DtoToModelTestProfile());
-            });
-            
-            _mapper = new Mapper(configuration);
-            _mockService = new Mock<IUsuarioService>();
+	        _mockService = new Mock<IUsuarioService>();
             _controller = new UsuariosController(_mockService.Object);
         }
 
