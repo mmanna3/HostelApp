@@ -45,7 +45,6 @@ namespace Api.UnitTests.Controllers.Mapping
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new DtoToModelTestProfile());
-                cfg.AddProfile(new ModelToDtoTestProfile());
             });
             
             _mapper = new Mapper(configuration);

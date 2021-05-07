@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Api.Controllers.DTOs.Usuario;
+using Api.Controllers.Mapping;
 using Api.Controllers.Otros;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
@@ -45,11 +46,11 @@ namespace Api.Controllers
         {
             var usuario = _mapper.Map<RegistrarDTO, Usuario>(dto);
 
-            var result = await _userService.Crear(usuario, dto.Password);
-            
-            var usuarioDTO = _mapper.Map<Usuario, RegistrarDTO>(result);
+            var usuarioCreado = await _userService.Crear(usuario, dto.Password);
 
-            return Ok(usuarioDTO);
+            var registrarDTO = UsuarioMapper.Map(usuarioCreado);
+
+            return Ok(registrarDTO);
         }
 
         [HttpGet("okbro")]
