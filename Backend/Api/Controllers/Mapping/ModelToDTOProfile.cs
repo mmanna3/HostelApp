@@ -1,6 +1,4 @@
-﻿using Api.Controllers.DTOs.Usuario;
-using AutoMapper;
-using Api.Core.Entidades;
+﻿using AutoMapper;
 
 namespace Api.Controllers.Mapping
 {
@@ -8,7 +6,6 @@ namespace Api.Controllers.Mapping
     {
         public ModelToDTOProfile()
         {
-	        CreateMap<Usuario, RegistrarDTO>();
         }
     }
 }
