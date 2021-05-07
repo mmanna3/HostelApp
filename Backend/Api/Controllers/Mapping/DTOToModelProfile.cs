@@ -16,11 +16,6 @@ namespace Api.Controllers.Mapping
         {
             CreateMap<string, DateTime>().ConvertUsing(new StringADateTimeConverter());
 
-
-            CreateMap<HuespedDTO, Huesped>();
-
-            CreateMap<DatosMinimosDeHuespedDTO, Huesped>();
-
             CreateMap<HabitacionDTO, Habitacion>()
                 .ForMember(
                     dest => dest.CamasIndividuales,

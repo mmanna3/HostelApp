@@ -12,12 +12,10 @@ namespace Api.Controllers
     public class HuespedesController : ApiAutenticadoController
     {
         private readonly IHuespedService _service;
-        private readonly IMapper _mapper;
 
-        public HuespedesController(IMapper mapper, IHuespedService service)
+        public HuespedesController(IHuespedService service)
         {
-            _mapper = mapper;
-            _service = service;
+	        _service = service;
         }
 
         [HttpGet]
@@ -30,10 +28,8 @@ namespace Api.Controllers
         [HttpGet, Route("obtener")]
         public async Task<HuespedDTO> ObtenerPorId(int id)
         {
-	        var modelo = await _service.ObtenerPorId(id);
-	        var dto = _mapper.Map<HuespedDTO>(modelo);
-
-	        return dto;
+	        var entidad = await _service.ObtenerPorId(id);
+	        return HuespedMapper.Map(entidad);
         }
 
         [HttpGet, Route("obtenerPorDniOPasaporte")]
@@ -46,8 +42,8 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<int> Crear([FromBody] HuespedDTO dto)
         {
-            var huesped = _mapper.Map<Huesped>(dto);
-            var id = await _service.CreateAsync(huesped);
+            var entidad = HuespedMapper.Map(dto);
+            var id = await _service.CreateAsync(entidad);
 
             return id;
         }

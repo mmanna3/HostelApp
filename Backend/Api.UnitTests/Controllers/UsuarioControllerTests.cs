@@ -34,7 +34,7 @@ namespace Api.UnitTests.Controllers
             
             _mapper = new Mapper(configuration);
             _mockService = new Mock<IUsuarioService>();
-            _controller = new UsuariosController(_mockService.Object, _mapper);
+            _controller = new UsuariosController(_mockService.Object);
         }
 
         [Test]

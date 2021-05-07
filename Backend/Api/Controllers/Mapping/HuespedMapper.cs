@@ -24,6 +24,7 @@ namespace Api.Controllers.Mapping
 		{
 			return new HuespedDTO
 			{
+				Id = entidad.Id,
 				NombreCompleto = entidad.NombreCompleto,
 				DniOPasaporte = entidad.DniOPasaporte,
 				Pais = entidad.Pais,
@@ -35,6 +36,19 @@ namespace Api.Controllers.Mapping
 		public static IEnumerable<HuespedDTO> Map(IEnumerable<Huesped> huespedes)
 		{
 			return huespedes.Select(Map);
+		}
+
+		public static Huesped Map(HuespedDTO dto)
+		{
+			return new Huesped
+			{
+				NombreCompleto = dto.NombreCompleto,
+				Pais = dto.Pais,
+				DniOPasaporte = dto.DniOPasaporte,
+				Telefono = dto.Telefono,
+				Email = dto.Email,
+				Id = dto.Id
+			};
 		}
 	}
 }
