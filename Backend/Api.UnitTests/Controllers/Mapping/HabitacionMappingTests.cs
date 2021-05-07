@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
+using Api.Controllers.Mapping;
 using Api.Core.Entidades;
 using AutoMapper;
 using FluentAssertions;
@@ -48,7 +49,7 @@ namespace Api.UnitTests.Controllers.Mapping
         {
             DadaUnaListaDeHabitaciones();
 
-            var habitacionesDTO = _mapper.Map<IEnumerable<HabitacionDTO>>(_unaListaDeHabitaciones).ToList();
+            var habitacionesDTO = HabitacionMapper.Map(_unaListaDeHabitaciones);
 
             habitacionesDTO.First().EsPrivada.Should().BeTrue();
             habitacionesDTO.First().TieneBanio.Should().BeTrue();
