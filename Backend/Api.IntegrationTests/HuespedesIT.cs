@@ -38,6 +38,7 @@ namespace Api.IntegrationTests
 	            DniOPasaporte = "123456789",
 	            Email = "mrrobot@fsociety.ong",
 	            Telefono = "5556453",
+                Pais = "AR"
             };
 
             return await _httpClient.PostAsJsonAsync(ENDPOINT, body);

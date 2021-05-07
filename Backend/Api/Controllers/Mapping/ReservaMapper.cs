@@ -21,8 +21,36 @@ namespace Api.Controllers.Mapping
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
 				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).Cast<int?>().ToList(),
-				DatosMinimosDeHuesped = HuespedMapper.Map(entidad.Huesped)
+				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped)
 			};
+		}
+
+		public static ReservasDelPeriodoDTO Map(IEnumerable<Reserva> entidad, DateTime primeraNoche, DateTime ultimaNoche)
+		{
+			return new ReservasDelPeriodoDTO
+			{
+				Desde = Utilidades.ConvertirFecha(primeraNoche),
+				Hasta = Utilidades.ConvertirFecha(ultimaNoche),
+				Reservas = entidad.Select(x => Map(x, primeraNoche, ultimaNoche)).ToList()
+			};
+		}
+
+		private static ReservasDelPeriodoDTO.ReservaResumenDTO Map(Reserva entidad, DateTime primeraNoche, DateTime ultimaNoche)
+		{
+			return new ReservasDelPeriodoDTO.ReservaResumenDTO
+			{
+				Id = entidad.Id,
+				NombreAbreviadoDelHuesped = entidad.ObtenerNombreAbreviadoDelHuesped(),
+				Estado = entidad.Estado,
+				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche < primeraNoche ? primeraNoche : entidad.PrimeraNoche), 
+				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche > ultimaNoche ? ultimaNoche : entidad.UltimaNoche), 
+				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).ToList(),
+			};
+		}
+
+		public static IEnumerable<CheckoutsDeHoyDTO> Map(IEnumerable<Reserva> reservas)
+		{
+			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
 	}
 }

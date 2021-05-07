@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.Mapping;
 using Api.Core.Entidades;
 using AutoMapper;
 using Api.Core.Services.Interfaces;
@@ -23,9 +24,7 @@ namespace Api.Controllers
         public async Task<IEnumerable<HuespedDTO>> Listar()
         {
             var huespedes = await _service.ListAsync();
-            var huespedesDTO = _mapper.Map<IEnumerable<HuespedDTO>>(huespedes);
-
-            return huespedesDTO;
+            return HuespedMapper.Map(huespedes);
         }
 
         [HttpGet, Route("obtener")]
@@ -40,10 +39,8 @@ namespace Api.Controllers
         [HttpGet, Route("obtenerPorDniOPasaporte")]
         public async Task<HuespedDTO> ObtenerPorDniOPasaporte(string dniOPasaporte)
         {
-	        var modelo = await _service.ObtenerPorDniOPasaporte(dniOPasaporte);
-	        var dto = _mapper.Map<HuespedDTO>(modelo);
-
-	        return dto;
+	        var entidad = await _service.ObtenerPorDniOPasaporte(dniOPasaporte);
+	        return HuespedMapper.Map(entidad);
         }
 
         [HttpPost]

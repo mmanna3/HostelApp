@@ -14,10 +14,7 @@ namespace Api.Controllers.Mapping
     {
         public ModelToDTOProfile()
         {
-            CreateMap<Huesped, HuespedDTO>();
-            CreateMap<Huesped, DatosMinimosDeHuespedDTO>();
-
-            CreateMap<Habitacion, HabitacionDTO>();
+	        CreateMap<Habitacion, HabitacionDTO>();
 
             CreateMap<Cama, CamaDTO>()
                 .ForMember(
@@ -83,41 +80,6 @@ namespace Api.Controllers.Mapping
                 .ForMember(
                     dest => dest.CantidadDeLugaresLibres,
                     opt => opt.Ignore()
-                );
-
-
-            CreateMap<Reserva, CheckoutsDeHoyDTO>();
-
-            CreateMap<Reserva, ReservasDelPeriodoDTO.ReservaResumenDTO>()
-	            .ForMember(
-                    dest => dest.NombreAbreviadoDelHuesped,
-                    opt => opt.MapFrom(src => src.ObtenerNombreAbreviadoDelHuesped())
-                )
-	            .ForMember(
-                    dest => dest.DiaDeCheckin,
-                    opt => opt.MapFrom((src, dest, _, context) => src.PrimeraNoche < ((DateTime)context.Options.Items["desde"]) ? ((DateTime)context.Options.Items["desde"]) : src.PrimeraNoche)
-                )
-                .ForMember(
-                    dest => dest.DiaDeCheckout,
-                    opt => opt.MapFrom((src, dest, _, context) => src.UltimaNoche > ((DateTime)context.Options.Items["hasta"]) ? ((DateTime)context.Options.Items["hasta"]) : src.UltimaNoche)
-                )
-                .ForMember(
-                    dest => dest.CamasIds,
-                    opt => opt.MapFrom(src => src.ReservaCamas.Select(x => x.CamaId))
-                );
-
-            CreateMap<IEnumerable<Reserva>, ReservasDelPeriodoDTO>()
-                .ForMember(
-                    dest => dest.Reservas,
-                    opt => opt.MapFrom(src => src)
-                )
-                .ForMember(
-                    dest => dest.Desde,
-                    opt => opt.MapFrom((src, dest, _, context) => ((DateTime)context.Options.Items["desde"]))
-                )
-                .ForMember(
-                    dest => dest.Hasta,
-                    opt => opt.MapFrom((src, dest, _, context) => ((DateTime)context.Options.Items["hasta"]))
                 );
 
             CreateMap<DateTime, string>().ConvertUsing(new DateTimeAStringConverter());

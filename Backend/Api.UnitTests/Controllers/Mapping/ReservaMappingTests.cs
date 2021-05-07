@@ -25,6 +25,16 @@ namespace Api.UnitTests.Controllers.Mapping
 	        Telefono = "5556453",
             Pais = "AR",
         };
+
+        private readonly Huesped _unHuesped = new Huesped
+        {
+	        NombreCompleto = "Elliot",
+	        DniOPasaporte = "123456789",
+	        Email = "mrrobot@fsociety.ong",
+	        Telefono = "5556453",
+	        Pais = "AR",
+        };
+
         private const int UN_CAMA_ID = 1;
         private readonly DateTime _desde = new DateTime(2020, 07, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 17);
@@ -110,55 +120,32 @@ namespace Api.UnitTests.Controllers.Mapping
 	        reservaDTO.CamasIds.Should().HaveCount(2);
 	        reservaDTO.CamasIds.First().Should().Be(1);
 	        reservaDTO.CamasIds.Skip(1).First().Should().Be(2);
+
+	        reservaDTO.DatosMinimosDeHuesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        reservaDTO.DatosMinimosDeHuesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        reservaDTO.DatosMinimosDeHuesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        reservaDTO.DatosMinimosDeHuesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+	        reservaDTO.DatosMinimosDeHuesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
         }
 
         [Test]
-        public void MapeaCorrectamenteEnLaConsulta()
+        public void ListaReservas_a_ReservasDelPeriodoDTO()
         {
             DadaUnaListaDeReservas();
             var desde = new DateTime(2020, 8, 1);
             var hasta = new DateTime(2020, 8, 31);
 
-            var reservasDTO = _mapper.Map<ReservasDelPeriodoDTO>(_unaListaDeReservas, op =>
-            {
-                op.Items["desde"] = desde;
-                op.Items["hasta"] = hasta;
-            });
-            var primeraReserva = reservasDTO.Reservas.First();
+            var reservasDelPeriodoDTO = ReservaMapper.Map(_unaListaDeReservas, desde, hasta);
+            var primeraReserva = reservasDelPeriodoDTO.Reservas.First();
 
-            reservasDTO.Desde.Should().Be(Utilidades.ConvertirFecha(desde));
-            reservasDTO.Hasta.Should().Be(Utilidades.ConvertirFecha(hasta));
+            reservasDelPeriodoDTO.Desde.Should().Be(Utilidades.ConvertirFecha(desde));
+            reservasDelPeriodoDTO.Hasta.Should().Be(Utilidades.ConvertirFecha(hasta));
 
             primeraReserva.DiaDeCheckin.Should().Be("2020-08-01");
             primeraReserva.DiaDeCheckout.Should().Be("2020-08-31");
             primeraReserva.CamasIds.Should().HaveCount(2);
             primeraReserva.CamasIds.First().Should().Be(1);
             primeraReserva.CamasIds.Skip(1).First().Should().Be(2);
-        }
-
-        [Test]
-        public void MapeaCorrectamenteElHuesped_DeModelADTO()
-        {
-	        var reserva = new Reserva
-	        {
-		        PrimeraNoche = new DateTime(2020, 07, 17),
-		        UltimaNoche = new DateTime(2021, 1, 2),
-		        ReservaCamas = new List<ReservaCama>(),
-		        Huesped = new Huesped
-		        {
-			        NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto, 
-			        DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte, 
-			        Telefono = _datosMinimosDeUnHuesped.Telefono, 
-			        Email = _datosMinimosDeUnHuesped.Email
-		        }
-            };
-
-	        var reservaDTO = _mapper.Map<ReservaDTO>(reserva);
-
-	        reservaDTO.DatosMinimosDeHuesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-	        reservaDTO.DatosMinimosDeHuesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-	        reservaDTO.DatosMinimosDeHuesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-	        reservaDTO.DatosMinimosDeHuesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
         }
 
         private void DadaUnaListaDeReservas()
@@ -173,7 +160,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 PrimeraNoche = new DateTime(2020, 07, 17),
                 UltimaNoche = new DateTime(2021, 1, 2),
                 ReservaCamas = new List<ReservaCama> { new ReservaCama{ Cama = cama1, CamaId = cama1.Id}, new ReservaCama{ Cama = cama2, CamaId = cama2.Id } },
-                Huesped = new Huesped { NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto }
+                Huesped = _unHuesped
             };
 
             var r2 = new Reserva
@@ -184,7 +171,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 HoraEstimadaDeLlegada = new TimeSpan(11, 0, 0),
                 Estado = ReservaEstadoEnum.InHouse,
                 ReservaCamas = new List<ReservaCama> { new ReservaCama { Cama = cama1, CamaId = cama1.Id }, new ReservaCama { Cama = cama2, CamaId = cama2.Id } },
-                Huesped = new Huesped { NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto }
+                Huesped = _unHuesped
             };
 
             _unaListaDeReservas.Add(r1);

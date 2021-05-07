@@ -29,9 +29,7 @@ namespace Api.Controllers
         public async Task<IEnumerable<CheckoutsDeHoyDTO>> ListarCheckoutsDeHoy()
         {
             var reservas = await _service.ListarCheckoutsDeHoy();
-            var reservaDTOs = _mapper.Map<IEnumerable<CheckoutsDeHoyDTO>>(reservas);
-
-            return reservaDTOs;
+            return ReservaMapper.Map(reservas);
         }
 
         [HttpGet, Route("obtener")]
@@ -48,13 +46,7 @@ namespace Api.Controllers
 	        var ultimaNoche = primeraNocheDateTime.AddDays(dias - 1);
 
             var reservas = await _service.ListarEntre(primeraNocheDateTime, ultimaNoche);
-	        var reservaDTOs = _mapper.Map<ReservasDelPeriodoDTO>(reservas, op =>
-	        {
-		        op.Items["desde"] = primeraNocheDateTime;
-		        op.Items["hasta"] = ultimaNoche.AddDays(1);
-	        });
-
-	        return reservaDTOs;
+            return ReservaMapper.Map(reservas, primeraNocheDateTime, ultimaNoche.AddDays(1));
         }
 
         [HttpPost]
