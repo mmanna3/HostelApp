@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
 using AutoMapper;
@@ -31,6 +32,13 @@ namespace Api.Controllers
             var reservaDTOs = _mapper.Map<IEnumerable<CheckoutsDeHoyDTO>>(reservas);
 
             return reservaDTOs;
+        }
+
+        [HttpGet, Route("obtener")]
+        public async Task<ReservaDTO> ObtenerPorId(int id)
+        {
+	        var reserva = await _service.ObtenerPorId(id);
+	        return ReservaMapper.Map(reserva);
         }
 
         [HttpGet]
@@ -83,15 +91,6 @@ namespace Api.Controllers
 		        reserva.Huesped = null;
 		        reserva.HuespedId = huesped.Id;
             }
-        }
-
-        [HttpGet, Route("obtener")]
-        public async Task<ReservaDTO> ObtenerPorId(int id)
-        {
-	        var reserva = await _service.ObtenerPorId(id);
-	        var reservaDTO = _mapper.Map<ReservaDTO>(reserva);
-
-	        return reservaDTO;
         }
     }
 }

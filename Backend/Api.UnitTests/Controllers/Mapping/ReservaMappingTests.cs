@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs;
+using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
 using AutoMapper;
@@ -96,11 +97,11 @@ namespace Api.UnitTests.Controllers.Mapping
         }
 
         [Test]
-        public void MapeaCorrectamente_EnObtenerPorId()
+        public void Reserva_a_ReservaDTO()
         {
 	        DadaUnaListaDeReservas();
-                        
-	        var reservaDTO = _mapper.Map<ReservaDTO>(_unaListaDeReservas.Skip(1).First());
+	        var reservaDTO = ReservaMapper.Map(_unaListaDeReservas.Skip(1).First());
+
 	        reservaDTO.Estado.Should().Be(ReservaEstadoEnum.InHouse);
 	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00:00");
 	        reservaDTO.CantidadDePasajeros.Should().Be(1);

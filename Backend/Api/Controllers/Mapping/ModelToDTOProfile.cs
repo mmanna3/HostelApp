@@ -85,27 +85,6 @@ namespace Api.Controllers.Mapping
                     opt => opt.Ignore()
                 );
 
-            CreateMap<Reserva, ReservaDTO>()
-	            .ForMember(
-		            dest => dest.HoraEstimadaDeLlegada,
-		            opt => opt.MapFrom(src => src.HoraEstimadaDeLlegada)
-	            )
-                .ForMember(
-		            dest => dest.DatosMinimosDeHuesped,
-		            opt => opt.MapFrom(src => src.Huesped)
-	            )
-                .ForMember(
-		            dest => dest.DiaDeCheckout,
-		            opt => opt.MapFrom(src => src.UltimaNoche.AddDays(1))
-	            )
-	            .ForMember(
-		            dest => dest.DiaDeCheckin,
-		            opt => opt.MapFrom(src => src.PrimeraNoche)
-	            )
-                .ForMember(
-                    dest => dest.CamasIds,
-                    opt => opt.MapFrom(src => src.ReservaCamas.Select(x => x.CamaId))
-                );
 
             CreateMap<Reserva, CheckoutsDeHoyDTO>();
 
