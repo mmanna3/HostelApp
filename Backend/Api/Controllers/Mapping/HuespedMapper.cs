@@ -50,5 +50,17 @@ namespace Api.Controllers.Mapping
 				Id = dto.Id
 			};
 		}
+
+		public static Huesped Map(DatosMinimosDeHuespedDTO dtoDatosMinimosDeHuesped)
+		{
+			return new Huesped
+			{
+				NombreCompleto = dtoDatosMinimosDeHuesped.NombreCompleto,
+				Pais = dtoDatosMinimosDeHuesped.Pais,
+				DniOPasaporte = dtoDatosMinimosDeHuesped.DniOPasaporte,
+				Telefono = dtoDatosMinimosDeHuesped.Telefono,
+				Email = dtoDatosMinimosDeHuesped.Email
+			};
+		}
 	}
 }

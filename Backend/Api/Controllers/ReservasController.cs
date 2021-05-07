@@ -16,12 +16,10 @@ namespace Api.Controllers
     {
         private readonly IReservaService _service;
         private readonly IHuespedService _huespedService;
-        private readonly IMapper _mapper;
 
-        public ReservasController(IMapper mapper, IReservaService service, IHuespedService huespedService)
+        public ReservasController(IReservaService service, IHuespedService huespedService)
         {
-            _mapper = mapper;
-            _service = service;
+	        _service = service;
             _huespedService = huespedService;
         }
 
@@ -65,7 +63,7 @@ namespace Api.Controllers
 			if (dto.DiaDeCheckin == dto.DiaDeCheckout)
 				throw new AppException("Se debe reservar al menos una noche");
 
-			var reserva = _mapper.Map<Reserva>(dto);
+			var reserva = ReservaMapper.Map(dto);
 
 			await SiElHuespedYaExisteModificarlo(reserva);
 

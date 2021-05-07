@@ -5,7 +5,6 @@ using Api.Controllers.DTOs;
 using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
-using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -13,9 +12,7 @@ namespace Api.UnitTests.Controllers.Mapping
 {
     public class ReservaMappingTests
     {
-	    private IMapper _mapper;
-
-        private ReservaDTO _unaReservaDto;
+	    private ReservaDTO _unaReservaDto;
         private IList<Reserva> _unaListaDeReservas;
         private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
         {
@@ -39,23 +36,12 @@ namespace Api.UnitTests.Controllers.Mapping
         private readonly DateTime _desde = new DateTime(2020, 07, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 17);
 
-        [SetUp]
-        public void Inicializar()
-        {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new DtoToModelTestProfile());
-            });
-            
-            _mapper = new Mapper(configuration);
-        }
-
         [Test]
-        public void MapeaCorrectamenteEnLaCreacion()
+        public void ReservaDto_a_Reserva()
         {
             DadaUnaReservaDto();
 
-            var reserva = _mapper.Map<Reserva>(_unaReservaDto);
+            var reserva = ReservaMapper.Map(_unaReservaDto);
 
             reserva.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
             reserva.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
@@ -65,41 +51,12 @@ namespace Api.UnitTests.Controllers.Mapping
 
             reserva.PrimeraNoche.Should().Be(_desde);
             reserva.UltimaNoche.Should().Be(_hasta.AddDays(-1));
+            reserva.HoraEstimadaDeLlegada.Should().Be(new TimeSpan(11, 0, 0));
+            reserva.Estado.Should().Be(ReservaEstadoEnum.HizoCheckout);
+            reserva.CantidadDePasajeros.Should().Be(3);
             reserva.ReservaCamas.Should().HaveCount(4);
 
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == UN_CAMA_ID);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 100);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 200);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 400);
-        }
-
-        [Test]
-        public void MapeaCorrectamente_SiNoHayCamasDeHabitacionesPrivadas()
-        {
-            DadoUnaReservaDtoSinCamasDeHabitacionesPrivadas();
-
-            var reserva = _mapper.Map<Reserva>(_unaReservaDto);
-
-            reserva.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-            reserva.PrimeraNoche.Should().Be(_desde);
-            reserva.UltimaNoche.Should().Be(_hasta.AddDays(-1));
-            reserva.ReservaCamas.Should().HaveCount(1);
-
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == UN_CAMA_ID);
-        }
-
-        [Test]
-        public void MapeaCorrectamente_SiSoloHayCamasDeHabitacionesPrivadas()
-        {
-            DadoUnaReservaDtoSoloConCamasDeHabitacionesPrivadas();
-
-            var reserva = _mapper.Map<Reserva>(_unaReservaDto);
-
-            reserva.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-            reserva.PrimeraNoche.Should().Be(_desde);
-            reserva.UltimaNoche.Should().Be(_hasta.AddDays(-1));
-            reserva.ReservaCamas.Should().HaveCount(3);
-
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == 100);
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == 200);
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == 400);
@@ -190,40 +147,13 @@ namespace Api.UnitTests.Controllers.Mapping
             _unaReservaDto = new ReservaDTO
             {
                 DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
-                CamasIds = new List<int?>{null, UN_CAMA_ID},
                 DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),
-                CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
-            };
-        }
-
-        private void DadoUnaReservaDtoSinCamasDeHabitacionesPrivadas()
-        {
-            _unaReservaDto = new ReservaDTO
-            {
-	            DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 CamasIds = new List<int?> { null, UN_CAMA_ID },
-                DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
-                DiaDeCheckout = Utilidades.ConvertirFecha(_hasta)
-            };
-        }        
-        
-        private void DadoUnaReservaDtoSoloConCamasDeHabitacionesPrivadas()
-        {
-            var listaDeCamasDeHabitacionPrivada1 = new List<int> { 100, 200 };
-            var listaDeCamasDeHabitacionPrivada2 = new List<int> { 400 };
-
-            var camasDeHabitacionesPrivadasIds = new List<List<int>>
-            {
-                listaDeCamasDeHabitacionPrivada1, null, listaDeCamasDeHabitacionPrivada2
-            };
-
-            _unaReservaDto = new ReservaDTO
-            {
-	            DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
-                DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
-                DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),
-                CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds
+                CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds,
+                HoraEstimadaDeLlegada = "11:00",
+                Estado = ReservaEstadoEnum.HizoCheckout,
+                CantidadDePasajeros = 3,
             };
         }
     }

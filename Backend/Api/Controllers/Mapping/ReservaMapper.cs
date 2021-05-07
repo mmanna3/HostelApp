@@ -52,5 +52,41 @@ namespace Api.Controllers.Mapping
 		{
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
+
+		private static List<ReservaCama> UnificarCamasIds(ReservaDTO dto)
+		{
+			var resultado = new List<ReservaCama>();
+			if (dto.CamasIds != null)
+				resultado.AddRange(dto.CamasIds.Where(c => c != null).Select(x => new ReservaCama{CamaId = (int)x }).ToList());
+
+			if (dto.CamasDeHabitacionesPrivadasIds != null)
+				foreach (var idsDeCamasDeUnaHabitacionPrivada in dto.CamasDeHabitacionesPrivadasIds)
+					if (idsDeCamasDeUnaHabitacionPrivada != null)
+						resultado.AddRange(idsDeCamasDeUnaHabitacionPrivada.Select(x => new ReservaCama { CamaId = x }));
+
+			return resultado;
+		}
+
+		public static Reserva Map(ReservaDTO dto)
+		{
+			var reserva = new Reserva
+			{
+				ReservaCamas = UnificarCamasIds(dto),
+				Huesped = HuespedMapper.Map(dto.DatosMinimosDeHuesped),
+				Estado = dto.Estado,
+				HoraEstimadaDeLlegada = TimeSpan.Parse(dto.HoraEstimadaDeLlegada),
+				CantidadDePasajeros = dto.CantidadDePasajeros,
+				PrimeraNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckin),
+				UltimaNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckout).AddDays(-1),
+			};
+
+			// Seguro esto se puede hacer mejor
+			foreach (var reservaCama in reserva.ReservaCamas)
+			{
+				reservaCama.Reserva = reserva;
+			}
+
+			return reserva;
+		}
 	}
 }
