@@ -40,6 +40,7 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
     );
   };
 
+  // Tuneo para que quede igual a los Bulma Inputs
   const styles = {
     valueContainer: (base: CSSObject): CSSObject =>
       icono
@@ -50,22 +51,20 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
         : base,
     control: (base: CSSObject, state: ControlProps<any, any, any>): CSSObject => ({
       ...base,
-      borderColor: state.isFocused ? '#3260a8' : '#dbdbdb',
-      boxShadow: '0 !important',
-      color: state.isFocused ? '#3260a8' : '#222',
+      boxShadow: 'inset 0 0.0625em 0.125em rgb(10 10 10 / 5%) !important',
+      borderColor: '#dbdbdb',
+      // Si juego con el state.isFocused acá, no me limpia el estilo cuando pierde el foco
+      // El menuIsOpen tampoco parece andar muy bien
       '&:hover': {
         borderColor: state.isFocused ? '#3260a8' : 'hsl(0, 0%, 71%)',
         color: state.isFocused ? '#3260a8' : '#222',
+        // boxShadow: '0 0 0 0.125em rgba(hsl(217, 71%,  53%), 0.25)',  //Debería ser el mismo que en los inputs de Bulma, pero no anda
       },
     }),
     dropdownIndicator: (base: CSSObject): CSSObject => ({
       ...base,
       color: 'inherit',
     }),
-    // singleValue: (base: CSSObject): CSSObject => ({
-    //   ...base,
-    //   color: 'inherit',
-    // }),
   };
 
   return (
@@ -85,13 +84,6 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
           defaultValue={field.value}
           components={{ ValueContainer }}
           styles={styles}
-          // theme={(theme: Theme): Theme => ({
-          //   ...theme,
-          //   colors: {
-          //     ...theme.colors,
-          //     primary: '#3260a8',
-          //   },
-          // })}
         />
       )}
     />
