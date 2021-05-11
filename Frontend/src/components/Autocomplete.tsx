@@ -1,6 +1,8 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
+import { Icon } from './Icon';
 
 interface IProps {
   opciones: ILabelValue[];
@@ -8,6 +10,7 @@ interface IProps {
   name: string;
   placeholder: string;
   register?: () => any;
+  icono?: IconProp;
 }
 
 export interface ILabelValue {
@@ -15,7 +18,7 @@ export interface ILabelValue {
   label: string;
 }
 
-export const Autocomplete = ({ opciones, opcionInicial, name, placeholder }: IProps): ReactElement => {
+export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono }: IProps): ReactElement => {
   const [valor, actualizarValor] = useState<ILabelValue>(opcionInicial);
   const { setValue } = useFormContext();
 
@@ -24,6 +27,27 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder }: IPr
       setValue(name, valor.value);
     }, 500);
   });
+
+  const ValueContainer = ({ children, ...props }: any): any => {
+    return (
+      components.ValueContainer && (
+        <components.ValueContainer {...props}>
+          {!!children && icono && <Icon faCode={icono} style={{ position: 'absolute', left: 8 }} />}
+          {children}
+        </components.ValueContainer>
+      )
+    );
+  };
+
+  const styles = {
+    valueContainer: (base: any): any =>
+      icono
+        ? {
+            ...base,
+            paddingLeft: 38,
+          }
+        : base,
+  };
 
   return (
     <Controller
@@ -40,6 +64,15 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder }: IPr
           }}
           placeholder={placeholder}
           defaultValue={field.value}
+          components={{ ValueContainer }}
+          styles={styles}
+          // theme={(theme: Theme): Theme => ({
+          //   ...theme,
+          //   colors: {
+          //     ...theme.colors,
+          //     primary: '#3260a8',
+          //   },
+          // })}
         />
       )}
     />

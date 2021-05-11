@@ -83,6 +83,7 @@ const CabeceraHuesped = (): ReactElement => {
             opciones={paises}
             opcionInicial={paises[8]}
             placeholder="Nacionalidad"
+            icono="globe"
           />
         </div>
         <div className="column is-one-fifth">
