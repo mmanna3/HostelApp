@@ -1,3 +1,4 @@
+import { Autocomplete } from 'components/Autocomplete';
 import { Button } from 'components/botones/botones';
 import DateRangePicker from 'components/dateRangePicker/DateRangePicker';
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
@@ -118,6 +119,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     }
   }
 
+  const canales = [
+    { label: 'Presencial', value: 'Presencial' },
+    { label: 'Booking', value: 'Booking' },
+    { label: 'Hostelworld', value: 'Hostelworld' },
+  ];
+
   return (
     <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
       <Header title="Nueva reserva" onHide={hide} />
@@ -151,7 +158,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
             <Input label="Hora de llegada" name="horaEstimadaDeLlegada" defaultValue="11:00" step="1800" type="time" />
           </div>
           <div className="column">
-            <Input label="Canal" name="canal" defaultValue="Personal" />
+            <Autocomplete label="Canal" name="canal" opciones={canales} opcionInicial={canales[0]} />
           </div>
         </div>
 

@@ -6,10 +6,11 @@ import Select, { components, ControlProps } from 'react-select';
 import { Icon } from './Icon';
 
 interface IProps {
+  label?: string;
   opciones: ILabelValue[];
   opcionInicial: ILabelValue;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   register?: () => any;
   icono?: IconProp;
 }
@@ -19,7 +20,7 @@ export interface ILabelValue {
   label: string;
 }
 
-export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono }: IProps): ReactElement => {
+export const Autocomplete = ({ label, opciones, opcionInicial, name, placeholder = '', icono }: IProps): ReactElement => {
   const [valor, actualizarValor] = useState<ILabelValue>(opcionInicial);
   const { setValue } = useFormContext();
 
@@ -72,19 +73,22 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
       name={name}
       defaultValue={opcionInicial}
       render={({ field }): ReactElement => (
-        <Select
-          options={opciones}
-          {...field}
-          value={opciones.find((c): boolean => c.value === field.value)}
-          onChange={(val): void => {
-            field.onChange(val?.value);
-            actualizarValor(val);
-          }}
-          placeholder={placeholder}
-          defaultValue={field.value}
-          components={{ ValueContainer }}
-          styles={styles}
-        />
+        <>
+          {label && <label className="label">{label}</label>}
+          <Select
+            options={opciones}
+            {...field}
+            value={opciones.find((c): boolean => c.value === field.value)}
+            onChange={(val): void => {
+              field.onChange(val?.value);
+              actualizarValor(val);
+            }}
+            placeholder={placeholder}
+            defaultValue={field.value}
+            components={{ ValueContainer }}
+            styles={styles}
+          />
+        </>
       )}
     />
   );
