@@ -2,7 +2,7 @@ import { CSSObject } from '@emotion/serialize';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import Select, { components } from 'react-select';
+import Select, { components, ControlProps } from 'react-select';
 import { Icon } from './Icon';
 
 interface IProps {
@@ -48,18 +48,20 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
             paddingLeft: 38,
           }
         : base,
-    control: (base: CSSObject): CSSObject => ({
+    control: (base: CSSObject, state: ControlProps<any, any, any>): CSSObject => ({
       ...base,
-      borderColor: '#dbdbdb',
-      // '&:hover': {
-      //   borderColor: 'red',
-      //   color: 'red',
-      // },
+      borderColor: state.isFocused ? '#3260a8' : '#dbdbdb',
+      boxShadow: '0 !important',
+      color: state.isFocused ? '#3260a8' : '#222',
+      '&:hover': {
+        borderColor: state.isFocused ? '#3260a8' : 'hsl(0, 0%, 71%)',
+        color: state.isFocused ? '#3260a8' : '#222',
+      },
     }),
-    // dropdownIndicator: (base: CSSObject): CSSObject => ({
-    //   ...base,
-    //   color: 'inherit',
-    // }),
+    dropdownIndicator: (base: CSSObject): CSSObject => ({
+      ...base,
+      color: 'inherit',
+    }),
     // singleValue: (base: CSSObject): CSSObject => ({
     //   ...base,
     //   color: 'inherit',
