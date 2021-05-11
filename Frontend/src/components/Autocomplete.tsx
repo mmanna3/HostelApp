@@ -1,3 +1,4 @@
+import { CSSObject } from '@emotion/serialize';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -40,13 +41,29 @@ export const Autocomplete = ({ opciones, opcionInicial, name, placeholder, icono
   };
 
   const styles = {
-    valueContainer: (base: any): any =>
+    valueContainer: (base: CSSObject): CSSObject =>
       icono
         ? {
             ...base,
             paddingLeft: 38,
           }
         : base,
+    control: (base: CSSObject): CSSObject => ({
+      ...base,
+      borderColor: '#dbdbdb',
+      // '&:hover': {
+      //   borderColor: 'red',
+      //   color: 'red',
+      // },
+    }),
+    // dropdownIndicator: (base: CSSObject): CSSObject => ({
+    //   ...base,
+    //   color: 'inherit',
+    // }),
+    // singleValue: (base: CSSObject): CSSObject => ({
+    //   ...base,
+    //   color: 'inherit',
+    // }),
   };
 
   return (
