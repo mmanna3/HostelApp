@@ -3,52 +3,24 @@ import { Input } from 'components/Input';
 import { obtenerPaisesParaAutocomplete } from 'pantallas/reservas/crear/CabeceraHuesped/ListaDePaises';
 import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const CabeceraHuesped = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
-  const [camposEditables, togglearCamposEditables] = React.useState(false);
 
   useEffect((): void => {
-    if (estado === EstadosApiRequestEnum.exitoso) togglearCamposEditables(true);
-  }, [estado]);
+    if (estado === EstadosApiRequestEnum.exitoso && datos != null)
+      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', { type: toast.TYPE.SUCCESS });
+    else if (estado === EstadosApiRequestEnum.huboError)
+      toast('El huésped no está registrado. Llená sus datos para registrarlo.', { type: toast.TYPE.ERROR });
+  }, [estado, datos]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
-
-  // const mensaje = (): ReactElement => {
-  //   if (estado === EstadosApiRequestEnum.inactivo)
-  //     return (
-  //       <>
-  //         <Label text=""></Label>
-  //         <div className="notification is-primary is-light">
-  //           Si el huésped <strong>está registrado</strong>, traeremos sus datos.
-  //         </div>
-  //       </>
-  //     );
-
-  //   if (datos != null)
-  //     return (
-  //       <>
-  //         <Label text=""></Label>
-  //         <div className="notification is-success is-light">
-  //           El huésped está <strong>registrado</strong>. De ser necesario, podés editar sus datos.
-  //         </div>
-  //       </>
-  //     );
-
-  //   return (
-  //     <>
-  //       <Label text=""></Label>
-  //       <div className="notification is-warning is-light">
-  //         El huésped <strong>no está registrado</strong>. Llená sus datos para registrarlo.
-  //       </div>
-  //     </>
-  //   );
-  // };
 
   const paises = obtenerPaisesParaAutocomplete();
 
@@ -65,10 +37,8 @@ const CabeceraHuesped = (): ReactElement => {
             faIconCode="id-card"
           />
         </div>
-        {/* <div className="column">{mensaje()}</div> */}
         <div className="column">
           <Input
-            readOnly={!camposEditables}
             placeholder="Nombre completo"
             name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={datos?.nombreCompleto}
@@ -88,7 +58,6 @@ const CabeceraHuesped = (): ReactElement => {
         </div>
         <div className="column is-one-fifth">
           <Input
-            readOnly={!camposEditables}
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
             defaultValue={datos?.telefono}
@@ -97,13 +66,7 @@ const CabeceraHuesped = (): ReactElement => {
           />
         </div>
         <div className="column">
-          <Input
-            readOnly={!camposEditables}
-            name="DatosMinimosDeHuesped.Email"
-            defaultValue={datos?.email}
-            placeholder="Email"
-            faIconCode="envelope"
-          />
+          <Input name="DatosMinimosDeHuesped.Email" defaultValue={datos?.email} placeholder="Email" faIconCode="envelope" />
         </div>
       </div>
     </>

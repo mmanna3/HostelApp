@@ -6,6 +6,7 @@ import { estaLogueado, siEstaLogueadoEnviarTokenEnTodosLosRequests } from 'panta
 import ReservasPage from 'pantallas/reservas/Page';
 import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'utils/FontAwesomeLibrary';
 
 const App = () => {
@@ -37,6 +38,18 @@ const AuthRoutes = () => {
         <Route exact path="/habitaciones" component={HabitacionesPage} />
         <Route exact path="/huespedes" component={HuespedesPage} />
         <Route exact path="/reservas" component={ReservasPage} />
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          style={{ zIndex: 9999 }}
+        />
       </div>
     );
 };
