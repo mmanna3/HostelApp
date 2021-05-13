@@ -14,7 +14,7 @@ import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
 import Estilos from './Modal.module.scss';
-import PasajerosVsLugares from './PasajerosVsLugares';
+import PasajerosYLugares from './PasajerosYLugares/PasajerosYLugares';
 import Renglon from './Renglon/Renglon';
 import { RenglonData } from './Renglon/RenglonDataClass';
 
@@ -169,7 +169,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <DatosDelHuesped />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
-        <PasajerosVsLugares renglones={renglones} key={renglones[0].indice} />
+        <PasajerosYLugares renglones={renglones} key={renglones[0].indice} />
         {renglones.map(
           (renglon): ReactElement => {
             return (
