@@ -1,18 +1,19 @@
+import { CamaDTO } from 'interfaces/habitacion';
 import { IHabitacionParaReservaDTO, IHabitacionParaTablaReservas } from 'interfaces/reserva';
 
 export class RenglonData {
   public habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas>;
-  public camaSeleccionadaId: Nullable<number>; //No sé si esto está súper bien
+  public camaSeleccionadaId: Nullable<string>;
   public indice: number;
   public habitacionesDisponibles: IHabitacionParaReservaDTO[];
-  public camasDisponibles: any[];
+  public camasDisponibles: CamaDTO[];
 
   public constructor(
     indice: number,
     habitacionesDisponibles: IHabitacionParaReservaDTO[],
-    camasDisponibles: any[],
+    camasDisponibles: CamaDTO[],
     habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
-    camaSeleccionadaId: Nullable<number> = null
+    camaSeleccionadaId: Nullable<string> = null
   ) {
     this.habitacionSeleccionada = habitacionSeleccionada;
     this.indice = indice;
@@ -21,6 +22,8 @@ export class RenglonData {
     this.camaSeleccionadaId = null; //No sé si esto está súper bien
 
     if (camaSeleccionadaId) this.camaSeleccionadaId = camaSeleccionadaId;
-    else if (camasDisponibles.length > 0) this.camaSeleccionadaId = camasDisponibles[0].id;
+    else if (camasDisponibles.length > 0) {
+      this.camaSeleccionadaId = camasDisponibles[0].id.toString();
+    }
   }
 }

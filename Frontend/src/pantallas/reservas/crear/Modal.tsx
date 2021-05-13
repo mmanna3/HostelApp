@@ -5,6 +5,8 @@ import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
+import { CamaDTO, CamaTipo } from 'interfaces/habitacion';
+import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -28,6 +30,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   const [modalKey, reiniciarModal] = useCounterKey();
   const [desdeHasta, actualizarDesdeHasta] = useState([hoy(), maniana()]);
   const [cantidadDeNoches, actualizarCantidadDeNoches] = useState(1);
+  const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
   const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
 
   const dispatch = useDispatch();
@@ -66,6 +69,18 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     // eslint-disable-next-line
   }, [habitaciones]);
 
+  useEffect((): void => {
+    const camasDisponibles = renglones[0].camasDisponibles;
+    let lugaresReservados = 0;
+
+    renglones.forEach((renglon): void => {
+      var cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
+      cama?.tipo === CamaTipo.Matrimonial ? (lugaresReservados = lugaresReservados + 2) : lugaresReservados++;
+    });
+
+    actualizarCantidadDeLugaresReservados(lugaresReservados);
+  }, [renglones]);
+
   function ocultar(): void {
     onHide();
     dispatch(reiniciar());
@@ -74,7 +89,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   }
 
   function onHabitacionChange(indice: number, id: string): void {
-    var habitacion = habitaciones.find((hab: any): any => hab.id === parseInt(id));
+    var habitacion = habitaciones.find((hab: IHabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
 
     if (habitacion) {
       // Innecesario if pero bueno
@@ -83,7 +98,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         if (renglonesCopia[i].indice === indice) {
           renglonesCopia[i].habitacionSeleccionada = habitacion;
           renglonesCopia[i].camasDisponibles = habitacion.camas;
-          if (habitacion.camas.length > 0) renglonesCopia[i].camaSeleccionadaId = habitacion.camas[0].id;
+          if (habitacion.camas.length > 0) renglonesCopia[i].camaSeleccionadaId = habitacion.camas[0].id.toString();
 
           break;
         }
@@ -96,11 +111,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
     for (let i = 0; i < renglones.length; i++)
       if (renglonesCopia[i].indice === indice) {
-        renglonesCopia[i].camaSeleccionadaId = id;
+        renglonesCopia[i].camaSeleccionadaId = id.toString();
         break;
       }
 
     actualizarRenglones([...renglonesCopia]);
+    // calcularLugaresReservados();
   }
 
   function agregarRenglon(): void {
@@ -167,7 +183,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <DatosDelHuesped />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
-
+        <div>A{cantidadDeLugaresReservados}</div>
         {renglones.map(
           (renglon): ReactElement => {
             return (
