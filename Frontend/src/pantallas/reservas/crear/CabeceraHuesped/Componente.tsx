@@ -1,7 +1,7 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
-import { obtenerPaisesParaAutocomplete } from 'pantallas/reservas/crear/CabeceraHuesped/ListaDePaises';
-import React, { ReactElement, useEffect } from 'react';
+import { paisesParaAutocomplete } from 'pantallas/reservas/crear/CabeceraHuesped/ListaDePaises';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import api from 'store/api/api';
@@ -9,6 +9,7 @@ import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 const CabeceraHuesped = (): ReactElement => {
   const dispatch = useDispatch();
+  const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(paisesParaAutocomplete[8]);
   const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
 
   useEffect((): void => {
@@ -22,7 +23,14 @@ const CabeceraHuesped = (): ReactElement => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
 
-  const paises = obtenerPaisesParaAutocomplete();
+  useEffect((): void => {
+    if (datos) {
+      let pais = paisesParaAutocomplete.find((x): boolean => x.value === datos.pais);
+      if (pais) {
+        modificarPaisOpcionInicial(pais);
+      }
+    }
+  }, [datos]);
 
   return (
     <>
@@ -49,9 +57,10 @@ const CabeceraHuesped = (): ReactElement => {
       <div className="columns">
         <div className="column is-one-quarter">
           <Autocomplete
+            key={paisOpcionInicial.value}
             name="DatosMinimosDeHuesped.Pais"
-            opciones={paises}
-            opcionInicial={paises[8]}
+            opciones={paisesParaAutocomplete}
+            opcionInicial={paisOpcionInicial}
             placeholder="Nacionalidad"
             icono="globe"
           />

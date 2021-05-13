@@ -7,4 +7,5 @@ export interface DatosMinimosDeHuespedDTO {
   dniOPasaporte: string;
   telefono: string;
   email: string;
+  pais: string;
 }

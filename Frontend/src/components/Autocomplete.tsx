@@ -27,8 +27,8 @@ export const Autocomplete = ({ label, opciones, opcionInicial, name, placeholder
   useEffect((): void => {
     setTimeout((): void => {
       setValue(name, valor.value);
-    }, 500);
-  });
+    }, 100);
+  }, [opcionInicial, name, valor, setValue]);
 
   const ValueContainer = ({ children, ...props }: any): any => {
     return (
