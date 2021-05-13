@@ -169,7 +169,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <DatosDelHuesped />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
-        <PasajerosYLugares renglones={renglones} key={renglones[0].indice} />
+        <PasajerosYLugares renglones={renglones} />
         {renglones.map(
           (renglon): ReactElement => {
             return (

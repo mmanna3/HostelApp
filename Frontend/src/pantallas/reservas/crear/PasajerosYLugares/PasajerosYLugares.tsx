@@ -11,22 +11,28 @@ interface IParams {
 }
 
 const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
-  const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
+  //A veces esta línea de abajo no anda y cuando agrego una cama no re-renderiza (pero creo que es un problema del Modal)
+  const _renglones = [...renglones]; // Hago esto para que el useEffect vuelva a renderizar con cada cambio que haya en renglones
 
+  const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
   const { watch } = useFormContext();
-  const cantidadDePasajeros = watch('cantidadDePasajeros');
+  const cantidadDePasajeros = parseInt(watch('cantidadDePasajeros'));
   const textoPasajero = useMemo((): string => (cantidadDePasajeros === 1 ? 'pasajero' : 'pasajeros'), [cantidadDePasajeros]);
   const textoLugares = useMemo(
     (): string => (cantidadDeLugaresReservados === 1 ? 'lugar reservado' : 'lugares reservados'),
     [cantidadDeLugaresReservados]
   );
 
+  const hayMasPasajerosQueLugaresReservados = useMemo((): boolean => {
+    return cantidadDePasajeros !== cantidadDeLugaresReservados;
+  }, [cantidadDeLugaresReservados, cantidadDePasajeros]);
+
   useEffect((): void => {
-    const camasDisponibles = renglones[0].camasDisponibles;
-    const habitacionesDisponibles = renglones[0].habitacionesDisponibles;
+    const camasDisponibles = _renglones[0].camasDisponibles;
+    const habitacionesDisponibles = _renglones[0].habitacionesDisponibles;
     let lugaresReservados = 0;
 
-    renglones.forEach((renglon): void => {
+    _renglones.forEach((renglon): void => {
       if (!renglon.habitacionSeleccionada?.esPrivada) {
         let cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
         if (cama) cama.tipo === CamaTipo.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
@@ -39,13 +45,13 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
     });
 
     actualizarCantidadDeLugaresReservados(lugaresReservados);
-  }, [renglones]);
+  }, [_renglones]);
 
   return (
     <div className={Estilos.contenedor}>
       <label>
         {cantidadDePasajeros} {textoPasajero} ➝ {cantidadDeLugaresReservados} {textoLugares}
-        {cantidadDePasajeros !== cantidadDeLugaresReservados ? (
+        {hayMasPasajerosQueLugaresReservados ? (
           <span className="icon-text has-text-warning">
             <Icon faCode="exclamation-triangle" />
           </span>
