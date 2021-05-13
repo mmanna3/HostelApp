@@ -1,6 +1,7 @@
 import { CamaDTO, CamaTipo } from 'interfaces/habitacion';
 import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { RenglonData } from './Renglon/RenglonDataClass';
 
 interface IParams {
@@ -9,6 +10,9 @@ interface IParams {
 
 const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
   const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
+
+  const { watch } = useFormContext();
+  const cantidadDePasajeros = watch('cantidadDePasajeros');
 
   useEffect((): void => {
     const camasDisponibles = renglones[0].camasDisponibles;
@@ -30,7 +34,11 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
     actualizarCantidadDeLugaresReservados(lugaresReservados);
   }, [renglones]);
 
-  return <div>Lugares: {cantidadDeLugaresReservados}</div>;
+  return (
+    <div>
+      Lugares: {cantidadDeLugaresReservados} / Pasajeros: {cantidadDePasajeros}
+    </div>
+  );
 };
 
 export default PasajerosVsLugares;
