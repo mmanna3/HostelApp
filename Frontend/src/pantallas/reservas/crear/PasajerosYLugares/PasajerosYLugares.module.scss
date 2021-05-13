@@ -3,4 +3,17 @@
 .contenedor {
   display: flex;
   justify-content: center;
+  margin-bottom: 1.5em;
+}
+
+.contenedor label {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid $gris-clarito;
+  border-radius: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
