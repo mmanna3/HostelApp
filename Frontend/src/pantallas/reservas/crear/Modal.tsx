@@ -5,7 +5,7 @@ import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
+import { IHabitacionParaReservaDTO, ReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -30,7 +30,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   const [modalKey, reiniciarModal] = useCounterKey();
   const [desdeHasta, actualizarDesdeHasta] = useState([hoy(), maniana()]);
   const [cantidadDeNoches, actualizarCantidadDeNoches] = useState(1);
-  const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
+  const [renglones, actualizarRenglones] = useState<RenglonData[]>([new RenglonData(0, [], [])]);
   const dispatch = useDispatch();
 
   function onSuccess(): void {
@@ -40,7 +40,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  const onSubmit = (data: any): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
+  const onSubmit = (data: ReservaDTO): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
 
   const habRequest = api.habitaciones.listarConLugaresLibres;
   const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
@@ -116,7 +116,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   function eliminarRenglon(indice: number): void {
     if (renglones.length > 1) {
-      var renglonesSinElEliminado = renglones.filter((renglon): boolean => renglon.indice !== indice);
+      var renglonesSinElEliminado = renglones.filter((renglon: RenglonData): boolean => renglon.indice !== indice);
       actualizarRenglones(renglonesSinElEliminado);
     }
   }
@@ -171,7 +171,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
         <PasajerosYLugares renglones={renglones} />
         {renglones.map(
-          (renglon): ReactElement => {
+          (renglon: RenglonData): ReactElement => {
             return (
               <Renglon
                 key={`${renglon.indice}`}
