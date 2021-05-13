@@ -1,3 +1,4 @@
+import { Icon } from 'components/Icon';
 import { CamaDTO, CamaTipo } from 'interfaces/habitacion';
 import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
@@ -44,6 +45,15 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
     <div className={Estilos.contenedor}>
       <label>
         {cantidadDePasajeros} {textoPasajero} ➝ {cantidadDeLugaresReservados} {textoLugares}
+        {cantidadDePasajeros !== cantidadDeLugaresReservados ? (
+          <span className="icon-text has-text-warning">
+            <Icon faCode="exclamation-triangle" />
+          </span>
+        ) : (
+          <span className="icon-text has-text-success">
+            <Icon faCode="check-circle" />
+          </span>
+        )}
       </label>
     </div>
   );

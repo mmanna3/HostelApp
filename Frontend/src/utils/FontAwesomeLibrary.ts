@@ -1,7 +1,9 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCalendar,
+  faCheckCircle,
   faEnvelope,
+  faExclamationTriangle,
   faGlobe,
   faIdCard,
   faInfo,
@@ -18,5 +20,7 @@ library.add(faPhone);
 library.add(faIdCard);
 library.add(faEnvelope);
 library.add(faUser);
+library.add(faCheckCircle);
+library.add(faExclamationTriangle);
 // library.add(faUsers);
 // library.add(faUserFriends);
