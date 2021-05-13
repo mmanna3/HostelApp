@@ -66,7 +66,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     // eslint-disable-next-line
   }, [habitaciones]);
 
-  function hide(): void {
+  function ocultar(): void {
     onHide();
     dispatch(reiniciar());
     reiniciarModal();
@@ -114,8 +114,8 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   function eliminarRenglon(indice: number): void {
     if (renglones.length > 1) {
-      var renglonSinElBorrado = renglones.filter((renglon): any => renglon.indice !== indice);
-      actualizarRenglones(renglonSinElBorrado);
+      var renglonesSinElEliminado = renglones.filter((renglon): any => renglon.indice !== indice);
+      actualizarRenglones(renglonesSinElEliminado);
     }
   }
 
@@ -126,8 +126,8 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   ];
 
   return (
-    <ModalForm isVisible={isVisible} onHide={hide} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
-      <Header title="Nueva reserva" onHide={hide} />
+    <ModalForm isVisible={isVisible} onHide={ocultar} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
+      <Header title="Nueva reserva" onHide={ocultar} />
       <CardBody minHeight="460px">
         <ValidationSummary errors={errores} />
 
@@ -185,7 +185,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
       </CardBody>
-      <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />
+      <FooterAcceptCancel onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };
