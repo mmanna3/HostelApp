@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Huesped;
 using Api.Controllers.Mapping;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

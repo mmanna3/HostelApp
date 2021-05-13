@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using Api.Core.Entidades;
+using Api.Controllers.DTOs.Huesped;
+using Api.Core.Enums;
 
-namespace Api.Controllers.DTOs
+namespace Api.Controllers.DTOs.Reserva
 {
-    public class ReservaDTO
+	public class ReservaDTO
     {
         public int Id { get; set; }
         public ReservaEstadoEnum Estado { get; set; }

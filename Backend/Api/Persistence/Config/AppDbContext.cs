@@ -1,9 +1,10 @@
 ﻿using Api.Core.Entidades;
+using Api.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Persistence.Config
 {
-    public class AppDbContext : DbContext
+	public class AppDbContext : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Habitacion> Habitaciones { get; set; }

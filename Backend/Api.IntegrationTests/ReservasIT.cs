@@ -6,14 +6,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
+using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Reserva;
 using Api.Core;
-using Api.Core.Entidades;
+using Api.Core.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Api.IntegrationTests
 {
-    public class ReservasIT : BaseAutenticadoIT
+	public class ReservasIT : BaseAutenticadoIT
     {
 	    private const string ENDPOINT_HABITACIONES = "/api/habitaciones";
 

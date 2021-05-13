@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 
 namespace Api.IntegrationTests

@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Huesped;
 using Api.Core.Entidades;
 using System;
 using System.Collections.Generic;

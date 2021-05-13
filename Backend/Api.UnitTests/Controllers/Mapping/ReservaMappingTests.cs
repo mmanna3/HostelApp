@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Reserva;
 using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Api.UnitTests.Controllers.Mapping
 {
-    public class ReservaMappingTests
+	public class ReservaMappingTests
     {
 	    private ReservaDTO _unaReservaDto;
         private IList<Reserva> _unaListaDeReservas;

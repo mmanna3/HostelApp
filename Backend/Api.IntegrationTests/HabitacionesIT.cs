@@ -4,15 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
+using Api.Controllers.DTOs.Huesped;
 using Api.Core;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Api.IntegrationTests
 {
-    public class HabitacionesIT : BaseAutenticadoIT
+	public class HabitacionesIT : BaseAutenticadoIT
     {
         private const string ENDPOINT = "/api/habitaciones";
 

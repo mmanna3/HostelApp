@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Api.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Core.Entidades
 {
-    public class Reserva : EntidadConId
+	public class Reserva : EntidadConId
     {
         [Required]
         public ReservaEstadoEnum Estado { get; set; }

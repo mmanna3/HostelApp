@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Reserva;
 using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;

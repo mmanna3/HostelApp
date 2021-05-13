@@ -1,0 +1,17 @@
+{
+  "include": ["./../Backend/Api/Controllers/DTOs/**/*.cs", "./../Backend/Api/Core/Enums/**/*.cs"],
+  "output": "./api.d.ts",
+  "camelCase": true,
+  "camelCaseEnums": true,
+  "camelCaseOptions": {
+    "pascalCase": false,
+    "preserveConsecutiveUppercase": true,
+    "locale": "en-US"
+  },
+  "numericEnums": true,
+  "stringLiteralTypesInsteadOfEnums": false,
+  "customTypeTranslations": {
+    "ProductName": "string",
+    "ProductNumber": "string"
+  }
+}

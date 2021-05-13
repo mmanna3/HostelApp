@@ -1,4 +1,4 @@
-﻿namespace Api.Controllers.DTOs
+﻿namespace Api.Controllers.DTOs.Reserva
 {
     public class CheckoutsDeHoyDTO
     {

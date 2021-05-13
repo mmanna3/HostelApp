@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Api.Controllers.DTOs
+namespace Api.Controllers.DTOs.Huesped
 {
 	public class DatosMinimosDeHuespedDTO
 	{

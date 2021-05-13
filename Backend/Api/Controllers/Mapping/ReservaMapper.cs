@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Entidades;
 
@@ -35,9 +36,9 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		private static ReservasDelPeriodoDTO.ReservaResumenDTO Map(Reserva entidad, DateTime primeraNoche, DateTime ultimaNoche)
+		private static ReservaResumenDTO Map(Reserva entidad, DateTime primeraNoche, DateTime ultimaNoche)
 		{
-			return new ReservasDelPeriodoDTO.ReservaResumenDTO
+			return new ReservaResumenDTO
 			{
 				Id = entidad.Id,
 				NombreAbreviadoDelHuesped = entidad.ObtenerNombreAbreviadoDelHuesped(),

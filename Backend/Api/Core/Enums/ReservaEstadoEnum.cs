@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 
-namespace Api.Core.Entidades
+namespace Api.Core.Enums
 {
 	public enum ReservaEstadoEnum
 	{
 		[Description("Check-in pendiente")]
 		CheckinPendiente = 1,
-		
+
 		[Description("In-House")]
 		InHouse = 2,
 
