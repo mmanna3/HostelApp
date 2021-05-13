@@ -1,13 +1,13 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
-import { paisesParaAutocomplete } from 'pantallas/reservas/crear/CabeceraHuesped/ListaDePaises';
+import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelHuesped/ListaDePaises';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
-const CabeceraHuesped = (): ReactElement => {
+const DatosDelHuesped = (): ReactElement => {
   const dispatch = useDispatch();
   const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(paisesParaAutocomplete[8]);
   const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
@@ -75,11 +75,17 @@ const CabeceraHuesped = (): ReactElement => {
           />
         </div>
         <div className="column">
-          <Input name="DatosMinimosDeHuesped.Email" defaultValue={datos?.email} placeholder="Email" faIconCode="envelope" />
+          <Input
+            name="DatosMinimosDeHuesped.Email"
+            defaultValue={datos?.email}
+            type="email"
+            placeholder="Email"
+            faIconCode="envelope"
+          />
         </div>
       </div>
     </>
   );
 };
 
-export default CabeceraHuesped;
+export default DatosDelHuesped;

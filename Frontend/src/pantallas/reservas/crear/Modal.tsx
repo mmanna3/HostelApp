@@ -11,7 +11,7 @@ import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
-import CabeceraHuesped from './CabeceraHuesped/Componente';
+import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
 import Estilos from './Modal.module.scss';
 import Renglon from './Renglon/Renglon';
 import { RenglonData } from './Renglon/RenglonDataClass';
@@ -164,7 +164,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
-        <CabeceraHuesped />
+        <DatosDelHuesped />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
 
