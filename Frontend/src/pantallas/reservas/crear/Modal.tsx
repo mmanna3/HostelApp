@@ -71,11 +71,19 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   useEffect((): void => {
     const camasDisponibles = renglones[0].camasDisponibles;
+    const habitacionesDisponibles = renglones[0].habitacionesDisponibles;
     let lugaresReservados = 0;
 
     renglones.forEach((renglon): void => {
-      var cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
-      cama?.tipo === CamaTipo.Matrimonial ? (lugaresReservados = lugaresReservados + 2) : lugaresReservados++;
+      if (!renglon.habitacionSeleccionada?.esPrivada) {
+        let cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
+        cama?.tipo === CamaTipo.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
+      } else {
+        let habitacion = habitacionesDisponibles.find(
+          (hab: IHabitacionParaReservaDTO): boolean => hab.id === renglon.habitacionSeleccionada?.id
+        );
+        if (habitacion) lugaresReservados += habitacion.cantidadDeLugaresLibres;
+      }
     });
 
     actualizarCantidadDeLugaresReservados(lugaresReservados);
