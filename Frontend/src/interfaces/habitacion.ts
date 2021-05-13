@@ -1,8 +1,8 @@
 export enum CamaTipo {
-  Individual = 'Individual',
-  Matrimonial = 'Matrimonial',
-  CuchetaArriba = 'Cucheta Arriba',
-  CuchetaAbajo = 'Cucheta Abajo',
+  Individual = 1,
+  Matrimonial = 2,
+  CuchetaArriba = 3,
+  CuchetaAbajo = 4,
 }
 export interface CamaDTO {
   id: number;

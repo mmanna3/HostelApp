@@ -4,12 +4,12 @@ import { IHabitacionParaReservaDTO } from '../../../../src/interfaces/reserva';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 describe('Cabecera con datos del huésped', (): void => {
-//   it('Antes de darle click a buscar, los campos están bloqueados', (): void => {
-//     cy.get('[name="DatosMinimosDeHuesped.NombreCompleto"]').should('have.attr', 'readonly');
-//     cy.get('[name="DatosMinimosDeHuesped.Telefono"]').should('have.attr', 'readonly');
-//     cy.get('[name="DatosMinimosDeHuesped.Email"]').should('have.attr', 'readonly');
-//   });
-// });
+  it.skip('Antes de darle click a buscar, los campos están bloqueados', (): void => {
+    cy.get('[name="DatosMinimosDeHuesped.NombreCompleto"]').should('have.attr', 'readonly');
+    cy.get('[name="DatosMinimosDeHuesped.Telefono"]').should('have.attr', 'readonly');
+    cy.get('[name="DatosMinimosDeHuesped.Email"]').should('have.attr', 'readonly');
+  });
+});
 
 before((): void => {
   cy.login();

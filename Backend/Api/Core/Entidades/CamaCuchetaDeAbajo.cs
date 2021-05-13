@@ -1,10 +1,12 @@
-﻿namespace Api.Core.Entidades
+﻿using Api.Core.Enums;
+
+namespace Api.Core.Entidades
 {
     public class CamaCuchetaDeAbajo : Cama
     {
-        public override string Tipo()
+        public override CamaTipoEnum Tipo()
         {
-            return "Cucheta abajo";
+            return CamaTipoEnum.CuchetaAbajo;
         }
     }
 }

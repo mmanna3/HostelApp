@@ -1,4 +1,6 @@
-﻿namespace Api.Controllers.DTOs.Habitacion
+﻿using Api.Core.Enums;
+
+namespace Api.Controllers.DTOs.Habitacion
 {
     public class CamaDTO
     {
@@ -7,6 +9,6 @@
         [YKNStringLength(Maximo = 10)]
         public string Nombre { get; set; }
 
-        public string Tipo { get; set; }
+        public CamaTipoEnum Tipo { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Api.Core.Enums;
 
 namespace Api.Core.Entidades
 {
@@ -11,9 +12,9 @@ namespace Api.Core.Entidades
         {
             return 2;
         }
-        public override string Tipo()
+        public override CamaTipoEnum Tipo()
         {
-            return "Matrimonial";
+            return CamaTipoEnum.Matrimonial;
         }
     }
 }

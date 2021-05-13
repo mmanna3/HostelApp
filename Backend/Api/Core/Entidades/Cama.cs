@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Api.Core.Enums;
 
 namespace Api.Core.Entidades
 {
@@ -40,6 +41,6 @@ namespace Api.Core.Entidades
             return ReservaCamas?.Select(x => x.Reserva).Any(x => x.PrimeraNoche >= desde && x.UltimaNoche <= hasta) ?? false;
         }
 
-        public abstract string Tipo();
+        public abstract CamaTipoEnum Tipo();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Api.Core.Enums;
 
 namespace Api.Core.Entidades
 {
@@ -8,9 +9,9 @@ namespace Api.Core.Entidades
         [Column("Individual_HabitacionId")]
         public int HabitacionId { get; set; }
         public Habitacion Habitacion { get; set; }
-        public override string Tipo()
+        public override CamaTipoEnum Tipo()
         {
-            return "Individual";
+            return CamaTipoEnum.Individual;
         }
     }
 }

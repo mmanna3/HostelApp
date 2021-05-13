@@ -19,7 +19,7 @@ namespace Api.IntegrationTests
     {
 	    private const string ENDPOINT_HABITACIONES = "/api/habitaciones";
 
-	    private const string CAMA_TIPO = "Individual";
+	    private const CamaTipoEnum CAMA_TIPO = CamaTipoEnum.Individual;
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
         private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
