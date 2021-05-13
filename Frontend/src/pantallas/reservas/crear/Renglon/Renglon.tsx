@@ -9,9 +9,9 @@ import { RenglonData } from './RenglonDataClass';
 interface IParams {
   renglon: RenglonData;
   estado: ESTADO;
-  onHabitacionChange: (e: any) => any;
-  onCamaChange: (e: any) => any;
-  eliminar: (id: number) => any;
+  onHabitacionChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onCamaChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  eliminar: (id: number) => void;
 }
 
 const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }: IParams): ReactElement => {

@@ -106,12 +106,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     }
   }
 
-  function onCamaChange(indice: number, id: number): void {
+  function onCamaChange(indice: number, id: string): void {
     var renglonesCopia = renglones;
 
     for (let i = 0; i < renglones.length; i++)
       if (renglonesCopia[i].indice === indice) {
-        renglonesCopia[i].camaSeleccionadaId = id.toString();
+        renglonesCopia[i].camaSeleccionadaId = id;
         break;
       }
 
@@ -130,7 +130,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   function eliminarRenglon(indice: number): void {
     if (renglones.length > 1) {
-      var renglonesSinElEliminado = renglones.filter((renglon): any => renglon.indice !== indice);
+      var renglonesSinElEliminado = renglones.filter((renglon): boolean => renglon.indice !== indice);
       actualizarRenglones(renglonesSinElEliminado);
     }
   }
@@ -191,8 +191,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
                 key={`${renglon.indice}`}
                 renglon={renglon}
                 estado={habitacionesEstado}
-                onHabitacionChange={(e: any): void => onHabitacionChange(renglon.indice, e.target.value)}
-                onCamaChange={(e: any): void => onCamaChange(renglon.indice, e.target.value)}
+                onHabitacionChange={(e: React.ChangeEvent<HTMLSelectElement>): void =>
+                  onHabitacionChange(renglon.indice, e.target.value)
+                }
+                onCamaChange={(e: React.ChangeEvent<HTMLSelectElement>): void =>
+                  onCamaChange(renglon.indice, e.target.value)
+                }
                 eliminar={eliminarRenglon}
               />
             );
