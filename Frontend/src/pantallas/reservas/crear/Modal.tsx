@@ -5,7 +5,6 @@ import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import { CamaDTO, CamaTipo } from 'interfaces/habitacion';
 import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +14,7 @@ import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
 import Estilos from './Modal.module.scss';
+import PasajerosVsLugares from './PasajerosVsLugares';
 import Renglon from './Renglon/Renglon';
 import { RenglonData } from './Renglon/RenglonDataClass';
 
@@ -30,9 +30,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   const [modalKey, reiniciarModal] = useCounterKey();
   const [desdeHasta, actualizarDesdeHasta] = useState([hoy(), maniana()]);
   const [cantidadDeNoches, actualizarCantidadDeNoches] = useState(1);
-  const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
   const [renglones, actualizarRenglones] = useState([new RenglonData(0, [], [])]);
-
   const dispatch = useDispatch();
 
   function onSuccess(): void {
@@ -68,26 +66,6 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     //PORQUE QUIERE QUE RENGLÓN SEA DEPENDENCIA Y SE ROMPE TODO SI LO PONGO
     // eslint-disable-next-line
   }, [habitaciones]);
-
-  useEffect((): void => {
-    const camasDisponibles = renglones[0].camasDisponibles;
-    const habitacionesDisponibles = renglones[0].habitacionesDisponibles;
-    let lugaresReservados = 0;
-
-    renglones.forEach((renglon): void => {
-      if (!renglon.habitacionSeleccionada?.esPrivada) {
-        let cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
-        cama?.tipo === CamaTipo.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
-      } else {
-        let habitacion = habitacionesDisponibles.find(
-          (hab: IHabitacionParaReservaDTO): boolean => hab.id === renglon.habitacionSeleccionada?.id
-        );
-        if (habitacion) lugaresReservados += habitacion.cantidadDeLugaresLibres;
-      }
-    });
-
-    actualizarCantidadDeLugaresReservados(lugaresReservados);
-  }, [renglones]);
 
   function ocultar(): void {
     onHide();
@@ -191,7 +169,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <DatosDelHuesped />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
-        <div>A{cantidadDeLugaresReservados}</div>
+        <PasajerosVsLugares renglones={renglones} key={renglones[0].indice} />
         {renglones.map(
           (renglon): ReactElement => {
             return (
