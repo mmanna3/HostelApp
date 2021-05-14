@@ -1,29 +1,32 @@
-import { IHabitacionParaTablaReservas } from 'pantallas/reservas/utilidades';
 import { CamaDTO, HabitacionParaReservaDTO } from 'store/api/DTOs';
 
-export class RenglonData {
-  public habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas>;
-  public camaSeleccionadaId: Nullable<string>;
-  public indice: number;
-  public habitacionesDisponibles: HabitacionParaReservaDTO[];
-  public camasDisponibles: CamaDTO[];
-
-  public constructor(
-    indice: number,
-    habitacionesDisponibles: HabitacionParaReservaDTO[],
-    camasDisponibles: CamaDTO[],
-    habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
-    camaSeleccionadaId: Nullable<string> = null
-  ) {
-    this.habitacionSeleccionada = habitacionSeleccionada;
-    this.indice = indice;
-    this.habitacionesDisponibles = habitacionesDisponibles;
-    this.camasDisponibles = camasDisponibles;
-    this.camaSeleccionadaId = null; //No sé si esto está súper bien
-
-    if (camaSeleccionadaId) this.camaSeleccionadaId = camaSeleccionadaId;
-    else if (camasDisponibles.length > 0) {
-      this.camaSeleccionadaId = camasDisponibles[0].id.toString();
-    }
-  }
+export interface RenglonData {
+  habitacionSeleccionada: HabitacionParaReservaDTO;
+  camaSeleccionadaId: Nullable<string>;
+  indice: number;
+  habitacionesDisponibles: HabitacionParaReservaDTO[];
+  camasDisponibles: CamaDTO[];
 }
+
+export const crearRenglonData = (
+  indice: number,
+  habitacionesDisponibles: HabitacionParaReservaDTO[],
+  habitacionSeleccionada?: HabitacionParaReservaDTO
+): RenglonData => {
+  let _habitacionSeleccionada = habitacionSeleccionada ?? habitacionesDisponibles[0];
+  let camasDisponibles: CamaDTO[] = [];
+  let camaSeleccionadaId = null;
+
+  if (!_habitacionSeleccionada.esPrivada && _habitacionSeleccionada.camas.length > 0) {
+    camasDisponibles = _habitacionSeleccionada.camas;
+    camaSeleccionadaId = camasDisponibles[0].id.toString();
+  }
+
+  return {
+    indice: indice,
+    camaSeleccionadaId: camaSeleccionadaId,
+    habitacionSeleccionada: _habitacionSeleccionada,
+    habitacionesDisponibles: habitacionesDisponibles,
+    camasDisponibles: camasDisponibles,
+  };
+};

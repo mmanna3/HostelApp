@@ -10,9 +10,6 @@ interface IParams {
 }
 
 const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
-  //A veces esta línea de abajo no anda y cuando agrego una cama no re-renderiza (pero creo que es un problema del Modal)
-  const _renglones = [...renglones]; // Hago esto para que el useEffect vuelva a renderizar con cada cambio que haya en renglones
-
   const [cantidadDeLugaresReservados, actualizarCantidadDeLugaresReservados] = useState(0);
   const { watch } = useFormContext();
   const cantidadDePasajeros = parseInt(watch('cantidadDePasajeros'));
@@ -27,24 +24,28 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
   }, [cantidadDeLugaresReservados, cantidadDePasajeros]);
 
   useEffect((): void => {
-    const camasDisponibles = _renglones[0].camasDisponibles;
-    const habitacionesDisponibles = _renglones[0].habitacionesDisponibles;
+    console.log(renglones);
     let lugaresReservados = 0;
 
-    _renglones.forEach((renglon): void => {
-      if (!renglon.habitacionSeleccionada?.esPrivada) {
-        let cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
-        if (cama) cama.tipo === CamaTipoEnum.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
-      } else {
-        let habitacion = habitacionesDisponibles.find(
-          (hab: HabitacionParaReservaDTO): boolean => hab.id === renglon.habitacionSeleccionada?.id
-        );
-        if (habitacion) lugaresReservados += habitacion.cantidadDeLugaresLibres;
-      }
-    });
+    if (renglones.length > 0) {
+      const habitacionesDisponibles = renglones[0].habitacionesDisponibles;
 
+      renglones.forEach((renglon): void => {
+        if (!renglon.habitacionSeleccionada.esPrivada) {
+          let cama = renglon.camasDisponibles.find(
+            (cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId
+          );
+          if (cama) cama.tipo === CamaTipoEnum.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
+        } else {
+          let habitacion = habitacionesDisponibles.find(
+            (hab: HabitacionParaReservaDTO): boolean => hab.id.toString() === renglon.habitacionSeleccionada.id.toString()
+          );
+          if (habitacion) lugaresReservados += habitacion.cantidadDeLugaresLibres;
+        }
+      });
+    }
     actualizarCantidadDeLugaresReservados(lugaresReservados);
-  }, [_renglones]);
+  }, [renglones]);
 
   return (
     <div className={Estilos.contenedor}>
