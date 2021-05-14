@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { esHoy, nombreAbreviadoDelDiaDeLaSemana, nombreAbreviadoDelMes } from 'utils/Fecha';
-import { calcularDiasDeReservasVisibles } from '../utils/funcionesUtiles';
+import { calcularDiasDeReservasVisibles } from '../utilidades';
 import Estilos from './EncabezadoDias.module.scss';
 
 interface IParams {

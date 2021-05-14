@@ -1,4 +1,4 @@
-import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
+import { IHabitacionParaTablaReservas, obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { Fragment, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CamaDTO } from 'store/api/DTOs';
@@ -24,7 +24,7 @@ const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: 
       return (
         <>
           <td key={cama.id} className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
-            {cama.nombre} - {cama.tipo}
+            {cama.nombre} - {obtenerTipoCamaDescripcion.get(cama.tipo)}
           </td>
           {tablaDeReservas.dias.map(
             (dia): ReactElement => (

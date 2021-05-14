@@ -1,5 +1,6 @@
 import { Icon } from 'components/Icon';
 import { Input } from 'components/Input';
+import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
@@ -74,7 +75,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
                       (cama): ReactElement => {
                         return (
                           <option key={cama.id} value={cama.id}>
-                            {cama.tipo} - {cama.nombre}
+                            {obtenerTipoCamaDescripcion.get(cama.tipo)} - {cama.nombre}
                           </option>
                         );
                       }

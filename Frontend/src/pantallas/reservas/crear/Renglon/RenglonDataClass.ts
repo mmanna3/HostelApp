@@ -1,4 +1,4 @@
-import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/utilidades';
 import { CamaDTO, HabitacionParaReservaDTO } from 'store/api/DTOs';
 
 export class RenglonData {

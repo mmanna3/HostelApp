@@ -4,7 +4,7 @@ import api from 'store/api/api';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Cabecera from './Cabecera/Cabecera';
-import Crear from './crear/Modal';
+import Crear from './crear/Crear';
 import Estilos from './Page.module.scss';
 import Tabla from './Tabla/Tabla';
 

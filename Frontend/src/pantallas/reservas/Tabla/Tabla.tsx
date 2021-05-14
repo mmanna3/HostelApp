@@ -4,12 +4,12 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HabitacionDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'store/api/DTOs';
 import { inicializarTabla, insertarReserva } from 'store/app/tablaDeReservas/slice';
-import { IHabitacionParaTablaReservas } from '../interfaces';
+import { IHabitacionParaTablaReservas } from '../utilidades';
 import Cuerpo from './Cuerpo/Cuerpo';
 import EncabezadoDias from './EncabezadoDias/EncabezadoDias';
 import FooterReferencias from './FooterReferencias/FooterReferencias';
 import Estilos from './Tabla.module.scss';
-import { calcularCamasIdsYHabitacionesConCamasUnificadas, calcularDiasDeReservasVisibles } from './utils/funcionesUtiles';
+import { calcularCamasIdsYHabitacionesConCamasUnificadas, calcularDiasDeReservasVisibles } from './utilidades';
 
 interface IParams {
   datos: ReservasDelPeriodoDTO;

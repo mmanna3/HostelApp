@@ -1,4 +1,4 @@
-import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/utilidades';
 import { CamaDTO, HabitacionDTO } from 'store/api/DTOs';
 import { convertirADate, sumarDiasALaFecha } from 'utils/Fecha';
 
