@@ -57,7 +57,7 @@
   "scripts": {
     "start": "react-scripts start",
     "frescura": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./../Scripts/InstalacionLimpiaDelFrontend.ps1",
-    "generar-dtos": "csharp-models-to-typescript --config=csharp-models-to-typescript.json",
+    "generar-dtos": "csharp-models-to-typescript --config=generarDTOs.json",
     "build": "react-scripts build",
     "cy-run": "cypress run",
     "test": "react-scripts test --env=jsdom",

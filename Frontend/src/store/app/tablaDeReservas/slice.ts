@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ReservaResumenDTO } from 'interfaces/reserva';
 import {
   ClaseCssEstaHovereadaONo,
   crearCeldaData,
   crearCeldaDataVacia,
   ICeldaData,
 } from 'pantallas/reservas/Tabla/Celda/interfaces';
+import { ReservaResumenDTO } from 'store/api/DTOs';
 import { convertirADate, convertirAString, sumarDiasALaFecha } from 'utils/Fecha';
 
 export const initialState: IInitialState = {

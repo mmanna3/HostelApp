@@ -1,8 +1,8 @@
-import { ReservaEstadoEnum } from 'interfaces/reserva';
 import * as React from 'react';
 import { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
+import { ReservaEstadoEnum } from 'store/api/DTOs';
 import { seleccionarTodasLasCeldasDeLaReserva, tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import estilos from './Celda.module.scss';
 import { crearCeldaDataVacia, EstadoSinReservar, ICeldaData } from './interfaces';

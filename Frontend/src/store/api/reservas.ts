@@ -1,4 +1,4 @@
-import { CheckoutsDeHoyDTO, ReservaDTO, ReservasDelPeriodoDTO } from 'interfaces/reserva';
+import { CheckoutsDeHoyDTO, ReservaDTO, ReservasDelPeriodoDTO } from 'store/api/DTOs';
 import {
   generarSliceHttpGet,
   generarSliceHttpPost,

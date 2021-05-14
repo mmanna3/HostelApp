@@ -1,6 +1,6 @@
 {
   "include": ["./../Backend/Api/Controllers/DTOs/**/*.cs", "./../Backend/Api/Core/Enums/**/*.cs"],
-  "output": "./api.d.ts",
+  "output": "./src/store/api/DTOs.ts",
   "camelCase": true,
   "camelCaseEnums": true,
   "camelCaseOptions": {

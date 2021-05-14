@@ -1,5 +1,5 @@
-import { IApiSliceInfo, generarSliceHttpPost } from './utils/generadorDeSlicesParaRequest';
-import { AutenticarDTO } from 'interfaces/usuario';
+import { AutenticarDTO } from 'store/api/DTOs';
+import { generarSliceHttpPost, IApiSliceInfo } from './utils/generadorDeSlicesParaRequest';
 
 const autenticarSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'autenticarUsuario',

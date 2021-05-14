@@ -1,5 +1,5 @@
-import { IApiSliceInfo, generarSliceHttpGet, generarSliceHttpPost } from './utils/generadorDeSlicesParaRequest';
-import { HuespedDTO } from 'interfaces/huesped';
+import { HuespedDTO } from 'store/api/DTOs';
+import { generarSliceHttpGet, generarSliceHttpPost, IApiSliceInfo } from './utils/generadorDeSlicesParaRequest';
 
 const listarSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'huespedes',

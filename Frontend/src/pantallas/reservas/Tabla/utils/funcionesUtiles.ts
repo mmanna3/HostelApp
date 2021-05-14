@@ -1,5 +1,5 @@
-import { CamaDTO, HabitacionDTO } from 'interfaces/habitacion';
-import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
+import { CamaDTO, HabitacionDTO } from 'store/api/DTOs';
 import { convertirADate, sumarDiasALaFecha } from 'utils/Fecha';
 
 export function calcularDiasDeReservasVisibles(fechaDesde: string, fechaHasta: string): Date[] {

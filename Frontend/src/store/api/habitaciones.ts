@@ -1,5 +1,4 @@
-import { HabitacionDTO } from 'interfaces/habitacion';
-import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
+import { HabitacionDTO, HabitacionParaReservaDTO } from 'store/api/DTOs';
 import {
   generarSliceHttpGet,
   generarSliceHttpPost,
@@ -38,7 +37,7 @@ const crearSliceInfo: IApiSliceInfo = {
 
 const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
 const listarConLugaresLibres = {
-  ...generarSliceHttpGet<IHabitacionParaReservaDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
+  ...generarSliceHttpGet<HabitacionParaReservaDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
 };
 const obtenerPorId = { ...generarSliceHttpGet<HabitacionDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 const crear = {

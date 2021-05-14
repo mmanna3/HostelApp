@@ -5,10 +5,10 @@ import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import { IHabitacionParaReservaDTO, ReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
+import { HabitacionParaReservaDTO, ReservaDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirAString, hoy, maniana, restarFechas } from 'utils/Fecha';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
@@ -75,7 +75,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   }
 
   function onHabitacionChange(indice: number, id: string): void {
-    var habitacion = habitaciones.find((hab: IHabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
+    var habitacion = habitaciones.find((hab: HabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
 
     if (habitacion) {
       // Innecesario if pero bueno

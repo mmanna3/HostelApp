@@ -1,4 +1,4 @@
-import { ReservaEstadoEnum, ReservaResumenDTO } from 'interfaces/reserva';
+import { ReservaEstadoEnum, ReservaResumenDTO } from 'store/api/DTOs';
 import estilo from './Celda.module.scss';
 
 export const ClaseCssEstaHovereadaONo = {

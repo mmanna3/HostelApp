@@ -1,4 +1,4 @@
-import { HabitacionDTO, CamaTipo } from '../../../src/interfaces/habitacion';
+import { CamaTipo, HabitacionDTO } from '../../../src/store/api/DTOs';
 
 const habitaciones: HabitacionDTO[] = [
   {

@@ -1,7 +1,7 @@
-import { CamaDTO } from 'interfaces/habitacion';
-import { IHabitacionParaTablaReservas } from 'interfaces/reserva';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
 import React, { Fragment, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { CamaDTO } from 'store/api/DTOs';
 import { tablaDeReservasSelector } from 'store/app/tablaDeReservas/slice';
 import { obtenerDia } from 'utils/Fecha';
 import Celda from '../Celda/Celda';

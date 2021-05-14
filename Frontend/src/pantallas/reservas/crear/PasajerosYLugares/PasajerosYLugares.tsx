@@ -1,8 +1,7 @@
 import { Icon } from 'components/Icon';
-import { CamaDTO, CamaTipo } from 'interfaces/habitacion';
-import { IHabitacionParaReservaDTO } from 'interfaces/reserva';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { CamaDTO, CamaTipoEnum, HabitacionParaReservaDTO } from 'store/api/DTOs';
 import { RenglonData } from '../Renglon/RenglonDataClass';
 import Estilos from './PasajerosYLugares.module.scss';
 
@@ -35,10 +34,10 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
     _renglones.forEach((renglon): void => {
       if (!renglon.habitacionSeleccionada?.esPrivada) {
         let cama = camasDisponibles.find((cama: CamaDTO): boolean => cama.id.toString() === renglon.camaSeleccionadaId);
-        if (cama) cama.tipo === CamaTipo.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
+        if (cama) cama.tipo === CamaTipoEnum.Matrimonial ? (lugaresReservados += 2) : lugaresReservados++;
       } else {
         let habitacion = habitacionesDisponibles.find(
-          (hab: IHabitacionParaReservaDTO): boolean => hab.id === renglon.habitacionSeleccionada?.id
+          (hab: HabitacionParaReservaDTO): boolean => hab.id === renglon.habitacionSeleccionada?.id
         );
         if (habitacion) lugaresReservados += habitacion.cantidadDeLugaresLibres;
       }

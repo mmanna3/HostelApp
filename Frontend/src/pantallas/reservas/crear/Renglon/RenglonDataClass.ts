@@ -1,16 +1,16 @@
-import { CamaDTO } from 'interfaces/habitacion';
-import { IHabitacionParaReservaDTO, IHabitacionParaTablaReservas } from 'interfaces/reserva';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/interfaces';
+import { CamaDTO, HabitacionParaReservaDTO } from 'store/api/DTOs';
 
 export class RenglonData {
   public habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas>;
   public camaSeleccionadaId: Nullable<string>;
   public indice: number;
-  public habitacionesDisponibles: IHabitacionParaReservaDTO[];
+  public habitacionesDisponibles: HabitacionParaReservaDTO[];
   public camasDisponibles: CamaDTO[];
 
   public constructor(
     indice: number,
-    habitacionesDisponibles: IHabitacionParaReservaDTO[],
+    habitacionesDisponibles: HabitacionParaReservaDTO[],
     camasDisponibles: CamaDTO[],
     habitacionSeleccionada: Nullable<IHabitacionParaTablaReservas> = null,
     camaSeleccionadaId: Nullable<string> = null

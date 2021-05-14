@@ -1,9 +1,9 @@
 import { Icon } from 'components/Icon';
 import { Body, Modal } from 'components/Modal';
-import { ReservaDTO, ReservaEstadoEnum } from 'interfaces/reserva';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
+import { ReservaDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Estilos from './Detalle.module.scss';

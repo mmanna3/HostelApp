@@ -1,5 +1,5 @@
 import 'cypress-localstorage-commands';
-import { ReservasDelPeriodoDTO } from '../../../../src/interfaces/reserva';
+import { ReservasDelPeriodoDTO } from '../../../../src/store/api/DTOs';
 import * as fechaUtils from '../../../../src/utils/Fecha';
 import habitaciones from '../../../mocks/habitaciones/2-habitaciones-5-camas';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
