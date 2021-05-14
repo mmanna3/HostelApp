@@ -5,7 +5,7 @@ import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiReque
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Cabecera from './Cabecera/Cabecera';
 import Crear from './crear/Crear';
-import Estilos from './Page.module.scss';
+import Estilos from './PantallaReservas.module.scss';
 import Tabla from './Tabla/Tabla';
 
 const ReservasPage = (): ReactElement => {
