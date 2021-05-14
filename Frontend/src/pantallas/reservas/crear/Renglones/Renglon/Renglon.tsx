@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import Estilos from './Renglon.module.scss';
-import { RenglonData } from './RenglonDataClass';
+import { RenglonData } from './RenglonData';
 
 interface IParams {
   renglon: RenglonData;

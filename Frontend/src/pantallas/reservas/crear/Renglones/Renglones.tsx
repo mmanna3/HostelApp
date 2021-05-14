@@ -5,26 +5,21 @@ import api from 'store/api/api';
 import { HabitacionParaReservaDTO } from 'store/api/DTOs';
 import PasajerosYLugares from './PasajerosYLugares/PasajerosYLugares';
 import Renglon from './Renglon/Renglon';
-import { crearRenglonData, RenglonData } from './Renglon/RenglonDataClass';
+import { crearRenglonData, RenglonData } from './Renglon/RenglonData';
 
 const Renglones = (): ReactElement => {
   const [renglones, actualizarRenglones] = useState<RenglonData[]>([]);
-
-  const habitacionesSelector = useSelector(api.habitaciones.listarConLugaresLibres.selector);
-  const habitaciones = habitacionesSelector.datos;
-  const habitacionesEstado = habitacionesSelector.estado;
+  const { datos: habitacionesDisponibles, estado } = useSelector(api.habitaciones.listarConLugaresLibres.selector);
 
   useEffect((): void => {
-    if (habitaciones.length > 0) actualizarRenglones([crearRenglonData(0, habitaciones)]);
-    //PORQUE QUIERE QUE RENGLÓN SEA DEPENDENCIA Y SE ROMPE TODO SI LO PONGO
-    // eslint-disable-next-line
-  }, [habitaciones]);
+    if (habitacionesDisponibles.length > 0) actualizarRenglones([crearRenglonData(0, habitacionesDisponibles)]);
+  }, [habitacionesDisponibles]);
 
   function onHabitacionChange(indice: number, id: string): void {
     let renglonesCopia = renglones.map(
       (renglon): RenglonData => {
         if (renglon.indice === indice) {
-          let habitacion = habitaciones.find((hab: HabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
+          let habitacion = habitacionesDisponibles.find((hab: HabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
           return crearRenglonData(indice, renglon.habitacionesDisponibles, habitacion);
         } else return renglon;
       }
@@ -43,22 +38,19 @@ const Renglones = (): ReactElement => {
       }
 
     actualizarRenglones([...renglonesCopia]);
-    // calcularLugaresReservados();
   }
 
   const agregarRenglon = (): void => {
     let ultimoRenglon = renglones.slice(-1).pop();
-    let proximoIndice = 0;
-    if (ultimoRenglon) proximoIndice = ultimoRenglon.indice + 1;
-    // Hago esto porque eslint dice que ultimoRenglon puede ser undefined, tiene razón, pero no debería serlo nunca
-
-    actualizarRenglones([...renglones, crearRenglonData(proximoIndice, habitaciones)]);
+    if (ultimoRenglon) {
+      actualizarRenglones([...renglones, crearRenglonData(ultimoRenglon.indice + 1, habitacionesDisponibles)]);
+    }
   };
 
   function eliminarRenglon(indice: number): void {
     if (renglones.length > 1) {
       let renglonesSinElEliminado = renglones.filter((renglon: RenglonData): boolean => renglon.indice !== indice);
-      actualizarRenglones(renglonesSinElEliminado);
+      actualizarRenglones([...renglonesSinElEliminado]);
     }
   }
   return (
@@ -71,7 +63,7 @@ const Renglones = (): ReactElement => {
             <Renglon
               key={`${renglon.indice}`}
               renglon={renglon}
-              estado={habitacionesEstado}
+              estado={estado}
               onHabitacionChange={(e: React.ChangeEvent<HTMLSelectElement>): void =>
                 onHabitacionChange(renglon.indice, e.target.value)
               }

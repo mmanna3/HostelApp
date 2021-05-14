@@ -2,7 +2,7 @@ import { Icon } from 'components/Icon';
 import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CamaDTO, CamaTipoEnum, HabitacionParaReservaDTO } from 'store/api/DTOs';
-import { RenglonData } from '../Renglon/RenglonDataClass';
+import { RenglonData } from '../Renglon/RenglonData';
 import Estilos from './PasajerosYLugares.module.scss';
 
 interface IParams {
