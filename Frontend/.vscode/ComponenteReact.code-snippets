@@ -1,0 +1,21 @@
+{
+  "Componente React": {
+    "prefix": ["cmp", "componente"],
+    "body": [
+      "import React, { ReactElement } from 'react';",
+      "import Estilos from './${1:nombre}.module.scss';",
+      "",
+      "interface IProps {",
+      "  algo: string;",
+      "}",
+      "",
+      "const ${1:nombre} = ({ algo }: IProps): ReactElement => {",
+      "  return <div></div>;",
+      "};",
+      "",
+      "export default ${1:nombre};",
+      ""
+    ],
+    "description": "A for loop."
+  }
+}
