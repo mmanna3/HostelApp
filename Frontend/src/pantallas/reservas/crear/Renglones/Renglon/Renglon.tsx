@@ -1,19 +1,22 @@
 import { Autocomplete, ILabelValue } from 'components/Autocomplete';
+import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 import { RenglonData } from './RenglonData';
 
 interface IParams {
   renglon: RenglonData;
   estado: ESTADO;
   onHabitacionChange: (habitacionId: string) => void;
-  onCamaChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onCamaChange: (camaId: string) => void;
   eliminar: (id: number) => void;
 }
 
 const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }: IParams): ReactElement => {
   const { register } = useFormContext();
+  const [camaKey, reiniciarCama] = useCounterKey();
 
   const habitaciones = renglon.habitacionesDisponibles.map(
     (habitacion): ILabelValue => {
@@ -22,6 +25,15 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
           habitacion.esPrivada ? '\uf023' : ''
         }`,
         value: habitacion.id.toString(),
+      };
+    }
+  );
+
+  const camas = renglon.camasDisponibles.map(
+    (cama): ILabelValue => {
+      return {
+        label: `${obtenerTipoCamaDescripcion.get(cama.tipo)} - ${cama.nombre}`,
+        value: cama.id.toString(),
       };
     }
   );
@@ -35,8 +47,22 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
           name={`habitacion[${renglon.indice}]`}
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
-          onChange={onHabitacionChange}
+          onChange={(habitacionId: string): void => {
+            onHabitacionChange(habitacionId);
+            reiniciarCama();
+          }}
           icono="door-closed"
+        />
+      </div>
+      <div className="column">
+        <Autocomplete
+          // id={`cama-renglon-${renglon.indice}`}
+          key={camaKey}
+          name={`camasIds[${renglon.indice}]`}
+          opciones={camas}
+          opcionInicial={camas[0]}
+          onChange={onCamaChange}
+          icono="bed"
         />
       </div>
     </div>

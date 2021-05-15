@@ -65,7 +65,7 @@ const Renglones = (): ReactElement => {
               renglon={renglon}
               estado={estado}
               onHabitacionChange={(habitacionId: string): void => onHabitacionChange(renglon.indice, habitacionId)}
-              onCamaChange={(e: React.ChangeEvent<HTMLSelectElement>): void => onCamaChange(renglon.indice, e.target.value)}
+              onCamaChange={(camaId: string): void => onCamaChange(renglon.indice, camaId)}
               eliminar={eliminarRenglon}
             />
           );
