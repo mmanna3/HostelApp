@@ -35,8 +35,6 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  // const onSubmit = (data: ReservaDTO): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
-
   const onSubmit = (data: ReservaDTO): void => {
     let nuevaData = data;
 

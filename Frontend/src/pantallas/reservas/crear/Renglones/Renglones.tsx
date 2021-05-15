@@ -3,9 +3,11 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { HabitacionParaReservaDTO } from 'store/api/DTOs';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import PasajerosYLugares from './PasajerosYLugares/PasajerosYLugares';
 import Renglon from './Renglon/Renglon';
 import { crearRenglonData, RenglonData } from './Renglon/RenglonData';
+import Estilos from './Renglones.module.scss';
 
 interface IProps {
   modificarRenglonesParaPost: (renglones: RenglonesParaReservaDTO) => void;
@@ -78,24 +80,31 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
   }
   return (
     <>
-      <PasajerosYLugares renglones={renglones} />
+      {estado === EstadosApiRequestEnum.cargando ? (
+        <div className={Estilos.cargando}>Cargando habitaciones y camas para la fecha seleccionada</div>
+      ) : estado === EstadosApiRequestEnum.huboError ? (
+        <div>Hubo un error</div>
+      ) : (
+        <>
+          <PasajerosYLugares renglones={renglones} />
 
-      {renglones.map(
-        (renglon: RenglonData): ReactElement => {
-          return (
-            <Renglon
-              key={`${renglon.indice}`}
-              renglon={renglon}
-              estado={estado}
-              onHabitacionChange={(habitacionId: string): void => onHabitacionChange(renglon.indice, habitacionId)}
-              onCamaChange={(camaId: string): void => onCamaChange(renglon.indice, camaId)}
-              eliminar={eliminarRenglon}
-            />
-          );
-        }
+          {renglones.map(
+            (renglon: RenglonData): ReactElement => {
+              return (
+                <Renglon
+                  key={`${renglon.indice}`}
+                  renglon={renglon}
+                  onHabitacionChange={(habitacionId: string): void => onHabitacionChange(renglon.indice, habitacionId)}
+                  onCamaChange={(camaId: string): void => onCamaChange(renglon.indice, camaId)}
+                  eliminar={eliminarRenglon}
+                />
+              );
+            }
+          )}
+
+          <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
+        </>
       )}
-
-      <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
     </>
   );
 };
