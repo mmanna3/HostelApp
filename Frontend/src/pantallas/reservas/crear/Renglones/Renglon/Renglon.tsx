@@ -1,5 +1,6 @@
 import { Autocomplete, ILabelValue } from 'components/Autocomplete';
 import { Icon } from 'components/Icon';
+import { Input } from 'components/Input';
 import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
@@ -55,15 +56,28 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
         />
       </div>
       <div className="column">
-        <Autocomplete
-          // id={`cama-renglon-${renglon.indice}`}
-          key={camaKey}
-          name={`camasIds[${renglon.indice}]`}
-          opciones={camas}
-          opcionInicial={camas[0]}
-          onChange={onCamaChange}
-          icono="bed"
-        />
+        {renglon.habitacionSeleccionada?.esPrivada ? (
+          <>
+            <Input key={camaKey} name="noImporta" placeholder="Se reservarán todas las camas" readOnly faIconCode="bed" />
+            <Input
+              style={{ display: 'none' }}
+              name={`habitacionesPrivadasIds[${renglon.indice}]`}
+              defaultValue={renglon.habitacionSeleccionada.id}
+            />
+          </>
+        ) : renglon.camasDisponibles.length === 0 ? (
+          <Input key={camaKey} name="noImporta" placeholder="No tiene camas en esta fecha" readOnly faIconCode="bed" />
+        ) : (
+          <Autocomplete
+            // id={`cama-renglon-${renglon.indice}`}
+            key={camaKey}
+            name={`camasIds[${renglon.indice}]`}
+            opciones={camas}
+            opcionInicial={camas[0]}
+            onChange={onCamaChange}
+            icono="bed"
+          />
+        )}
       </div>
       <div className="column is-narrow">
         <button
