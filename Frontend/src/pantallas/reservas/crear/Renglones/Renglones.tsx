@@ -7,9 +7,32 @@ import PasajerosYLugares from './PasajerosYLugares/PasajerosYLugares';
 import Renglon from './Renglon/Renglon';
 import { crearRenglonData, RenglonData } from './Renglon/RenglonData';
 
-const Renglones = (): ReactElement => {
+interface IProps {
+  modificarRenglonesParaPost: (renglones: RenglonesParaReservaDTO) => void;
+}
+
+export interface RenglonesParaReservaDTO {
+  camasIds: number[];
+  habitacionesPrivadasIds: number[];
+}
+
+const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
   const [renglones, actualizarRenglones] = useState<RenglonData[]>([]);
   const { datos: habitacionesDisponibles, estado } = useSelector(api.habitaciones.listarConLugaresLibres.selector);
+
+  useEffect((): void => {
+    let data: RenglonesParaReservaDTO = {
+      camasIds: [] as number[],
+      habitacionesPrivadasIds: [] as number[],
+    };
+
+    renglones.forEach((renglon): void => {
+      if (renglon.habitacionSeleccionada.esPrivada) data.habitacionesPrivadasIds.push(renglon.habitacionSeleccionada.id);
+      else if (renglon.camaSeleccionadaId) data.camasIds.push(parseInt(renglon.camaSeleccionadaId));
+    });
+
+    modificarRenglonesParaPost(data);
+  }, [renglones, modificarRenglonesParaPost]);
 
   useEffect((): void => {
     if (habitacionesDisponibles.length > 0) actualizarRenglones([crearRenglonData(0, habitacionesDisponibles)]);

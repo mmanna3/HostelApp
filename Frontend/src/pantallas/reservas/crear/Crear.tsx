@@ -1,7 +1,7 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { ReservaDTO } from 'store/api/DTOs';
@@ -9,7 +9,7 @@ import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
 import DatosGenerales from './DatosGenerales/DatosGenerales';
-import Renglones from './Renglones/Renglones';
+import Renglones, { RenglonesParaReservaDTO } from './Renglones/Renglones';
 
 interface IParams {
   isVisible: boolean;
@@ -22,6 +22,10 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   const { estado, errores } = useSelector(selector);
   const [modalKey, reiniciarModal] = useCounterKey();
   const [datosGeneralesKey, reiniciarDatosGenerales] = useCounterKey();
+  const [renglonesParaPost, modificarRenglonesParaPost] = useState<RenglonesParaReservaDTO>({
+    camasIds: [],
+    habitacionesPrivadasIds: [],
+  });
   const dispatch = useDispatch();
 
   function onSuccess(): void {
@@ -31,7 +35,16 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  const onSubmit = (data: ReservaDTO): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
+  // const onSubmit = (data: ReservaDTO): void => dispatch(api.reservas.crear.invocar(data, onSuccess));
+
+  const onSubmit = (data: ReservaDTO): void => {
+    let nuevaData = data;
+
+    nuevaData.camasIds = renglonesParaPost.camasIds;
+    nuevaData.habitacionesPrivadasIds = renglonesParaPost.habitacionesPrivadasIds;
+
+    dispatch(api.reservas.crear.invocar(nuevaData, onSuccess));
+  };
 
   const listarConLugaresLibresRequest = api.habitaciones.listarConLugaresLibres;
 
@@ -63,7 +76,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
 
-        <Renglones />
+        <Renglones modificarRenglonesParaPost={modificarRenglonesParaPost} />
       </CardBody>
       <FooterAcceptCancel onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>

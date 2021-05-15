@@ -45,7 +45,8 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
       <div className="column">
         <Autocomplete
           data-cy={`habitacion-renglon-${renglon.indice}`}
-          name={`habitacion[${renglon.indice}]`}
+          name={`ignorarHabitacion[${renglon.indice}]`}
+          // name="desestimado"
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
           onChange={(habitacionId: string): void => {
@@ -58,20 +59,34 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
       <div className="column">
         {renglon.habitacionSeleccionada?.esPrivada ? (
           <>
-            <Input key={camaKey} name="noImporta" placeholder="Se reservarán todas las camas" readOnly faIconCode="bed" />
+            <Input
+              key={camaKey}
+              name={`ignorarCamaHabPrivada-${renglon.indice}`}
+              placeholder="Se reservarán todas las camas"
+              readOnly
+              faIconCode="bed"
+            />
             <Input
               style={{ display: 'none' }}
-              name={`habitacionesPrivadasIds[${renglon.indice}]`}
+              name={`ignorarHabitacionesPrivadasIds[${renglon.indice}]`}
+              // name="desestimado"
               defaultValue={renglon.habitacionSeleccionada.id}
             />
           </>
         ) : renglon.camasDisponibles.length === 0 ? (
-          <Input key={camaKey} name="noImporta" placeholder="No tiene camas en esta fecha" readOnly faIconCode="bed" />
+          <Input
+            key={camaKey}
+            name={`ignorarSincamas-${renglon.indice}`}
+            placeholder="No tiene camas en esta fecha"
+            readOnly
+            faIconCode="bed"
+          />
         ) : (
           <Autocomplete
             data-cy={`cama-renglon-${renglon.indice}`}
             key={camaKey}
-            name={`camasIds[${renglon.indice}]`}
+            name={`ignorarCamasIds[${renglon.indice}]`}
+            // name="desestimado"
             opciones={camas}
             opcionInicial={camas[0]}
             onChange={onCamaChange}
