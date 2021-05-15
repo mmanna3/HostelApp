@@ -1,4 +1,5 @@
 import { Button } from 'components/botones/botones';
+import Loader from 'components/Loader/Loader';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -81,7 +82,9 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
   return (
     <>
       {estado === EstadosApiRequestEnum.cargando ? (
-        <div className={Estilos.cargando}>Cargando habitaciones y camas para la fecha seleccionada</div>
+        <div className={Estilos.cargando}>
+          <Loader />
+        </div>
       ) : estado === EstadosApiRequestEnum.huboError ? (
         <div>Hubo un error</div>
       ) : (
