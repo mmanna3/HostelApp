@@ -44,7 +44,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
     <div className="columns">
       <div className="column">
         <Autocomplete
-          // id={`habitacion-renglon-${renglon.indice}`}
+          data-cy={`habitacion-renglon-${renglon.indice}`}
           name={`habitacion[${renglon.indice}]`}
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
@@ -69,7 +69,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
           <Input key={camaKey} name="noImporta" placeholder="No tiene camas en esta fecha" readOnly faIconCode="bed" />
         ) : (
           <Autocomplete
-            // id={`cama-renglon-${renglon.indice}`}
+            data-cy={`cama-renglon-${renglon.indice}`}
             key={camaKey}
             name={`camasIds[${renglon.indice}]`}
             opciones={camas}
