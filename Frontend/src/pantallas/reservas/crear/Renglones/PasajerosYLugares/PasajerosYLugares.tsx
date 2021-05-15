@@ -24,7 +24,6 @@ const PasajerosVsLugares = ({ renglones }: IParams): ReactElement => {
   }, [cantidadDeLugaresReservados, cantidadDePasajeros]);
 
   useEffect((): void => {
-    console.log(renglones);
     let lugaresReservados = 0;
 
     if (renglones.length > 0) {
