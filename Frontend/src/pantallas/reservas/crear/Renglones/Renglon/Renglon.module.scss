@@ -4,3 +4,7 @@
   @extend .select;
   font-family: 'Font Awesome 5 Free', 'Segoe UI';
 }
+
+.boton:hover {
+  @extend .has-text-primary;
+}

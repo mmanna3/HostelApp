@@ -2,9 +2,9 @@ import { Autocomplete, ILabelValue } from 'components/Autocomplete';
 import { Icon } from 'components/Icon';
 import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
+import Estilos from './Renglon.module.scss';
 import { RenglonData } from './RenglonData';
 
 interface IParams {
@@ -16,7 +16,6 @@ interface IParams {
 }
 
 const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }: IParams): ReactElement => {
-  const { register } = useFormContext();
   const [camaKey, reiniciarCama] = useCounterKey();
 
   const habitaciones = renglon.habitacionesDisponibles.map(
@@ -68,7 +67,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
       </div>
       <div className="column is-narrow">
         <button
-          className="button has-text-grey has-background-light"
+          className={`button has-text-grey has-background-light ${Estilos.boton}`}
           type="button"
           id={`eliminar-renglon-${renglon.indice}`}
           onClick={(): void => eliminar(renglon.indice)}
