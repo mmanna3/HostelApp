@@ -3,6 +3,7 @@ import {
   faArrowRight,
   faCalendar,
   faCheckCircle,
+  faDoorClosed,
   faEnvelope,
   faExclamationTriangle,
   faGlobe,
@@ -24,5 +25,6 @@ library.add(faUser);
 library.add(faCheckCircle);
 library.add(faExclamationTriangle);
 library.add(faArrowRight);
+library.add(faDoorClosed);
 // library.add(faUsers);
 // library.add(faUserFriends);
