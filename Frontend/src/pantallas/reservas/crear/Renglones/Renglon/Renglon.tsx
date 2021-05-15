@@ -1,4 +1,5 @@
 import { Autocomplete, ILabelValue } from 'components/Autocomplete';
+import { Icon } from 'components/Icon';
 import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -64,6 +65,16 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
           onChange={onCamaChange}
           icono="bed"
         />
+      </div>
+      <div className="column is-narrow">
+        <button
+          className="button has-text-grey has-background-light"
+          type="button"
+          id={`eliminar-renglon-${renglon.indice}`}
+          onClick={(): void => eliminar(renglon.indice)}
+        >
+          <Icon faCode="trash-alt" />
+        </button>
       </div>
     </div>
   );
