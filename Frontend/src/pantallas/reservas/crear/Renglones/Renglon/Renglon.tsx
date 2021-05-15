@@ -7,7 +7,7 @@ import { RenglonData } from './RenglonData';
 interface IParams {
   renglon: RenglonData;
   estado: ESTADO;
-  onHabitacionChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onHabitacionChange: (habitacionId: string) => void;
   onCamaChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   eliminar: (id: number) => void;
 }
@@ -27,6 +27,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
   );
 
   return (
+    // estado
     <div className="columns">
       <div className="column">
         <Autocomplete
@@ -34,6 +35,7 @@ const Renglon = ({ renglon, estado, onHabitacionChange, onCamaChange, eliminar }
           name={`habitacion[${renglon.indice}]`}
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
+          onChange={onHabitacionChange}
           icono="door-closed"
         />
       </div>

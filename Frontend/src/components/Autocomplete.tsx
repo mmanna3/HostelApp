@@ -12,6 +12,7 @@ interface IProps {
   name: string;
   placeholder?: string;
   register?: () => any;
+  onChange?: (value: string) => any;
   icono?: IconProp;
 }
 
@@ -20,7 +21,15 @@ export interface ILabelValue {
   label: string;
 }
 
-export const Autocomplete = ({ label, opciones, opcionInicial, name, placeholder = '', icono }: IProps): ReactElement => {
+export const Autocomplete = ({
+  label,
+  opciones,
+  opcionInicial,
+  name,
+  placeholder = '',
+  onChange,
+  icono,
+}: IProps): ReactElement => {
   const [valor, actualizarValor] = useState<ILabelValue>(opcionInicial);
   const { setValue } = useFormContext();
 
@@ -82,6 +91,7 @@ export const Autocomplete = ({ label, opciones, opcionInicial, name, placeholder
             onChange={(val): void => {
               field.onChange(val?.value);
               actualizarValor(val);
+              if (onChange) onChange(val?.value);
             }}
             placeholder={placeholder}
             defaultValue={field.value}

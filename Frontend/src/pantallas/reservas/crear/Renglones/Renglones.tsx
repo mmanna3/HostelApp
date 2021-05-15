@@ -64,9 +64,7 @@ const Renglones = (): ReactElement => {
               key={`${renglon.indice}`}
               renglon={renglon}
               estado={estado}
-              onHabitacionChange={(e: React.ChangeEvent<HTMLSelectElement>): void =>
-                onHabitacionChange(renglon.indice, e.target.value)
-              }
+              onHabitacionChange={(habitacionId: string): void => onHabitacionChange(renglon.indice, habitacionId)}
               onCamaChange={(e: React.ChangeEvent<HTMLSelectElement>): void => onCamaChange(renglon.indice, e.target.value)}
               eliminar={eliminarRenglon}
             />
