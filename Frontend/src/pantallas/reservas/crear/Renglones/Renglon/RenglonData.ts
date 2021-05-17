@@ -1,17 +1,17 @@
-import { CamaDTO, HabitacionParaReservaDTO } from 'store/api/DTOs';
+import { CamaDTO, HabitacionConLugaresLibresDTO } from 'store/api/DTOs';
 
 export interface RenglonData {
-  habitacionSeleccionada: HabitacionParaReservaDTO;
+  habitacionSeleccionada: HabitacionConLugaresLibresDTO;
   camaSeleccionadaId: Nullable<string>;
   indice: number;
-  habitacionesDisponibles: HabitacionParaReservaDTO[];
+  habitacionesDisponibles: HabitacionConLugaresLibresDTO[];
   camasDisponibles: CamaDTO[];
 }
 
 export const crearRenglonData = (
   indice: number,
-  habitacionesDisponibles: HabitacionParaReservaDTO[],
-  habitacionSeleccionada?: HabitacionParaReservaDTO
+  habitacionesDisponibles: HabitacionConLugaresLibresDTO[],
+  habitacionSeleccionada?: HabitacionConLugaresLibresDTO
 ): RenglonData => {
   let _habitacionSeleccionada = habitacionSeleccionada ?? habitacionesDisponibles[0];
   let camasDisponibles: CamaDTO[] = [];

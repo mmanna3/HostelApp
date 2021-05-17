@@ -1,5 +1,5 @@
 import 'cypress-localstorage-commands';
-import { CamaTipoEnum, HabitacionParaReservaDTO } from '../../../../src/store/api/DTOs';
+import { CamaTipoEnum, HabitacionConLugaresLibresDTO } from '../../../../src/store/api/DTOs';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 describe('Cabecera con datos del huésped', (): void => {
@@ -18,7 +18,7 @@ before((): void => {
 beforeEach((): void => {
   cy.restoreLocalStorage();
 
-  const habitacionesConLugaresLibres: HabitacionParaReservaDTO[] = [
+  const habitacionesConLugaresLibres: HabitacionConLugaresLibresDTO[] = [
     {
       id: 1,
       nombre: 'Roja',
