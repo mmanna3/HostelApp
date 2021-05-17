@@ -38,14 +38,23 @@ namespace Api.Controllers.Mapping
 		{
 			var camasIds = new List<int>();
 
-			camasIds.AddRange(entidad.ReservaCamas.Select(x => x.CamaId).ToList());
+			if (entidad.ReservaCamas != null)
+				camasIds.AddRange(entidad.ReservaCamas.Select(x => x.CamaId).ToList());
 
 			if (entidad.ReservaHabitacionesPrivadas != null)
 				foreach (var reservaHabitacionPrivada in entidad.ReservaHabitacionesPrivadas)
 				{
-					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasCuchetas.Select(c => c.Id).ToList());
-					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasIndividuales.Select(c => c.Id).ToList());
-					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasMatrimoniales.Select(c => c.Id).ToList());
+					if (reservaHabitacionPrivada.HabitacionPrivada.CamasCuchetas != null)
+					{
+						camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasCuchetas.Select(x => x.Abajo.Id));
+						camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasCuchetas.Select(x => x.Arriba.Id));
+					}
+
+					if (reservaHabitacionPrivada.HabitacionPrivada.CamasIndividuales != null)
+						camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasIndividuales.Select(c => c.Id).ToList());
+
+					if (reservaHabitacionPrivada.HabitacionPrivada.CamasMatrimoniales != null)
+						camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasMatrimoniales.Select(c => c.Id).ToList());
 				}
 
 			return new ReservaResumenDTO
