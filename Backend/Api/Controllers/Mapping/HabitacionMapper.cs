@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
+using Api.Core.Enums;
 
 namespace Api.Controllers.Mapping
 {
@@ -15,7 +16,7 @@ namespace Api.Controllers.Mapping
 				Id = entidad.Id,
 				Nombre = entidad.Nombre,
 				TieneBanio = entidad.TieneBanio,
-				EsPrivada = entidad.EsPrivada,
+				EsPrivada = entidad.Tipo().Equals(HabitacionTipoEnum.Privada),
 				InformacionAdicional = entidad.InformacionAdicional,
 				CamasIndividuales = entidad.CamasIndividuales.Select(entidadCamasIndividuale => new CamaDTO
 				{
@@ -48,52 +49,77 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		public static HabitacionParaReservaDTO MapHabitacionParaReservaDTO(Habitacion habitacion, DateTime desde, DateTime hasta)
+		public static HabitacionParaReservaDTO MapHabitacionParaReservaDTO(Habitacion Habitacion, DateTime desde, DateTime hasta)
 		{
 			var camas = new List<Cama>();
-			camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Abajo).Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Arriba).Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(habitacion.CamasMatrimoniales.Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(habitacion.CamasIndividuales.Where(x => x.EstaLibreEntre(desde, hasta)));
+			camas.AddRange(Habitacion.CamasCuchetas.Select(x => x.Abajo).Where(x => x.EstaLibreEntre(desde, hasta)));
+			camas.AddRange(Habitacion.CamasCuchetas.Select(x => x.Arriba).Where(x => x.EstaLibreEntre(desde, hasta)));
+			camas.AddRange(Habitacion.CamasMatrimoniales.Where(x => x.EstaLibreEntre(desde, hasta)));
+			camas.AddRange(Habitacion.CamasIndividuales.Where(x => x.EstaLibreEntre(desde, hasta)));
 
 			return new HabitacionParaReservaDTO
 			{
-				Id = habitacion.Id,
-				Nombre = habitacion.Nombre,
-				EsPrivada = habitacion.EsPrivada,
-				CantidadDeLugaresLibres = habitacion.LugaresLibresEntre(desde, hasta),
+				Id = Habitacion.Id,
+				Nombre = Habitacion.Nombre,
+				CantidadDeLugaresLibres = Habitacion.LugaresLibresEntre(desde, hasta),
 				Camas = camas.Select(x => new CamaDTO{ Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
 			};
 		}
 
 		public static Habitacion Map(HabitacionDTO dto)
 		{
-			return new Habitacion
-			{
-				Nombre = dto.Nombre,
-				TieneBanio = dto.TieneBanio,
-				EsPrivada = dto.EsPrivada,
-				InformacionAdicional = dto.InformacionAdicional,
-				CamasIndividuales = dto.CamasIndividuales?.ConvertAll(camaIndividual => new CamaIndividual
+			if (dto.EsPrivada)
+				return new HabitacionPrivada
 				{
-					Nombre = camaIndividual.Nombre
-				}),
-				CamasMatrimoniales = dto.CamasMatrimoniales?.ConvertAll(camaMatrimonial => new CamaMatrimonial
-				{
-					Nombre = camaMatrimonial.Nombre
-				}),
-				CamasCuchetas = dto.CamasCuchetas?.ConvertAll(dtoCamasCucheta => new CamaCucheta
-				{
-					Abajo = new CamaCuchetaDeAbajo
+					Nombre = dto.Nombre,
+					TieneBanio = dto.TieneBanio,
+					InformacionAdicional = dto.InformacionAdicional,
+					CamasIndividuales = dto.CamasIndividuales?.ConvertAll(camaIndividual => new CamaIndividual
 					{
-						Nombre = dtoCamasCucheta.Nombre
-					},
-					Arriba = new CamaCuchetaDeArriba
+						Nombre = camaIndividual.Nombre
+					}),
+					CamasMatrimoniales = dto.CamasMatrimoniales?.ConvertAll(camaMatrimonial => new CamaMatrimonial
 					{
-						Nombre = dtoCamasCucheta.Nombre
-					}
-				}),
-			};
+						Nombre = camaMatrimonial.Nombre
+					}),
+					CamasCuchetas = dto.CamasCuchetas?.ConvertAll(dtoCamasCucheta => new CamaCucheta
+					{
+						Abajo = new CamaCuchetaDeAbajo
+						{
+							Nombre = dtoCamasCucheta.Nombre
+						},
+						Arriba = new CamaCuchetaDeArriba
+						{
+							Nombre = dtoCamasCucheta.Nombre
+						}
+					}),
+				};
+			else 
+				return new HabitacionCompartida
+				{
+					Nombre = dto.Nombre,
+					TieneBanio = dto.TieneBanio,
+					InformacionAdicional = dto.InformacionAdicional,
+					CamasIndividuales = dto.CamasIndividuales?.ConvertAll(camaIndividual => new CamaIndividual
+					{
+						Nombre = camaIndividual.Nombre
+					}),
+					CamasMatrimoniales = dto.CamasMatrimoniales?.ConvertAll(camaMatrimonial => new CamaMatrimonial
+					{
+						Nombre = camaMatrimonial.Nombre
+					}),
+					CamasCuchetas = dto.CamasCuchetas?.ConvertAll(dtoCamasCucheta => new CamaCucheta
+					{
+						Abajo = new CamaCuchetaDeAbajo
+						{
+							Nombre = dtoCamasCucheta.Nombre
+						},
+						Arriba = new CamaCuchetaDeArriba
+						{
+							Nombre = dtoCamasCucheta.Nombre
+						}
+					}),
+				};
 		}
 
 		public static IEnumerable<HabitacionParaReservaDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)

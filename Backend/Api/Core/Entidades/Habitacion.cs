@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Api.Core.Enums;
 
 namespace Api.Core.Entidades
 {
-    public class Habitacion : EntidadConId
+    public abstract class Habitacion : EntidadConId
     {
         [Required, MaxLength(12)]
         public string Nombre { get; set; }
 
-        [Required]
-        public bool TieneBanio { get; set; }
+        public abstract HabitacionTipoEnum Tipo();
 
         [Required]
-        public bool EsPrivada { get; set; }
+        public bool TieneBanio { get; set; }
 
         [MaxLength(140)]
         public string InformacionAdicional { get; set; }

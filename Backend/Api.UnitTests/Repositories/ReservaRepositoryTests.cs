@@ -31,7 +31,7 @@ namespace Api.UnitTests.Repositories
         [Ignore("")]
         public void Lista_correctamente_lugares_libres_en_la_fecha()
         {
-            _context.Habitaciones.Add(new Habitacion { Id = 1, Nombre = "Azul" });
+            _context.Habitaciones.Add(new HabitacionCompartida { Id = 1, Nombre = "Azul" });
 
             var cama = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             _context.CamasIndividuales.Add(cama);
@@ -110,7 +110,7 @@ namespace Api.UnitTests.Repositories
 
         private int AgregarReservaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
         {
-            var habitacion = new Habitacion {Nombre = "Azul"};
+            var habitacion = new HabitacionCompartida {Nombre = "Azul"};
             _context.Habitaciones.Add(habitacion);
 
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };

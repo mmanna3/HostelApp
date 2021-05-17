@@ -24,7 +24,6 @@ namespace Api.UnitTests.Controllers.Mapping
             habitacion.CamasIndividuales.Count.Should().Be(1);
             habitacion.CamasCuchetas.Count.Should().Be(1);
 
-            habitacion.EsPrivada.Should().BeTrue();
             habitacion.TieneBanio.Should().BeTrue();
             habitacion.InformacionAdicional.Should().Be("asd");
         }
@@ -49,10 +48,9 @@ namespace Api.UnitTests.Controllers.Mapping
         {
             _unaListaDeHabitaciones = new List<Habitacion>();
 
-            var h1 = new Habitacion
+            var h1 = new HabitacionPrivada
             {
                 Nombre = "Azul",
-                EsPrivada = true,
                 TieneBanio = true,
                 InformacionAdicional = "asd",
                 CamasIndividuales = new List<CamaIndividual>
@@ -109,7 +107,7 @@ namespace Api.UnitTests.Controllers.Mapping
                     {
                         Abajo = new CamaDTO
                         {
-                            Nombre = "Abajo"
+                              Nombre = "Abajo"
                         },
                         Arriba = new CamaDTO
                         {
