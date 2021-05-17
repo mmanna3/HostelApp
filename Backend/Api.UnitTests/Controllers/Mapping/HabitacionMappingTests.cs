@@ -3,6 +3,7 @@ using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.Mapping;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -26,6 +27,7 @@ namespace Api.UnitTests.Controllers.Mapping
 
             habitacion.TieneBanio.Should().BeTrue();
             habitacion.InformacionAdicional.Should().Be("asd");
+            habitacion.Tipo().Should().Be(HabitacionTipoEnum.Privada);
         }
 
         [Test]
@@ -38,6 +40,7 @@ namespace Api.UnitTests.Controllers.Mapping
             habitacionesDTO.First().EsPrivada.Should().BeTrue();
             habitacionesDTO.First().TieneBanio.Should().BeTrue();
             habitacionesDTO.First().InformacionAdicional.Should().Be("asd");
+            habitacionesDTO.First().EsPrivada.Should().Be(true);
 
             habitacionesDTO.First().CamasMatrimoniales.Count.Should().Be(1);
             habitacionesDTO.First().CamasIndividuales.Count.Should().Be(1);

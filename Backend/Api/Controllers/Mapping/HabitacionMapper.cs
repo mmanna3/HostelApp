@@ -62,6 +62,7 @@ namespace Api.Controllers.Mapping
 				Id = Habitacion.Id,
 				Nombre = Habitacion.Nombre,
 				CantidadDeLugaresLibres = Habitacion.LugaresLibresEntre(desde, hasta),
+				EsPrivada = Habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
 				Camas = camas.Select(x => new CamaDTO{ Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
 			};
 		}
