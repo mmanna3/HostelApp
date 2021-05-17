@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Api.Core.Enums;
 
 namespace Api.Core.Entidades
@@ -23,13 +24,11 @@ namespace Api.Core.Entidades
         public ICollection<CamaMatrimonial> CamasMatrimoniales { get; set; }
         public ICollection<CamaCucheta> CamasCuchetas { get; set; }
 
-        public int LugaresLibresEntre(DateTime desde, DateTime hasta)
-        {
-            var sumaIndividuales = CamasIndividuales?.Sum(x => x.LugaresLibresEntre(desde, hasta)) ?? 0;
-            var sumaMatri = CamasMatrimoniales?.Sum(x => x.LugaresLibresEntre(desde, hasta)) ?? 0;
-            var sumaCucheta = CamasCuchetas?.Sum(x => x.Abajo.LugaresLibresEntre(desde, hasta) + x.Arriba.LugaresLibresEntre(desde, hasta)) ?? 0;
+        public abstract int LugaresLibresEntre(DateTime desde, DateTime hasta);
 
-            return sumaIndividuales + sumaCucheta + sumaMatri;
-        }
-    }
+		public static explicit operator Habitacion(Task<List<HabitacionPrivada>> v)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

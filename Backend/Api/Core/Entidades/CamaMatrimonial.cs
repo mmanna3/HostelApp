@@ -8,7 +8,7 @@ namespace Api.Core.Entidades
         [Column("Matrimonial_HabitacionId")]
         public int HabitacionId { get; set; }
         public Habitacion Habitacion { get; set; }
-        protected override int Plazas()
+        public override int Plazas()
         {
             return 2;
         }

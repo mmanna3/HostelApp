@@ -49,20 +49,23 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		public static HabitacionParaReservaDTO MapHabitacionParaReservaDTO(Habitacion Habitacion, DateTime desde, DateTime hasta)
+		public static HabitacionConLugaresLibresDTO MapHabitacionParaReservaDTO(Habitacion habitacion, DateTime desde, DateTime hasta)
 		{
 			var camas = new List<Cama>();
-			camas.AddRange(Habitacion.CamasCuchetas.Select(x => x.Abajo).Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(Habitacion.CamasCuchetas.Select(x => x.Arriba).Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(Habitacion.CamasMatrimoniales.Where(x => x.EstaLibreEntre(desde, hasta)));
-			camas.AddRange(Habitacion.CamasIndividuales.Where(x => x.EstaLibreEntre(desde, hasta)));
-
-			return new HabitacionParaReservaDTO
+			if (habitacion.Tipo().Equals(HabitacionTipoEnum.Compartida))
 			{
-				Id = Habitacion.Id,
-				Nombre = Habitacion.Nombre,
-				CantidadDeLugaresLibres = Habitacion.LugaresLibresEntre(desde, hasta),
-				EsPrivada = Habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
+				camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Abajo).Where(x => x.EstaLibreEntre(desde, hasta)));
+				camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Arriba).Where(x => x.EstaLibreEntre(desde, hasta)));
+				camas.AddRange(habitacion.CamasMatrimoniales.Where(x => x.EstaLibreEntre(desde, hasta)));
+				camas.AddRange(habitacion.CamasIndividuales.Where(x => x.EstaLibreEntre(desde, hasta)));
+			}
+
+			return new HabitacionConLugaresLibresDTO
+			{
+				Id = habitacion.Id,
+				Nombre = habitacion.Nombre,
+				CantidadDeLugaresLibres = habitacion.LugaresLibresEntre(desde, hasta),
+				EsPrivada = habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
 				Camas = camas.Select(x => new CamaDTO{ Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
 			};
 		}
@@ -123,7 +126,7 @@ namespace Api.Controllers.Mapping
 				};
 		}
 
-		public static IEnumerable<HabitacionParaReservaDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)
+		public static IEnumerable<HabitacionConLugaresLibresDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)
 		{
 			return habitaciones.Select(x => MapHabitacionParaReservaDTO(x, desde, hasta)).OrderByDescending(x => x.CantidadDeLugaresLibres);
 		}

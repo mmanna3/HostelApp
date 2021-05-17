@@ -15,7 +15,7 @@ namespace Api.Core.Entidades
 
         public ICollection<ReservaCama> ReservaCamas { get; set; }
 
-        protected virtual int Plazas()
+        public virtual int Plazas()
         {
             return 1;
         }
