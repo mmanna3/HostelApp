@@ -25,7 +25,7 @@ namespace Api.IntegrationTests
 			var body = new ReservaDTO
 			{
 				DatosMinimosDeHuesped = datosMinimosDeHuesped,
-				CamasIds = new List<int?> { camaId },
+				CamasIds = new List<int> { camaId },
 				DiaDeCheckin = Utilidades.ConvertirFecha(desde),
 				DiaDeCheckout = Utilidades.ConvertirFecha(hasta),
 				HoraEstimadaDeLlegada = "11:30:00",

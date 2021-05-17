@@ -22,8 +22,8 @@ namespace Api.Controllers.DTOs.Reserva
         [YKNRequired, DisplayName("Día de checkout")]
         public string DiaDeCheckout { get; set; }
         
-        public List<int?> CamasIds { get; set; }
+        public List<int> CamasIds { get; set; }
         
-        public List<List<int>> CamasDeHabitacionesPrivadasIds { get; set; }
+        public List<int> HabitacionesPrivadasIds { get; set; }
     }
 }

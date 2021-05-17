@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Entidades;
@@ -21,7 +19,7 @@ namespace Api.Controllers.Mapping
 				CantidadDePasajeros = entidad.CantidadDePasajeros,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
-				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).Cast<int?>().ToList(),
+				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).ToList(), //Faltan las camas de las habitacionesPrivadas
 				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped)
 			};
 		}
@@ -38,6 +36,18 @@ namespace Api.Controllers.Mapping
 
 		private static ReservaResumenDTO Map(Reserva entidad, DateTime primeraNoche, DateTime ultimaNoche)
 		{
+			var camasIds = new List<int>();
+
+			camasIds.AddRange(entidad.ReservaCamas.Select(x => x.CamaId).ToList());
+
+			if (entidad.ReservaHabitacionesPrivadas != null)
+				foreach (var reservaHabitacionPrivada in entidad.ReservaHabitacionesPrivadas)
+				{
+					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasCuchetas.Select(c => c.Id).ToList());
+					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasIndividuales.Select(c => c.Id).ToList());
+					camasIds.AddRange(reservaHabitacionPrivada.HabitacionPrivada.CamasMatrimoniales.Select(c => c.Id).ToList());
+				}
+
 			return new ReservaResumenDTO
 			{
 				Id = entidad.Id,
@@ -45,7 +55,7 @@ namespace Api.Controllers.Mapping
 				Estado = entidad.Estado,
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche < primeraNoche ? primeraNoche : entidad.PrimeraNoche), 
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche > ultimaNoche ? ultimaNoche : entidad.UltimaNoche), 
-				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).ToList(),
+				CamasIds = camasIds
 			};
 		}
 
@@ -54,25 +64,12 @@ namespace Api.Controllers.Mapping
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
 
-		private static List<ReservaCama> UnificarCamasIds(ReservaDTO dto)
-		{
-			var resultado = new List<ReservaCama>();
-			if (dto.CamasIds != null)
-				resultado.AddRange(dto.CamasIds.Where(c => c != null).Select(x => new ReservaCama{CamaId = (int)x }).ToList());
-
-			if (dto.CamasDeHabitacionesPrivadasIds != null)
-				foreach (var idsDeCamasDeUnaHabitacionPrivada in dto.CamasDeHabitacionesPrivadasIds)
-					if (idsDeCamasDeUnaHabitacionPrivada != null)
-						resultado.AddRange(idsDeCamasDeUnaHabitacionPrivada.Select(x => new ReservaCama { CamaId = x }));
-
-			return resultado;
-		}
-
 		public static Reserva Map(ReservaDTO dto)
 		{
 			var reserva = new Reserva
 			{
-				ReservaCamas = UnificarCamasIds(dto),
+				ReservaCamas = dto.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
+				ReservaHabitacionesPrivadas = dto.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
 				Huesped = HuespedMapper.Map(dto.DatosMinimosDeHuesped),
 				Estado = dto.Estado,
 				HoraEstimadaDeLlegada = TimeSpan.Parse(dto.HoraEstimadaDeLlegada),

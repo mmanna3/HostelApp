@@ -24,34 +24,29 @@ namespace Api.Persistence.Config
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
+		{
+			base.OnModelCreating(builder);
 
-            CamasConTipo(builder);
+			CamasConTipo(builder);
 
-            HabitacionesConTipo(builder);
+			HabitacionesConTipo(builder);
 
-            builder.Entity<ReservaCama>()
-                .HasKey(x => new { x.ReservaId, x.CamaId });
-            builder.Entity<ReservaCama>()
-                .HasOne(x => x.Reserva)
-                .WithMany(x => x.ReservaCamas)
-                .HasForeignKey(x => x.ReservaId);
-            builder.Entity<ReservaCama>()
-                .HasOne(x => x.Cama)
-                .WithMany(x => x.ReservaCamas)
-                .HasForeignKey(x => x.CamaId);
+			ReservaCama(builder);
 
-            builder.Entity<Huesped>()
-	            .HasIndex(h => h.DniOPasaporte)
-	            .IsUnique();
+			ReservaHabitacionPrivada(builder);
 
-            builder.Entity<Reserva>()
-	            .Property(x => x.Estado)
-	            .HasDefaultValue(ReservaEstadoEnum.CheckinPendiente);
-        }
+			builder.Entity<Huesped>()
+				.HasIndex(h => h.DniOPasaporte)
+				.IsUnique();
 
-        private static void HabitacionesConTipo(ModelBuilder builder)
+			builder.Entity<Reserva>()
+				.Property(x => x.Estado)
+				.HasDefaultValue(ReservaEstadoEnum.CheckinPendiente);
+
+
+		}
+
+		private static void HabitacionesConTipo(ModelBuilder builder)
         {
 	        builder.Entity<Habitacion>()
 		        .ToTable("Habitaciones")
@@ -83,6 +78,38 @@ namespace Api.Persistence.Config
 		        .WithMany(a => a.CamasCuchetas)
 		        .OnDelete(DeleteBehavior.Restrict);
         }
-    }
+
+        private static void ReservaCama(ModelBuilder builder)
+        {
+	        builder.Entity<ReservaCama>()
+		        .HasKey(x => new { x.ReservaId, x.CamaId });
+	        
+	        builder.Entity<ReservaCama>()
+		        .HasOne(x => x.Reserva)
+		        .WithMany(x => x.ReservaCamas)
+		        .HasForeignKey(x => x.ReservaId);
+	        
+	        builder.Entity<ReservaCama>()
+		        .HasOne(x => x.Cama)
+		        .WithMany(x => x.ReservaCamas)
+		        .HasForeignKey(x => x.CamaId);
+        }
+
+        private static void ReservaHabitacionPrivada(ModelBuilder builder)
+        {
+	        builder.Entity<ReservaHabitacionPrivada>()
+		        .HasKey(x => new { x.ReservaId, x.HabitacionPrivadaId });
+	        
+	        builder.Entity<ReservaHabitacionPrivada>()
+		        .HasOne(x => x.Reserva)
+		        .WithMany(x => x.ReservaHabitacionesPrivadas)
+		        .HasForeignKey(x => x.ReservaId);
+
+	        builder.Entity<ReservaHabitacionPrivada>()
+		        .HasOne(x => x.HabitacionPrivada)
+		        .WithMany(x => x.ReservaHabitacionesPrivadas)
+		        .HasForeignKey(x => x.HabitacionPrivadaId);
+        }
+	}
 }
 

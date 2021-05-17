@@ -57,12 +57,13 @@ namespace Api.UnitTests.Controllers.Mapping
             reserva.HoraEstimadaDeLlegada.Should().Be(new TimeSpan(11, 0, 0));
             reserva.Estado.Should().Be(ReservaEstadoEnum.HizoCheckout);
             reserva.CantidadDePasajeros.Should().Be(3);
-            reserva.ReservaCamas.Should().HaveCount(4);
+            reserva.ReservaCamas.Should().HaveCount(1);
+            reserva.ReservaHabitacionesPrivadas.Should().HaveCount(3);
 
             reserva.ReservaCamas.Should().Contain(x => x.CamaId == UN_CAMA_ID);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 100);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 200);
-            reserva.ReservaCamas.Should().Contain(x => x.CamaId == 400);
+            reserva.ReservaHabitacionesPrivadas.Should().Contain(x => x.HabitacionPrivadaId == 100);
+            reserva.ReservaHabitacionesPrivadas.Should().Contain(x => x.HabitacionPrivadaId == 200);
+            reserva.ReservaHabitacionesPrivadas.Should().Contain(x => x.HabitacionPrivadaId == 400);
         }
 
         [Test]
@@ -88,7 +89,7 @@ namespace Api.UnitTests.Controllers.Mapping
         }
 
         [Test]
-        public void ListaReservas_a_ReservasDelPeriodoDTO()
+		public void ListaReservas_a_ReservasDelPeriodoDTO()
         {
             DadaUnaListaDeReservas();
             var desde = new DateTime(2020, 8, 1);
@@ -139,21 +140,13 @@ namespace Api.UnitTests.Controllers.Mapping
 
         private void DadaUnaReservaDto()
         {
-            var listaDeCamasDeHabitacionPrivada1 = new List<int> {100, 200};
-            var listaDeCamasDeHabitacionPrivada2 = new List<int> {400};
-
-            var camasDeHabitacionesPrivadasIds = new List<List<int>>
-            {
-                listaDeCamasDeHabitacionPrivada1, null, listaDeCamasDeHabitacionPrivada2
-            };
-
-            _unaReservaDto = new ReservaDTO
+	        _unaReservaDto = new ReservaDTO
             {
                 DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),
-                CamasIds = new List<int?> { null, UN_CAMA_ID },
-                CamasDeHabitacionesPrivadasIds = camasDeHabitacionesPrivadasIds,
+                CamasIds = new List<int> { UN_CAMA_ID },
+                HabitacionesPrivadasIds = new List<int> { 100, 200, 400 },
                 HoraEstimadaDeLlegada = "11:00",
                 Estado = ReservaEstadoEnum.HizoCheckout,
                 CantidadDePasajeros = 3,
