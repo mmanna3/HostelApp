@@ -23,7 +23,7 @@ describe('Datos del huésped', (): void => {
   });
 
   describe('Al hacer click en Buscar', (): void => {
-    it('Si el huésped existe, trae sus datos y muestra popup. Si había datos, los pisa.', (): void => {
+    it('Si el huésped existe, trae sus datos y muestra popup de éxito. Si había datos, los pisa.', (): void => {
       dadoQueExisteElHuespedDeDni('111');
 
       cy.get('[data-cy="dni"]').type('111');
@@ -38,6 +38,22 @@ describe('Datos del huésped', (): void => {
       cy.get('[data-cy="nombre"]').should('have.value', 'Kvothe');
       cy.get('[data-cy="telefono"]').should('have.value', '44610000');
       cy.get('[data-cy="email"]').should('have.value', 'elcolorado@gmail.edu');
+    });
+
+    it('Si el huésped no existe, no trae datos y muestra popup de error.', (): void => {
+      cy.get('[data-cy="dni"]').type('404');
+      cy.get('[data-cy="boton-dni"]').click();
+
+      cy.get('[data-cy="telefono"]').type('45678888');
+
+      cy.get('#toast-error').should('be.visible');
+      cy.get('#toast-exito-404').should('not.exist');
+
+      cy.get('[data-cy="dni"]').should('be.empty');
+      cy.get('[data-cy="nombre"]').should('be.empty');
+      cy.get('[data-cy="pais"]').contains('Argentina');
+      cy.get('[data-cy="telefono"]').should('have.value', '45678888');
+      cy.get('[data-cy="email"]').should('be.empty');
     });
   });
 });

@@ -21,7 +21,7 @@ const DatosDelHuesped = (): ReactElement => {
     else if (estado === EstadosApiRequestEnum.huboError)
       toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
         type: toast.TYPE.ERROR,
-        toastId: `toast-error-${datos.dniOPasaporte}`,
+        toastId: `toast-error`,
       });
   }, [estado, datos]);
 
