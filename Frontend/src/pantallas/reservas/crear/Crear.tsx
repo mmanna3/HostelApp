@@ -35,11 +35,21 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  const onSubmit = (data: ReservaDTO): void => {
+  interface ReservaDTOYPropsIgnoradas extends ReservaDTO {
+    ignorarCamasIds?: string[];
+    ignorarHabitacion?: string[];
+    ignorarHabitacionesPrivadasIds?: string[];
+  }
+
+  const onSubmit = (data: ReservaDTOYPropsIgnoradas): void => {
     let nuevaData = data;
 
     nuevaData.camasIds = renglonesParaPost.camasIds;
     nuevaData.habitacionesPrivadasIds = renglonesParaPost.habitacionesPrivadasIds;
+
+    delete nuevaData.ignorarCamasIds;
+    delete nuevaData.ignorarHabitacion;
+    delete nuevaData.ignorarHabitacionesPrivadasIds;
 
     dispatch(api.reservas.crear.invocar(nuevaData, onSuccess));
   };
@@ -76,7 +86,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <Renglones modificarRenglonesParaPost={modificarRenglonesParaPost} />
       </CardBody>
-      <FooterAcceptCancel onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} />
+      <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };

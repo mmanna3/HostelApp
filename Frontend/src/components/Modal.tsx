@@ -84,15 +84,16 @@ export const Footer = ({ children }: IFooterParams): ReactElement => {
 interface IFooterAcceptCancel {
   onCancel: () => void;
   loading: boolean;
+  acceptDataCy?: string;
 }
 
-export const FooterAcceptCancel = ({ onCancel, loading }: IFooterAcceptCancel): ReactElement => {
+export const FooterAcceptCancel = ({ onCancel, acceptDataCy, loading }: IFooterAcceptCancel): ReactElement => {
   return (
     <Footer>
       <button type="button" className="button" onClick={onCancel}>
         Cancelar
       </button>
-      <SubmitButton loading={loading} text="Confirmar" />
+      <SubmitButton dataCy={acceptDataCy} loading={loading} text="Confirmar" />
     </Footer>
   );
 };

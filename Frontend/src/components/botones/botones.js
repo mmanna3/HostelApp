@@ -1,10 +1,10 @@
 import React from 'react';
 import Estilos from './botones.module.scss';
 
-export function SubmitButton({ text, loading }) {
+export function SubmitButton({ text, dataCy = '', loading }) {
   if (!loading)
     return (
-      <button className="button is-primary" type="submit">
+      <button data-cy={dataCy} className="button is-primary" type="submit">
         {text}
       </button>
     );
