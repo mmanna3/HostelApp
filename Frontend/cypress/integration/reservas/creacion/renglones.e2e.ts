@@ -104,6 +104,19 @@ describe('Renglones', (): void => {
       cy.get('#autocomplete-habitacion-renglon-0').contains('Roja');
       cy.get('#autocomplete-cama-renglon-0').contains('Indi1');
     });
+
+    it.only('Al eliminar un renglón, se mantienen los datos de los de abajo', (): void => {
+      cy.get('[data-cy=boton-agregar-cama]').click();
+      cy.get('[data-cy=boton-agregar-cama]').click();
+
+      cy.get('#autocomplete-habitacion-renglon-2').type('azul{enter}');
+      cy.get('#autocomplete-cama-renglon-2').type('Matri{enter}');
+
+      cy.get('[data-cy=eliminar-renglon-1]').click();
+
+      cy.get('#autocomplete-habitacion-renglon-2').contains('Azul');
+      cy.get('#autocomplete-cama-renglon-2').contains('MatriAzul');
+    });
   });
 
   describe('Habitación privada y sin camas', (): void => {

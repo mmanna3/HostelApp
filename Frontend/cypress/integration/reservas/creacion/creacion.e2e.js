@@ -2,47 +2,6 @@ import 'cypress-localstorage-commands';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 describe('Crear reservas', () => {
-  it('Puede agregar renglones', () => {
-    cy.contains('button', 'Agregar cama').click();
-
-    cy.get('.button.is-static:visible:contains("Hab.")').should('have.length', 2);
-  });
-
-  it.only('Al cambiar la fecha, se reinician los renglones', () => {
-    cy.contains('button', 'Agregar cama').click();
-    cy.get('#autocomplete-habitacion-renglon-0').type('azul{enter}');
-    cy.get('#autocomplete-cama-renglon-0').type('Matri{enter}');
-
-    cy.get('.react-daterange-picker__calendar-button').click();
-
-    cy.get('.react-calendar__navigation__next-button').click();
-
-    cy.get('.react-calendar__month-view__days__day').contains('11').click();
-
-    cy.get('.react-calendar__month-view__days__day').contains('12').click();
-
-    cy.wait('@conLugaresLibres');
-
-    cy.get('#autocomplete-habitacion-renglon-0').contains('Roja');
-    cy.get('#autocomplete-cama-renglon-0').contains('4');
-  });
-
-  it('Al eliminar un renglón, se mantienen los datos de los de abajo', () => {
-    cy.contains('button', 'Agregar cama').click();
-
-    cy.contains('button', 'Agregar cama').click();
-
-    cy.get('#habitacion-renglon-2').select('2');
-
-    cy.get('[name="CamasIds[2]"]').select('28');
-
-    cy.get('#eliminar-renglon-1').click();
-
-    cy.get('#habitacion-renglon-2').should('contain.value', 2);
-
-    cy.get('[name="CamasIds[2]"]').should('contain.value', 28);
-  });
-
   it('Al seleccionar una habitación sin camas disponibles, figura la leyenda correspondiente', () => {
     cy.get('#habitacion-renglon-0').select('4');
 

@@ -100,7 +100,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
         <button
           className={`button has-text-grey has-background-light ${Estilos.boton}`}
           type="button"
-          id={`eliminar-renglon-${renglon.indice}`}
+          data-cy={`eliminar-renglon-${renglon.indice}`}
           onClick={(): void => eliminar(renglon.indice)}
         >
           <Icon faCode="trash-alt" />
