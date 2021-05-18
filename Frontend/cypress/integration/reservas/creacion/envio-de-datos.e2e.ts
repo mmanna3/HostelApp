@@ -68,9 +68,14 @@ function cargarDatosDelHuesped(): void {
 }
 
 function cargarRenglones(): void {
-  cy.get('[data-cy=boton-agregar-cama]').click();
   cy.get('#autocomplete-habitacion-renglon-0').type('azul{enter}');
   cy.get('#autocomplete-cama-renglon-0').type('Matri{enter}');
+
+  cy.get('[data-cy=boton-agregar-cama]').click();
+  cy.get('#autocomplete-habitacion-renglon-1').type('azul{enter}');
+  cy.get('#autocomplete-cama-renglon-1').type('Indi{enter}');
+
+  cy.get('[data-cy=boton-agregar-cama]').click();
 }
 
 describe.only('Envío de datos', (): void => {
@@ -93,7 +98,7 @@ describe.only('Envío de datos', (): void => {
         Pais: 'de',
         Telefono: '44610000',
       },
-      camasIds: [29],
+      camasIds: [29, 52],
       canal: 'Presencial',
       cantidadDePasajeros: 1,
       diaDeCheckin: '2021-05-18',
