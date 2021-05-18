@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Huesped;
 using Api.Controllers.DTOs.Reserva;
 using Api.Controllers.Mapping;
@@ -57,6 +56,7 @@ namespace Api.UnitTests.Controllers.Mapping
             reserva.HoraEstimadaDeLlegada.Should().Be(new TimeSpan(11, 0, 0));
             reserva.Estado.Should().Be(ReservaEstadoEnum.HizoCheckout);
             reserva.CantidadDePasajeros.Should().Be(3);
+            reserva.Canal.Should().Be(_unaReservaDto.Canal);
             reserva.ReservaCamas.Should().HaveCount(1);
             reserva.ReservaHabitacionesPrivadas.Should().HaveCount(3);
 
@@ -70,11 +70,13 @@ namespace Api.UnitTests.Controllers.Mapping
         public void Reserva_a_ReservaDTO()
         {
 	        DadaUnaListaDeReservas();
-	        var reservaDTO = ReservaMapper.Map(_unaListaDeReservas.Skip(1).First());
+	        var reserva = _unaListaDeReservas.Skip(1).First();
+	        var reservaDTO = ReservaMapper.Map(reserva);
 
 	        reservaDTO.Estado.Should().Be(ReservaEstadoEnum.InHouse);
 	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00:00");
 	        reservaDTO.CantidadDePasajeros.Should().Be(1);
+	        reservaDTO.Canal.Should().Be(reserva.Canal);
             reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
 	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
 	        reservaDTO.CamasIds.Should().HaveCount(2);
@@ -130,6 +132,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 CantidadDePasajeros = 1,
                 HoraEstimadaDeLlegada = new TimeSpan(11, 0, 0),
                 Estado = ReservaEstadoEnum.InHouse,
+                Canal = "Booking",
                 ReservaCamas = new List<ReservaCama> { new ReservaCama { Cama = cama1, CamaId = cama1.Id }, new ReservaCama { Cama = cama2, CamaId = cama2.Id } },
                 Huesped = _unHuesped
             };
@@ -143,6 +146,7 @@ namespace Api.UnitTests.Controllers.Mapping
 	        _unaReservaDto = new ReservaDTO
             {
                 DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
+                Canal = "Booking",
                 DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),
                 CamasIds = new List<int> { UN_CAMA_ID },

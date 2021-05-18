@@ -32,6 +32,7 @@ namespace Api.IntegrationTests
 				DiaDeCheckout = Utilidades.ConvertirFecha(hasta),
 				HoraEstimadaDeLlegada = "11:30:00",
 				CantidadDePasajeros = 2,
+				Canal = "Booking",
 			};
 
 			return await _httpClient.PostAsJsonAsync(ENDPOINT, body);

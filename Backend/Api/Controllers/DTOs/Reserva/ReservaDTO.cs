@@ -13,7 +13,10 @@ namespace Api.Controllers.DTOs.Reserva
 
         [YKNRequired, YKNRango(Desde = 1, Hasta = 20), DisplayName("Cant. de pasajeros")]
         public int CantidadDePasajeros { get; set; }
-        
+
+        [YKNRequired, DisplayName("Canal")]
+        public string Canal { get; set; }
+
         public DatosMinimosDeHuespedDTO DatosMinimosDeHuesped { get; set; }
 
         [YKNRequired, DisplayName("Día de checkin")]

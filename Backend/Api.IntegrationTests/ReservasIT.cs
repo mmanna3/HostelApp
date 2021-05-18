@@ -79,6 +79,7 @@ namespace Api.IntegrationTests
 	        reserva.DiaDeCheckout.Should().Be("2020-09-18");
 	        reserva.HoraEstimadaDeLlegada.Should().Be("11:30:00");
 	        reserva.CantidadDePasajeros.Should().Be(2);
+	        reserva.Canal.Should().Be("Booking");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);

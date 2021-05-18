@@ -17,6 +17,7 @@ namespace Api.Controllers.Mapping
 				Estado = entidad.Estado,
 				HoraEstimadaDeLlegada = entidad.HoraEstimadaDeLlegada.ToString(),
 				CantidadDePasajeros = entidad.CantidadDePasajeros,
+				Canal = entidad.Canal,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
 				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).ToList(), //Faltan las camas de las habitacionesPrivadas
@@ -81,6 +82,7 @@ namespace Api.Controllers.Mapping
 				ReservaHabitacionesPrivadas = dto.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
 				Huesped = HuespedMapper.Map(dto.DatosMinimosDeHuesped),
 				Estado = dto.Estado,
+				Canal = dto.Canal,
 				HoraEstimadaDeLlegada = TimeSpan.Parse(dto.HoraEstimadaDeLlegada),
 				CantidadDePasajeros = dto.CantidadDePasajeros,
 				PrimeraNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckin),
