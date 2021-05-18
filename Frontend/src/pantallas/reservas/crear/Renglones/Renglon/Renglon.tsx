@@ -20,10 +20,9 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
   const habitaciones = renglon.habitacionesDisponibles.map(
     (habitacion): ILabelValue => {
       return {
-        label: `Habitación ${habitacion.nombre} - ${habitacion.cantidadDeLugaresLibres} lugares ${
-          habitacion.esPrivada ? '\uf023' : ''
-        }`,
+        label: `Habitación ${habitacion.nombre} - ${habitacion.cantidadDeLugaresLibres} lugares`,
         value: habitacion.id.toString(),
+        esPrivada: habitacion.esPrivada,
       };
     }
   );
@@ -35,6 +34,12 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
         value: cama.id.toString(),
       };
     }
+  );
+
+  const formatOptionLabel = ({ label, esPrivada }: any): ReactElement => (
+    <div>
+      {label} {esPrivada ? <Icon faCode="lock" /> : ''}
+    </div>
   );
 
   return (
@@ -50,6 +55,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
             reiniciarCama();
           }}
           icono="door-closed"
+          formatOptionLabel={formatOptionLabel}
         />
       </div>
       <div className="column">

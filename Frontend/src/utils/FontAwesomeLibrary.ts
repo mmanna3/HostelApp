@@ -10,6 +10,7 @@ import {
   faGlobe,
   faIdCard,
   faInfo,
+  faLock,
   faPhone,
   faTrashAlt,
   faUser,
@@ -28,5 +29,6 @@ library.add(faExclamationTriangle);
 library.add(faArrowRight);
 library.add(faDoorClosed);
 library.add(faBed);
+library.add(faLock);
 // library.add(faUsers);
 // library.add(faUserFriends);

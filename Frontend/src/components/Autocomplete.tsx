@@ -14,11 +14,13 @@ interface IProps {
   register?: () => any;
   onChange?: (value: string) => any;
   icono?: IconProp;
+  formatOptionLabel?: (props: any) => ReactElement;
 }
 
 export interface ILabelValue {
   value: string;
   label: string;
+  [key: string]: any;
 }
 
 export const Autocomplete = ({
@@ -29,6 +31,7 @@ export const Autocomplete = ({
   placeholder = '',
   onChange,
   icono,
+  formatOptionLabel,
 }: IProps): ReactElement => {
   const [valor, actualizarValor] = useState<ILabelValue>(opcionInicial);
   const { setValue } = useFormContext();
@@ -97,6 +100,7 @@ export const Autocomplete = ({
             defaultValue={field.value}
             components={{ ValueContainer }}
             styles={styles}
+            formatOptionLabel={formatOptionLabel}
           />
         </>
       )}
