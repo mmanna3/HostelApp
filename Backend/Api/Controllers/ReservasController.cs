@@ -49,8 +49,10 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<int> Crear([FromBody] ReservaDTO dto)
         {
+	        if (dto.CamasIds != null  && dto.CamasIds.Count == 0 && dto.HabitacionesPrivadasIds != null && dto.HabitacionesPrivadasIds.Count == 0)
+		        throw new AppException("Se debe reservar al menos una habitación o cama");
 
-			if (dto.CamasIds != null && dto.CamasIds.Count() != dto.CamasIds.Distinct().Count())
+	        if (dto.CamasIds != null && dto.CamasIds.Count() != dto.CamasIds.Distinct().Count())
 				throw new AppException("No puede reservarse dos veces la misma cama");
 
 			if (dto.HabitacionesPrivadasIds != null && dto.HabitacionesPrivadasIds.Count() != dto.HabitacionesPrivadasIds.Distinct().Count())
