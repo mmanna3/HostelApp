@@ -50,7 +50,7 @@ function mockearSoloUnaHabitacionSinCamas() {
       {
         id: 1,
         nombre: 'Roja',
-        esPrivada: true,
+        esPrivada: false,
         camas: [],
         cantidadDeLugaresLibres: 0,
       },
@@ -60,25 +60,31 @@ function mockearSoloUnaHabitacionSinCamas() {
   cy.visit('/reservas');
 }
 
-describe('Crear reservas', () => {
-  it('Si la primera es una habitación privada, figura la leyenda correspondiente', () => {
+describe('Renglones: Habitación privada y sin camas', () => {
+  it('Si se selecciona una habitación privada, figura la leyenda correspondiente', () => {
     mockearSoloUnaHabitacionPrivada();
 
     paginaReservas.abrirModalNuevaReserva();
 
-    cy.get('#habitacion-privada-renglon-0').should('contain.value', 1);
+    cy.get('[data-cy=autocomplete-habitacion-renglon-0]').should('be.visible');
+    cy.get('[data-cy=input-privada-renglon-0]').should('be.visible');
+    cy.get('[data-cy=input-privada-renglon-0]').should('have.attr', 'placeholder', 'Se reservarán todas las camas');
 
-    cy.get('#habitacion-privada-renglon-0').should('contain.text', 'Todas - Habitación privada');
+    cy.get('[data-cy=autocomplete-cama-renglon-0]').should('not.exist');
+    cy.get('[data-cy=input-no-tiene-camas-renglon-0]').should('not.exist');
   });
 
-  it('Si la primera es una habitación sin camas, figura la leyenda correspondiente', () => {
+  it('Si se selecciona una habitación sin camas disponibles, figura la leyenda correspondiente', () => {
     mockearSoloUnaHabitacionSinCamas();
 
     paginaReservas.abrirModalNuevaReserva();
 
-    cy.get('#habitacion-renglon-0').should('contain.value', 1);
+    cy.get('[data-cy=autocomplete-habitacion-renglon-0]').should('be.visible');
+    cy.get('[data-cy=input-no-tiene-camas-renglon-0]').should('be.visible');
+    cy.get('[data-cy=input-no-tiene-camas-renglon-0]').should('have.attr', 'placeholder', 'No tiene camas en esta fecha');
 
-    cy.get('#renglon-sin-camas-0').should('contain.value', 'No tiene en esta fecha');
+    cy.get('[data-cy=autocomplete-cama-renglon-0]').should('not.exist');
+    cy.get('[data-cy=input-privada-renglon-0]').should('not.exist');
   });
 });
 

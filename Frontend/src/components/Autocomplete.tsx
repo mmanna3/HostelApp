@@ -15,6 +15,7 @@ interface IProps {
   onChange?: (value: string) => any;
   icono?: IconProp;
   formatOptionLabel?: (props: any) => ReactElement;
+  dataCy?: string;
 }
 
 export interface ILabelValue {
@@ -32,6 +33,7 @@ export const Autocomplete = ({
   onChange,
   icono,
   formatOptionLabel,
+  dataCy,
 }: IProps): ReactElement => {
   const [valor, actualizarValor] = useState<ILabelValue>(opcionInicial);
   const { setValue } = useFormContext();
@@ -81,29 +83,31 @@ export const Autocomplete = ({
   };
 
   return (
-    <Controller
-      name={name}
-      defaultValue={opcionInicial}
-      render={({ field }): ReactElement => (
-        <>
-          {label && <label className="label">{label}</label>}
-          <Select
-            options={opciones}
-            {...field}
-            value={opciones.find((c): boolean => c.value === field.value)}
-            onChange={(val): void => {
-              field.onChange(val?.value);
-              actualizarValor(val);
-              if (onChange) onChange(val?.value);
-            }}
-            placeholder={placeholder}
-            defaultValue={field.value}
-            components={{ ValueContainer }}
-            styles={styles}
-            formatOptionLabel={formatOptionLabel}
-          />
-        </>
-      )}
-    />
+    <div data-cy={dataCy}>
+      <Controller
+        name={name}
+        defaultValue={opcionInicial}
+        render={({ field }): ReactElement => (
+          <>
+            {label && <label className="label">{label}</label>}
+            <Select
+              options={opciones}
+              {...field}
+              value={opciones.find((c): boolean => c.value === field.value)}
+              onChange={(val): void => {
+                field.onChange(val?.value);
+                actualizarValor(val);
+                if (onChange) onChange(val?.value);
+              }}
+              placeholder={placeholder}
+              defaultValue={field.value}
+              components={{ ValueContainer }}
+              styles={styles}
+              formatOptionLabel={formatOptionLabel}
+            />
+          </>
+        )}
+      />
+    </div>
   );
 };

@@ -46,7 +46,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
     <div className="columns">
       <div className="column">
         <Autocomplete
-          data-cy={`habitacion-renglon-${renglon.indice}`}
+          dataCy={`autocomplete-habitacion-renglon-${renglon.indice}`}
           name={`ignorarHabitacion[${renglon.indice}]`}
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
@@ -63,6 +63,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
           <>
             <Input
               key={camaKey}
+              dataCy={`input-privada-renglon-${renglon.indice}`}
               name={`ignorarCamaHabPrivada-${renglon.indice}`}
               placeholder="Se reservarán todas las camas"
               readOnly
@@ -77,6 +78,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
         ) : renglon.camasDisponibles.length === 0 ? (
           <Input
             key={camaKey}
+            dataCy={`input-no-tiene-camas-renglon-${renglon.indice}`}
             name={`ignorarSincamas-${renglon.indice}`}
             placeholder="No tiene camas en esta fecha"
             readOnly
@@ -84,7 +86,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
           />
         ) : (
           <Autocomplete
-            data-cy={`cama-renglon-${renglon.indice}`}
+            dataCy={`autocomplete-cama-renglon-${renglon.indice}`}
             key={camaKey}
             name={`ignorarCamasIds[${renglon.indice}]`}
             opciones={camas}
