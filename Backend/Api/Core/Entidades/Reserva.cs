@@ -16,8 +16,9 @@ namespace Api.Core.Entidades
         [Required]
         public int HuespedId { get; set; }
 
-        [Required]
         public ICollection<ReservaCama> ReservaCamas { get; set; }
+
+        public ICollection<ReservaHabitacionPrivada> ReservaHabitacionesPrivadas { get; set; }
 
         [Required]
         public DateTime PrimeraNoche { get; set; }
@@ -30,6 +31,10 @@ namespace Api.Core.Entidades
         
         [Required]
         public int CantidadDePasajeros { get; set; }
+
+        [Required]
+        public string Canal { get; set; }
+
         public bool EstaReservado(DateTime dia)
         {
             return dia >= PrimeraNoche && dia <= UltimaNoche;

@@ -1,4 +1,4 @@
-import { CamaTipo, HabitacionDTO } from '../../../src/store/api/DTOs';
+import { CamaTipoEnum, HabitacionDTO } from '../../../src/store/api/DTOs';
 
 const habitaciones: HabitacionDTO[] = [
   {
@@ -11,7 +11,7 @@ const habitaciones: HabitacionDTO[] = [
       {
         id: 1,
         nombre: '1',
-        tipo: CamaTipo.Individual,
+        tipo: CamaTipoEnum.Individual,
       },
     ],
     camasCuchetas: [],
@@ -19,7 +19,7 @@ const habitaciones: HabitacionDTO[] = [
       {
         id: 2,
         nombre: 'Matri',
-        tipo: CamaTipo.Matrimonial,
+        tipo: CamaTipoEnum.Matrimonial,
       },
     ],
   },
@@ -33,12 +33,12 @@ const habitaciones: HabitacionDTO[] = [
       {
         id: 5,
         nombre: '1',
-        tipo: CamaTipo.Individual,
+        tipo: CamaTipoEnum.Individual,
       },
       {
         id: 6,
         nombre: '2',
-        tipo: CamaTipo.Individual,
+        tipo: CamaTipoEnum.Individual,
       },
     ],
     camasCuchetas: [
@@ -48,12 +48,12 @@ const habitaciones: HabitacionDTO[] = [
         abajo: {
           id: 3,
           nombre: 'Cucheta',
-          tipo: CamaTipo.CuchetaAbajo,
+          tipo: CamaTipoEnum.CuchetaAbajo,
         },
         arriba: {
           id: 4,
           nombre: 'Cucheta',
-          tipo: CamaTipo.CuchetaArriba,
+          tipo: CamaTipoEnum.CuchetaArriba,
         },
       },
     ],

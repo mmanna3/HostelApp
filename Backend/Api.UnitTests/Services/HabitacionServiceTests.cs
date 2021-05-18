@@ -32,7 +32,7 @@ namespace Api.UnitTests.Services
         [Test]
         public void Crear_Falla_PorqueHayCamasIndividualesSinNombre()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasIndividuales = new List<CamaIndividual>
                 {
@@ -51,7 +51,7 @@ namespace Api.UnitTests.Services
         [Test]
         public void Crear_DaExcepcion_PorqueHayCamasMatrimonialesSinNombre()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasMatrimoniales = new List<CamaMatrimonial>
                 {
@@ -70,7 +70,7 @@ namespace Api.UnitTests.Services
         [Test]
         public void Crear_Falla_PorqueHayCamasCuchetasSinNombre()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasCuchetas = new List<CamaCucheta>
                 {
@@ -93,7 +93,7 @@ namespace Api.UnitTests.Services
                         .With.Property("Message").EqualTo(TODAS_LAS_CAMAS_DEBEN_TENER_IDENTIFICADOR))
                 ;
 
-            var habitacion2 = new Habitacion
+            var habitacion2 = new HabitacionCompartida
             {
                 CamasCuchetas = new List<CamaCucheta>
                 {
@@ -116,7 +116,7 @@ namespace Api.UnitTests.Services
                         .With.Property("Message").EqualTo(TODAS_LAS_CAMAS_DEBEN_TENER_IDENTIFICADOR))
                 ;
 
-            var habitacion3 = new Habitacion
+            var habitacion3 = new HabitacionCompartida
             {
                 CamasCuchetas = new List<CamaCucheta>
                 {
@@ -143,7 +143,7 @@ namespace Api.UnitTests.Services
         [Test]
         public void Crear_Falla_PorqueHayCamasDelMismoTipoConIdentificadorRepetido()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasMatrimoniales = new List<CamaMatrimonial>
                 {
@@ -162,7 +162,7 @@ namespace Api.UnitTests.Services
         [Test]
         public void Crear_Falla_PorqueHayCamasDeDistintoTipoConIdentificadorRepetido()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasIndividuales = new List<CamaIndividual>
                 {
@@ -193,7 +193,7 @@ namespace Api.UnitTests.Services
         [Test]
         public async Task Crear_Ok_PorqueTodasLasCamasTienenIdentificadorUnico()
         {
-            var habitacion = new Habitacion
+            var habitacion = new HabitacionCompartida
             {
                 CamasIndividuales = new List<CamaIndividual>
                 {

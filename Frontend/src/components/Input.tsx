@@ -17,6 +17,7 @@ interface InputProps {
   type?: string;
   readOnly?: boolean;
   step?: string;
+  dataCy?: string;
 }
 
 export function Input({
@@ -31,6 +32,7 @@ export function Input({
   style,
   readOnly,
   step,
+  dataCy,
   handleOnChange = (e: any): void => {},
 }: InputProps): ReactElement {
   const { setValue, getValues } = useFormContext();
@@ -48,6 +50,7 @@ export function Input({
           <div className={`control ${faIconCode ? 'has-icons-left' : ''} `}>
             <input
               {...field}
+              data-cy={dataCy}
               value={field.value || ''} // así React sabe que el input es Controlled
               onChange={(e: any): void => {
                 field.onChange(e);

@@ -20,10 +20,9 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
   const habitaciones = renglon.habitacionesDisponibles.map(
     (habitacion): ILabelValue => {
       return {
-        label: `Habitación ${habitacion.nombre} - ${habitacion.cantidadDeLugaresLibres} lugares ${
-          habitacion.esPrivada ? '\uf023' : ''
-        }`,
+        label: `Habitación ${habitacion.nombre} - ${habitacion.cantidadDeLugaresLibres} lugares`,
         value: habitacion.id.toString(),
+        esPrivada: habitacion.esPrivada,
       };
     }
   );
@@ -37,11 +36,17 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
     }
   );
 
+  const formatOptionLabel = ({ label, esPrivada }: any): ReactElement => (
+    <div>
+      {label} {esPrivada ? <Icon faCode="lock" /> : ''}
+    </div>
+  );
+
   return (
     <div className="columns">
       <div className="column">
         <Autocomplete
-          data-cy={`habitacion-renglon-${renglon.indice}`}
+          dataCy={`autocomplete-habitacion-renglon-${renglon.indice}`}
           name={`ignorarHabitacion[${renglon.indice}]`}
           opciones={habitaciones}
           opcionInicial={habitaciones[0]}
@@ -50,6 +55,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
             reiniciarCama();
           }}
           icono="door-closed"
+          formatOptionLabel={formatOptionLabel}
         />
       </div>
       <div className="column">
@@ -57,6 +63,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
           <>
             <Input
               key={camaKey}
+              dataCy={`input-privada-renglon-${renglon.indice}`}
               name={`ignorarCamaHabPrivada-${renglon.indice}`}
               placeholder="Se reservarán todas las camas"
               readOnly
@@ -71,6 +78,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
         ) : renglon.camasDisponibles.length === 0 ? (
           <Input
             key={camaKey}
+            dataCy={`input-no-tiene-camas-renglon-${renglon.indice}`}
             name={`ignorarSincamas-${renglon.indice}`}
             placeholder="No tiene camas en esta fecha"
             readOnly
@@ -78,7 +86,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
           />
         ) : (
           <Autocomplete
-            data-cy={`cama-renglon-${renglon.indice}`}
+            dataCy={`autocomplete-cama-renglon-${renglon.indice}`}
             key={camaKey}
             name={`ignorarCamasIds[${renglon.indice}]`}
             opciones={camas}
@@ -92,7 +100,7 @@ const Renglon = ({ renglon, onHabitacionChange, onCamaChange, eliminar }: IParam
         <button
           className={`button has-text-grey has-background-light ${Estilos.boton}`}
           type="button"
-          id={`eliminar-renglon-${renglon.indice}`}
+          data-cy={`eliminar-renglon-${renglon.indice}`}
           onClick={(): void => eliminar(renglon.indice)}
         >
           <Icon faCode="trash-alt" />

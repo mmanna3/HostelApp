@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,8 +42,8 @@ namespace Api.Persistence.Repositories
 
         public async Task<IEnumerable<Habitacion>> ListarConCamasLibres()
         {
-            return await _context.Habitaciones
-                .Include(x => x.CamasIndividuales)
+	        var habitacionesCompartidas = await _context.HabitacionesCompartidas
+		        .Include(x => x.CamasIndividuales)
                     .ThenInclude(x => x.ReservaCamas)
                     .ThenInclude(x => x.Reserva)
                 .Include(x => x.CamasCuchetas)
@@ -57,6 +58,13 @@ namespace Api.Persistence.Repositories
                     .ThenInclude(x => x.ReservaCamas)
                     .ThenInclude(x => x.Reserva)
                 .ToListAsync();
+
+	        var habitacionesPrivadas = await _context.HabitacionesPrivadas
+		        .Include(x => x.ReservaHabitacionesPrivadas)
+			        .ThenInclude(x => x.Reserva)
+			        .ToListAsync();
+
+	        return habitacionesCompartidas.Concat(habitacionesPrivadas.Cast<Habitacion>()).ToList();
         }
     }
 }

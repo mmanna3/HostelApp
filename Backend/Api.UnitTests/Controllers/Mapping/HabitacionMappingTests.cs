@@ -3,6 +3,7 @@ using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.Mapping;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -24,9 +25,9 @@ namespace Api.UnitTests.Controllers.Mapping
             habitacion.CamasIndividuales.Count.Should().Be(1);
             habitacion.CamasCuchetas.Count.Should().Be(1);
 
-            habitacion.EsPrivada.Should().BeTrue();
             habitacion.TieneBanio.Should().BeTrue();
             habitacion.InformacionAdicional.Should().Be("asd");
+            habitacion.Tipo().Should().Be(HabitacionTipoEnum.Privada);
         }
 
         [Test]
@@ -39,6 +40,7 @@ namespace Api.UnitTests.Controllers.Mapping
             habitacionesDTO.First().EsPrivada.Should().BeTrue();
             habitacionesDTO.First().TieneBanio.Should().BeTrue();
             habitacionesDTO.First().InformacionAdicional.Should().Be("asd");
+            habitacionesDTO.First().EsPrivada.Should().Be(true);
 
             habitacionesDTO.First().CamasMatrimoniales.Count.Should().Be(1);
             habitacionesDTO.First().CamasIndividuales.Count.Should().Be(1);
@@ -49,10 +51,9 @@ namespace Api.UnitTests.Controllers.Mapping
         {
             _unaListaDeHabitaciones = new List<Habitacion>();
 
-            var h1 = new Habitacion
+            var h1 = new HabitacionPrivada
             {
                 Nombre = "Azul",
-                EsPrivada = true,
                 TieneBanio = true,
                 InformacionAdicional = "asd",
                 CamasIndividuales = new List<CamaIndividual>
@@ -109,7 +110,7 @@ namespace Api.UnitTests.Controllers.Mapping
                     {
                         Abajo = new CamaDTO
                         {
-                            Nombre = "Abajo"
+                              Nombre = "Abajo"
                         },
                         Arriba = new CamaDTO
                         {

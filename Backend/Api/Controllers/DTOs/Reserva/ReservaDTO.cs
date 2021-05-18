@@ -13,7 +13,10 @@ namespace Api.Controllers.DTOs.Reserva
 
         [YKNRequired, YKNRango(Desde = 1, Hasta = 20), DisplayName("Cant. de pasajeros")]
         public int CantidadDePasajeros { get; set; }
-        
+
+        [YKNRequired, DisplayName("Canal")]
+        public string Canal { get; set; }
+
         public DatosMinimosDeHuespedDTO DatosMinimosDeHuesped { get; set; }
 
         [YKNRequired, DisplayName("Día de checkin")]
@@ -22,8 +25,8 @@ namespace Api.Controllers.DTOs.Reserva
         [YKNRequired, DisplayName("Día de checkout")]
         public string DiaDeCheckout { get; set; }
         
-        public List<int?> CamasIds { get; set; }
+        public List<int> CamasIds { get; set; }
         
-        public List<List<int>> CamasDeHabitacionesPrivadasIds { get; set; }
+        public List<int> HabitacionesPrivadasIds { get; set; }
     }
 }

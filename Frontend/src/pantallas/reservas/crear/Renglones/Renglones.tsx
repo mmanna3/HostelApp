@@ -3,7 +3,7 @@ import Loader from 'components/Loader/Loader';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { HabitacionParaReservaDTO } from 'store/api/DTOs';
+import { HabitacionConLugaresLibresDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import PasajerosYLugares from './PasajerosYLugares/PasajerosYLugares';
 import Renglon from './Renglon/Renglon';
@@ -39,13 +39,15 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
 
   useEffect((): void => {
     if (habitacionesDisponibles.length > 0) actualizarRenglones([crearRenglonData(0, habitacionesDisponibles)]);
-  }, [habitacionesDisponibles]);
+  }, [habitacionesDisponibles, estado]);
 
   function onHabitacionChange(indice: number, id: string): void {
     let renglonesCopia = renglones.map(
       (renglon): RenglonData => {
         if (renglon.indice === indice) {
-          let habitacion = habitacionesDisponibles.find((hab: HabitacionParaReservaDTO): boolean => hab.id === parseInt(id));
+          let habitacion = habitacionesDisponibles.find(
+            (hab: HabitacionConLugaresLibresDTO): boolean => hab.id === parseInt(id)
+          );
           return crearRenglonData(indice, renglon.habitacionesDisponibles, habitacion);
         } else return renglon;
       }
@@ -105,7 +107,7 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
             }
           )}
 
-          <Button text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
+          <Button dataCy="boton-agregar-cama" text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
         </>
       )}
     </>

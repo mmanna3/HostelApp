@@ -4,14 +4,16 @@ using Api.Persistence.Config;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Api.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210517012049_SeparaHabitacionesCompartidasDePrivadas")]
+    partial class SeparaHabitacionesCompartidasDePrivadas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,10 +146,6 @@ namespace Api.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Canal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CantidadDePasajeros")
                         .HasColumnType("int");
 
@@ -188,21 +186,6 @@ namespace Api.Persistence.Migrations
                     b.HasIndex("CamaId");
 
                     b.ToTable("ReservaCama");
-                });
-
-            modelBuilder.Entity("Api.Core.Entidades.ReservaHabitacionPrivada", b =>
-                {
-                    b.Property<int>("ReservaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HabitacionPrivadaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ReservaId", "HabitacionPrivadaId");
-
-                    b.HasIndex("HabitacionPrivadaId");
-
-                    b.ToTable("ReservaHabitacionPrivada");
                 });
 
             modelBuilder.Entity("Api.Core.Entidades.Usuario", b =>
@@ -333,21 +316,6 @@ namespace Api.Persistence.Migrations
 
                     b.HasOne("Api.Core.Entidades.Reserva", "Reserva")
                         .WithMany("ReservaCamas")
-                        .HasForeignKey("ReservaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Api.Core.Entidades.ReservaHabitacionPrivada", b =>
-                {
-                    b.HasOne("Api.Core.Entidades.HabitacionPrivada", "HabitacionPrivada")
-                        .WithMany("ReservaHabitacionesPrivadas")
-                        .HasForeignKey("HabitacionPrivadaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Core.Entidades.Reserva", "Reserva")
-                        .WithMany("ReservaHabitacionesPrivadas")
                         .HasForeignKey("ReservaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

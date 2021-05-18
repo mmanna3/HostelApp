@@ -16,9 +16,9 @@ export function SubmitButton({ text, loading }) {
     );
 }
 
-export function Button({ text, clases = '', ...otrosAtributos }) {
+export function Button({ text, clases = '', dataCy = '', ...otrosAtributos }) {
   return (
-    <button className={`button is-primary ${clases}`} type="button" {...otrosAtributos}>
+    <button data-cy={dataCy} className={`button is-primary ${clases}`} type="button" {...otrosAtributos}>
       {text}
     </button>
   );

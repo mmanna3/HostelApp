@@ -32,7 +32,7 @@ namespace Api.Controllers
         }
 
         [HttpGet, Route("conLugaresLibres")]
-        public async Task<IEnumerable<HabitacionParaReservaDTO>> ListarConLugaresLibres(DateTime desde, DateTime hasta)
+        public async Task<IEnumerable<HabitacionConLugaresLibresDTO>> ListarConLugaresLibres(DateTime desde, DateTime hasta)
         {
             // Esto está malísimo. Con razón anda lento, salame. Mentira, te quiero.
 	        var habitaciones = await _habitacionService.ListarConLugaresLibres();

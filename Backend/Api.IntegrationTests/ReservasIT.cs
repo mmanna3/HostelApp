@@ -44,7 +44,7 @@ namespace Api.IntegrationTests
 
             var camaId = await CrearHabitacionConUnaCama();
 
-            var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, _desde, _hasta);
+            var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, _desde, _hasta);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var consultaResponse = await _reservasHttpClient.ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
@@ -67,7 +67,7 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, _desde, _hasta);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, _desde, _hasta);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var reservaId = await response.Content.ReadAsAsync<int>();
             
@@ -79,6 +79,7 @@ namespace Api.IntegrationTests
 	        reserva.DiaDeCheckout.Should().Be("2020-09-18");
 	        reserva.HoraEstimadaDeLlegada.Should().Be("11:30:00");
 	        reserva.CantidadDePasajeros.Should().Be(2);
+	        reserva.Canal.Should().Be("Booking");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
@@ -96,7 +97,7 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
@@ -116,7 +117,7 @@ namespace Api.IntegrationTests
 	        var camaId = await CrearHabitacionConUnaCama();
 	        var huespedId = await _reservasHttpClient.CrearHuesped(_datosMinimosDeUnHuesped);
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
@@ -135,7 +136,7 @@ namespace Api.IntegrationTests
         {
             var camaId = await CrearHabitacionConUnaCama();
 
-            await _reservasHttpClient.CrearReserva(camaId, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-3), DateTime.Today);
+            await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-3), DateTime.Today);
 
             var consultaResponse = await _reservasHttpClient.ListarCheckoutsDeHoy();
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);

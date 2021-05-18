@@ -23,7 +23,7 @@ namespace Api.UnitTests.Repositories
         [Test]
         public async Task Lista_correctamente_lugares_libres_en_la_fecha()
         {
-            await _context.Habitaciones.AddAsync(new Habitacion { Id = 1, Nombre = "Azul" });
+            await _context.Habitaciones.AddAsync(new HabitacionCompartida { Id = 1, Nombre = "Azul" });
 
             var indi = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             await _context.CamasIndividuales.AddAsync(indi);

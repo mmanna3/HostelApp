@@ -2,7 +2,7 @@
 
 namespace Api.Controllers.DTOs.Habitacion
 {
-    public class HabitacionParaReservaDTO
+    public class HabitacionConLugaresLibresDTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

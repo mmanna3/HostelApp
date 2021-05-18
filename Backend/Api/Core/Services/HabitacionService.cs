@@ -33,66 +33,66 @@ namespace Api.Core.Services
             return await _habitacionRepository.ObtenerPorId(id);
         }
 
-        public async Task<int> CrearAsync(Habitacion habitacion)
+        public async Task<int> CrearAsync(Habitacion Habitacion)
         {
-            if (HayCamasSinNombre(habitacion))
+            if (HayCamasSinNombre(Habitacion))
                 throw new AppException("Todas las camas deben tener Identificador");
 
-            if (HayCamasConIdentificadorRepetido(habitacion))
+            if (HayCamasConIdentificadorRepetido(Habitacion))
                 throw new AppException("No puede haber camas con el mismo Identificador");
 
-            _habitacionRepository.Crear(habitacion);
+            _habitacionRepository.Crear(Habitacion);
             await _unitOfWork.CompleteAsync();
-            return habitacion.Id;
+            return Habitacion.Id;
         }
 
-        public async Task ModificarAsync(int id, Habitacion habitacion)
+        public async Task ModificarAsync(int id, Habitacion Habitacion)
         {
             var habitacionAModificar = await _habitacionRepository.ObtenerPorId(id);
 
             if (habitacionAModificar == null)
                 throw new AppException($"No se encontró la habitación de id:{id}");
 
-            habitacion.Id = habitacionAModificar.Id;
-            _habitacionRepository.Modificar(habitacionAModificar, habitacion);
+            Habitacion.Id = habitacionAModificar.Id;
+            _habitacionRepository.Modificar(habitacionAModificar, Habitacion);
             
             await _unitOfWork.CompleteAsync();
         }
 
-        private static bool HayCamasSinNombre(Habitacion habitacion)
+        private static bool HayCamasSinNombre(Habitacion Habitacion)
         {
-            return habitacion.CamasIndividuales != null && 
-                   habitacion.CamasIndividuales.ToList().Exists(x => string.IsNullOrEmpty(x.Nombre))
+            return Habitacion.CamasIndividuales != null && 
+                   Habitacion.CamasIndividuales.ToList().Exists(x => string.IsNullOrEmpty(x.Nombre))
                    ||
-                   habitacion.CamasMatrimoniales != null && 
-                   habitacion.CamasMatrimoniales.ToList().Exists(x => string.IsNullOrEmpty(x.Nombre))
+                   Habitacion.CamasMatrimoniales != null && 
+                   Habitacion.CamasMatrimoniales.ToList().Exists(x => string.IsNullOrEmpty(x.Nombre))
                    ||
-                   habitacion.CamasCuchetas != null && 
-                   habitacion.CamasCuchetas
+                   Habitacion.CamasCuchetas != null && 
+                   Habitacion.CamasCuchetas
                        .Select(x => x.Abajo)
                        .ToList()
                        .Exists(x => string.IsNullOrEmpty(x.Nombre))
                    ||
-                   habitacion.CamasCuchetas != null &&
-                   habitacion.CamasCuchetas
+                   Habitacion.CamasCuchetas != null &&
+                   Habitacion.CamasCuchetas
                        .Select(x => x.Arriba)
                        .ToList()
                        .Exists(x => string.IsNullOrEmpty(x.Nombre))
                 ;
         }
 
-        private static bool HayCamasConIdentificadorRepetido(Habitacion habitacion)
+        private static bool HayCamasConIdentificadorRepetido(Habitacion Habitacion)
         {
             var nombres = new List<string>();
 
-            if (habitacion.CamasMatrimoniales != null)
-                nombres.AddRange(habitacion.CamasMatrimoniales?.Select(x => x.Nombre));
+            if (Habitacion.CamasMatrimoniales != null)
+                nombres.AddRange(Habitacion.CamasMatrimoniales?.Select(x => x.Nombre));
 
-            if (habitacion.CamasCuchetas != null)
-                nombres.AddRange(habitacion.CamasCuchetas.Select(x => x.Abajo.Nombre)); //Es el mismo nombre arriba y abajo
+            if (Habitacion.CamasCuchetas != null)
+                nombres.AddRange(Habitacion.CamasCuchetas.Select(x => x.Abajo.Nombre)); //Es el mismo nombre arriba y abajo
 
-            if (habitacion.CamasIndividuales != null)
-                nombres.AddRange(habitacion.CamasIndividuales.Select(x => x.Nombre));
+            if (Habitacion.CamasIndividuales != null)
+                nombres.AddRange(Habitacion.CamasIndividuales.Select(x => x.Nombre));
 
             return nombres.GroupBy(x => x).Any(g => g.Count() > 1);
         }

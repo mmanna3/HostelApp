@@ -20,16 +20,19 @@ namespace Api.IntegrationTests
 			_httpClient = httpClient;
 		}
 
-		public async Task<HttpResponseMessage> CrearReserva(int camaId, DatosMinimosDeHuespedDTO datosMinimosDeHuesped, DateTime desde, DateTime hasta)
+		public async Task<HttpResponseMessage> CrearReserva(int? camaId, int? habitacionPrivadaId,
+			DatosMinimosDeHuespedDTO datosMinimosDeHuesped, DateTime desde, DateTime hasta)
 		{
 			var body = new ReservaDTO
 			{
 				DatosMinimosDeHuesped = datosMinimosDeHuesped,
-				CamasIds = new List<int?> { camaId },
+				HabitacionesPrivadasIds = habitacionPrivadaId == null ? new List<int>() : new List<int> { (int)habitacionPrivadaId },
+				CamasIds = camaId == null ? new List<int>() : new List<int> { (int)camaId },
 				DiaDeCheckin = Utilidades.ConvertirFecha(desde),
 				DiaDeCheckout = Utilidades.ConvertirFecha(hasta),
 				HoraEstimadaDeLlegada = "11:30:00",
 				CantidadDePasajeros = 2,
+				Canal = "Booking",
 			};
 
 			return await _httpClient.PostAsJsonAsync(ENDPOINT, body);

@@ -11,7 +11,7 @@ namespace Api.UnitTests.Entidades
     {
         private static readonly DateTime INICIO = new DateTime(2020, 09, 03);
         private static readonly DateTime FIN = new DateTime(2020, 09, 07);
-        private Habitacion _habitacion;
+        private HabitacionCompartida _habitacionCompartida;
 
         private Mock<CamaIndividual> _mockCamaIndividual;
         private Mock<CamaCuchetaDeAbajo> _mockCamaCuchetaDeAbajo;
@@ -26,25 +26,25 @@ namespace Api.UnitTests.Entidades
             _mockCamaCuchetaDeArriba = new Mock<CamaCuchetaDeArriba>();
             _mockCamaMatrimonial = new Mock<CamaMatrimonial>();
 
-            _habitacion = new Habitacion();
+            _habitacionCompartida = new HabitacionCompartida();
         }
 
         [Test]
         public void SumaCorrectamente_Reservas_CamasMatrimoniales()
         {
             _mockCamaMatrimonial.Setup(x=> x.LugaresLibresEntre(INICIO, FIN)).Returns(2);
-            _habitacion.CamasMatrimoniales = new List<CamaMatrimonial>{_mockCamaMatrimonial.Object};
+            _habitacionCompartida.CamasMatrimoniales = new List<CamaMatrimonial>{_mockCamaMatrimonial.Object};
 
-            _habitacion.LugaresLibresEntre(INICIO, FIN).Should().Be(2);
+            _habitacionCompartida.LugaresLibresEntre(INICIO, FIN).Should().Be(2);
         }
 
         [Test]
         public void SumaCorrectamente_Reservas_CamasIndividuales()
         {
             _mockCamaIndividual.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(1);
-            _habitacion.CamasIndividuales = new List<CamaIndividual> { _mockCamaIndividual.Object };
+            _habitacionCompartida.CamasIndividuales = new List<CamaIndividual> { _mockCamaIndividual.Object };
 
-            _habitacion.LugaresLibresEntre(INICIO, FIN).Should().Be(1);
+            _habitacionCompartida.LugaresLibresEntre(INICIO, FIN).Should().Be(1);
         }
 
         [Test]
@@ -59,9 +59,9 @@ namespace Api.UnitTests.Entidades
                 Arriba = _mockCamaCuchetaDeArriba.Object
             };
 
-            _habitacion.CamasCuchetas = new List<CamaCucheta> { camaCucheta };
+            _habitacionCompartida.CamasCuchetas = new List<CamaCucheta> { camaCucheta };
 
-            _habitacion.LugaresLibresEntre(INICIO, FIN).Should().Be(2);
+            _habitacionCompartida.LugaresLibresEntre(INICIO, FIN).Should().Be(2);
         }
     }
 }
