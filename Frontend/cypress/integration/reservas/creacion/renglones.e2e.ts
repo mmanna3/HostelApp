@@ -77,7 +77,7 @@ function dadoQueLaPrimeraHabitacionConLugaresLibresNoTieneLugaresLibres(): void 
 }
 
 describe('Renglones', (): void => {
-  describe.only('Casos generales', (): void => {
+  describe('Casos generales', (): void => {
     beforeEach((): void => {
       dadoQueHayDosHabitacionesConLugaresLibres();
       paginaReservas.abrirModalNuevaReserva();
@@ -105,7 +105,7 @@ describe('Renglones', (): void => {
       cy.get('#autocomplete-cama-renglon-0').contains('Indi1');
     });
 
-    it.only('Al eliminar un renglón, se mantienen los datos de los de abajo', (): void => {
+    it('Al eliminar un renglón, se mantienen los datos de los de abajo', (): void => {
       cy.get('[data-cy=boton-agregar-cama]').click();
       cy.get('[data-cy=boton-agregar-cama]').click();
 
