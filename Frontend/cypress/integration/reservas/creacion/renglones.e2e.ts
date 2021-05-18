@@ -78,10 +78,18 @@ function dadoQueLaPrimeraHabitacionConLugaresLibresNoTieneLugaresLibres(): void 
 
 describe('Renglones', (): void => {
   describe.only('Casos generales', (): void => {
-    it('Al cambiar la fecha, se reinician los renglones', (): void => {
+    beforeEach((): void => {
       dadoQueHayDosHabitacionesConLugaresLibres();
       paginaReservas.abrirModalNuevaReserva();
+    });
 
+    it('El usuario puede agregar renglones', (): void => {
+      cy.get('[data-cy=boton-agregar-cama]').click();
+      cy.get('[data-cy=autocomplete-habitacion-renglon-1]').should('be.visible');
+      cy.get('[data-cy=autocomplete-cama-renglon-1]').should('be.visible');
+    });
+
+    it('Al cambiar la fecha, se reinician los renglones', (): void => {
       cy.get('[data-cy=boton-agregar-cama]').click();
       cy.get('#autocomplete-habitacion-renglon-0').type('azul{enter}');
       cy.get('#autocomplete-cama-renglon-0').type('Matri{enter}');
