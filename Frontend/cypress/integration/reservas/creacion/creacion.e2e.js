@@ -8,12 +8,10 @@ describe('Crear reservas', () => {
     cy.get('.button.is-static:visible:contains("Hab.")').should('have.length', 2);
   });
 
-  it('Al cambiar la fecha, se reinician los renglones', () => {
+  it.only('Al cambiar la fecha, se reinician los renglones', () => {
     cy.contains('button', 'Agregar cama').click();
-
-    cy.get('#habitacion-renglon-0').select('2');
-
-    cy.get('[name="CamasIds[0]"]').select('28');
+    cy.get('#autocomplete-habitacion-renglon-0').type('azul{enter}');
+    cy.get('#autocomplete-cama-renglon-0').type('Matri{enter}');
 
     cy.get('.react-daterange-picker__calendar-button').click();
 
@@ -25,11 +23,8 @@ describe('Crear reservas', () => {
 
     cy.wait('@conLugaresLibres');
 
-    cy.get('.button.is-static:visible:contains("Hab.")').should('have.length', 1);
-
-    cy.get('#habitacion-renglon-0').should('contain.value', 1);
-
-    cy.get('[name="CamasIds[0]"]').should('contain.value', 31);
+    cy.get('#autocomplete-habitacion-renglon-0').contains('Roja');
+    cy.get('#autocomplete-cama-renglon-0').contains('4');
   });
 
   it('Al eliminar un renglón, se mantienen los datos de los de abajo', () => {

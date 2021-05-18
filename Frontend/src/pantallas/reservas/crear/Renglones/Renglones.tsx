@@ -39,7 +39,7 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
 
   useEffect((): void => {
     if (habitacionesDisponibles.length > 0) actualizarRenglones([crearRenglonData(0, habitacionesDisponibles)]);
-  }, [habitacionesDisponibles]);
+  }, [habitacionesDisponibles, estado]);
 
   function onHabitacionChange(indice: number, id: string): void {
     let renglonesCopia = renglones.map(

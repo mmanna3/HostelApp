@@ -91,6 +91,7 @@ export const Autocomplete = ({
           <>
             {label && <label className="label">{label}</label>}
             <Select
+              id={dataCy}
               options={opciones}
               {...field}
               value={opciones.find((c): boolean => c.value === field.value)}
