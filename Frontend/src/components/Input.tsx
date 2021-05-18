@@ -71,7 +71,7 @@ export function Input({
           </div>
           {onButtonClick && (
             <div className="control">
-              <Button text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
+              <Button dataCy={'boton-' + dataCy} text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
             </div>
           )}
         </div>

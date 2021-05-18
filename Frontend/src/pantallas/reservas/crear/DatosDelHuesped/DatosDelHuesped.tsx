@@ -14,9 +14,15 @@ const DatosDelHuesped = (): ReactElement => {
 
   useEffect((): void => {
     if (estado === EstadosApiRequestEnum.exitoso && datos != null)
-      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', { type: toast.TYPE.SUCCESS });
+      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
+        type: toast.TYPE.SUCCESS,
+        toastId: `toast-exito-${datos.dniOPasaporte}`,
+      });
     else if (estado === EstadosApiRequestEnum.huboError)
-      toast('El huésped no está registrado. Llená sus datos para registrarlo.', { type: toast.TYPE.ERROR });
+      toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
+        type: toast.TYPE.ERROR,
+        toastId: `toast-error-${datos.dniOPasaporte}`,
+      });
   }, [estado, datos]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
