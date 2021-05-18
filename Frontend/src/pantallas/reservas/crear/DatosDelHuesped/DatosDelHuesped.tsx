@@ -40,6 +40,7 @@ const DatosDelHuesped = (): ReactElement => {
             placeholder="DNI o Pasaporte"
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
+            dataCy="dni"
             name="DatosMinimosDeHuesped.DNIOPasaporte"
             type="number"
             faIconCode="id-card"
@@ -48,6 +49,7 @@ const DatosDelHuesped = (): ReactElement => {
         <div className="column">
           <Input
             placeholder="Nombre completo"
+            dataCy="nombre"
             name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={datos?.nombreCompleto}
             faIconCode="user"
@@ -58,6 +60,7 @@ const DatosDelHuesped = (): ReactElement => {
         <div className="column is-one-quarter">
           <Autocomplete
             key={paisOpcionInicial.value}
+            dataCy="pais"
             name="DatosMinimosDeHuesped.Pais"
             opciones={paisesParaAutocomplete}
             opcionInicial={paisOpcionInicial}
@@ -67,6 +70,7 @@ const DatosDelHuesped = (): ReactElement => {
         </div>
         <div className="column is-one-fifth">
           <Input
+            dataCy="telefono"
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
             defaultValue={datos?.telefono}
@@ -76,6 +80,7 @@ const DatosDelHuesped = (): ReactElement => {
         </div>
         <div className="column">
           <Input
+            dataCy="email"
             name="DatosMinimosDeHuesped.Email"
             defaultValue={datos?.email}
             type="email"
