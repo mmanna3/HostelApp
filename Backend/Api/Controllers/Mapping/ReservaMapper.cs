@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Entidades;
@@ -20,7 +21,9 @@ namespace Api.Controllers.Mapping
 				Canal = entidad.Canal,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
-				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped)
+				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped),
+				HabitacionesPrivadas = new List<HabitacionDTO>(),
+				Camas = new List<CamaDTO>()
 			};
 
 			if (entidad.ReservaHabitacionesPrivadas != null)
@@ -28,7 +31,7 @@ namespace Api.Controllers.Mapping
 					.Map(entidad.ReservaHabitacionesPrivadas.Select(x => x.HabitacionPrivada)).ToList();
 
 			if (entidad.ReservaCamas != null)
-				dto.Camas = HabitacionMapper.MapCamas(entidad.ReservaCamas?.Select(x => x.Cama)).ToList();
+				dto.Camas = HabitacionMapper.MapCamas(entidad.ReservaCamas.Select(x => x.Cama)).ToList();
 
 			return dto;
 		}
