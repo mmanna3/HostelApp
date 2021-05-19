@@ -3,7 +3,7 @@ import { Body, Modal } from 'components/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { ReservaDTO, ReservaEstadoEnum } from 'store/api/DTOs';
+import { ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Estilos from './Detalle.module.scss';
@@ -11,7 +11,7 @@ import Estilos from './Detalle.module.scss';
 const Detalle = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos } = useSelector(api.reservas.obtenerPorId.selector) as {
-    datos: ReservaDTO;
+    datos: ReservaDetalleDTO;
     estado: ESTADO;
   };
 

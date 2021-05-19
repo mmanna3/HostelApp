@@ -54,8 +54,8 @@ export interface CheckoutsDeHoyDTO {
     aNombreDe: string;
 }
 
-// ..\Backend\Api\Controllers\DTOs\Reserva\ReservaDTO.cs
-export interface ReservaDTO {
+// ..\Backend\Api\Controllers\DTOs\Reserva\ReservaBaseDTO.cs
+export interface ReservaBaseDTO {
     id: number;
     estado: ReservaEstadoEnum;
     horaEstimadaDeLlegada: string;
@@ -64,8 +64,18 @@ export interface ReservaDTO {
     datosMinimosDeHuesped: DatosMinimosDeHuespedDTO;
     diaDeCheckin: string;
     diaDeCheckout: string;
+}
+
+// ..\Backend\Api\Controllers\DTOs\Reserva\ReservaCreacionDTO.cs
+export interface ReservaCreacionDTO extends ReservaBaseDTO {
     camasIds: number[];
     habitacionesPrivadasIds: number[];
+}
+
+// ..\Backend\Api\Controllers\DTOs\Reserva\ReservaDetalleDTO.cs
+export interface ReservaDetalleDTO extends ReservaBaseDTO {
+    camas: CamaDTO[];
+    habitacionesPrivadas: HabitacionDTO[];
 }
 
 // ..\Backend\Api\Controllers\DTOs\Reserva\ReservaResumenDTO.cs

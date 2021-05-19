@@ -4,7 +4,7 @@ import ValidationSummary from 'components/ValidationSummary';
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { ReservaDTO } from 'store/api/DTOs';
+import { ReservaCreacionDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
@@ -35,7 +35,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
   }
 
-  interface ReservaDTOYPropsIgnoradas extends ReservaDTO {
+  interface ReservaDTOYPropsIgnoradas extends ReservaCreacionDTO {
     ignorarCamasIds?: string[];
     ignorarHabitacion?: string[];
     ignorarHabitacionesPrivadasIds?: string[];
