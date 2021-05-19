@@ -67,7 +67,7 @@ const Detalle = (): ReactElement => {
               <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
             </div>
             <div className={Estilos.dato}>
-              <Icon faCode="clock" /> <p>Llega a las: {datos.horaEstimadaDeLlegada}</p>
+              <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
             </div>
           </div>
         </div>

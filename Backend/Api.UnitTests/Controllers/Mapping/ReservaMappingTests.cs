@@ -74,7 +74,7 @@ namespace Api.UnitTests.Controllers.Mapping
 	        var reservaDTO = ReservaMapper.Map(reserva);
 
 	        reservaDTO.Estado.Should().Be(ReservaEstadoEnum.InHouse);
-	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00:00");
+	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00");
 	        reservaDTO.CantidadDePasajeros.Should().Be(1);
 	        reservaDTO.Canal.Should().Be(reserva.Canal);
             reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
