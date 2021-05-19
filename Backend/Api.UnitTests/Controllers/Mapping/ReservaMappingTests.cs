@@ -67,7 +67,7 @@ namespace Api.UnitTests.Controllers.Mapping
         }
 
         [Test]
-        public void Reserva_a_ReservaDTO()
+        public void ReservaConCamas_a_ReservaDTO()
         {
 	        DadaUnaListaDeReservas();
 	        var reserva = _unaListaDeReservas.Skip(1).First();
@@ -88,6 +88,19 @@ namespace Api.UnitTests.Controllers.Mapping
 	        reservaDTO.DatosMinimosDeHuesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
 	        reservaDTO.DatosMinimosDeHuesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
 	        reservaDTO.DatosMinimosDeHuesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
+        }
+
+        [Test]
+        public void ReservaConHabPrivada_a_ReservaDTO()
+        {
+	        var reserva = DadaUnaReservaQueTieneHabitacionPrivadaPeroNoCama();
+	        var reservaDTO = ReservaMapper.Map(reserva);
+
+	        reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
+	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
+	        reservaDTO.Camas.Should().HaveCount(0);
+	        reservaDTO.HabitacionesPrivadas.Should().HaveCount(1);
+            reservaDTO.HabitacionesPrivadas.First().Id.Should().Be(1);
         }
 
         [Test]
@@ -139,6 +152,19 @@ namespace Api.UnitTests.Controllers.Mapping
 
             _unaListaDeReservas.Add(r1);
             _unaListaDeReservas.Add(r2);
+        }
+
+        private Reserva DadaUnaReservaQueTieneHabitacionPrivadaPeroNoCama()
+        {
+	        var hab = new HabitacionPrivada {Id = 1, CamasCuchetas = new List<CamaCucheta>(), CamasIndividuales = new List<CamaIndividual>(), CamasMatrimoniales = new List<CamaMatrimonial>()};
+	        
+	        return new Reserva
+	        {
+		        PrimeraNoche = _desde,
+		        UltimaNoche = _hasta,
+		        ReservaHabitacionesPrivadas = new List<ReservaHabitacionPrivada> { new ReservaHabitacionPrivada { HabitacionPrivada = hab } },
+		        Huesped = _unHuesped
+	        };
         }
 
         private void DadaUnaReservaDto()
