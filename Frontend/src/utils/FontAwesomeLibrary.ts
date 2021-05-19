@@ -4,6 +4,7 @@ import {
   faBed,
   faCalendar,
   faCheckCircle,
+  faClock,
   faDoorClosed,
   faEnvelope,
   faExclamationTriangle,
@@ -14,6 +15,7 @@ import {
   faPhone,
   faTrashAlt,
   faUser,
+  faUserFriends,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faTrashAlt);
@@ -30,5 +32,5 @@ library.add(faArrowRight);
 library.add(faDoorClosed);
 library.add(faBed);
 library.add(faLock);
-// library.add(faUsers);
-// library.add(faUserFriends);
+library.add(faUserFriends);
+library.add(faClock);

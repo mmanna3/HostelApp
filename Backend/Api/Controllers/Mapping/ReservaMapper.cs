@@ -15,7 +15,7 @@ namespace Api.Controllers.Mapping
 			{
 				Id = entidad.Id,
 				Estado = entidad.Estado,
-				HoraEstimadaDeLlegada = entidad.HoraEstimadaDeLlegada.ToString(),
+				HoraEstimadaDeLlegada = entidad.HoraEstimadaDeLlegada.ToString(@"hh\:mm"),
 				CantidadDePasajeros = entidad.CantidadDePasajeros,
 				Canal = entidad.Canal,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),

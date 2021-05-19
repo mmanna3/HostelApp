@@ -35,6 +35,8 @@ const Detalle = (): ReactElement => {
     return cantidadDeNoches === 1 ? '1 noche' : `${cantidadDeNoches} noches`;
   };
 
+  const textoPasajeros = (cantidad: number): string => (cantidad === 1 ? '1 pasajero' : `${cantidad} pasajeros`);
+
   interface IEstilo {
     estilo: string;
     descripcion: string;
@@ -58,8 +60,14 @@ const Detalle = (): ReactElement => {
             {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
           </p>
           <div className={Estilos.cuerpo}>
-            <div className={Estilos.noches}>
+            <div className={Estilos.dato}>
               <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
+            </div>
+            <div className={Estilos.dato}>
+              <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
+            </div>
+            <div className={Estilos.dato}>
+              <Icon faCode="clock" /> <p>Llega a las: {datos.horaEstimadaDeLlegada}</p>
             </div>
           </div>
         </div>
