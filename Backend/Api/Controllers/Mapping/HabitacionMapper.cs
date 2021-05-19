@@ -49,6 +49,16 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
+		public static CamaDTO MapCama(Cama cama)
+		{
+			return new CamaDTO
+			{
+				Id = cama.Id,
+				Tipo = cama.Tipo(),
+				Nombre = cama.Nombre,
+			};
+		}
+
 		public static HabitacionConLugaresLibresDTO MapHabitacionParaReservaDTO(Habitacion habitacion, DateTime desde, DateTime hasta)
 		{
 			var camas = new List<Cama>();
@@ -124,6 +134,11 @@ namespace Api.Controllers.Mapping
 						}
 					}),
 				};
+		}
+
+		public static IEnumerable<CamaDTO> MapCamas(IEnumerable<Cama> camas)
+		{
+			return camas.Select(MapCama);
 		}
 
 		public static IEnumerable<HabitacionConLugaresLibresDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)

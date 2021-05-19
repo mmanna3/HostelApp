@@ -14,7 +14,7 @@ namespace Api.UnitTests.Controllers.Mapping
 {
 	public class ReservaMappingTests
     {
-	    private ReservaDTO _unaReservaDto;
+	    private ReservaCreacionDTO _unaReservaCreacionDTO;
         private IList<Reserva> _unaListaDeReservas;
         private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
         {
@@ -43,7 +43,7 @@ namespace Api.UnitTests.Controllers.Mapping
         {
             DadaUnaReservaDto();
 
-            var reserva = ReservaMapper.Map(_unaReservaDto);
+            var reserva = ReservaMapper.Map(_unaReservaCreacionDTO);
 
             reserva.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
             reserva.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
@@ -56,7 +56,7 @@ namespace Api.UnitTests.Controllers.Mapping
             reserva.HoraEstimadaDeLlegada.Should().Be(new TimeSpan(11, 0, 0));
             reserva.Estado.Should().Be(ReservaEstadoEnum.HizoCheckout);
             reserva.CantidadDePasajeros.Should().Be(3);
-            reserva.Canal.Should().Be(_unaReservaDto.Canal);
+            reserva.Canal.Should().Be(_unaReservaCreacionDTO.Canal);
             reserva.ReservaCamas.Should().HaveCount(1);
             reserva.ReservaHabitacionesPrivadas.Should().HaveCount(3);
 
@@ -79,9 +79,9 @@ namespace Api.UnitTests.Controllers.Mapping
 	        reservaDTO.Canal.Should().Be(reserva.Canal);
             reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
 	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
-	        reservaDTO.CamasIds.Should().HaveCount(2);
-	        reservaDTO.CamasIds.First().Should().Be(1);
-	        reservaDTO.CamasIds.Skip(1).First().Should().Be(2);
+	        reservaDTO.Camas.Should().HaveCount(2);
+	        reservaDTO.Camas.First().Id.Should().Be(1);
+	        reservaDTO.Camas.Skip(1).First().Id.Should().Be(2);
 
 	        reservaDTO.DatosMinimosDeHuesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
 	        reservaDTO.DatosMinimosDeHuesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
@@ -143,7 +143,7 @@ namespace Api.UnitTests.Controllers.Mapping
 
         private void DadaUnaReservaDto()
         {
-	        _unaReservaDto = new ReservaDTO
+	        _unaReservaCreacionDTO = new ReservaCreacionDTO
             {
                 DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
                 Canal = "Booking",

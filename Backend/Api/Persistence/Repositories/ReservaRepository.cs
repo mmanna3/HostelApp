@@ -58,6 +58,8 @@ namespace Api.Persistence.Repositories
 							.Include(x => x.Huesped)
 							.Include(x => x.ReservaCamas)
 								.ThenInclude(x => x.Cama)
+							.Include(x => x.ReservaHabitacionesPrivadas)
+								.ThenInclude(x => x.HabitacionPrivada)
 							.SingleOrDefaultAsync(x => x.Id == id);
         }
     }

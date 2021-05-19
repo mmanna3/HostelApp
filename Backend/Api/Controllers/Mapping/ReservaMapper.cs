@@ -9,9 +9,9 @@ namespace Api.Controllers.Mapping
 {
 	public static class ReservaMapper
 	{
-		public static ReservaDTO Map(Reserva entidad)
+		public static ReservaDetalleDTO Map(Reserva entidad)
 		{
-			return new ReservaDTO
+			var dto = new ReservaDetalleDTO
 			{
 				Id = entidad.Id,
 				Estado = entidad.Estado,
@@ -20,9 +20,17 @@ namespace Api.Controllers.Mapping
 				Canal = entidad.Canal,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
-				CamasIds = entidad.ReservaCamas.Select(x => x.CamaId).ToList(), //Faltan las camas de las habitacionesPrivadas
 				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped)
 			};
+
+			if (entidad.ReservaHabitacionesPrivadas != null)
+				dto.HabitacionesPrivadas = HabitacionMapper
+					.Map(entidad.ReservaHabitacionesPrivadas.Select(x => x.HabitacionPrivada)).ToList();
+
+			if (entidad.ReservaCamas != null)
+				dto.Camas = HabitacionMapper.MapCamas(entidad.ReservaCamas?.Select(x => x.Cama)).ToList();
+
+			return dto;
 		}
 
 		public static ReservasDelPeriodoDTO Map(IEnumerable<Reserva> entidad, DateTime primeraNoche, DateTime ultimaNoche)
@@ -74,19 +82,19 @@ namespace Api.Controllers.Mapping
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
 
-		public static Reserva Map(ReservaDTO dto)
+		public static Reserva Map(ReservaCreacionDTO creacionDTO)
 		{
 			var reserva = new Reserva
 			{
-				ReservaCamas = dto.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
-				ReservaHabitacionesPrivadas = dto.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
-				Huesped = HuespedMapper.Map(dto.DatosMinimosDeHuesped),
-				Estado = dto.Estado,
-				Canal = dto.Canal,
-				HoraEstimadaDeLlegada = TimeSpan.Parse(dto.HoraEstimadaDeLlegada),
-				CantidadDePasajeros = dto.CantidadDePasajeros,
-				PrimeraNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckin),
-				UltimaNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckout).AddDays(-1),
+				ReservaCamas = creacionDTO.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
+				ReservaHabitacionesPrivadas = creacionDTO.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
+				Huesped = HuespedMapper.Map(creacionDTO.DatosMinimosDeHuesped),
+				Estado = creacionDTO.Estado,
+				Canal = creacionDTO.Canal,
+				HoraEstimadaDeLlegada = TimeSpan.Parse(creacionDTO.HoraEstimadaDeLlegada),
+				CantidadDePasajeros = creacionDTO.CantidadDePasajeros,
+				PrimeraNoche = Utilidades.ConvertirFecha(creacionDTO.DiaDeCheckin),
+				UltimaNoche = Utilidades.ConvertirFecha(creacionDTO.DiaDeCheckout).AddDays(-1),
 			};
 
 			// Seguro esto se puede hacer mejor

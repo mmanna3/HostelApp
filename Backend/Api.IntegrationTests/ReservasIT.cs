@@ -73,15 +73,15 @@ namespace Api.IntegrationTests
             
 	        var consultaResponse = await _reservasHttpClient.ObtenerPorId(reservaId);
 	        consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDTO>();
+	        var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDetalleDTO>();
 
 	        reserva.DiaDeCheckin.Should().Be("2020-09-17");
 	        reserva.DiaDeCheckout.Should().Be("2020-09-18");
-	        reserva.HoraEstimadaDeLlegada.Should().Be("11:30:00");
+	        reserva.HoraEstimadaDeLlegada.Should().Be("11:30");
 	        reserva.CantidadDePasajeros.Should().Be(2);
 	        reserva.Canal.Should().Be("Booking");
-            reserva.CamasIds.Should().HaveCount(1);
-            reserva.CamasIds.First().Should().Be(camaId);
+            reserva.Camas.Should().HaveCount(1);
+            reserva.Camas.First().Id.Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
 
 	        reserva.DatosMinimosDeHuesped.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;

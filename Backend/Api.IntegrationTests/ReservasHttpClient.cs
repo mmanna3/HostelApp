@@ -23,7 +23,7 @@ namespace Api.IntegrationTests
 		public async Task<HttpResponseMessage> CrearReserva(int? camaId, int? habitacionPrivadaId,
 			DatosMinimosDeHuespedDTO datosMinimosDeHuesped, DateTime desde, DateTime hasta)
 		{
-			var body = new ReservaDTO
+			var body = new ReservaCreacionDTO
 			{
 				DatosMinimosDeHuesped = datosMinimosDeHuesped,
 				HabitacionesPrivadasIds = habitacionPrivadaId == null ? new List<int>() : new List<int> { (int)habitacionPrivadaId },

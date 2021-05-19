@@ -30,7 +30,7 @@ namespace Api.Controllers
         }
 
         [HttpGet, Route("obtener")]
-        public async Task<ReservaDTO> ObtenerPorId(int id)
+        public async Task<ReservaDetalleDTO> ObtenerPorId(int id)
         {
 	        var reserva = await _service.ObtenerPorId(id);
 	        return ReservaMapper.Map(reserva);
@@ -47,21 +47,21 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<int> Crear([FromBody] ReservaDTO dto)
+        public async Task<int> Crear([FromBody] ReservaCreacionDTO creacionDTO)
         {
-	        if (dto.CamasIds != null  && dto.CamasIds.Count == 0 && dto.HabitacionesPrivadasIds != null && dto.HabitacionesPrivadasIds.Count == 0)
+	        if (creacionDTO.CamasIds != null  && creacionDTO.CamasIds.Count == 0 && creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count == 0)
 		        throw new AppException("Se debe reservar al menos una habitación o cama");
 
-	        if (dto.CamasIds != null && dto.CamasIds.Count() != dto.CamasIds.Distinct().Count())
+	        if (creacionDTO.CamasIds != null && creacionDTO.CamasIds.Count() != creacionDTO.CamasIds.Distinct().Count())
 				throw new AppException("No puede reservarse dos veces la misma cama");
 
-			if (dto.HabitacionesPrivadasIds != null && dto.HabitacionesPrivadasIds.Count() != dto.HabitacionesPrivadasIds.Distinct().Count())
+			if (creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count() != creacionDTO.HabitacionesPrivadasIds.Distinct().Count())
                 throw new AppException("No se puede reservar dos veces la misma habitación");
 
-			if (dto.DiaDeCheckin == dto.DiaDeCheckout)
+			if (creacionDTO.DiaDeCheckin == creacionDTO.DiaDeCheckout)
 				throw new AppException("Se debe reservar al menos una noche");
 
-			var reserva = ReservaMapper.Map(dto);
+			var reserva = ReservaMapper.Map(creacionDTO);
 
 			await SiElHuespedYaExisteModificarlo(reserva);
 
