@@ -56,8 +56,24 @@ namespace Api.Persistence.Repositories
         {
 	        return await _context.Set<Reserva>()
 							.Include(x => x.Huesped)
+
 							.Include(x => x.ReservaCamas)
 								.ThenInclude(x => x.Cama)
+									.ThenInclude(x => (x as CamaIndividual).Habitacion)
+
+							.Include(x => x.ReservaCamas)
+								.ThenInclude(x => x.Cama)
+									.ThenInclude(x => (x as CamaMatrimonial).Habitacion)
+
+							.Include(x => x.ReservaCamas)
+								.ThenInclude(x => x.Cama)
+									.ThenInclude(x => (x as CamaCuchetaDeAbajo).CamaCucheta)
+										.ThenInclude(x => x.Habitacion)
+
+							.Include(x => x.ReservaCamas)
+								.ThenInclude(x => x.Cama)
+									.ThenInclude(x => (x as CamaCuchetaDeArriba).CamaCucheta)
+										.ThenInclude(x => x.Habitacion)
 
 							.Include(x => x.ReservaHabitacionesPrivadas)
 								.ThenInclude(x => x.HabitacionPrivada)

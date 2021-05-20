@@ -12,8 +12,8 @@ namespace Api.Core.Entidades
 
         [Required, MaxLength(10)]
         public string Nombre { get; set; }
-
         public ICollection<ReservaCama> ReservaCamas { get; set; }
+        public abstract Habitacion ObtenerHabitacion();
 
         public virtual int Plazas()
         {

@@ -25,10 +25,5 @@ namespace Api.Core.Entidades
         public ICollection<CamaCucheta> CamasCuchetas { get; set; }
 
         public abstract int LugaresLibresEntre(DateTime desde, DateTime hasta);
-
-		public static explicit operator Habitacion(Task<List<HabitacionPrivada>> v)
-		{
-			throw new NotImplementedException();
-		}
-	}
+    }
 }

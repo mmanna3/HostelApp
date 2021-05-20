@@ -77,7 +77,25 @@ namespace Api.Persistence.Config
 		        .HasOne(b => b.Habitacion)
 		        .WithMany(a => a.CamasCuchetas)
 		        .OnDelete(DeleteBehavior.Restrict);
-        }
+
+			builder.Entity<CamaCucheta>()
+				.HasOne(b => b.Abajo)
+				.WithOne(a => a.CamaCucheta)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			builder.Entity<CamaCucheta>()
+				.HasOne(b => b.Arriba)
+				.WithOne(a => a.CamaCucheta)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			builder.Entity<CamaCucheta>()
+				.HasOne(a => a.Abajo).WithOne(b => b.CamaCucheta)
+				.HasForeignKey<CamaCuchetaDeAbajo>(e => e.CamaCuchetaId);
+
+			builder.Entity<CamaCucheta>()
+				.HasOne(a => a.Arriba).WithOne(b => b.CamaCucheta)
+				.HasForeignKey<CamaCuchetaDeArriba>(e => e.CamaCuchetaId);
+		}
 
         private static void ReservaCama(ModelBuilder builder)
         {

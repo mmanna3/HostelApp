@@ -9,6 +9,12 @@ namespace Api.Core.Entidades
         [Column("Individual_HabitacionId")]
         public int HabitacionId { get; set; }
         public Habitacion Habitacion { get; set; }
+
+        public override Habitacion ObtenerHabitacion()
+        {
+	        return Habitacion;
+        }
+
         public override CamaTipoEnum Tipo()
         {
             return CamaTipoEnum.Individual;

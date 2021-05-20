@@ -8,6 +8,12 @@ namespace Api.Core.Entidades
         [Column("Matrimonial_HabitacionId")]
         public int HabitacionId { get; set; }
         public Habitacion Habitacion { get; set; }
+        
+        public override Habitacion ObtenerHabitacion()
+        {
+	        return Habitacion;
+        }
+
         public override int Plazas()
         {
             return 2;

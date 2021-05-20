@@ -10,5 +10,7 @@ namespace Api.Controllers.DTOs.Habitacion
         public string Nombre { get; set; }
 
         public CamaTipoEnum Tipo { get; set; }
+
+        public string NombreHabitacion { get; set; }
     }
 }

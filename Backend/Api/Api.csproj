@@ -59,6 +59,22 @@
     <Compile Remove="Persistence\Migrations\20210517010744_SeparaHabitacionesCompartidasDePrivadas.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20210517011010_SeparaHabitacionesCompartidasDePrivadas.cs" />
     <Compile Remove="Persistence\Migrations\20210517011010_SeparaHabitacionesCompartidasDePrivadas.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210519054142_AgregaReferenciaDeCamasCuchetasEnLaDeArribaYAbajo.cs" />
+    <Compile Remove="Persistence\Migrations\20210519054142_AgregaReferenciaDeCamasCuchetasEnLaDeArribaYAbajo.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520040814_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520040814_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520041232_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520041232_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520042419_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520042419_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520042928_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520042928_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520044043_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520044043_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520044910_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520044910_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210520045126_Agrega_NavigationProperty_EnCamaCucheta.cs" />
+    <Compile Remove="Persistence\Migrations\20210520045126_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

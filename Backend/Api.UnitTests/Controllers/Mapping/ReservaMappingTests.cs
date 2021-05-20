@@ -127,8 +127,10 @@ namespace Api.UnitTests.Controllers.Mapping
         {
             _unaListaDeReservas = new List<Reserva>();
 
-            var cama1 = new CamaCuchetaDeAbajo {Id = 1, Nombre = "a"};
-            var cama2 = new CamaIndividual {Id = 2, Nombre = "b"};
+            var habitacion = new HabitacionCompartida {Nombre = "Sarasa"};
+            var camaCucheta = new CamaCucheta { Id = 1, Habitacion = habitacion};
+            var cama1 = new CamaCuchetaDeAbajo {Id = 1, Nombre = "a", CamaCucheta = camaCucheta };
+            var cama2 = new CamaIndividual {Id = 2, Nombre = "b", Habitacion = habitacion };
             
             var r1 = new Reserva
             {

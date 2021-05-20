@@ -56,7 +56,8 @@ namespace Api.Controllers.Mapping
 				Id = cama.Id,
 				Tipo = cama.Tipo(),
 				Nombre = cama.Nombre,
-			};
+				NombreHabitacion = cama.ObtenerHabitacion().Nombre,
+		};
 		}
 
 		public static HabitacionConLugaresLibresDTO MapHabitacionParaReservaDTO(Habitacion habitacion, DateTime desde, DateTime hasta)
