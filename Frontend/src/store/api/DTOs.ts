@@ -11,6 +11,7 @@ export interface CamaDTO {
     id: number;
     nombre: string;
     tipo: CamaTipoEnum;
+    nombreHabitacion: string;
 }
 
 // ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionConLugaresLibresDTO.cs
