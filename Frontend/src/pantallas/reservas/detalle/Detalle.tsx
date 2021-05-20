@@ -3,9 +3,10 @@ import { Body, Modal } from 'components/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
+import { CamaDTO, HabitacionDTO, ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
+import { obtenerTipoCamaDescripcion } from '../utilidades';
 import Estilos from './Detalle.module.scss';
 
 const Detalle = (): ReactElement => {
@@ -36,6 +37,68 @@ const Detalle = (): ReactElement => {
   };
 
   const textoPasajeros = (cantidad: number): string => (cantidad === 1 ? '1 pasajero' : `${cantidad} pasajeros`);
+
+  const componenteHabitacionesPrivadas = (habs: HabitacionDTO[]): ReactElement =>
+    habs.length === 0 ? (
+      <div className={Estilos.dato}>
+        <Icon faCode="door-closed" />
+        <p>Habitaciones privadas: Ninguna.</p>
+      </div>
+    ) : (
+      <div className={Estilos.dato}>
+        <Icon faCode="door-closed" />
+        <p>Habitaciones privadas:</p>
+        <ul className={Estilos.lista}>
+          {habs.map(
+            (hab, i): ReactElement => (
+              <li key={i}>{hab.nombre}</li>
+            )
+          )}
+        </ul>
+      </div>
+    );
+
+  const componenteCamasDeHabitacionesCompartidas = (camas: CamaDTO[]): ReactElement => {
+    if (camas.length === 0)
+      return (
+        <div className={Estilos.dato}>
+          <Icon faCode="bed" />
+          <p>Camas: Ninguna.</p>;
+        </div>
+      );
+
+    const camasAgrupadas: Map<string, CamaDTO[]> = camas.reduce(
+      (entryMap, cama): Map<string, CamaDTO[]> =>
+        entryMap.set(cama.nombreHabitacion, [...(entryMap.get(cama.nombreHabitacion) || []), cama]),
+      new Map()
+    );
+
+    let camasLi: ReactElement[] = [];
+    camasAgrupadas.forEach((camas, habitacionNombre): void => {
+      camasLi.push(
+        <li key={habitacionNombre}>
+          Habitación {habitacionNombre}
+          <ul className={Estilos.listaCamasDeHabitacionesCompartidas}>
+            {camas.map(
+              (c, i): ReactElement => (
+                <li key={i}>
+                  Cama {c.nombre} ({obtenerTipoCamaDescripcion.get(c.tipo)})
+                </li>
+              )
+            )}
+          </ul>
+        </li>
+      );
+    });
+
+    return (
+      <div className={Estilos.dato}>
+        <Icon faCode="bed" />
+        <p>Camas de habitaciones compartidas: </p>
+        <ul className={Estilos.lista}>{camasLi}</ul>
+      </div>
+    );
+  };
 
   interface IEstilo {
     estilo: string;
@@ -69,6 +132,9 @@ const Detalle = (): ReactElement => {
             <div className={Estilos.dato}>
               <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
             </div>
+            {componenteHabitacionesPrivadas(datos.habitacionesPrivadas)}
+
+            {componenteCamasDeHabitacionesCompartidas(datos.camas)}
           </div>
         </div>
       </Body>
