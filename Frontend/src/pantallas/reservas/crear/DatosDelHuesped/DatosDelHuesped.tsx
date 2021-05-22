@@ -5,9 +5,14 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import api from 'store/api/api';
+import { HuespedDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
-const DatosDelHuesped = (): ReactElement => {
+interface IProps {
+  huesped?: HuespedDTO;
+}
+
+const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(paisesParaAutocomplete[8]);
   const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
@@ -39,7 +44,7 @@ const DatosDelHuesped = (): ReactElement => {
   }, [datos]);
 
   return (
-    <>
+    <div>
       <div className="columns">
         <div className="column is-one-third">
           <Input
@@ -57,7 +62,7 @@ const DatosDelHuesped = (): ReactElement => {
             placeholder="Nombre completo"
             dataCy="nombre"
             name="DatosMinimosDeHuesped.NombreCompleto"
-            defaultValue={datos?.nombreCompleto}
+            defaultValue={datos ? datos.nombreCompleto : huesped?.nombreCompleto}
             faIconCode="user"
           />
         </div>
@@ -95,7 +100,7 @@ const DatosDelHuesped = (): ReactElement => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

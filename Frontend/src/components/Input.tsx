@@ -33,13 +33,15 @@ export function Input({
   readOnly,
   step,
   dataCy,
-  handleOnChange = (e: any): void => {},
+  handleOnChange = (): void => {},
 }: InputProps): ReactElement {
-  const { setValue, getValues } = useFormContext();
+  const { setValue } = useFormContext();
 
   useEffect((): void => {
-    if (!getValues(name)) setValue(name, defaultValue);
-  });
+    setTimeout((): void => {
+      setValue(name, defaultValue);
+    }, 100);
+  }, [defaultValue, setValue, name]);
 
   return (
     <Controller
