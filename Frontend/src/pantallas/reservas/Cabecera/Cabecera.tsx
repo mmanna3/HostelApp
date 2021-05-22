@@ -1,4 +1,4 @@
-import { Button } from 'components/botones/botones';
+import { Boton } from 'components/botones/botones';
 import SelectorDeFecha from 'components/selectorDeFecha/selectorDeFecha';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { convertirAString, hoy, sumarDiasALaFecha } from 'utils/Fecha';
@@ -64,23 +64,23 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
     <div className={Estilos.contenedor}>
       <div className="level-left">
         <div className={`buttons has-addons ${Estilos.botones}`}>
-          <Button onClick={(): void => seleccionarSemana()} text="Semana" className={`button ${estiloBotonSemana}`} />
-          <Button
+          <Boton onClick={(): void => seleccionarSemana()} text="Semana" className={`button ${estiloBotonSemana}`} />
+          <Boton
             onClick={(): void => seleccionarDosSemanas()}
             text="Dos semanas"
             className={`button ${estiloBotonDosSemanas}`}
           />
-          <Button onClick={(): void => seleccionarMes()} text="Mes" className={`button ${estiloBotonMes}`} />
+          <Boton onClick={(): void => seleccionarMes()} text="Mes" className={`button ${estiloBotonMes}`} />
         </div>
         <div className={Estilos.selectorDeFechaContenedor}>
           <SelectorDeFecha onChange={onFechaDeSelectorChange} value={fechaInicio} />
         </div>
         <div>
-          <Button onClick={(): void => seleccionarHoy()} text="Hoy" className="button is-success" />
+          <Boton onClick={(): void => seleccionarHoy()} text="Hoy" className="button is-success" />
         </div>
       </div>
       <div className="level-right">
-        <Button onClick={showModal} text="Nueva reserva" />
+        <Boton onClick={showModal} text="Nueva reserva" />
       </div>
     </div>
   );

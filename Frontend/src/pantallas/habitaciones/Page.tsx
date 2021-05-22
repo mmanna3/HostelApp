@@ -1,10 +1,10 @@
-import React, { useState, ReactElement, useCallback } from 'react';
+import { Boton } from 'components/botones/botones';
 import Table from 'components/Table';
+import React, { ReactElement, useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import api from 'store/api/api';
 import Crear from './crear/Modal';
 import Detalle from './detalle/Modal';
-import { Button } from 'components/botones/botones';
-import api from 'store/api/api';
-import { useDispatch, useSelector } from 'react-redux';
 
 const HabitacionesPage = (): ReactElement => {
   const dispatch = useDispatch();
@@ -34,8 +34,7 @@ const HabitacionesPage = (): ReactElement => {
       Header: '',
       accessor: 'id',
       Cell: ({ cell }: any): ReactElement => (
-        <Button
-          clases=""
+        <Boton
           onClick={(e: any): void => {
             cambiarIdSeleccionadoParaDetalle(e.target.value);
           }}
@@ -67,7 +66,7 @@ const HabitacionesPage = (): ReactElement => {
       <h1 className="title is-1">Habitaciones</h1>
       <div className="botonera">
         <div className="is-pulled-right">
-          <Button clases="" onClick={(): void => mostrarModalDeCreacion(true)} text="Cargar nueva" />
+          <Boton onClick={(): void => mostrarModalDeCreacion(true)} text="Cargar nueva" />
         </div>
       </div>
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />

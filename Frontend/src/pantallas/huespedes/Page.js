@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import { Boton } from 'components/botones/botones';
 import Table from 'components/Table';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Crear from './crear/Modal';
-import { Button } from 'components/botones/botones';
 import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import Crear from './crear/Modal';
 
 const HuespedesPage = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const HuespedesPage = () => {
 
       <h1 className="title is-1">Huéspedes</h1>
       <div className="buttons is-fullwidth is-pulled-right">
-        <Button onClick={showModal} text="Cargar nuevo" />
+        <Boton onClick={showModal} text="Cargar nuevo" />
       </div>
       <Table
         fetchData={fetchData}

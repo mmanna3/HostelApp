@@ -1,4 +1,4 @@
-import { Button } from 'components/botones/botones';
+import { Boton } from 'components/botones/botones';
 import Loader from 'components/Loader/Loader';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -107,7 +107,7 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
             }
           )}
 
-          <Button dataCy="boton-agregar-cama" text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
+          <Boton dataCy="boton-agregar-cama" text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
         </>
       )}
     </>

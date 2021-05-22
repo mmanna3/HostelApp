@@ -1,4 +1,4 @@
-import { Button } from 'components/botones/botones';
+import { Boton } from 'components/botones/botones';
 import { Input } from 'components/Input';
 import Label from 'components/Label';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
@@ -196,7 +196,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
               );
             }
           )}
-          <Button text="Agregar cama" onClick={(): void => agregarRenglon()} style={{ marginTop: '1em' }} />
+          <Boton text="Agregar cama" onClick={(): void => agregarRenglon()} style={{ marginTop: '1em' }} />
         </div>
       </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />

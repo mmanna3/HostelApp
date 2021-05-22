@@ -2,7 +2,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Button } from './botones/botones';
+import { Boton } from './botones/botones';
 
 interface InputProps {
   label?: string;
@@ -71,7 +71,7 @@ export function Input({
           </div>
           {onButtonClick && textoDelBoton && (
             <div className="control">
-              <Button dataCy={'boton-' + dataCy} text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
+              <Boton dataCy={'boton-' + dataCy} text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
             </div>
           )}
         </div>
