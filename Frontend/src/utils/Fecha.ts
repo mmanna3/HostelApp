@@ -47,6 +47,12 @@ export function restarFechas(b: Date, a: Date): number {
   return Math.floor((utc2 - utc1) / _milisegundosQueTieneCadaDia);
 }
 
+export function sumarMesesALaFecha(fecha: Date, cantidadDeMeses: number): Date {
+  var resultado = new Date(fecha);
+  resultado.setMonth(resultado.getMonth() + cantidadDeMeses);
+  return resultado;
+}
+
 export function sumarDiasALaFecha(fecha: Date, cantidadDeDias: number): Date {
   var resultado = new Date(fecha);
   resultado.setDate(resultado.getDate() + cantidadDeDias);
