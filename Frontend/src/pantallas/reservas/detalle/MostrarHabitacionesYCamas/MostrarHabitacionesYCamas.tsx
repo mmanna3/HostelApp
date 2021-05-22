@@ -35,7 +35,7 @@ const MostrarHabitacionesYCamas = ({ habitacionesPrivadas, camasDeHabitacionesCo
       return (
         <div className={Estilos.dato}>
           <Icon faCode="bed" />
-          <p>Camas: Ninguna.</p>;
+          <p>Camas: Ninguna.</p>
         </div>
       );
 

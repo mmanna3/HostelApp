@@ -5,16 +5,23 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import api from 'store/api/api';
-import { HuespedDTO } from 'store/api/DTOs';
+import { DatosMinimosDeHuespedDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
-  huesped?: HuespedDTO;
+  huesped?: DatosMinimosDeHuespedDTO;
 }
 
 const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
   const dispatch = useDispatch();
-  const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(paisesParaAutocomplete[8]);
+
+  const paisParaAutoCompleteDelHuesped = huesped
+    ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais)
+    : null;
+  const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(
+    paisParaAutoCompleteDelHuesped ? paisParaAutoCompleteDelHuesped : paisesParaAutocomplete[8]
+  );
+
   const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
 
   useEffect((): void => {
@@ -54,6 +61,7 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
             dataCy="dni"
             name="DatosMinimosDeHuesped.DNIOPasaporte"
             type="number"
+            defaultValue={datos ? datos.dniOPasaporte : huesped?.dniOPasaporte}
             faIconCode="id-card"
           />
         </div>
@@ -84,7 +92,7 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
             dataCy="telefono"
             name="DatosMinimosDeHuesped.Telefono"
             type="number"
-            defaultValue={datos?.telefono}
+            defaultValue={datos ? datos.telefono : huesped?.telefono}
             placeholder="Teléfono"
             faIconCode="phone"
           />
@@ -93,7 +101,7 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
           <Input
             dataCy="email"
             name="DatosMinimosDeHuesped.Email"
-            defaultValue={datos?.email}
+            defaultValue={datos ? datos.email : huesped?.email}
             type="email"
             placeholder="Email"
             faIconCode="envelope"

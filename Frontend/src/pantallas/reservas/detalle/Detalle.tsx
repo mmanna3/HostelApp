@@ -55,6 +55,7 @@ const Detalle = (): ReactElement => {
   return datos !== null ? (
     <>
       <HacerCheckIn
+        datos={datos}
         esVisible={modalHacerCheckInEsVisible}
         ocultar={(): void => {
           cambiarVisibilidadDeModalPrincipal(true);
