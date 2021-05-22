@@ -16,6 +16,8 @@ import {
   faTrashAlt,
   faUser,
   faUserFriends,
+  faUserLock,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faTrashAlt);
@@ -34,3 +36,5 @@ library.add(faBed);
 library.add(faLock);
 library.add(faUserFriends);
 library.add(faClock);
+library.add(faUsers);
+library.add(faUserLock);

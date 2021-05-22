@@ -9,6 +9,17 @@
   color: #222 !important;
 }
 
+.habitacion div {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.iconoHabitacionPrivada {
+  border: 0.15rem solid;
+  padding: 1.2rem;
+  border-radius: 100%;
+}
+
 .cama {
   position: sticky;
   left: 150px;

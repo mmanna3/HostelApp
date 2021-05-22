@@ -1,3 +1,4 @@
+import { Icon } from 'components/Icon';
 import { IHabitacionParaTablaReservas, obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { Fragment, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -48,7 +49,14 @@ const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: 
           className={Estilos.habitacion}
           data-es-primera-cama="true"
         >
-          {habitacion.nombre}
+          <div>
+            {habitacion.esPrivada ? (
+              <Icon cssClass={Estilos.iconoHabitacionPrivada} faCode="user-lock" size="lg" />
+            ) : (
+              <Icon faCode="users" size="lg" />
+            )}
+            <div>{habitacion.nombre}</div>
+          </div>
         </td>
         {renderizarEncabezadoCamaYCeldasDeDatosDeLaFila(habitacion.camas[0], true)}
       </tr>
