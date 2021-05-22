@@ -1,6 +1,6 @@
 import { Icon } from 'components/Icon';
 import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { CamaDTO, HabitacionDTO } from 'store/api/DTOs';
 import Estilos from './MostrarHabitacionesYCamas.module.scss';
 
@@ -72,10 +72,31 @@ const MostrarHabitacionesYCamas = ({ habitacionesPrivadas, camasDeHabitacionesCo
     );
   };
 
+  const [esVisible, togglearVisibiliad] = useState(false);
+  const [textoDelBoton, cambiarTextoDelBoton] = useState('Ver habitaciones y camas');
+
+  const mostrarOcultar = (): void => togglearVisibiliad((valorAnterior: boolean): boolean => !valorAnterior);
+
+  useEffect((): void => {
+    if (!esVisible) cambiarTextoDelBoton('Ver habitaciones y camas');
+    else cambiarTextoDelBoton('Ocultar habitaciones y camas');
+  }, [esVisible]);
+
   return (
     <>
-      {renderizarCamasDeHabitacionesCompartidas(camasDeHabitacionesCompartidas)}
-      {renderizarHabitacionesPrivadas(habitacionesPrivadas)}
+      <button className={Estilos.boton} onClick={mostrarOcultar}>
+        <Icon faCode="bed" />
+        <span className={Estilos.textoDelBoton}>{textoDelBoton}</span>
+      </button>
+
+      {esVisible ? (
+        <div className={Estilos.contenedor}>
+          {renderizarHabitacionesPrivadas(habitacionesPrivadas)}
+          {renderizarCamasDeHabitacionesCompartidas(camasDeHabitacionesCompartidas)}
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

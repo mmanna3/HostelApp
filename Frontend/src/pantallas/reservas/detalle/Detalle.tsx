@@ -73,13 +73,6 @@ const Detalle = (): ReactElement => {
               habitacionesPrivadas={datos.habitacionesPrivadas}
               camasDeHabitacionesCompartidas={datos.camas}
             />
-
-            {/* <button className="button">
-              <Icon faCode="bed" />
-              <span>Ver habitaciones y camas</span>
-            </button>
-            {componenteHabitacionesPrivadas()}
-            {componenteCamasDeHabitacionesCompartidas(datos.camas)} */}
           </div>
         </div>
       </Body>
