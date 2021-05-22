@@ -1,16 +1,19 @@
 import { Boton } from 'components/botones/botones';
 import { Icon } from 'components/Icon';
 import { Body, Modal } from 'components/Modal';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Estilos from './Detalle.module.scss';
+import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
 import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
 
 const Detalle = (): ReactElement => {
+  const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
+  const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
   const dispatch = useDispatch();
   const { datos } = useSelector(api.reservas.obtenerPorId.selector) as {
     datos: ReservaDetalleDTO;
@@ -50,50 +53,62 @@ const Detalle = (): ReactElement => {
   ]);
 
   return datos !== null ? (
-    <Modal isVisible={true} onHide={ocultar}>
-      <Body width={'500px'}>
-        <div className={Estilos.contenedor}>
-          <p className={Estilos.nombre}>
-            {datos.datosMinimosDeHuesped.nombreCompleto}
-            <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
-          </p>
-          <p className={Estilos.fechas}>
-            {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
-          </p>
-          <div className={Estilos.cuerpo}>
-            <div className={Estilos.dato}>
-              <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
-            </div>
-            <div className={Estilos.dato}>
-              <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
-            </div>
-            <div className={Estilos.dato}>
-              <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
-            </div>
-            <MostrarHabitacionesYCamas
-              habitacionesPrivadas={datos.habitacionesPrivadas}
-              camasDeHabitacionesCompartidas={datos.camas}
-            />
-            <div className={Estilos.botones}>
-              <div className="column">
-                <Boton
-                  texto="Cancelar reserva"
-                  className={`is-danger ${Estilos.ocuparTodoElAncho}`}
-                  onClick={(): void => {}}
-                />
+    <>
+      <HacerCheckIn
+        esVisible={modalHacerCheckInEsVisible}
+        ocultar={(): void => {
+          cambiarVisibilidadDeModalPrincipal(true);
+          cambiarVisibilidadDeModalHacerCheckIn(false);
+        }}
+      />
+      <Modal isVisible={modalPrincipalEsVisible} onHide={ocultar}>
+        <Body width={'500px'}>
+          <div className={Estilos.contenedor}>
+            <p className={Estilos.nombre}>
+              {datos.datosMinimosDeHuesped.nombreCompleto}
+              <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
+            </p>
+            <p className={Estilos.fechas}>
+              {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
+            </p>
+            <div className={Estilos.cuerpo}>
+              <div className={Estilos.dato}>
+                <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
               </div>
-              <div className="column">
-                <Boton
-                  texto="Hacer Check-In"
-                  className={`is-primary ${Estilos.ocuparTodoElAncho}`}
-                  onClick={(): void => {}}
-                />
+              <div className={Estilos.dato}>
+                <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
+              </div>
+              <div className={Estilos.dato}>
+                <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
+              </div>
+              <MostrarHabitacionesYCamas
+                habitacionesPrivadas={datos.habitacionesPrivadas}
+                camasDeHabitacionesCompartidas={datos.camas}
+              />
+              <div className={Estilos.botones}>
+                <div className="column">
+                  <Boton
+                    texto="Cancelar reserva"
+                    className={`is-danger ${Estilos.ocuparTodoElAncho}`}
+                    onClick={(): void => {}}
+                  />
+                </div>
+                <div className="column">
+                  <Boton
+                    texto="Hacer Check-In"
+                    className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                    onClick={(): void => {
+                      cambiarVisibilidadDeModalPrincipal(false);
+                      cambiarVisibilidadDeModalHacerCheckIn(true);
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Body>
-    </Modal>
+        </Body>
+      </Modal>
+    </>
   ) : (
     <></>
   );

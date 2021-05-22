@@ -60,23 +60,6 @@
   margin-left: 0.5rem;
 }
 
-.lista {
-  margin-left: 4rem;
-}
-
-.lista li {
-  margin-top: 0.4rem;
-}
-
-.listaCamasDeHabitacionesCompartidas {
-  list-style-type: disc;
-  margin-left: 2rem;
-}
-
-.listaCamasDeHabitacionesCompartidas li {
-  margin-top: 0.3rem;
-}
-
 .botones {
   @extend .columns;
   margin-top: 0.05rem;
