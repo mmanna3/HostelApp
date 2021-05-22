@@ -1,3 +1,4 @@
+import { Boton } from 'components/botones/botones';
 import { Icon } from 'components/Icon';
 import { Body, Modal } from 'components/Modal';
 import React, { ReactElement } from 'react';
@@ -73,6 +74,22 @@ const Detalle = (): ReactElement => {
               habitacionesPrivadas={datos.habitacionesPrivadas}
               camasDeHabitacionesCompartidas={datos.camas}
             />
+            <div className={Estilos.botones}>
+              <div className="column">
+                <Boton
+                  texto="Cancelar reserva"
+                  className={`is-danger ${Estilos.ocuparTodoElAncho}`}
+                  onClick={(): void => {}}
+                />
+              </div>
+              <div className="column">
+                <Boton
+                  texto="Hacer Check-In"
+                  className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                  onClick={(): void => {}}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </Body>

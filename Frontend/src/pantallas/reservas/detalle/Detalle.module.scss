@@ -76,3 +76,12 @@
 .listaCamasDeHabitacionesCompartidas li {
   margin-top: 0.3rem;
 }
+
+.botones {
+  @extend .columns;
+  margin-top: 0.05rem;
+}
+
+.ocuparTodoElAncho {
+  width: 100%;
+}
