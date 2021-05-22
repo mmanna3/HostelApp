@@ -64,23 +64,19 @@ const Cabecera = ({ showModal, onFechaChange }: IProps): ReactElement => {
     <div className={Estilos.contenedor}>
       <div className="level-left">
         <div className={`buttons has-addons ${Estilos.botones}`}>
-          <Boton onClick={(): void => seleccionarSemana()} text="Semana" className={`button ${estiloBotonSemana}`} />
-          <Boton
-            onClick={(): void => seleccionarDosSemanas()}
-            text="Dos semanas"
-            className={`button ${estiloBotonDosSemanas}`}
-          />
-          <Boton onClick={(): void => seleccionarMes()} text="Mes" className={`button ${estiloBotonMes}`} />
+          <Boton onClick={(): void => seleccionarSemana()} texto="Semana" className={estiloBotonSemana} />
+          <Boton onClick={(): void => seleccionarDosSemanas()} texto="Dos semanas" className={estiloBotonDosSemanas} />
+          <Boton onClick={(): void => seleccionarMes()} texto="Mes" className={estiloBotonMes} />
         </div>
         <div className={Estilos.selectorDeFechaContenedor}>
           <SelectorDeFecha onChange={onFechaDeSelectorChange} value={fechaInicio} />
         </div>
         <div>
-          <Boton onClick={(): void => seleccionarHoy()} text="Hoy" className="button is-success" />
+          <Boton onClick={(): void => seleccionarHoy()} texto="Hoy" className="is-success" />
         </div>
       </div>
       <div className="level-right">
-        <Boton onClick={showModal} text="Nueva reserva" />
+        <Boton onClick={showModal} texto="Nueva reserva" />
       </div>
     </div>
   );

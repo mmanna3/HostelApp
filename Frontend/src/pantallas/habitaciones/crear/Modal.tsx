@@ -196,7 +196,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IProps): ReactElement 
               );
             }
           )}
-          <Boton text="Agregar cama" onClick={(): void => agregarRenglon()} style={{ marginTop: '1em' }} />
+          <Boton texto="Agregar cama" onClick={(): void => agregarRenglon()} style={{ marginTop: '1em' }} />
         </div>
       </CardBody>
       <FooterAcceptCancel onCancel={hide} loading={estado === EstadosApiRequestEnum.cargando} />

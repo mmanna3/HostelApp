@@ -107,7 +107,7 @@ const Renglones = ({ modificarRenglonesParaPost }: IProps): ReactElement => {
             }
           )}
 
-          <Boton dataCy="boton-agregar-cama" text="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
+          <Boton dataCy="boton-agregar-cama" texto="Agregar cama" onClick={agregarRenglon} style={{ marginTop: '1em' }} />
         </>
       )}
     </>

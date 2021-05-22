@@ -23,7 +23,7 @@ export function SubmitButton({ text, dataCy = '', loading }: ISubmitButtonProps)
 }
 
 interface IBotonProps {
-  text: string;
+  texto: string;
   dataCy?: string;
   onClick: (e: any) => void;
   value?: string;
@@ -31,10 +31,10 @@ interface IBotonProps {
   className?: string;
 }
 
-export function Boton({ text, dataCy = '', onClick, style, value, className = 'is-primary' }: IBotonProps): ReactElement {
+export function Boton({ texto, dataCy = '', onClick, style, value, className = 'is-primary' }: IBotonProps): ReactElement {
   return (
     <button data-cy={dataCy} className={`button ${className}`} type="button" style={style} onClick={onClick} value={value}>
-      {text}
+      {texto}
     </button>
   );
 }

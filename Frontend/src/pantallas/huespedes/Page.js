@@ -46,7 +46,7 @@ const HuespedesPage = () => {
 
       <h1 className="title is-1">Huéspedes</h1>
       <div className="buttons is-fullwidth is-pulled-right">
-        <Boton onClick={showModal} text="Cargar nuevo" />
+        <Boton onClick={showModal} texto="Cargar nuevo" />
       </div>
       <Table
         fetchData={fetchData}

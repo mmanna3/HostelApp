@@ -39,7 +39,7 @@ const HabitacionesPage = (): ReactElement => {
             cambiarIdSeleccionadoParaDetalle(e.target.value);
           }}
           value={cell.row.values.id}
-          text="Ver detalle"
+          texto="Ver detalle"
         />
       ),
     },
@@ -66,7 +66,7 @@ const HabitacionesPage = (): ReactElement => {
       <h1 className="title is-1">Habitaciones</h1>
       <div className="botonera">
         <div className="is-pulled-right">
-          <Boton onClick={(): void => mostrarModalDeCreacion(true)} text="Cargar nueva" />
+          <Boton onClick={(): void => mostrarModalDeCreacion(true)} texto="Cargar nueva" />
         </div>
       </div>
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
