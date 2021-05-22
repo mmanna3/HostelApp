@@ -69,7 +69,7 @@ export function Input({
               </span>
             )}
           </div>
-          {onButtonClick && (
+          {onButtonClick && textoDelBoton && (
             <div className="control">
               <Button dataCy={'boton-' + dataCy} text={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
             </div>
