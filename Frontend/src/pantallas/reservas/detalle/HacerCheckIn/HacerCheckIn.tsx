@@ -40,16 +40,16 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
         ...anteriores.map((item, i): HuespedDTO => (i === huespedBusquedaActivaIndex ? huespedEncontrado : item)),
       ]);
     }
-    //reiniciar API obtenerPorDniOPasaporte
-  }, [huespedEncontrado, huespedBusquedaActivaIndex]);
+
+    dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
+  }, [huespedEncontrado, huespedBusquedaActivaIndex, dispatch]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
 
-  const clickEnBuscar = (dniOPasaporte: string): void => {
-    // reiniciarDatosDelHuesped();
-    actualizarHuespedBusquedaActivaIndex(0);
+  const clickEnBuscar = (dniOPasaporte: string, index: number): void => {
+    actualizarHuespedBusquedaActivaIndex(index);
     buscarDniOPasaporte(dniOPasaporte);
   };
 
@@ -60,16 +60,24 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
         {/* <ValidationSummary errors={errores} /> */}
 
         <LineaDivisoria texto="TITULAR DE LA RESERVA" />
-        <DatosDelHuesped huesped={huespedes[0]} name="HuespedTitular" buscarDniOPasaporte={clickEnBuscar} />
+        <DatosDelHuesped
+          huesped={huespedes[0]}
+          name="HuespedTitular"
+          buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, 0)}
+        />
 
-        {/* {[...Array(datos.cantidadDePasajeros - 1)].map(
-          (_e, i): ReactElement => (
-            <>
-              <LineaDivisoria texto={`PASAJERO ${i + 2}`} />
-              <DatosDelHuesped key={i} />
-            </>
+        {huespedes.slice(1).map(
+          (huesped, i): ReactElement => (
+            <div key={i + 1}>
+              <LineaDivisoria texto={`HUÉSPED ${i + 2}`} />
+              <DatosDelHuesped
+                huesped={huesped}
+                name={`Huesped[${i + 1}]`}
+                buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, i + 1)}
+              />
+            </div>
           )
-        )} */}
+        )}
       </CardBody>
       {/* <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} /> */}
       <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={false} />
