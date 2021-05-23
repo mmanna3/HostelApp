@@ -62,7 +62,7 @@ export interface ReservaBaseDTO {
     horaEstimadaDeLlegada: string;
     cantidadDePasajeros: number;
     canal: string;
-    datosMinimosDeHuesped: DatosMinimosDeHuespedDTO;
+    huesped: HuespedDTO;
     diaDeCheckin: string;
     diaDeCheckout: string;
 }
