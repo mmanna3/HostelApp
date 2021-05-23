@@ -10,6 +10,11 @@ interface IProps {
 }
 
 const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
+  // const buscarDniOPasaporte = (dniOPasaporte: string): void => {
+  //   reiniciarDatosDelHuesped();
+  //   dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+  // };
+
   return (
     <ModalForm isVisible={esVisible} onHide={ocultar} onSubmit={(): void => {}} minWidth="900px">
       <Header title="Hacer Check-In" onHide={ocultar} />

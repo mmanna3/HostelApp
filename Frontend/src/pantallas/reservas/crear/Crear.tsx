@@ -72,7 +72,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   );
 
   // Todo esto a customHook
-  const [datosDelHuespedKey, reiniciarDatosDelHuesped] = useCounterKey();
+  const [datosDelHuespedKey, reiniciarDatosDelHuesped] = useCounterKey(1000);
   const { datos: huesped, estado: estadoHuesped } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
   useEffect((): void => {
     if (estadoHuesped === EstadosApiRequestEnum.exitoso && huesped != null)
@@ -103,7 +103,6 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
-        {/* No puedo empezar con key 0 acá, porque ya está el modal con key 0 */}
         <DatosDelHuesped key={datosDelHuespedKey} huesped={huesped} buscarDniOPasaporte={buscarDniOPasaporte} />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
