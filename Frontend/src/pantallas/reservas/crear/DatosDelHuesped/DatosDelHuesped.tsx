@@ -1,54 +1,17 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
 import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelHuesped/ListaDePaises';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import api from 'store/api/api';
+import React, { ReactElement } from 'react';
 import { DatosMinimosDeHuespedDTO } from 'store/api/DTOs';
-import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
   huesped?: DatosMinimosDeHuespedDTO;
+  buscarDniOPasaporte: (dniOPasaporte: string) => void;
 }
 
-const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
-  const dispatch = useDispatch();
-
-  const paisParaAutoCompleteDelHuesped = huesped
-    ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais)
-    : null;
-  const [paisOpcionInicial, modificarPaisOpcionInicial] = useState(
-    paisParaAutoCompleteDelHuesped ? paisParaAutoCompleteDelHuesped : paisesParaAutocomplete[8]
-  );
-
-  const { datos, estado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
-
-  useEffect((): void => {
-    if (estado === EstadosApiRequestEnum.exitoso && datos != null)
-      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
-        type: toast.TYPE.SUCCESS,
-        toastId: `toast-exito-${datos.dniOPasaporte}`,
-      });
-    else if (estado === EstadosApiRequestEnum.huboError)
-      toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
-        type: toast.TYPE.ERROR,
-        toastId: `toast-error`,
-      });
-  }, [estado, datos]);
-
-  const buscarDniOPasaporte = (dniOPasaporte: string): void => {
-    dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
-  };
-
-  useEffect((): void => {
-    if (datos) {
-      let pais = paisesParaAutocomplete.find((x): boolean => x.value === datos.pais);
-      if (pais) {
-        modificarPaisOpcionInicial(pais);
-      }
-    }
-  }, [datos]);
+const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement => {
+  const paisDelHuesped = huesped ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais) : undefined;
+  const paisOpcionInicial = paisDelHuesped ? paisDelHuesped : paisesParaAutocomplete[8];
 
   return (
     <div>
@@ -59,9 +22,9 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
             dataCy="dni"
-            name="DatosMinimosDeHuesped.DNIOPasaporte"
+            name="datosMinimosDeHuesped.DNIOPasaporte"
             type="number"
-            defaultValue={datos ? datos.dniOPasaporte : huesped?.dniOPasaporte}
+            defaultValue={huesped?.dniOPasaporte}
             faIconCode="id-card"
           />
         </div>
@@ -69,8 +32,8 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
           <Input
             placeholder="Nombre completo"
             dataCy="nombre"
-            name="DatosMinimosDeHuesped.NombreCompleto"
-            defaultValue={datos ? datos.nombreCompleto : huesped?.nombreCompleto}
+            name="datosMinimosDeHuesped.NombreCompleto"
+            defaultValue={huesped?.nombreCompleto}
             faIconCode="user"
           />
         </div>
@@ -80,7 +43,7 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
           <Autocomplete
             key={paisOpcionInicial.value}
             dataCy="pais"
-            name="DatosMinimosDeHuesped.Pais"
+            name="datosMinimosDeHuesped.Pais"
             opciones={paisesParaAutocomplete}
             opcionInicial={paisOpcionInicial}
             placeholder="Nacionalidad"
@@ -90,9 +53,9 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
         <div className="column is-one-fifth">
           <Input
             dataCy="telefono"
-            name="DatosMinimosDeHuesped.Telefono"
+            name="datosMinimosDeHuesped.Telefono"
             type="number"
-            defaultValue={datos ? datos.telefono : huesped?.telefono}
+            defaultValue={huesped?.telefono}
             placeholder="Teléfono"
             faIconCode="phone"
           />
@@ -100,8 +63,8 @@ const DatosDelHuesped = ({ huesped }: IProps): ReactElement => {
         <div className="column">
           <Input
             dataCy="email"
-            name="DatosMinimosDeHuesped.Email"
-            defaultValue={datos ? datos.email : huesped?.email}
+            name="datosMinimosDeHuesped.Email"
+            defaultValue={huesped?.email}
             type="email"
             placeholder="Email"
             faIconCode="envelope"

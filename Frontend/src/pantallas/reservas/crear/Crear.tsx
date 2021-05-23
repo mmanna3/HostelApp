@@ -1,8 +1,9 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import api from 'store/api/api';
 import { ReservaCreacionDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
@@ -70,6 +71,28 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     [listarConLugaresLibresRequest, dispatch]
   );
 
+  // Todo esto a customHook
+  const [datosDelHuespedKey, reiniciarDatosDelHuesped] = useCounterKey();
+  const { datos: huesped, estado: estadoHuesped } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
+  useEffect((): void => {
+    if (estadoHuesped === EstadosApiRequestEnum.exitoso && huesped != null)
+      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
+        type: toast.TYPE.SUCCESS,
+        toastId: `toast-exito-${huesped.dniOPasaporte}`,
+      });
+    else if (estadoHuesped === EstadosApiRequestEnum.huboError)
+      toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
+        type: toast.TYPE.ERROR,
+        toastId: `toast-error`,
+      });
+  }, [estadoHuesped, huesped]);
+
+  const buscarDniOPasaporte = (dniOPasaporte: string): void => {
+    reiniciarDatosDelHuesped();
+    dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+  };
+  // Hasta acá
+
   return (
     <ModalForm isVisible={isVisible} onHide={ocultar} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
       <Header title="Nueva reserva" onHide={ocultar} />
@@ -80,7 +103,8 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
-        <DatosDelHuesped />
+        {/* No puedo empezar con key 0 acá, porque ya está el modal con key 0 */}
+        <DatosDelHuesped key={datosDelHuespedKey} huesped={huesped} buscarDniOPasaporte={buscarDniOPasaporte} />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
 

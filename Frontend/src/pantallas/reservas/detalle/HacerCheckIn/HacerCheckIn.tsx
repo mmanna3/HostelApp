@@ -1,5 +1,4 @@
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
-import DatosDelHuesped from 'pantallas/reservas/crear/DatosDelHuesped/DatosDelHuesped';
 import React, { ReactElement } from 'react';
 import { ReservaDetalleDTO } from 'store/api/DTOs';
 // import Estilos from './HacerCheckIn.module.scss';
@@ -17,8 +16,17 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
       <CardBody minHeight="460px">
         {/* <ValidationSummary errors={errores} /> */}
 
-        {/* <Input name="cantidadDePasajeros" type="number" /> */}
+        {/* <LineaDivisoria texto="TITULAR DE LA RESERVA" />
         <DatosDelHuesped huesped={datos.datosMinimosDeHuesped} />
+
+        {[...Array(datos.cantidadDePasajeros - 1)].map(
+          (_e, i): ReactElement => (
+            <>
+              <LineaDivisoria texto={`PASAJERO ${i + 2}`} />
+              <DatosDelHuesped key={i} />
+            </>
+          )
+        )} */}
       </CardBody>
       {/* <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} /> */}
       <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={false} />
