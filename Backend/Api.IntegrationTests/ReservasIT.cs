@@ -22,7 +22,7 @@ namespace Api.IntegrationTests
 	    private const CamaTipoEnum CAMA_TIPO = CamaTipoEnum.Individual;
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
-        private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
+        private readonly HuespedDTO _datosMinimosDeUnHuesped = new HuespedDTO
         {
 	        NombreCompleto = "Elliot Alderson",
 	        DniOPasaporte = "123456789",
@@ -84,11 +84,11 @@ namespace Api.IntegrationTests
             reserva.Camas.First().Id.Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
 
-	        reserva.DatosMinimosDeHuesped.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
-	        reserva.DatosMinimosDeHuesped.Telefono = _datosMinimosDeUnHuesped.Telefono;
-            reserva.DatosMinimosDeHuesped.Email = _datosMinimosDeUnHuesped.Email;
-            reserva.DatosMinimosDeHuesped.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
-            reserva.DatosMinimosDeHuesped.Pais = _datosMinimosDeUnHuesped.Pais;
+	        reserva.Huesped.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
+	        reserva.Huesped.Telefono = _datosMinimosDeUnHuesped.Telefono;
+            reserva.Huesped.Email = _datosMinimosDeUnHuesped.Email;
+            reserva.Huesped.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
+            reserva.Huesped.Pais = _datosMinimosDeUnHuesped.Pais;
 
         }
 

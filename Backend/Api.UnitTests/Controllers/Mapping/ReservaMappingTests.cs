@@ -16,7 +16,7 @@ namespace Api.UnitTests.Controllers.Mapping
     {
 	    private ReservaCreacionDTO _unaReservaCreacionDTO;
         private IList<Reserva> _unaListaDeReservas;
-        private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
+        private readonly HuespedDTO _datosMinimosDeUnHuesped = new HuespedDTO
         {
 	        NombreCompleto = "Elliot",
 	        DniOPasaporte = "123456789",
@@ -83,11 +83,11 @@ namespace Api.UnitTests.Controllers.Mapping
 	        reservaDTO.Camas.First().Id.Should().Be(1);
 	        reservaDTO.Camas.Skip(1).First().Id.Should().Be(2);
 
-	        reservaDTO.DatosMinimosDeHuesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-	        reservaDTO.DatosMinimosDeHuesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-	        reservaDTO.DatosMinimosDeHuesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-	        reservaDTO.DatosMinimosDeHuesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
-	        reservaDTO.DatosMinimosDeHuesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
+	        reservaDTO.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        reservaDTO.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        reservaDTO.Huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        reservaDTO.Huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+	        reservaDTO.Huesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace Api.UnitTests.Controllers.Mapping
         {
 	        _unaReservaCreacionDTO = new ReservaCreacionDTO
             {
-                DatosMinimosDeHuesped = _datosMinimosDeUnHuesped,
+                Huesped = _datosMinimosDeUnHuesped,
                 Canal = "Booking",
                 DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),

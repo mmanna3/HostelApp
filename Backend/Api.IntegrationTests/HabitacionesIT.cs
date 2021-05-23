@@ -19,7 +19,7 @@ namespace Api.IntegrationTests
         private const string ENDPOINT_CONLUGARESLIBRES = ENDPOINT + "/conLugaresLibres";
         private readonly DateTime DESDE = new DateTime(2020, 09, 17);
         private readonly DateTime HASTA = new DateTime(2020, 09, 18);
-        private readonly DatosMinimosDeHuespedDTO _datosMinimosDeUnHuesped = new DatosMinimosDeHuespedDTO
+        private readonly HuespedDTO _datosMinimosDeUnHuesped = new HuespedDTO
         {
 	        NombreCompleto = "Elliot",
 	        DniOPasaporte = "123456789",

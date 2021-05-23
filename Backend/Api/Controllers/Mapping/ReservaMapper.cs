@@ -21,7 +21,7 @@ namespace Api.Controllers.Mapping
 				Canal = entidad.Canal,
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
-				DatosMinimosDeHuesped = HuespedMapper.MapToDatosMinimosDelHuesped(entidad.Huesped),
+				Huesped = HuespedMapper.Map(entidad.Huesped),
 				HabitacionesPrivadas = new List<HabitacionDTO>(),
 				Camas = new List<CamaDTO>()
 			};
@@ -91,7 +91,7 @@ namespace Api.Controllers.Mapping
 			{
 				ReservaCamas = creacionDTO.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
 				ReservaHabitacionesPrivadas = creacionDTO.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
-				Huesped = HuespedMapper.Map(creacionDTO.DatosMinimosDeHuesped),
+				Huesped = HuespedMapper.Map(creacionDTO.Huesped),
 				Estado = creacionDTO.Estado,
 				Canal = creacionDTO.Canal,
 				HoraEstimadaDeLlegada = TimeSpan.Parse(creacionDTO.HoraEstimadaDeLlegada),

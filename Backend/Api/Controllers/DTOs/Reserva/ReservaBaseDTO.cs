@@ -16,7 +16,7 @@ namespace Api.Controllers.DTOs.Reserva
 	    [YKNRequired, DisplayName("Canal")]
 	    public string Canal { get; set; }
 
-	    public DatosMinimosDeHuespedDTO DatosMinimosDeHuesped { get; set; }
+	    public HuespedDTO Huesped { get; set; }
 
 	    [YKNRequired, DisplayName("Día de checkin")]
 	    public string DiaDeCheckin { get; set; }
