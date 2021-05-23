@@ -22,7 +22,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
             dataCy="dni"
-            name="datosMinimosDeHuesped.DNIOPasaporte"
+            name="DatosMinimosDeHuesped.DNIOPasaporte"
             type="number"
             defaultValue={huesped?.dniOPasaporte}
             faIconCode="id-card"
@@ -32,7 +32,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
           <Input
             placeholder="Nombre completo"
             dataCy="nombre"
-            name="datosMinimosDeHuesped.NombreCompleto"
+            name="DatosMinimosDeHuesped.NombreCompleto"
             defaultValue={huesped?.nombreCompleto}
             faIconCode="user"
           />
@@ -43,7 +43,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
           <Autocomplete
             key={paisOpcionInicial.value}
             dataCy="pais"
-            name="datosMinimosDeHuesped.Pais"
+            name="DatosMinimosDeHuesped.Pais"
             opciones={paisesParaAutocomplete}
             opcionInicial={paisOpcionInicial}
             placeholder="Nacionalidad"
@@ -53,7 +53,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
         <div className="column is-one-fifth">
           <Input
             dataCy="telefono"
-            name="datosMinimosDeHuesped.Telefono"
+            name="DatosMinimosDeHuesped.Telefono"
             type="number"
             defaultValue={huesped?.telefono}
             placeholder="Teléfono"
@@ -63,7 +63,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
         <div className="column">
           <Input
             dataCy="email"
-            name="datosMinimosDeHuesped.Email"
+            name="DatosMinimosDeHuesped.Email"
             defaultValue={huesped?.email}
             type="email"
             placeholder="Email"
