@@ -1,7 +1,7 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
 import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelHuesped/ListaDePaises';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { DatosMinimosDeHuespedDTO } from 'store/api/DTOs';
 
 interface IProps {
@@ -11,21 +11,11 @@ interface IProps {
 }
 
 const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactElement => {
-  const [key, actualizarKey] = useState(huesped?.dniOPasaporte);
-
-  useEffect((): void => {
-    debugger;
-    actualizarKey(huesped?.dniOPasaporte);
-  }, [huesped, huesped?.dniOPasaporte]);
-
   const paisDelHuesped = huesped ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais) : undefined;
   const paisOpcionInicial = paisDelHuesped ? paisDelHuesped : paisesParaAutocomplete[8];
 
-  debugger;
   return (
-    <div key={key}>
-      <p>Key= {key}</p>
-      {/* Porque si cambia el huesped, quiero que rerenderice */}
+    <div>
       <div className="columns">
         <div className="column is-one-third">
           <Input
