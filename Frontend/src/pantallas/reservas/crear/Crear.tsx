@@ -103,7 +103,12 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
-        <DatosDelHuesped key={datosDelHuespedKey} huesped={huesped} buscarDniOPasaporte={buscarDniOPasaporte} />
+        <DatosDelHuesped
+          key={datosDelHuespedKey}
+          huesped={huesped}
+          name="DatosMinimosDeHuesped"
+          buscarDniOPasaporte={buscarDniOPasaporte}
+        />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />
 

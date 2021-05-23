@@ -7,9 +7,10 @@ import { DatosMinimosDeHuespedDTO } from 'store/api/DTOs';
 interface IProps {
   huesped?: DatosMinimosDeHuespedDTO;
   buscarDniOPasaporte: (dniOPasaporte: string) => void;
+  name: string;
 }
 
-const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement => {
+const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactElement => {
   const paisDelHuesped = huesped ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais) : undefined;
   const paisOpcionInicial = paisDelHuesped ? paisDelHuesped : paisesParaAutocomplete[8];
 
@@ -22,7 +23,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
             dataCy="dni"
-            name="DatosMinimosDeHuesped.DNIOPasaporte"
+            name={`${name}.DNIOPasaporte`}
             type="number"
             defaultValue={huesped?.dniOPasaporte}
             faIconCode="id-card"
@@ -32,7 +33,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
           <Input
             placeholder="Nombre completo"
             dataCy="nombre"
-            name="DatosMinimosDeHuesped.NombreCompleto"
+            name={`${name}.NombreCompleto`}
             defaultValue={huesped?.nombreCompleto}
             faIconCode="user"
           />
@@ -43,7 +44,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
           <Autocomplete
             key={paisOpcionInicial.value}
             dataCy="pais"
-            name="DatosMinimosDeHuesped.Pais"
+            name={`${name}.Pais`}
             opciones={paisesParaAutocomplete}
             opcionInicial={paisOpcionInicial}
             placeholder="Nacionalidad"
@@ -53,7 +54,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
         <div className="column is-one-fifth">
           <Input
             dataCy="telefono"
-            name="DatosMinimosDeHuesped.Telefono"
+            name={`${name}.Telefono`}
             type="number"
             defaultValue={huesped?.telefono}
             placeholder="Teléfono"
@@ -63,7 +64,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte }: IProps): ReactElement
         <div className="column">
           <Input
             dataCy="email"
-            name="DatosMinimosDeHuesped.Email"
+            name={`${name}.Email`}
             defaultValue={huesped?.email}
             type="email"
             placeholder="Email"
