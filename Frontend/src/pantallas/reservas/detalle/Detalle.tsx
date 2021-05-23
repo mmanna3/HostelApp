@@ -66,7 +66,7 @@ const Detalle = (): ReactElement => {
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
             <p className={Estilos.nombre}>
-              {datos.datosMinimosDeHuesped.nombreCompleto}
+              {datos.huesped.nombreCompleto}
               <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
             </p>
             <p className={Estilos.fechas}>

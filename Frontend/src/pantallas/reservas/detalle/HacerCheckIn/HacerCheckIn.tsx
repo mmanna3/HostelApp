@@ -4,7 +4,7 @@ import DatosDelHuesped from 'pantallas/reservas/crear/DatosDelHuesped/DatosDelHu
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { DatosMinimosDeHuespedDTO, ReservaDetalleDTO } from 'store/api/DTOs';
+import { HuespedDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 // import Estilos from './HacerCheckIn.module.scss';
 
 interface IProps {
@@ -14,13 +14,14 @@ interface IProps {
 }
 
 const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
-  const [huespedes, actualizarHuespedes] = useState<DatosMinimosDeHuespedDTO[]>([datos.datosMinimosDeHuesped]);
+  const [huespedes, actualizarHuespedes] = useState<HuespedDTO[]>([datos.huesped]);
   const [huespedBusquedaActivaIndex, actualizarHuespedBusquedaActivaIndex] = useState(0);
   const dispatch = useDispatch();
   const { datos: huespedEncontrado } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
 
   useEffect((): void => {
-    let huespedVacio: DatosMinimosDeHuespedDTO = {
+    let huespedVacio: HuespedDTO = {
+      id: -1,
       nombreCompleto: '',
       dniOPasaporte: '',
       pais: '',
@@ -29,24 +30,27 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
     };
 
     for (let i = 0; i < datos.cantidadDePasajeros - 1; i++) {
-      actualizarHuespedes((anteriores): DatosMinimosDeHuespedDTO[] => [...anteriores, huespedVacio]);
+      actualizarHuespedes((anteriores): HuespedDTO[] => [...anteriores, huespedVacio]);
     }
   }, [datos]);
 
-  // const a = useCallback((): void => {
-  //   let copiaHuespedesAcompaniantes = huespedes;
-  //   copiaHuespedesAcompaniantes[huespedBusquedaActivaIndex] = huespedEncontrado;
-  //   actualizarHuespedes(copiaHuespedesAcompaniantes);
-  // }, [huespedes, huespedEncontrado, huespedBusquedaActivaIndex]);
-
-  // useEffect((): void => {
-  //   a();
-  // }, [huespedEncontrado, a]);
+  useEffect((): void => {
+    if (huespedEncontrado) {
+      actualizarHuespedes((anteriores): HuespedDTO[] => [
+        ...anteriores.map((item, i): HuespedDTO => (i === huespedBusquedaActivaIndex ? huespedEncontrado : item)),
+      ]);
+    }
+    //reiniciar API obtenerPorDniOPasaporte
+  }, [huespedEncontrado, huespedBusquedaActivaIndex]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
-    // reiniciarDatosDelHuesped();
-    debugger;
     dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+  };
+
+  const clickEnBuscar = (dniOPasaporte: string): void => {
+    // reiniciarDatosDelHuesped();
+    actualizarHuespedBusquedaActivaIndex(0);
+    buscarDniOPasaporte(dniOPasaporte);
   };
 
   return (
@@ -56,15 +60,7 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
         {/* <ValidationSummary errors={errores} /> */}
 
         <LineaDivisoria texto="TITULAR DE LA RESERVA" />
-        <DatosDelHuesped
-          huesped={huespedes[0]}
-          name="HuespedTitular"
-          buscarDniOPasaporte={(dniOPasaporte: string): void => {
-            debugger;
-            actualizarHuespedBusquedaActivaIndex(0);
-            buscarDniOPasaporte(dniOPasaporte);
-          }}
-        />
+        <DatosDelHuesped huesped={huespedes[0]} name="HuespedTitular" buscarDniOPasaporte={clickEnBuscar} />
 
         {/* {[...Array(datos.cantidadDePasajeros - 1)].map(
           (_e, i): ReactElement => (
