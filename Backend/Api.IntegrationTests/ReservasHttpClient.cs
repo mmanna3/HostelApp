@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Huesped;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
@@ -58,15 +57,15 @@ namespace Api.IntegrationTests
 			return await _httpClient.GetAsync(ENDPOINT + "/checkoutsDeHoy");
 		}
 
-		public async Task<int> CrearHuesped(DatosMinimosDeHuespedDTO datosMinimosDeHuespedDTO)
+		public async Task<int> CrearHuesped(HuespedDTO huesped)
 		{
 			var body = new HuespedDTO
 			{
-				NombreCompleto = datosMinimosDeHuespedDTO.NombreCompleto,
-				DniOPasaporte = datosMinimosDeHuespedDTO.DniOPasaporte,
-				Email = datosMinimosDeHuespedDTO.Email,
-				Telefono = datosMinimosDeHuespedDTO.Telefono,
-				Pais = datosMinimosDeHuespedDTO.Pais,
+				NombreCompleto = huesped.NombreCompleto,
+				DniOPasaporte = huesped.DniOPasaporte,
+				Email = huesped.Email,
+				Telefono = huesped.Telefono,
+				Pais = huesped.Pais,
 			};
 
 			await _httpClient.PostAsJsonAsync(ENDPOINT_HUESPEDES, body);
