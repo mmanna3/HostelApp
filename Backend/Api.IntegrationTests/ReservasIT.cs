@@ -58,7 +58,7 @@ namespace Api.IntegrationTests
             reserva.DiaDeCheckout.Should().Be("2020-09-17");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
-            reserva.NombreAbreviadoDelHuesped.Should().Be("Elliot");
+            reserva.NombreAbreviadoDelPasajero.Should().Be("Elliot");
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
         }
 
@@ -109,6 +109,27 @@ namespace Api.IntegrationTests
 	        pasajero.Email.Should().Be(_pasajero.Email);
 	        pasajero.NombreCompleto.Should().Be(_pasajero.NombreCompleto);
 	        pasajero.Telefono.Should().Be(_pasajero.Telefono);
+        }
+
+        [Test]
+        public async Task HaceCheckIn_Correctamente()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
+	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var reservaId = await response.Content.ReadAsAsync<int>();
+
+            var dto = new HacerCheckInDTO
+            {
+                ReservaId = reservaId,
+                PasajeroTitular = _pasajero,
+            };
+
+            var responseHacerCheckIn = await _reservasHttpClient.HacerCheckIn(dto);
+            responseHacerCheckIn.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var reservaId2 = await responseHacerCheckIn.Content.ReadAsAsync<int>();
+
+	        reservaId2.Should().Be(reservaId);
         }
 
         [Test]

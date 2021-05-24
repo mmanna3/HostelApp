@@ -1,4 +1,10 @@
-import { CheckoutsDeHoyDTO, ReservaCreacionDTO, ReservaDetalleDTO, ReservasDelPeriodoDTO } from 'store/api/DTOs';
+import {
+  CheckoutsDeHoyDTO,
+  HacerCheckInDTO,
+  ReservaCreacionDTO,
+  ReservaDetalleDTO,
+  ReservasDelPeriodoDTO,
+} from 'store/api/DTOs';
 import {
   generarSliceHttpGet,
   generarSliceHttpPost,
@@ -24,6 +30,12 @@ const crearSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
+const hacerCheckInSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'hacerCheckIn',
+  endpoint: '/reservas/hacerCheckIn',
+  dataInicial: null,
+};
+
 interface IListarParams {
   primeraNoche: string;
   dias: number;
@@ -45,6 +57,10 @@ const crear = {
   ...generarSliceHttpPost<string, ReservaCreacionDTO>(crearSliceInfo),
 };
 
+const hacerCheckIn = {
+  ...generarSliceHttpPost<string, HacerCheckInDTO>(hacerCheckInSliceInfo),
+};
+
 const obtenerPorId = { ...generarSliceHttpGet<ReservaDetalleDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
 export default {
@@ -52,4 +68,5 @@ export default {
   checkoutsDeHoy,
   crear,
   obtenerPorId,
+  hacerCheckIn,
 };

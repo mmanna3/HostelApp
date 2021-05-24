@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
   reservas: api.reservas.listar.reducer,
   crearReserva: api.reservas.crear.reducer,
   checkoutsDeHoy: api.reservas.checkoutsDeHoy.reducer,
+  hacerCheckIn: api.reservas.hacerCheckIn.reducer,
 });
 
 export default rootReducer;

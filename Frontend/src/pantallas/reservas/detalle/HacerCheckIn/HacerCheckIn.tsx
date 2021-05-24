@@ -1,4 +1,5 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
+import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import DatosDelPasajero from 'pantallas/reservas/crear/DatosDelPasajero/DatosDelPasajero';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -45,7 +46,7 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
   }, [pasajeroEncontrado, IndiceEnBusquedaActiva, dispatch]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
-    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte })); //Reescribir esto agregándole un onSuccess
   };
 
   const clickEnBuscar = (dniOPasaporte: string, index: number): void => {
@@ -53,11 +54,17 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
     buscarDniOPasaporte(dniOPasaporte);
   };
 
+  const alEnviar = (data: any): void => {
+    dispatch(api.reservas.hacerCheckIn.invocar(data, ocultar));
+  };
+
   return (
-    <ModalForm isVisible={esVisible} onHide={ocultar} onSubmit={(): void => {}} minWidth="900px">
+    <ModalForm isVisible={esVisible} onHide={ocultar} onSubmit={alEnviar} minWidth="900px">
       <Header title="Hacer Check-In" onHide={ocultar} />
       <CardBody minHeight="460px">
         {/* <ValidationSummary errors={errores} /> */}
+
+        <Input name="ReservaId" defaultValue={datos.id} style={{ display: 'none' }} />
 
         <LineaDivisoria texto="TITULAR DE LA RESERVA" />
         <DatosDelPasajero
@@ -72,7 +79,7 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
               <LineaDivisoria texto={`PASAJERO ${i + 2}`} />
               <DatosDelPasajero
                 pasajero={pasajero}
-                name={`Pasajero[${i + 1}]`}
+                name={`PasajerosAnexos[${i}]`}
                 buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, i + 1)}
               />
             </div>

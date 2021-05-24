@@ -69,10 +69,17 @@ namespace Api.IntegrationTests
 			};
 
 			await _httpClient.PostAsJsonAsync(ENDPOINT_PASAJEROS, body);
+			
+			//Esto es raro
 			var huespedesDtos = await (await _httpClient.GetAsync(ENDPOINT_PASAJEROS)).Content
 				.ReadAsAsync<IEnumerable<PasajeroDTO>>();
 
 			return huespedesDtos.First().Id;
+		}
+
+		public async Task<HttpResponseMessage> HacerCheckIn(HacerCheckInDTO dto)
+		{
+			return await _httpClient.PostAsJsonAsync(ENDPOINT + "/hacerCheckIn", dto);
 		}
 	}
 }

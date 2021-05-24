@@ -70,6 +70,30 @@ namespace Api.Controllers
             return id;
         }
 
+        [HttpPost, Route("hacerCheckIn")]
+        public async Task<int> HacerCheckIn([FromBody] HacerCheckInDTO dto)
+        {
+            //if (creacionDTO.CamasIds != null && creacionDTO.CamasIds.Count == 0 && creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count == 0)
+            // throw new AppException("Se debe reservar al menos una habitación o cama");
+
+            //if (creacionDTO.CamasIds != null && creacionDTO.CamasIds.Count() != creacionDTO.CamasIds.Distinct().Count())
+            // throw new AppException("No puede reservarse dos veces la misma cama");
+
+            //if (creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count() != creacionDTO.HabitacionesPrivadasIds.Distinct().Count())
+            // throw new AppException("No se puede reservar dos veces la misma habitación");
+
+            //if (creacionDTO.DiaDeCheckin == creacionDTO.DiaDeCheckout)
+            // throw new AppException("Se debe reservar al menos una noche");
+
+            //var reserva = ReservaMapper.Map(creacionDTO);
+
+            //await SiElHuespedYaExisteModificarlo(reserva);
+
+            //var id = await _service.Crear(reserva);
+            await _pasajeroService.ObtenerPorDniOPasaporte("111");
+            return dto.ReservaId;
+        }
+
         private async Task SiElHuespedYaExisteModificarlo(Reserva reserva)
         {
 	        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reserva.PasajeroTitular.DniOPasaporte);
