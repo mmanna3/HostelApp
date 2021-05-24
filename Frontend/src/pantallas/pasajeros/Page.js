@@ -44,7 +44,7 @@ const PasajerosPage = () => {
     <div className="container">
       <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
 
-      <h1 className="title is-1">Huéspedes</h1>
+      <h1 className="title is-1">Pasajeros</h1>
       <div className="buttons is-fullwidth is-pulled-right">
         <Boton onClick={showModal} texto="Cargar nuevo" />
       </div>

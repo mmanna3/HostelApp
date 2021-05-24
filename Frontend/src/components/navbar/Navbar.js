@@ -39,7 +39,7 @@ const Navbar = () => {
               <Link className="navbar-item has-text-weight-medium" to="/habitaciones">
                 Habitaciones
               </Link>
-              {/* <Link className="navbar-item has-text-weight-medium" to="/pasajeros">Huéspedes</Link>
+              {/* <Link className="navbar-item has-text-weight-medium" to="/pasajeros">Pasajeros</Link>
               <Link className="navbar-item has-text-weight-medium" to="/calendario">Calendario</Link> */}
               <Link className="navbar-item has-text-weight-medium" to="/reservas">
                 Reservas

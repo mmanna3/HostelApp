@@ -69,7 +69,7 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
         {pasajeros.slice(1).map(
           (pasajero, i): ReactElement => (
             <div key={i + 1}>
-              <LineaDivisoria texto={`HUÉSPED ${i + 2}`} />
+              <LineaDivisoria texto={`PASAJERO ${i + 2}`} />
               <DatosDelPasajero
                 pasajero={pasajero}
                 name={`Pasajero[${i + 1}]`}
