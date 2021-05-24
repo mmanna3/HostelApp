@@ -75,6 +75,8 @@
     <Compile Remove="Persistence\Migrations\20210520044910_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20210520045126_Agrega_NavigationProperty_EnCamaCucheta.cs" />
     <Compile Remove="Persistence\Migrations\20210520045126_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210524171303_Renombra_Huesped_A_HuespedTitular_EnReserva.cs" />
+    <Compile Remove="Persistence\Migrations\20210524171303_Renombra_Huesped_A_HuespedTitular_EnReserva.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

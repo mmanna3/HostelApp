@@ -72,12 +72,12 @@ namespace Api.Controllers
 
         private async Task SiElHuespedYaExisteModificarlo(Reserva reserva)
         {
-	        var huesped = await _huespedService.ObtenerPorDniOPasaporte(reserva.Huesped.DniOPasaporte);
+	        var huesped = await _huespedService.ObtenerPorDniOPasaporte(reserva.HuespedTitular.DniOPasaporte);
 	        if (huesped != null)
 	        {
-		        await _huespedService.ModificarAsync(huesped.Id, reserva.Huesped);
-		        reserva.Huesped = null;
-		        reserva.HuespedId = huesped.Id;
+		        await _huespedService.ModificarAsync(huesped.Id, reserva.HuespedTitular);
+		        reserva.HuespedTitular = null;
+		        reserva.HuespedTitularId = huesped.Id;
             }
         }
     }

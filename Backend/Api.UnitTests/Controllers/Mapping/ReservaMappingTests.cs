@@ -45,11 +45,11 @@ namespace Api.UnitTests.Controllers.Mapping
 
             var reserva = ReservaMapper.Map(_unaReservaCreacionDTO);
 
-            reserva.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-            reserva.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-            reserva.Huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-            reserva.Huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
-            reserva.Huesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
+            reserva.HuespedTitular.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+            reserva.HuespedTitular.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+            reserva.HuespedTitular.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+            reserva.HuespedTitular.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+            reserva.HuespedTitular.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
 
             reserva.PrimeraNoche.Should().Be(_desde);
             reserva.UltimaNoche.Should().Be(_hasta.AddDays(-1));
@@ -83,11 +83,11 @@ namespace Api.UnitTests.Controllers.Mapping
 	        reservaDTO.Camas.First().Id.Should().Be(1);
 	        reservaDTO.Camas.Skip(1).First().Id.Should().Be(2);
 
-	        reservaDTO.Huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-	        reservaDTO.Huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-	        reservaDTO.Huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-	        reservaDTO.Huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
-	        reservaDTO.Huesped.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
+	        reservaDTO.HuespedTitular.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
+	        reservaDTO.HuespedTitular.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
+	        reservaDTO.HuespedTitular.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
+	        reservaDTO.HuespedTitular.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+	        reservaDTO.HuespedTitular.Pais.Should().Be(_datosMinimosDeUnHuesped.Pais);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 PrimeraNoche = new DateTime(2020, 07, 17),
                 UltimaNoche = new DateTime(2021, 1, 2),
                 ReservaCamas = new List<ReservaCama> { new ReservaCama{ Cama = cama1, CamaId = cama1.Id}, new ReservaCama{ Cama = cama2, CamaId = cama2.Id } },
-                Huesped = _unHuesped
+                HuespedTitular = _unHuesped
             };
 
             var r2 = new Reserva
@@ -149,7 +149,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 Estado = ReservaEstadoEnum.InHouse,
                 Canal = "Booking",
                 ReservaCamas = new List<ReservaCama> { new ReservaCama { Cama = cama1, CamaId = cama1.Id }, new ReservaCama { Cama = cama2, CamaId = cama2.Id } },
-                Huesped = _unHuesped
+                HuespedTitular = _unHuesped
             };
 
             _unaListaDeReservas.Add(r1);
@@ -165,7 +165,7 @@ namespace Api.UnitTests.Controllers.Mapping
 		        PrimeraNoche = _desde,
 		        UltimaNoche = _hasta,
 		        ReservaHabitacionesPrivadas = new List<ReservaHabitacionPrivada> { new ReservaHabitacionPrivada { HabitacionPrivada = hab } },
-		        Huesped = _unHuesped
+		        HuespedTitular = _unHuesped
 	        };
         }
 
@@ -173,7 +173,7 @@ namespace Api.UnitTests.Controllers.Mapping
         {
 	        _unaReservaCreacionDTO = new ReservaCreacionDTO
             {
-                Huesped = _datosMinimosDeUnHuesped,
+                HuespedTitular = _datosMinimosDeUnHuesped,
                 Canal = "Booking",
                 DiaDeCheckin = Utilidades.ConvertirFecha(_desde),
                 DiaDeCheckout = Utilidades.ConvertirFecha(_hasta),

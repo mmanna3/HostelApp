@@ -84,11 +84,11 @@ namespace Api.IntegrationTests
             reserva.Camas.First().Id.Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
 
-	        reserva.Huesped.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
-	        reserva.Huesped.Telefono = _datosMinimosDeUnHuesped.Telefono;
-            reserva.Huesped.Email = _datosMinimosDeUnHuesped.Email;
-            reserva.Huesped.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
-            reserva.Huesped.Pais = _datosMinimosDeUnHuesped.Pais;
+	        reserva.HuespedTitular.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
+	        reserva.HuespedTitular.Telefono = _datosMinimosDeUnHuesped.Telefono;
+            reserva.HuespedTitular.Email = _datosMinimosDeUnHuesped.Email;
+            reserva.HuespedTitular.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
+            reserva.HuespedTitular.Pais = _datosMinimosDeUnHuesped.Pais;
 
         }
 

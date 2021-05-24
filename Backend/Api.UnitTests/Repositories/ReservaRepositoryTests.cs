@@ -36,7 +36,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             _context.CamasIndividuales.Add(cama);
             
-            var reserva = new Reserva {Id = 1, Huesped = _huesped, PrimeraNoche = _desde, UltimaNoche = _hasta};
+            var reserva = new Reserva {Id = 1, HuespedTitular = _huesped, PrimeraNoche = _desde, UltimaNoche = _hasta};
             _context.Reservas.Add(reserva);
 
             //_context.ReservasDeCamas.Add(new ReservaCama {Cama = cama, Reserva = reserva});
@@ -54,10 +54,10 @@ namespace Api.UnitTests.Repositories
 	        var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
 	        var reserva = await _repository.ObtenerPorId(reservaId);
 
-	        reserva.Huesped.DniOPasaporte.Should().Be(_huesped.DniOPasaporte);
-	        reserva.Huesped.NombreCompleto.Should().Be(_huesped.NombreCompleto);
-	        reserva.Huesped.Email.Should().Be(_huesped.Email);
-	        reserva.Huesped.Telefono.Should().Be(_huesped.Telefono);
+	        reserva.HuespedTitular.DniOPasaporte.Should().Be(_huesped.DniOPasaporte);
+	        reserva.HuespedTitular.NombreCompleto.Should().Be(_huesped.NombreCompleto);
+	        reserva.HuespedTitular.Email.Should().Be(_huesped.Email);
+	        reserva.HuespedTitular.Telefono.Should().Be(_huesped.Telefono);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { Huesped = _huesped, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
+            var reserva = new Reserva { HuespedTitular = _huesped, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };

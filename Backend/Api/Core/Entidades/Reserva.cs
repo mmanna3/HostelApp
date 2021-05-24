@@ -11,10 +11,10 @@ namespace Api.Core.Entidades
         public ReservaEstadoEnum Estado { get; set; }
 
         [Required]
-        public Huesped Huesped { get; set; }
+        public Huesped HuespedTitular { get; set; }
 
         [Required]
-        public int HuespedId { get; set; }
+        public int HuespedTitularId { get; set; }
 
         public ICollection<ReservaCama> ReservaCamas { get; set; }
 
@@ -42,7 +42,7 @@ namespace Api.Core.Entidades
 
         public string ObtenerNombreAbreviadoDelHuesped()
         {
-	        return Huesped.ObtenerNombreAbreviado();
+	        return HuespedTitular.ObtenerNombreAbreviado();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Api.IntegrationTests
 		{
 			var body = new ReservaCreacionDTO
 			{
-				Huesped = datosMinimosDeHuesped,
+				HuespedTitular = datosMinimosDeHuesped,
 				HabitacionesPrivadasIds = habitacionPrivadaId == null ? new List<int>() : new List<int> { (int)habitacionPrivadaId },
 				CamasIds = camaId == null ? new List<int>() : new List<int> { (int)camaId },
 				DiaDeCheckin = Utilidades.ConvertirFecha(desde),
