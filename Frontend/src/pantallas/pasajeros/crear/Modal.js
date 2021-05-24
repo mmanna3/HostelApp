@@ -8,11 +8,11 @@ import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 
 const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
-  const { errores, estado } = useSelector(api.huespedes.crear.selector);
+  const { errores, estado } = useSelector(api.pasajeros.crear.selector);
   const [modalKey, reiniciarModal] = useCounterKey();
 
   const dispatch = useDispatch();
-  const onSubmit = data => dispatch(api.huespedes.crear.invocar(data, onSuccess));
+  const onSubmit = data => dispatch(api.pasajeros.crear.invocar(data, onSuccess));
 
   function onSuccess() {
     onSuccessfulSubmit();
@@ -22,7 +22,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }) => {
   function hide() {
     onHide();
     reiniciarModal();
-    dispatch(api.huespedes.crear.reiniciar());
+    dispatch(api.pasajeros.crear.reiniciar());
   }
 
   return (

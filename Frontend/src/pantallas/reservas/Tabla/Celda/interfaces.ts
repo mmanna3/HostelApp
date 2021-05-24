@@ -13,7 +13,7 @@ export enum EstadoSinReservar {
 export interface ICeldaData {
   claseCssEstaHovereadaONo: string;
   reservaId: Nullable<number>;
-  nombreAbreviadoDelHuesped: string;
+  nombreAbreviadoDelPasajero: string;
   estado: ReservaEstadoEnum | EstadoSinReservar;
 }
 
@@ -21,7 +21,7 @@ export const crearCeldaDataVacia = (): ICeldaData => {
   return {
     claseCssEstaHovereadaONo: '',
     reservaId: null,
-    nombreAbreviadoDelHuesped: '',
+    nombreAbreviadoDelPasajero: '',
     estado: EstadoSinReservar.SinReservar,
   };
 };
@@ -29,7 +29,7 @@ export const crearCeldaDataVacia = (): ICeldaData => {
 export const crearCeldaData = (reserva: ReservaResumenDTO): ICeldaData => {
   return {
     reservaId: reserva.id,
-    nombreAbreviadoDelHuesped: reserva.nombreAbreviadoDelHuesped,
+    nombreAbreviadoDelPasajero: reserva.nombreAbreviadoDelPasajero,
     estado: reserva.estado,
     claseCssEstaHovereadaONo: ClaseCssEstaHovereadaONo.NoEstaHovereada,
   };

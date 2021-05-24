@@ -1,21 +1,21 @@
-import { HuespedDTO } from 'store/api/DTOs';
+import { PasajeroDTO } from 'store/api/DTOs';
 import { generarSliceHttpGet, generarSliceHttpPost, IApiSliceInfo } from './utils/generadorDeSlicesParaRequest';
 
 const listarSliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'huespedes',
-  endpoint: '/huespedes',
+  nombreDelSlice: 'pasajeros',
+  endpoint: '/pasajeros',
   dataInicial: [],
 };
 
 const crearSliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'crearHuesped',
-  endpoint: '/huespedes',
+  nombreDelSlice: 'crearPasajero',
+  endpoint: '/pasajeros',
   dataInicial: null,
 };
 
 const obtenerPorDniOPasaporteSliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'obtenerHuespedPorDniOPasaporte',
-  endpoint: '/huespedes/obtenerPorDniOPasaporte',
+  nombreDelSlice: 'obtenerPasajeroPorDniOPasaporte',
+  endpoint: '/pasajeros/obtenerPorDniOPasaporte',
   dataInicial: null,
 };
 
@@ -23,14 +23,14 @@ interface IObtenerPorDniOPasaporteParams {
   dniOPasaporte: string;
 }
 
-const listar = { ...generarSliceHttpGet<HuespedDTO[]>(listarSliceInfo) };
+const listar = { ...generarSliceHttpGet<PasajeroDTO[]>(listarSliceInfo) };
 
 const crear = {
-  ...generarSliceHttpPost<string, HuespedDTO>(crearSliceInfo),
+  ...generarSliceHttpPost<string, PasajeroDTO>(crearSliceInfo),
 };
 
 const obtenerPorDniOPasaporte = {
-  ...generarSliceHttpGet<HuespedDTO, IObtenerPorDniOPasaporteParams>(obtenerPorDniOPasaporteSliceInfo),
+  ...generarSliceHttpGet<PasajeroDTO, IObtenerPorDniOPasaporteParams>(obtenerPorDniOPasaporteSliceInfo),
 };
 
 export default {

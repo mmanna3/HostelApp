@@ -1,8 +1,8 @@
 import Navbar from 'components/navbar/Navbar';
 import HabitacionesPage from 'pantallas/habitaciones/Page';
-import HuespedesPage from 'pantallas/huespedes/Page';
 import LoginPage from 'pantallas/login/Page';
 import { estaLogueado, siEstaLogueadoEnviarTokenEnTodosLosRequests } from 'pantallas/login/servicio';
+import PasajerosPage from 'pantallas/pasajeros/Page';
 import PantallaReservas from 'pantallas/reservas/PantallaReservas';
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
@@ -26,7 +26,7 @@ const App = (): ReactElement => {
         <div>
           <Navbar />
           <Route exact path="/habitaciones" component={HabitacionesPage} />
-          <Route exact path="/huespedes" component={HuespedesPage} />
+          <Route exact path="/pasajeros" component={PasajerosPage} />
           <Route exact path="/reservas" component={PantallaReservas} />
           <ToastContainer
             position="top-right"

@@ -6,12 +6,12 @@ import api from 'store/api/api';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import Crear from './crear/Modal';
 
-const HuespedesPage = () => {
+const PasajerosPage = () => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(api.huespedes.listar.selector);
+  const { datos, estado } = useSelector(api.pasajeros.listar.selector);
 
   const fetchData = useCallback(() => {
-    dispatch(api.huespedes.listar.invocar());
+    dispatch(api.pasajeros.listar.invocar());
   }, [dispatch]);
 
   const columnas = [
@@ -50,7 +50,7 @@ const HuespedesPage = () => {
       </div>
       <Table
         fetchData={fetchData}
-        selector={api.huespedes.selector}
+        selector={api.pasajeros.selector}
         columnas={columnas}
         datos={datos}
         loading={estado === EstadosApiRequestEnum.cargando}
@@ -60,4 +60,4 @@ const HuespedesPage = () => {
   );
 };
 
-export default HuespedesPage;
+export default PasajerosPage;
