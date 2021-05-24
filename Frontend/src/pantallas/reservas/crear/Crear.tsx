@@ -8,7 +8,7 @@ import api from 'store/api/api';
 import { ReservaCreacionDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
-import DatosDelHuesped from './DatosDelHuesped/DatosDelHuesped';
+import DatosDelPasajero from './DatosDelPasajero/DatosDelPasajero';
 import DatosGenerales from './DatosGenerales/DatosGenerales';
 import Renglones, { RenglonesParaReservaDTO } from './Renglones/Renglones';
 
@@ -33,7 +33,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     reiniciarDatosGenerales();
     onSuccessfulSubmit();
     reiniciarModal();
-    dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
   }
 
   interface ReservaDTOYPropsIgnoradas extends ReservaCreacionDTO {
@@ -61,7 +61,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     onHide();
     dispatch(reiniciar());
     reiniciarModal();
-    dispatch(api.huespedes.obtenerPorDniOPasaporte.reiniciar());
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
   }
 
   const onDesdeHastaChange = useCallback(
@@ -72,24 +72,24 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
   );
 
   // Todo esto a customHook
-  const [datosDelHuespedKey, reiniciarDatosDelHuesped] = useCounterKey(1000);
-  const { datos: huesped, estado: estadoHuesped } = useSelector(api.huespedes.obtenerPorDniOPasaporte.selector);
+  const [datosDelPasajeroKey, reiniciarDatosDelPasajero] = useCounterKey(1000);
+  const { datos: pasajero, estado: estadoPasajero } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
   useEffect((): void => {
-    if (estadoHuesped === EstadosApiRequestEnum.exitoso && huesped != null)
+    if (estadoPasajero === EstadosApiRequestEnum.exitoso && pasajero != null)
       toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
         type: toast.TYPE.SUCCESS,
-        toastId: `toast-exito-${huesped.dniOPasaporte}`,
+        toastId: `toast-exito-${pasajero.dniOPasaporte}`,
       });
-    else if (estadoHuesped === EstadosApiRequestEnum.huboError)
+    else if (estadoPasajero === EstadosApiRequestEnum.huboError)
       toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
         type: toast.TYPE.ERROR,
         toastId: `toast-error`,
       });
-  }, [estadoHuesped, huesped]);
+  }, [estadoPasajero, pasajero]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
-    reiniciarDatosDelHuesped();
-    dispatch(api.huespedes.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+    reiniciarDatosDelPasajero();
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
   // Hasta acá
 
@@ -103,10 +103,10 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
         <LineaDivisoria texto="PASAJERO TITULAR" style={{ marginTop: '-8px' }} />
 
-        <DatosDelHuesped
-          key={datosDelHuespedKey}
-          huesped={huesped}
-          name="Huesped"
+        <DatosDelPasajero
+          key={datosDelPasajeroKey}
+          pasajero={pasajero}
+          name="PasajeroTitular"
           buscarDniOPasaporte={buscarDniOPasaporte}
         />
 

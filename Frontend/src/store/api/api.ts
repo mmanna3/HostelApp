@@ -1,12 +1,12 @@
 import habitaciones from './habitaciones';
+import pasajeros from './pasajeros';
 import reservas from './reservas';
-import huespedes from './huespedes';
 import usuarios from './usuarios';
 
 const api = {
   habitaciones,
   reservas,
-  huespedes,
+  pasajeros,
   usuarios,
 };
 

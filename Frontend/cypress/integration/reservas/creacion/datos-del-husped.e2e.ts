@@ -1,8 +1,8 @@
 import 'cypress-localstorage-commands';
-import { HuespedDTO } from '../../../../src/store/api/DTOs';
+import { PasajeroDTO } from '../../../../src/store/api/DTOs';
 
-function dadoQueExisteElHuespedDeDni(dni: string): void {
-  const huesped: HuespedDTO = {
+function dadoQueExisteElPasajeroDeDni(dni: string): void {
+  const pasajero: PasajeroDTO = {
     id: 1,
     nombreCompleto: 'Kvothe',
     dniOPasaporte: '111',
@@ -10,7 +10,7 @@ function dadoQueExisteElHuespedDeDni(dni: string): void {
     telefono: '44610000',
     email: 'elcolorado@gmail.edu',
   };
-  cy.intercept(`/api/huespedes/obtenerPorDniOPasaporte?dniOPasaporte=${dni}`, huesped).as('datosDelHuesped');
+  cy.intercept(`/api/pasajeros/obtenerPorDniOPasaporte?dniOPasaporte=${dni}`, pasajero).as('datosDelPasajero');
 }
 
 describe('Datos del huésped', (): void => {
@@ -24,11 +24,11 @@ describe('Datos del huésped', (): void => {
 
   describe('Al hacer click en Buscar', (): void => {
     it('Si el huésped existe, trae sus datos y muestra popup de éxito. Si había datos, los pisa.', (): void => {
-      dadoQueExisteElHuespedDeDni('111');
+      dadoQueExisteElPasajeroDeDni('111');
 
       cy.get('[data-cy="dni"]').type('111');
       cy.get('[data-cy="boton-dni"]').click();
-      cy.wait('@datosDelHuesped');
+      cy.wait('@datosDelPasajero');
 
       cy.get('#toast-exito-111').should('be.visible');
       cy.get('#toast-error-111').should('not.exist');

@@ -14,7 +14,7 @@ namespace Api.UnitTests.Repositories
         private ReservaRepository _repository;
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 17);
-        private readonly Huesped _huesped = new Huesped
+        private readonly Pasajero _pasajero = new Pasajero
         {
             NombreCompleto = "Elliot",
             DniOPasaporte = "123456789",
@@ -36,7 +36,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual {Id = 1, Nombre = "Azul", HabitacionId = 1};
             _context.CamasIndividuales.Add(cama);
             
-            var reserva = new Reserva {Id = 1, HuespedTitular = _huesped, PrimeraNoche = _desde, UltimaNoche = _hasta};
+            var reserva = new Reserva {Id = 1, PasajeroTitular = _pasajero, PrimeraNoche = _desde, UltimaNoche = _hasta};
             _context.Reservas.Add(reserva);
 
             //_context.ReservasDeCamas.Add(new ReservaCama {Cama = cama, Reserva = reserva});
@@ -54,10 +54,10 @@ namespace Api.UnitTests.Repositories
 	        var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
 	        var reserva = await _repository.ObtenerPorId(reservaId);
 
-	        reserva.HuespedTitular.DniOPasaporte.Should().Be(_huesped.DniOPasaporte);
-	        reserva.HuespedTitular.NombreCompleto.Should().Be(_huesped.NombreCompleto);
-	        reserva.HuespedTitular.Email.Should().Be(_huesped.Email);
-	        reserva.HuespedTitular.Telefono.Should().Be(_huesped.Telefono);
+	        reserva.PasajeroTitular.DniOPasaporte.Should().Be(_pasajero.DniOPasaporte);
+	        reserva.PasajeroTitular.NombreCompleto.Should().Be(_pasajero.NombreCompleto);
+	        reserva.PasajeroTitular.Email.Should().Be(_pasajero.Email);
+	        reserva.PasajeroTitular.Telefono.Should().Be(_pasajero.Telefono);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { HuespedTitular = _huesped, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
+            var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };

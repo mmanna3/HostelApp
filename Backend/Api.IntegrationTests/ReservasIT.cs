@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Enums;
@@ -22,7 +22,7 @@ namespace Api.IntegrationTests
 	    private const CamaTipoEnum CAMA_TIPO = CamaTipoEnum.Individual;
         private readonly DateTime _desde = new DateTime(2020, 09, 17);
         private readonly DateTime _hasta = new DateTime(2020, 09, 18);
-        private readonly HuespedDTO _datosMinimosDeUnHuesped = new HuespedDTO
+        private readonly PasajeroDTO _pasajero = new PasajeroDTO
         {
 	        NombreCompleto = "Elliot Alderson",
 	        DniOPasaporte = "123456789",
@@ -44,7 +44,7 @@ namespace Api.IntegrationTests
 
             var camaId = await CrearHabitacionConUnaCama();
 
-            var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, _desde, _hasta);
+            var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var consultaResponse = await _reservasHttpClient.ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
@@ -67,7 +67,7 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, _desde, _hasta);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var reservaId = await response.Content.ReadAsAsync<int>();
             
@@ -84,11 +84,11 @@ namespace Api.IntegrationTests
             reserva.Camas.First().Id.Should().Be(camaId);
 	        reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
 
-	        reserva.HuespedTitular.NombreCompleto = _datosMinimosDeUnHuesped.NombreCompleto;
-	        reserva.HuespedTitular.Telefono = _datosMinimosDeUnHuesped.Telefono;
-            reserva.HuespedTitular.Email = _datosMinimosDeUnHuesped.Email;
-            reserva.HuespedTitular.DniOPasaporte = _datosMinimosDeUnHuesped.DniOPasaporte;
-            reserva.HuespedTitular.Pais = _datosMinimosDeUnHuesped.Pais;
+	        reserva.PasajeroTitular.NombreCompleto = _pasajero.NombreCompleto;
+	        reserva.PasajeroTitular.Telefono = _pasajero.Telefono;
+            reserva.PasajeroTitular.Email = _pasajero.Email;
+            reserva.PasajeroTitular.DniOPasaporte = _pasajero.DniOPasaporte;
+            reserva.PasajeroTitular.Pais = _pasajero.Pais;
 
         }
 
@@ -97,38 +97,38 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
-	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
-	        var huesped = huespedes.First();
+	        var pasajerosResponse = await _reservasHttpClient.ListarHuespedes();
+	        pasajerosResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+	        var pasajeros = await pasajerosResponse.Content.ReadAsAsync<IEnumerable<PasajeroDTO>>();
+	        var pasajero = pasajeros.First();
 
-	        huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-	        huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-	        huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-	        huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+	        pasajero.DniOPasaporte.Should().Be(_pasajero.DniOPasaporte);
+	        pasajero.Email.Should().Be(_pasajero.Email);
+	        pasajero.NombreCompleto.Should().Be(_pasajero.NombreCompleto);
+	        pasajero.Telefono.Should().Be(_pasajero.Telefono);
         }
 
         [Test]
         public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
-	        var huespedId = await _reservasHttpClient.CrearHuesped(_datosMinimosDeUnHuesped);
+	        var pasajeroId = await _reservasHttpClient.CrearPasajero(_pasajero);
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-1), DateTime.Today);
+	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 	        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
 	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var huespedes = await huespedesResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
-	        var huesped = huespedes.Single(x => x.Id == huespedId);
+	        var pasajeros = await huespedesResponse.Content.ReadAsAsync<IEnumerable<PasajeroDTO>>();
+	        var pasajero = pasajeros.Single(x => x.Id == pasajeroId);
 
-	        huesped.DniOPasaporte.Should().Be(_datosMinimosDeUnHuesped.DniOPasaporte);
-	        huesped.Email.Should().Be(_datosMinimosDeUnHuesped.Email);
-	        huesped.NombreCompleto.Should().Be(_datosMinimosDeUnHuesped.NombreCompleto);
-	        huesped.Telefono.Should().Be(_datosMinimosDeUnHuesped.Telefono);
+	        pasajero.DniOPasaporte.Should().Be(_pasajero.DniOPasaporte);
+	        pasajero.Email.Should().Be(_pasajero.Email);
+	        pasajero.NombreCompleto.Should().Be(_pasajero.NombreCompleto);
+	        pasajero.Telefono.Should().Be(_pasajero.Telefono);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Api.IntegrationTests
         {
             var camaId = await CrearHabitacionConUnaCama();
 
-            await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DateTime.Today.AddDays(-3), DateTime.Today);
+            await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-3), DateTime.Today);
 
             var consultaResponse = await _reservasHttpClient.ListarCheckoutsDeHoy();
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);

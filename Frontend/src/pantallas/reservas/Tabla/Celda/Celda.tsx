@@ -50,7 +50,7 @@ const Celda = ({ dia, camaId, esPrimeraCamaDeLaHabitacion }: IParams): ReactElem
         onMouseOver={onMouseOver}
         onClick={onClick}
       >
-        <div>{data.nombreAbreviadoDelHuesped}</div>
+        <div>{data.nombreAbreviadoDelPasajero}</div>
       </td>
     </>
   );

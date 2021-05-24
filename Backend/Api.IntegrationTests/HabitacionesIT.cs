@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs.Habitacion;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Core;
 using FluentAssertions;
 using NUnit.Framework;
@@ -19,7 +19,7 @@ namespace Api.IntegrationTests
         private const string ENDPOINT_CONLUGARESLIBRES = ENDPOINT + "/conLugaresLibres";
         private readonly DateTime DESDE = new DateTime(2020, 09, 17);
         private readonly DateTime HASTA = new DateTime(2020, 09, 18);
-        private readonly HuespedDTO _datosMinimosDeUnHuesped = new HuespedDTO
+        private readonly PasajeroDTO _pasajero = new PasajeroDTO
         {
 	        NombreCompleto = "Elliot",
 	        DniOPasaporte = "123456789",
@@ -117,7 +117,7 @@ namespace Api.IntegrationTests
 
             var camaId = habitacion.CamasIndividuales.First().Id;
 
-            await _reservasHttpClient.CrearReserva(camaId, null, _datosMinimosDeUnHuesped, DESDE, HASTA);
+            await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DESDE, HASTA);
         }
 
 		private async Task CargarUnaReservaDeLaHabitacionPrivada()
@@ -129,7 +129,7 @@ namespace Api.IntegrationTests
 
 			var habitacionId = habitacion.CamasIndividuales.First().Id;
 
-			await _reservasHttpClient.CrearReserva(null, habitacionId, _datosMinimosDeUnHuesped, DESDE, HASTA);
+			await _reservasHttpClient.CrearReserva(null, habitacionId, _pasajero, DESDE, HASTA);
 		}
         
 

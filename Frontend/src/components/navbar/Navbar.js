@@ -1,8 +1,8 @@
+import { obtenerUsuarioLogueado } from 'pantallas/login/servicio';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BotonCerrarSesion from './botonCerrarSesion/botonCerrarSesion';
 import styles from './Navbar.module.css';
-import { obtenerUsuarioLogueado } from 'pantallas/login/servicio';
 
 const Navbar = () => {
   let nombre = obtenerUsuarioLogueado().firstName;
@@ -39,7 +39,7 @@ const Navbar = () => {
               <Link className="navbar-item has-text-weight-medium" to="/habitaciones">
                 Habitaciones
               </Link>
-              {/* <Link className="navbar-item has-text-weight-medium" to="/huespedes">Huéspedes</Link>
+              {/* <Link className="navbar-item has-text-weight-medium" to="/pasajeros">Huéspedes</Link>
               <Link className="navbar-item has-text-weight-medium" to="/calendario">Calendario</Link> */}
               <Link className="navbar-item has-text-weight-medium" to="/reservas">
                 Reservas

@@ -2,7 +2,7 @@
 
 namespace Api.Core.Entidades
 {
-    public class Huesped : EntidadConId
+    public class Pasajero : EntidadConId
     {
 	    [Required, MaxLength(70)]
         public string NombreCompleto { get; set; }

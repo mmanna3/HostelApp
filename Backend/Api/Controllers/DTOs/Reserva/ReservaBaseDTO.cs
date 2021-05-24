@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Core.Enums;
 
 namespace Api.Controllers.DTOs.Reserva
@@ -16,7 +16,7 @@ namespace Api.Controllers.DTOs.Reserva
 	    [YKNRequired, DisplayName("Canal")]
 	    public string Canal { get; set; }
 
-		public HuespedDTO HuespedTitular { get; set; }
+		public PasajeroDTO PasajeroTitular { get; set; }
 
 	    [YKNRequired, DisplayName("Día de checkin")]
 	    public string DiaDeCheckin { get; set; }

@@ -41,7 +41,7 @@ beforeEach((): void => {
       {
         id: 123,
         estado: 1,
-        nombreAbreviadoDelHuesped: 'Semil..',
+        nombreAbreviadoDelPasajero: 'Semil..',
         diaDeCheckin: fechaUtils.convertirAString(ayer),
         diaDeCheckout: fechaUtils.convertirAString(fechaUtils.sumarDiasALaFecha(ayer, 1)),
         camasIds: [1, 2],

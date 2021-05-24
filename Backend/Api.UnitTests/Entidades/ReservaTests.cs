@@ -25,7 +25,7 @@ namespace Api.UnitTests.Entidades
 
         private static Reserva DadaUnaReservaConHuespedDeNombre(string nombreCompleto)
         {
-	        return new Reserva{HuespedTitular = new Huesped{NombreCompleto = nombreCompleto } };
+	        return new Reserva{PasajeroTitular = new Pasajero{NombreCompleto = nombreCompleto } };
         }
     }
 }

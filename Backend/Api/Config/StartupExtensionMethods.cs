@@ -57,8 +57,8 @@ namespace Api.Config
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             
-            services.AddScoped<IHuespedService, HuespedService>();
-            services.AddScoped<IHuespedRepository, HuespedRepository>();
+            services.AddScoped<IPasajeroService, PasajeroService>();
+            services.AddScoped<IPasajeroRepository, PasajeroRepository>();
 
             services.AddScoped<IHabitacionService, HabitacionService>();
             services.AddScoped<IHabitacionRepository, HabitacionRepository>();

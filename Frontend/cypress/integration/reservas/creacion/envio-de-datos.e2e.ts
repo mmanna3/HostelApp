@@ -1,5 +1,5 @@
 import 'cypress-localstorage-commands';
-import { CamaTipoEnum, HabitacionConLugaresLibresDTO, HuespedDTO } from '../../../../src/store/api/DTOs';
+import { CamaTipoEnum, HabitacionConLugaresLibresDTO, PasajeroDTO } from '../../../../src/store/api/DTOs';
 import { convertirAString, hoy, sumarMesesALaFecha } from '../../../../src/utils/Fecha';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
@@ -49,8 +49,8 @@ function dadoQueHayDosHabitacionesConLugaresLibres(): void {
   cy.intercept('/api/habitaciones/conLugaresLibres**', habitacionesConLugaresLibres).as('conLugaresLibres');
 }
 
-function dadoQueExisteElHuespedDeDni(dni: string): void {
-  const huesped: HuespedDTO = {
+function dadoQueExisteElPasajeroDeDni(dni: string): void {
+  const pasajero: PasajeroDTO = {
     id: 1,
     nombreCompleto: 'Kvothe',
     dniOPasaporte: '111',
@@ -58,18 +58,18 @@ function dadoQueExisteElHuespedDeDni(dni: string): void {
     telefono: '44610000',
     email: 'elcolorado@gmail.edu',
   };
-  cy.intercept(`/api/huespedes/obtenerPorDniOPasaporte?dniOPasaporte=${dni}`, huesped).as('datosDelHuesped');
+  cy.intercept(`/api/pasajeros/obtenerPorDniOPasaporte?dniOPasaporte=${dni}`, pasajero).as('datosDelPasajero');
 }
 
 function dadoQueAlEnviarLosDatosElServidorRespondeUn200(): void {
   cy.intercept('POST', '/api/reservas*', { id: 1 }).as('envioDeDatos');
 }
 
-function cargarDatosDelHuesped(): void {
-  dadoQueExisteElHuespedDeDni('111');
+function cargarDatosDelPasajero(): void {
+  dadoQueExisteElPasajeroDeDni('111');
   cy.get('[data-cy="dni"]').type('111');
   cy.get('[data-cy="boton-dni"]').click();
-  cy.wait('@datosDelHuesped');
+  cy.wait('@datosDelPasajero');
 }
 
 function cargarCheckinCheckout(): void {
@@ -100,7 +100,7 @@ describe('Envío de datos', (): void => {
     paginaReservas.abrirModalNuevaReserva();
 
     cargarCheckinCheckout();
-    cargarDatosDelHuesped();
+    cargarDatosDelPasajero();
     cargarRenglones();
 
     cy.get('[data-cy=confirmar]').click();
@@ -114,7 +114,7 @@ describe('Envío de datos', (): void => {
     diaDeCheckout.setDate(12);
 
     const form = {
-      Huesped: {
+      Pasajero: {
         DNIOPasaporte: '111',
         Email: 'elcolorado@gmail.edu',
         NombreCompleto: 'Kvothe',

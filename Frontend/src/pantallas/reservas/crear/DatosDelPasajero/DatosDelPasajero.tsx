@@ -1,18 +1,18 @@
 import { Autocomplete } from 'components/Autocomplete';
 import { Input } from 'components/Input';
-import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelHuesped/ListaDePaises';
+import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelPasajero/ListaDePaises';
 import React, { ReactElement } from 'react';
-import { DatosMinimosDeHuespedDTO } from 'store/api/DTOs';
+import { PasajeroDTO } from 'store/api/DTOs';
 
 interface IProps {
-  huesped?: DatosMinimosDeHuespedDTO;
+  pasajero?: PasajeroDTO;
   buscarDniOPasaporte: (dniOPasaporte: string) => void;
   name: string;
 }
 
-const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactElement => {
-  const paisDelHuesped = huesped ? paisesParaAutocomplete.find((x): boolean => x.value === huesped.pais) : undefined;
-  const paisOpcionInicial = paisDelHuesped ? paisDelHuesped : paisesParaAutocomplete[8];
+const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name }: IProps): ReactElement => {
+  const paisDelPasajero = pasajero ? paisesParaAutocomplete.find((x): boolean => x.value === pasajero.pais) : undefined;
+  const paisOpcionInicial = paisDelPasajero ? paisDelPasajero : paisesParaAutocomplete[8];
 
   return (
     <div>
@@ -25,7 +25,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactE
             dataCy="dni"
             name={`${name}.DNIOPasaporte`}
             type="number"
-            defaultValue={huesped?.dniOPasaporte}
+            defaultValue={pasajero?.dniOPasaporte}
             faIconCode="id-card"
           />
         </div>
@@ -34,7 +34,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactE
             placeholder="Nombre completo"
             dataCy="nombre"
             name={`${name}.NombreCompleto`}
-            defaultValue={huesped?.nombreCompleto}
+            defaultValue={pasajero?.nombreCompleto}
             faIconCode="user"
           />
         </div>
@@ -56,7 +56,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactE
             dataCy="telefono"
             name={`${name}.Telefono`}
             type="number"
-            defaultValue={huesped?.telefono}
+            defaultValue={pasajero?.telefono}
             placeholder="Teléfono"
             faIconCode="phone"
           />
@@ -65,7 +65,7 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactE
           <Input
             dataCy="email"
             name={`${name}.Email`}
-            defaultValue={huesped?.email}
+            defaultValue={pasajero?.email}
             type="email"
             placeholder="Email"
             faIconCode="envelope"
@@ -76,4 +76,4 @@ const DatosDelHuesped = ({ huesped, buscarDniOPasaporte, name }: IProps): ReactE
   );
 };
 
-export default DatosDelHuesped;
+export default DatosDelPasajero;
