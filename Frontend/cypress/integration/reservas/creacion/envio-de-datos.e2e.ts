@@ -114,7 +114,7 @@ describe('Envío de datos', (): void => {
     diaDeCheckout.setDate(12);
 
     const form = {
-      DatosMinimosDeHuesped: {
+      Huesped: {
         DNIOPasaporte: '111',
         Email: 'elcolorado@gmail.edu',
         NombreCompleto: 'Kvothe',

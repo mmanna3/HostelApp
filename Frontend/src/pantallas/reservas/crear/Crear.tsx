@@ -106,7 +106,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
         <DatosDelHuesped
           key={datosDelHuespedKey}
           huesped={huesped}
-          name="DatosMinimosDeHuesped"
+          name="Huesped"
           buscarDniOPasaporte={buscarDniOPasaporte}
         />
 
