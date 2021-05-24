@@ -3,37 +3,36 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Api.IntegrationTests
 {
-    public class HuespedesIT : BaseAutenticadoIT
+	public class PasajerosIT : BaseAutenticadoIT
     {
-        private const string ENDPOINT = "/api/huespedes";
+        private const string ENDPOINT = "/api/pasajeros";
 
         [Test]
         public async Task CreaHuespedCorrectamente()
         {
-            var response = await CrearUnHuesped();
+            var response = await CrearUnPasajero();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var createResponse = await response.Content.ReadAsStringAsync();
             Assert.That(int.Parse(createResponse), Is.GreaterThan(0));
 
             var listaResponse = await ListarHuespedes();
             listaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var huespedes = await listaResponse.Content.ReadAsAsync<IEnumerable<HuespedDTO>>();
+            var pasajeros = await listaResponse.Content.ReadAsAsync<IEnumerable<PasajeroDTO>>();
 
-            huespedes.Count().Should().Be(1);
-            var huesped = huespedes.ToList().First();
-            huesped.NombreCompleto.Should().Be("Elliot");
+            pasajeros.Count().Should().Be(1);
+            var pasajero = pasajeros.ToList().First();
+            pasajero.NombreCompleto.Should().Be("Elliot");
         }
 
-        private async Task<HttpResponseMessage> CrearUnHuesped()
+        private async Task<HttpResponseMessage> CrearUnPasajero()
         {
-            var body = new HuespedDTO
+            var body = new PasajeroDTO
             {
 	            NombreCompleto = "Elliot",
 	            DniOPasaporte = "123456789",

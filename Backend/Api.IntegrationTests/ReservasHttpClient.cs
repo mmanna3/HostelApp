@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 
@@ -12,7 +12,7 @@ namespace Api.IntegrationTests
 	public class ReservasHttpClient
 	{
 		private const string ENDPOINT = "/api/reservas";
-		private const string ENDPOINT_HUESPEDES = "/api/huespedes";
+		private const string ENDPOINT_PASAJEROS = "/api/pasajeros";
 		private readonly HttpClient _httpClient;
 		public ReservasHttpClient(HttpClient httpClient)
 		{
@@ -20,11 +20,11 @@ namespace Api.IntegrationTests
 		}
 
 		public async Task<HttpResponseMessage> CrearReserva(int? camaId, int? habitacionPrivadaId,
-			HuespedDTO datosMinimosDeHuesped, DateTime desde, DateTime hasta)
+			PasajeroDTO pasajero, DateTime desde, DateTime hasta)
 		{
 			var body = new ReservaCreacionDTO
 			{
-				HuespedTitular = datosMinimosDeHuesped,
+				PasajeroTitular = pasajero,
 				HabitacionesPrivadasIds = habitacionPrivadaId == null ? new List<int>() : new List<int> { (int)habitacionPrivadaId },
 				CamasIds = camaId == null ? new List<int>() : new List<int> { (int)camaId },
 				DiaDeCheckin = Utilidades.ConvertirFecha(desde),
@@ -49,7 +49,7 @@ namespace Api.IntegrationTests
 
 		public async Task<HttpResponseMessage> ListarHuespedes()
 		{
-			return await _httpClient.GetAsync(ENDPOINT_HUESPEDES);
+			return await _httpClient.GetAsync(ENDPOINT_PASAJEROS);
 		}
 
 		public async Task<HttpResponseMessage> ListarCheckoutsDeHoy()
@@ -57,20 +57,20 @@ namespace Api.IntegrationTests
 			return await _httpClient.GetAsync(ENDPOINT + "/checkoutsDeHoy");
 		}
 
-		public async Task<int> CrearHuesped(HuespedDTO huesped)
+		public async Task<int> CrearPasajero(PasajeroDTO pasajero)
 		{
-			var body = new HuespedDTO
+			var body = new PasajeroDTO
 			{
-				NombreCompleto = huesped.NombreCompleto,
-				DniOPasaporte = huesped.DniOPasaporte,
-				Email = huesped.Email,
-				Telefono = huesped.Telefono,
-				Pais = huesped.Pais,
+				NombreCompleto = pasajero.NombreCompleto,
+				DniOPasaporte = pasajero.DniOPasaporte,
+				Email = pasajero.Email,
+				Telefono = pasajero.Telefono,
+				Pais = pasajero.Pais,
 			};
 
-			await _httpClient.PostAsJsonAsync(ENDPOINT_HUESPEDES, body);
-			var huespedesDtos = await (await _httpClient.GetAsync(ENDPOINT_HUESPEDES)).Content
-				.ReadAsAsync<IEnumerable<HuespedDTO>>();
+			await _httpClient.PostAsJsonAsync(ENDPOINT_PASAJEROS, body);
+			var huespedesDtos = await (await _httpClient.GetAsync(ENDPOINT_PASAJEROS)).Content
+				.ReadAsAsync<IEnumerable<PasajeroDTO>>();
 
 			return huespedesDtos.First().Id;
 		}

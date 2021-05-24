@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using Api.Controllers.DTOs.Huesped;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Core.Enums;
 
 namespace Api.Controllers.DTOs.Reserva

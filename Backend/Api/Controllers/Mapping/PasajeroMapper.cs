@@ -1,15 +1,15 @@
-﻿using Api.Controllers.DTOs.Huesped;
+﻿using Api.Controllers.DTOs.Pasajero;
 using Api.Core.Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Api.Controllers.Mapping
 {
-	public static class HuespedMapper
+	public static class PasajeroMapper
 	{
-		public static HuespedDTO Map(Huesped entidad)
+		public static PasajeroDTO Map(Pasajero entidad)
 		{
-			return new HuespedDTO
+			return new PasajeroDTO
 			{
 				Id = entidad.Id,
 				NombreCompleto = entidad.NombreCompleto,
@@ -20,14 +20,14 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		public static IEnumerable<HuespedDTO> Map(IEnumerable<Huesped> huespedes)
+		public static IEnumerable<PasajeroDTO> Map(IEnumerable<Pasajero> pasajeros)
 		{
-			return huespedes.Select(Map);
+			return pasajeros.Select(Map);
 		}
 
-		public static Huesped Map(HuespedDTO dto)
+		public static Pasajero Map(PasajeroDTO dto)
 		{
-			return new Huesped
+			return new Pasajero
 			{
 				NombreCompleto = dto.NombreCompleto,
 				Pais = dto.Pais,

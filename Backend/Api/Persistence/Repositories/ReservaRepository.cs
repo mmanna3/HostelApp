@@ -17,7 +17,7 @@ namespace Api.Persistence.Repositories
         public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
             return await _context.Reservas
-	            .Include(x => x.HuespedTitular)
+	            .Include(x => x.PasajeroTitular)
                 .Include(x => x.ReservaCamas)
 					.ThenInclude(x => x.Cama)
 	            
@@ -55,7 +55,7 @@ namespace Api.Persistence.Repositories
         public override async Task<Reserva> ObtenerPorId(int id)
         {
 	        return await _context.Set<Reserva>()
-							.Include(x => x.HuespedTitular)
+							.Include(x => x.PasajeroTitular)
 
 							.Include(x => x.ReservaCamas)
 								.ThenInclude(x => x.Cama)

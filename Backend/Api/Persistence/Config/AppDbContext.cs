@@ -19,7 +19,7 @@ namespace Api.Persistence.Config
         public DbSet<CamaCuchetaDeAbajo> CamasCuchetasDeAbajo { get; set; }
         public DbSet<CamaCuchetaDeArriba> CamasCuchetasDeArriba { get; set; }
         public DbSet<CamaCucheta> CamasCuchetas { get; set; }
-        public DbSet<Huesped> Huespedes { get; set; }
+        public DbSet<Pasajero> Pasajeros { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -35,7 +35,7 @@ namespace Api.Persistence.Config
 
 			ReservaHabitacionPrivada(builder);
 
-			builder.Entity<Huesped>()
+			builder.Entity<Pasajero>()
 				.HasIndex(h => h.DniOPasaporte)
 				.IsUnique();
 

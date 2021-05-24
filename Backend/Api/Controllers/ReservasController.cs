@@ -14,12 +14,12 @@ namespace Api.Controllers
 	public class ReservasController : ApiAutenticadoController
     {
         private readonly IReservaService _service;
-        private readonly IHuespedService _huespedService;
+        private readonly IPasajeroService _pasajeroService;
 
-        public ReservasController(IReservaService service, IHuespedService huespedService)
+        public ReservasController(IReservaService service, IPasajeroService pasajeroService)
         {
 	        _service = service;
-            _huespedService = huespedService;
+            _pasajeroService = pasajeroService;
         }
 
         [HttpGet, Route("checkoutsDeHoy")]
@@ -72,12 +72,12 @@ namespace Api.Controllers
 
         private async Task SiElHuespedYaExisteModificarlo(Reserva reserva)
         {
-	        var huesped = await _huespedService.ObtenerPorDniOPasaporte(reserva.HuespedTitular.DniOPasaporte);
-	        if (huesped != null)
+	        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reserva.PasajeroTitular.DniOPasaporte);
+	        if (pasajero != null)
 	        {
-		        await _huespedService.ModificarAsync(huesped.Id, reserva.HuespedTitular);
-		        reserva.HuespedTitular = null;
-		        reserva.HuespedTitularId = huesped.Id;
+		        await _pasajeroService.ModificarAsync(pasajero.Id, reserva.PasajeroTitular);
+		        reserva.PasajeroTitular = null;
+		        reserva.PasajeroTitularId = pasajero.Id;
             }
         }
     }
