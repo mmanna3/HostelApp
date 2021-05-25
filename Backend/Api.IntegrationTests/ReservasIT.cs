@@ -125,7 +125,7 @@ namespace Api.IntegrationTests
             //Chequear que todos los demás campos no se hayan modificado
         }
 
-        [Ignore("Falla")]
+        [Test]
         public async Task HaceCheckIn_ConNuevoPasajeroTitular_SinPasajerosAnexos_Correctamente()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
