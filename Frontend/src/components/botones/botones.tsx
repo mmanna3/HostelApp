@@ -1,3 +1,5 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Icon } from 'components/Icon';
 import React, { CSSProperties, ReactElement } from 'react';
 import Estilos from './botones.module.scss';
 
@@ -29,12 +31,22 @@ interface IBotonProps {
   value?: string;
   style?: CSSProperties;
   className?: string;
+  icono?: IconProp;
 }
 
-export function Boton({ texto, dataCy = '', onClick, style, value, className = 'is-primary' }: IBotonProps): ReactElement {
+export function Boton({
+  texto,
+  icono,
+  dataCy = '',
+  onClick,
+  style,
+  value,
+  className = 'is-primary',
+}: IBotonProps): ReactElement {
   return (
     <button data-cy={dataCy} className={`button ${className}`} type="button" style={style} onClick={onClick} value={value}>
-      {texto}
+      {icono && <Icon faCode={icono} />}
+      <span>{texto}</span>
     </button>
   );
 }

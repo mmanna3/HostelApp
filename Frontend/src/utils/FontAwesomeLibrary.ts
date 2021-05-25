@@ -13,6 +13,7 @@ import {
   faInfo,
   faLock,
   faPhone,
+  faTimes,
   faTrashAlt,
   faUser,
   faUserFriends,
@@ -38,3 +39,4 @@ library.add(faUserFriends);
 library.add(faClock);
 library.add(faUsers);
 library.add(faUserLock);
+library.add(faTimes);

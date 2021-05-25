@@ -7,6 +7,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 // import Estilos from './HacerCheckIn.module.scss';
 
 interface IProps {
@@ -21,7 +22,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
   const [IndiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
   const dispatch = useDispatch();
   const { datos: pasajeroEncontrado } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
-  const { errores } = useSelector(api.reservas.hacerCheckIn.selector);
+  const { errores, estado } = useSelector(api.reservas.hacerCheckIn.selector);
 
   useEffect((): void => {
     let pasajeroVacio: PasajeroDTO = {
@@ -94,8 +95,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
           )
         )}
       </CardBody>
-      {/* <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} /> */}
-      <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={false} />
+      <FooterAcceptCancel acceptDataCy="confirmar" onCancel={ocultar} loading={estado === EstadosApiRequestEnum.cargando} />
     </ModalForm>
   );
 };
