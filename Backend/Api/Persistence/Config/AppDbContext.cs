@@ -35,6 +35,8 @@ namespace Api.Persistence.Config
 
 			ReservaHabitacionPrivada(builder);
 
+			ReservaPasajeroAnexo(builder);
+
 			builder.Entity<Pasajero>()
 				.HasIndex(h => h.DniOPasaporte)
 				.IsUnique();
@@ -127,6 +129,24 @@ namespace Api.Persistence.Config
 		        .HasOne(x => x.HabitacionPrivada)
 		        .WithMany(x => x.ReservaHabitacionesPrivadas)
 		        .HasForeignKey(x => x.HabitacionPrivadaId);
+        }
+
+        private static void ReservaPasajeroAnexo(ModelBuilder builder)
+        {
+	        builder.Entity<ReservaPasajeroAnexo>()
+		        .HasKey(x => new { x.ReservaId, x.PasajeroId });
+
+	        builder.Entity<ReservaPasajeroAnexo>()
+		        .HasOne(x => x.Reserva)
+		        .WithMany(x => x.ReservaPasajerosAnexos)
+		        .HasForeignKey(x => x.ReservaId)
+		        .OnDelete(DeleteBehavior.Restrict);
+
+			builder.Entity<ReservaPasajeroAnexo>()
+		        .HasOne(x => x.Pasajero)
+		        .WithMany(x => x.ReservaPasajerosAnexos)
+		        .HasForeignKey(x => x.PasajeroId)
+		        .OnDelete(DeleteBehavior.Restrict);
         }
 	}
 }

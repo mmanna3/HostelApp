@@ -16,6 +16,8 @@ namespace Api.Core.Entidades
         [Required]
         public int PasajeroTitularId { get; set; }
 
+        public ICollection<ReservaPasajeroAnexo> ReservaPasajerosAnexos { get; set; }
+
         public ICollection<ReservaCama> ReservaCamas { get; set; }
 
         public ICollection<ReservaHabitacionPrivada> ReservaHabitacionesPrivadas { get; set; }

@@ -63,7 +63,7 @@ namespace Api.Controllers
 
 			var reserva = ReservaMapper.Map(creacionDTO);
 
-			await SiElHuespedYaExisteModificarlo(reserva);
+			await SiElPasajeroTitularYaExisteModificarlo(reserva);
 
 			var id = await _service.Crear(reserva);
 
@@ -90,11 +90,18 @@ namespace Api.Controllers
             //await SiElHuespedYaExisteModificarlo(reserva);
 
             //var id = await _service.Crear(reserva);
-            await _pasajeroService.ObtenerPorDniOPasaporte("111");
-            return dto.ReservaId;
+
+            var reserva = ReservaMapper.Map(dto);
+
+            await SiElPasajeroTitularYaExisteModificarlo(reserva);
+            await SiAlgunPasajeroAnexoYaExisteModificarlo(reserva);
+
+            await _service.HacerCheckIn(reserva);
+            
+            return reserva.Id;
         }
 
-        private async Task SiElHuespedYaExisteModificarlo(Reserva reserva)
+        private async Task SiElPasajeroTitularYaExisteModificarlo(Reserva reserva)
         {
 	        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reserva.PasajeroTitular.DniOPasaporte);
 	        if (pasajero != null)
@@ -103,6 +110,22 @@ namespace Api.Controllers
 		        reserva.PasajeroTitular = null;
 		        reserva.PasajeroTitularId = pasajero.Id;
             }
+        }
+
+        private async Task SiAlgunPasajeroAnexoYaExisteModificarlo(Reserva reserva)
+        {
+	        if (reserva.ReservaPasajerosAnexos != null)
+		        foreach (var reservaPasajeroAnexo in reserva.ReservaPasajerosAnexos)
+		        {
+			        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reservaPasajeroAnexo.Pasajero.DniOPasaporte);
+			        if (pasajero != null)
+			        {
+				        await _pasajeroService.ModificarAsync(pasajero.Id, reservaPasajeroAnexo.Pasajero);
+
+				        reservaPasajeroAnexo.Pasajero = null;
+				        reservaPasajeroAnexo.PasajeroId = pasajero.Id;
+			        }
+	            }
         }
     }
 }

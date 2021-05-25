@@ -11,5 +11,6 @@ namespace Api.Core.Services.Interfaces
         Task<int> Crear(Reserva reserva);
         Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
         Task<Reserva> ObtenerPorId(int id);
+        Task<int> HacerCheckIn(Reserva reservaModificada);
     }
 }

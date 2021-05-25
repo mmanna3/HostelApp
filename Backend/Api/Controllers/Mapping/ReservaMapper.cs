@@ -5,6 +5,7 @@ using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 
 namespace Api.Controllers.Mapping
 {
@@ -85,19 +86,19 @@ namespace Api.Controllers.Mapping
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
 
-		public static Reserva Map(ReservaCreacionDTO creacionDTO)
+		public static Reserva Map(ReservaCreacionDTO dto)
 		{
 			var reserva = new Reserva
 			{
-				ReservaCamas = creacionDTO.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
-				ReservaHabitacionesPrivadas = creacionDTO.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
-				PasajeroTitular = PasajeroMapper.Map(creacionDTO.PasajeroTitular),
-				Estado = creacionDTO.Estado,
-				Canal = creacionDTO.Canal,
-				HoraEstimadaDeLlegada = TimeSpan.Parse(creacionDTO.HoraEstimadaDeLlegada),
-				CantidadDePasajeros = creacionDTO.CantidadDePasajeros,
-				PrimeraNoche = Utilidades.ConvertirFecha(creacionDTO.DiaDeCheckin),
-				UltimaNoche = Utilidades.ConvertirFecha(creacionDTO.DiaDeCheckout).AddDays(-1),
+				ReservaCamas = dto.CamasIds?.Select(x => new ReservaCama { CamaId = x }).ToList(),
+				ReservaHabitacionesPrivadas = dto.HabitacionesPrivadasIds?.Select(x => new ReservaHabitacionPrivada { HabitacionPrivadaId = x }).ToList(),
+				PasajeroTitular = PasajeroMapper.Map(dto.PasajeroTitular),
+				Estado = dto.Estado,
+				Canal = dto.Canal,
+				HoraEstimadaDeLlegada = TimeSpan.Parse(dto.HoraEstimadaDeLlegada),
+				CantidadDePasajeros = dto.CantidadDePasajeros,
+				PrimeraNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckin),
+				UltimaNoche = Utilidades.ConvertirFecha(dto.DiaDeCheckout).AddDays(-1),
 			};
 
 			// Seguro esto se puede hacer mejor
@@ -105,6 +106,19 @@ namespace Api.Controllers.Mapping
 			{
 				reservaCama.Reserva = reserva;
 			}
+
+			return reserva;
+		}
+
+		public static Reserva Map(HacerCheckInDTO dto)
+		{
+			var reserva = new Reserva
+			{
+				Id = dto.ReservaId,
+				PasajeroTitular = PasajeroMapper.Map(dto.PasajeroTitular),
+				Estado = ReservaEstadoEnum.InHouse,
+				ReservaPasajerosAnexos = dto.PasajerosAnexos?.Select(x => new ReservaPasajeroAnexo { Pasajero = PasajeroMapper.Map(x), ReservaId = dto.ReservaId}).ToList(),
+			};
 
 			return reserva;
 		}

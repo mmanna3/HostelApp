@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
+using FluentAssertions;
 
 namespace Api.IntegrationTests
 {
@@ -19,7 +21,7 @@ namespace Api.IntegrationTests
 			_httpClient = httpClient;
 		}
 
-		public async Task<HttpResponseMessage> CrearReserva(int? camaId, int? habitacionPrivadaId,
+		public async Task<int> CrearReserva(int? camaId, int? habitacionPrivadaId,
 			PasajeroDTO pasajero, DateTime desde, DateTime hasta)
 		{
 			var body = new ReservaCreacionDTO
@@ -34,7 +36,9 @@ namespace Api.IntegrationTests
 				Canal = "Booking",
 			};
 
-			return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
+			var respuesta = await _httpClient.PostAsJsonAsync(ENDPOINT, body);
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<int>();
 		}
 
 		public async Task<HttpResponseMessage> ListarEntre(string primeraNoche, int dias)
@@ -42,9 +46,11 @@ namespace Api.IntegrationTests
 			return await _httpClient.GetAsync(ENDPOINT + $"?primeraNoche={primeraNoche}&dias={dias}");
 		}
 
-		public async Task<HttpResponseMessage> ObtenerPorId(int id)
+		public async Task<ReservaDetalleDTO> ObtenerPorId(int id)
 		{
-			return await _httpClient.GetAsync(ENDPOINT + $"/obtener?id={id}");
+			var respuesta = await _httpClient.GetAsync(ENDPOINT + $"/obtener?id={id}");
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<ReservaDetalleDTO>();
 		}
 
 		public async Task<HttpResponseMessage> ListarHuespedes()
@@ -77,9 +83,11 @@ namespace Api.IntegrationTests
 			return huespedesDtos.First().Id;
 		}
 
-		public async Task<HttpResponseMessage> HacerCheckIn(HacerCheckInDTO dto)
+		public async Task<int> HacerCheckIn(HacerCheckInDTO dto)
 		{
-			return await _httpClient.PostAsJsonAsync(ENDPOINT + "/hacerCheckIn", dto);
+			var respuesta = await _httpClient.PostAsJsonAsync(ENDPOINT + "/hacerCheckIn", dto);
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<int>();
 		}
 	}
 }

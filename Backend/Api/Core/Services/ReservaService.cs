@@ -34,6 +34,19 @@ namespace Api.Core.Services
 	        return await _repository.ObtenerPorId(id);
         }
 
+        public async Task<int> HacerCheckIn(Reserva reservaModificada)
+        {
+            var reservaExistente = await _repository.ObtenerPorId(reservaModificada.Id);
+
+            reservaExistente.ReservaPasajerosAnexos = reservaModificada.ReservaPasajerosAnexos;
+            reservaExistente.PasajeroTitularId = reservaModificada.PasajeroTitularId;
+            reservaExistente.Estado = reservaModificada.Estado;
+
+            await _unitOfWork.CompleteAsync();
+
+	        return reservaExistente.Id;
+        }
+
         public async Task<int> Crear(Reserva reserva)
         {
             if (HayUnaCamaReservadaDosVeces(reserva))

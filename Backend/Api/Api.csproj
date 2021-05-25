@@ -77,6 +77,10 @@
     <Compile Remove="Persistence\Migrations\20210520045126_Agrega_NavigationProperty_EnCamaCucheta.Designer.cs" />
     <Compile Remove="Persistence\Migrations\20210524171303_Renombra_Huesped_A_HuespedTitular_EnReserva.cs" />
     <Compile Remove="Persistence\Migrations\20210524171303_Renombra_Huesped_A_HuespedTitular_EnReserva.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210525000736_Agrega_PasajerosAnexos_a_Reserva.cs" />
+    <Compile Remove="Persistence\Migrations\20210525000736_Agrega_PasajerosAnexos_a_Reserva.Designer.cs" />
+    <Compile Remove="Persistence\Migrations\20210525160604_Id_es_Key_enTodasLasEntidades.cs" />
+    <Compile Remove="Persistence\Migrations\20210525160604_Id_es_Key_enTodasLasEntidades.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

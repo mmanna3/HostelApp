@@ -127,9 +127,7 @@ namespace Api.IntegrationTests
 
 			var habitacion = habitaciones.ToList().First(x => x.EsPrivada);
 
-			var habitacionId = habitacion.CamasIndividuales.First().Id;
-
-			await _reservasHttpClient.CrearReserva(null, habitacionId, _pasajero, DESDE, HASTA);
+			await _reservasHttpClient.CrearReserva(null, habitacion.Id, _pasajero, DESDE, HASTA);
 		}
         
 

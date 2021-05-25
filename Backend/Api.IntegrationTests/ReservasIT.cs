@@ -43,9 +43,7 @@ namespace Api.IntegrationTests
         {
 
             var camaId = await CrearHabitacionConUnaCama();
-
-            var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 
             var consultaResponse = await _reservasHttpClient.ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -66,14 +64,8 @@ namespace Api.IntegrationTests
         public async Task Crea_UnaReserva_Y_LaObtienePorId()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
-
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
-	        response.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var reservaId = await response.Content.ReadAsAsync<int>();
-            
-	        var consultaResponse = await _reservasHttpClient.ObtenerPorId(reservaId);
-	        consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDetalleDTO>();
+	        var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+	        var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
 
 	        reserva.DiaDeCheckin.Should().Be("2020-09-17");
 	        reserva.DiaDeCheckout.Should().Be("2020-09-18");
@@ -97,8 +89,7 @@ namespace Api.IntegrationTests
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
-	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+	        await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 
 	        var pasajerosResponse = await _reservasHttpClient.ListarHuespedes();
 	        pasajerosResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -112,12 +103,12 @@ namespace Api.IntegrationTests
         }
 
         [Test]
-        public async Task HaceCheckIn_Correctamente()
+        public async Task HaceCheckIn_EditandoPasajeroTitularExistente_SinPasajerosAnexos_Correctamente() 
         {
 	        var camaId = await CrearHabitacionConUnaCama();
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
-	        response.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var reservaId = await response.Content.ReadAsAsync<int>();
+	        var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+
+	        _pasajero.NombreCompleto = "El inefable Señor Gama Alta";
 
             var dto = new HacerCheckInDTO
             {
@@ -125,21 +116,92 @@ namespace Api.IntegrationTests
                 PasajeroTitular = _pasajero,
             };
 
-            var responseHacerCheckIn = await _reservasHttpClient.HacerCheckIn(dto);
-            responseHacerCheckIn.StatusCode.Should().Be(HttpStatusCode.OK);
-	        var reservaId2 = await responseHacerCheckIn.Content.ReadAsAsync<int>();
+            await _reservasHttpClient.HacerCheckIn(dto);
 
-	        reservaId2.Should().Be(reservaId);
+            var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
+
+            reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+	        reserva.PasajeroTitular.NombreCompleto.Should().Be("El inefable Señor Gama Alta");
+            //Chequear que todos los demás campos no se hayan modificado
         }
+
+        [Ignore("Falla")]
+        public async Task HaceCheckIn_ConNuevoPasajeroTitular_SinPasajerosAnexos_Correctamente()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+	        var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+
+	        _pasajero.NombreCompleto = "El inefable Señor Gama Alta";
+	        _pasajero.Id = 0;
+	        _pasajero.DniOPasaporte = "678";
+
+            var dto = new HacerCheckInDTO
+	        {
+		        ReservaId = reservaId,
+		        PasajeroTitular = _pasajero,
+	        };
+
+	        await _reservasHttpClient.HacerCheckIn(dto);
+
+	        var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
+
+	        reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+	        reserva.PasajeroTitular.DniOPasaporte.Should().Be("678");
+            reserva.PasajeroTitular.NombreCompleto.Should().Be("El inefable Señor Gama Alta");
+            //Chequear que todos los demás campos no se hayan modificado
+        }
+
+        //[Test]
+        //public async Task HaceCheckIn_EnReservaConPasajerosAnexos_Correctamente()
+        //{
+        //	var camaId = await CrearHabitacionConUnaCama();
+        //	var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+        //	response.StatusCode.Should().Be(HttpStatusCode.OK);
+        //	var reservaId = await response.Content.ReadAsAsync<int>();
+
+        //	_pasajero.NombreCompleto = "El inefable Señor Gama Alta";
+        //	var pasajero2 = _pasajero;
+        //	pasajero2.DniOPasaporte = "222";
+        //	pasajero2.NombreCompleto = "Samanta Schweblin";
+
+        //	var dto = new HacerCheckInDTO
+        //	{
+        //		ReservaId = reservaId,
+        //		PasajeroTitular = _pasajero,
+        //		PasajerosAnexos = new List<PasajeroDTO> { pasajero2 }
+        //	};
+
+        //	var responseHacerCheckIn = await _reservasHttpClient.HacerCheckIn(dto);
+        //	responseHacerCheckIn.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        //	var consultaResponse = await _reservasHttpClient.ObtenerPorId(reservaId);
+        //	consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        //	var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDetalleDTO>();
+
+        //	reserva.DiaDeCheckin.Should().Be("2020-09-17");
+        //	reserva.DiaDeCheckout.Should().Be("2020-09-18");
+        //	reserva.HoraEstimadaDeLlegada.Should().Be("11:30");
+        //	reserva.CantidadDePasajeros.Should().Be(2);
+        //	reserva.Canal.Should().Be("Booking");
+        //	reserva.Camas.Should().HaveCount(1);
+        //	reserva.Camas.First().Id.Should().Be(camaId);
+        //	reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+
+        //	reserva.PasajeroTitular.NombreCompleto = "El inefable Señor Gama Alta";
+        //	reserva.PasajeroTitular.Telefono = _pasajero.Telefono;
+        //	reserva.PasajeroTitular.Email = _pasajero.Email;
+        //	reserva.PasajeroTitular.DniOPasaporte = _pasajero.DniOPasaporte;
+        //	reserva.PasajeroTitular.Pais = _pasajero.Pais;
+
+        //	Falta assertear que los pasajeros anexos se guarden correctamente
+        //}
 
         [Test]
         public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 	        var pasajeroId = await _reservasHttpClient.CrearPasajero(_pasajero);
-
-	        var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
-	        response.StatusCode.Should().Be(HttpStatusCode.OK);
+	        await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 
 	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
 	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);

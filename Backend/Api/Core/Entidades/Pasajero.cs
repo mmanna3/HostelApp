@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.Core.Entidades
 {
@@ -18,6 +19,8 @@ namespace Api.Core.Entidades
 
         [MaxLength(256)]
         public string Email { get; set; }
+
+        public ICollection<ReservaPasajeroAnexo> ReservaPasajerosAnexos { get; set; }
 
         public string ObtenerNombreAbreviado()
         {
