@@ -104,16 +104,20 @@ const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
                     onClick={(): void => {}}
                   />
                 </div>
-                <div className="column">
-                  <Boton
-                    texto="Hacer Check-In"
-                    className={`is-primary ${Estilos.ocuparTodoElAncho}`}
-                    onClick={(): void => {
-                      cambiarVisibilidadDeModalPrincipal(false);
-                      cambiarVisibilidadDeModalHacerCheckIn(true);
-                    }}
-                  />
-                </div>
+                {datos.estado === ReservaEstadoEnum.CheckinPendiente ? (
+                  <div className="column">
+                    <Boton
+                      texto="Hacer Check-In"
+                      className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                      onClick={(): void => {
+                        cambiarVisibilidadDeModalPrincipal(false);
+                        cambiarVisibilidadDeModalHacerCheckIn(true);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
