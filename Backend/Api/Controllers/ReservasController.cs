@@ -85,7 +85,7 @@ namespace Api.Controllers
 
         private async Task SiElPasajeroTitularYaExisteModificarloSinoCrearlo(Reserva reserva)
         {
-	        var pasajeroId = await _pasajeroService.SiExisteCrearSinoModificar(reserva.PasajeroTitular);
+	        var pasajeroId = await _pasajeroService.SiExisteModificarSinoCrear(reserva.PasajeroTitular);
 	        reserva.PasajeroTitularId = pasajeroId;
 	        reserva.PasajeroTitular = null;
         }
@@ -98,7 +98,7 @@ namespace Api.Controllers
 			        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reservaPasajeroAnexo.Pasajero.DniOPasaporte);
 			        if (pasajero != null)
 			        {
-				        await _pasajeroService.SiExisteCrearSinoModificar(reservaPasajeroAnexo.Pasajero);
+				        await _pasajeroService.SiExisteModificarSinoCrear(reservaPasajeroAnexo.Pasajero);
 
 				        reservaPasajeroAnexo.Pasajero = null;
 				        reservaPasajeroAnexo.PasajeroId = pasajero.Id;

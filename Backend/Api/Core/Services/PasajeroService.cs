@@ -41,7 +41,7 @@ namespace Api.Core.Services
 	        return await _pasajeroRepository.ObtenerPorDniOPasaporte(dniOPasaporte);
         }
 
-        public async Task<int> SiExisteCrearSinoModificar(Pasajero pasajero)
+        public async Task<int> SiExisteModificarSinoCrear(Pasajero pasajero)
         {
 	        var pasajeroExistente = await _pasajeroRepository.ObtenerPorDniOPasaporte(pasajero.DniOPasaporte);
 
