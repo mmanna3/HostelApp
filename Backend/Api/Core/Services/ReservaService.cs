@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using Api.Core.Repositories;
 using Api.Core.Services.Interfaces;
 
@@ -37,6 +38,9 @@ namespace Api.Core.Services
         public async Task<int> HacerCheckIn(Reserva reservaModificada)
         {
             var reservaExistente = await _repository.ObtenerPorId(reservaModificada.Id);
+
+            if (!reservaExistente.Estado.Equals(ReservaEstadoEnum.CheckinPendiente))
+	            throw new AppException("Para hacer Check-In, la reserva debe estar en estado Check-In Pendiente");
 
             reservaExistente.ReservaPasajerosAnexos = reservaModificada.ReservaPasajerosAnexos;
             reservaExistente.PasajeroTitularId = reservaModificada.PasajeroTitularId;
