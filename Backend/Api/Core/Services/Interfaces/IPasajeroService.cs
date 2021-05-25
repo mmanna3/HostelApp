@@ -10,6 +10,6 @@ namespace Api.Core.Services.Interfaces
         Task<int> CreateAsync(Pasajero pasajero);
         Task<Pasajero> ObtenerPorId(int id);
         Task<Pasajero> ObtenerPorDniOPasaporte(string dniOPasaporte);
-        Task ModificarAsync(int id, Pasajero habitacion);
+        Task<int> SiExisteCrearSinoModificar(Pasajero pasajero);
     }
 }

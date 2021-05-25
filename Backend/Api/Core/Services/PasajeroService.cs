@@ -41,17 +41,22 @@ namespace Api.Core.Services
 	        return await _pasajeroRepository.ObtenerPorDniOPasaporte(dniOPasaporte);
         }
 
-        public async Task ModificarAsync(int id, Pasajero pasajero)
+        public async Task<int> SiExisteCrearSinoModificar(Pasajero pasajero)
         {
-	        var huespedAModificar = await _pasajeroRepository.ObtenerPorId(id);
+	        var pasajeroExistente = await _pasajeroRepository.ObtenerPorDniOPasaporte(pasajero.DniOPasaporte);
 
-	        if (huespedAModificar == null)
-		        throw new AppException($"No se encontró el pasajero de id:{id}");
+	        if (pasajeroExistente == null)
+	        {
+		        var pasajeroCreado = _pasajeroRepository.Crear(pasajero);
+		        await _unitOfWork.CompleteAsync();
+		        return pasajeroCreado.Entity.Id;
+	        }
 
-	        pasajero.Id = huespedAModificar.Id;
-	        _pasajeroRepository.Modificar(huespedAModificar, pasajero);
-
+	        pasajero.Id = pasajeroExistente.Id; // Esto es necesario?
+	        _pasajeroRepository.Modificar(pasajeroExistente, pasajero);
 	        await _unitOfWork.CompleteAsync();
+
+	        return pasajeroExistente.Id;
         }
     }
 }

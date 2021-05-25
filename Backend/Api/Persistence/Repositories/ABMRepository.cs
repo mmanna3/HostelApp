@@ -4,6 +4,7 @@ using Api.Core.Entidades;
 using Api.Core.Repositories;
 using Api.Persistence.Config;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Api.Persistence.Repositories
 {
@@ -19,9 +20,9 @@ namespace Api.Persistence.Repositories
             return await _context.Set<TModel>().ToListAsync();
         }
 
-        public void Crear(TModel reserva)
+        public EntityEntry<TModel> Crear(TModel reserva)
         {
-            _context.Set<TModel>().Add(reserva);
+            return _context.Set<TModel>().Add(reserva);
         }
 
         public virtual async Task<TModel> ObtenerPorId(int id)

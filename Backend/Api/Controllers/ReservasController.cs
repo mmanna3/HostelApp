@@ -63,7 +63,7 @@ namespace Api.Controllers
 
 			var reserva = ReservaMapper.Map(creacionDTO);
 
-			await SiElPasajeroTitularYaExisteModificarlo(reserva);
+			await SiElPasajeroTitularYaExisteModificarloSinoCrearlo(reserva);
 
 			var id = await _service.Crear(reserva);
 
@@ -73,27 +73,9 @@ namespace Api.Controllers
         [HttpPost, Route("hacerCheckIn")]
         public async Task<int> HacerCheckIn([FromBody] HacerCheckInDTO dto)
         {
-            //if (creacionDTO.CamasIds != null && creacionDTO.CamasIds.Count == 0 && creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count == 0)
-            // throw new AppException("Se debe reservar al menos una habitación o cama");
+	        var reserva = ReservaMapper.Map(dto);
 
-            //if (creacionDTO.CamasIds != null && creacionDTO.CamasIds.Count() != creacionDTO.CamasIds.Distinct().Count())
-            // throw new AppException("No puede reservarse dos veces la misma cama");
-
-            //if (creacionDTO.HabitacionesPrivadasIds != null && creacionDTO.HabitacionesPrivadasIds.Count() != creacionDTO.HabitacionesPrivadasIds.Distinct().Count())
-            // throw new AppException("No se puede reservar dos veces la misma habitación");
-
-            //if (creacionDTO.DiaDeCheckin == creacionDTO.DiaDeCheckout)
-            // throw new AppException("Se debe reservar al menos una noche");
-
-            //var reserva = ReservaMapper.Map(creacionDTO);
-
-            //await SiElHuespedYaExisteModificarlo(reserva);
-
-            //var id = await _service.Crear(reserva);
-
-            var reserva = ReservaMapper.Map(dto);
-
-            await SiElPasajeroTitularYaExisteModificarlo(reserva);
+            await SiElPasajeroTitularYaExisteModificarloSinoCrearlo(reserva);
             await SiAlgunPasajeroAnexoYaExisteModificarlo(reserva);
 
             await _service.HacerCheckIn(reserva);
@@ -101,15 +83,11 @@ namespace Api.Controllers
             return reserva.Id;
         }
 
-        private async Task SiElPasajeroTitularYaExisteModificarlo(Reserva reserva)
+        private async Task SiElPasajeroTitularYaExisteModificarloSinoCrearlo(Reserva reserva)
         {
-	        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reserva.PasajeroTitular.DniOPasaporte);
-	        if (pasajero != null)
-	        {
-		        await _pasajeroService.ModificarAsync(pasajero.Id, reserva.PasajeroTitular);
-		        reserva.PasajeroTitular = null;
-		        reserva.PasajeroTitularId = pasajero.Id;
-            }
+	        var pasajeroId = await _pasajeroService.SiExisteCrearSinoModificar(reserva.PasajeroTitular);
+	        reserva.PasajeroTitularId = pasajeroId;
+	        reserva.PasajeroTitular = null;
         }
 
         private async Task SiAlgunPasajeroAnexoYaExisteModificarlo(Reserva reserva)
@@ -120,7 +98,7 @@ namespace Api.Controllers
 			        var pasajero = await _pasajeroService.ObtenerPorDniOPasaporte(reservaPasajeroAnexo.Pasajero.DniOPasaporte);
 			        if (pasajero != null)
 			        {
-				        await _pasajeroService.ModificarAsync(pasajero.Id, reservaPasajeroAnexo.Pasajero);
+				        await _pasajeroService.SiExisteCrearSinoModificar(reservaPasajeroAnexo.Pasajero);
 
 				        reservaPasajeroAnexo.Pasajero = null;
 				        reservaPasajeroAnexo.PasajeroId = pasajero.Id;

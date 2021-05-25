@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Api.Core.Repositories
 {
@@ -8,7 +9,7 @@ namespace Api.Core.Repositories
         where TModel : EntidadConId
     {
         Task<IEnumerable<TModel>> Listar();
-        void Crear(TModel reserva);
+        EntityEntry<TModel> Crear(TModel reserva);
         Task<TModel> ObtenerPorId(int id);
         void Modificar(TModel anterior, TModel nuevo);
     }
