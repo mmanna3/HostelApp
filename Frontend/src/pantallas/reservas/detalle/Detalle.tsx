@@ -61,7 +61,7 @@ const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
       <HacerCheckIn
         datos={datos}
         esVisible={modalHacerCheckInEsVisible}
-        ocultar={(): void => {
+        alOcultar={(): void => {
           cambiarVisibilidadDeModalHacerCheckIn(false);
           cambiarVisibilidadDeModalPrincipal(true);
         }}

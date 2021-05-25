@@ -1,6 +1,7 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import ValidationSummary from 'components/ValidationSummary';
 import DatosDelPasajero from 'pantallas/reservas/crear/DatosDelPasajero/DatosDelPasajero';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,16 +11,17 @@ import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 
 interface IProps {
   esVisible: boolean;
-  ocultar: () => void;
+  alOcultar: () => void;
   enCheckInExitoso: () => void;
   datos: ReservaDetalleDTO;
 }
 
-const HacerCheckIn = ({ esVisible, datos, ocultar, enCheckInExitoso }: IProps): ReactElement => {
+const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps): ReactElement => {
   const [pasajeros, actualizarPasajeroes] = useState<PasajeroDTO[]>([datos.pasajeroTitular]);
   const [IndiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
   const dispatch = useDispatch();
   const { datos: pasajeroEncontrado } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
+  const { errores } = useSelector(api.reservas.hacerCheckIn.selector);
 
   useEffect((): void => {
     let pasajeroVacio: PasajeroDTO = {
@@ -59,11 +61,16 @@ const HacerCheckIn = ({ esVisible, datos, ocultar, enCheckInExitoso }: IProps): 
     dispatch(api.reservas.hacerCheckIn.invocar(data, enCheckInExitoso));
   };
 
+  const ocultar = (): void => {
+    dispatch(api.reservas.hacerCheckIn.reiniciar());
+    alOcultar();
+  };
+
   return (
     <ModalForm isVisible={esVisible} onHide={ocultar} onSubmit={alEnviar} minWidth="900px">
       <Header title="Hacer Check-In" onHide={ocultar} />
       <CardBody minHeight="460px">
-        {/* <ValidationSummary errors={errores} /> */}
+        <ValidationSummary errors={errores} />
 
         <Input name="ReservaId" defaultValue={datos.id} style={{ display: 'none' }} />
 
