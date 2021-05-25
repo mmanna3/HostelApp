@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
 using Api.Controllers.Mapping;
 using Api.Core;
@@ -73,6 +74,8 @@ namespace Api.Controllers
         [HttpPost, Route("hacerCheckIn")]
         public async Task<int> HacerCheckIn([FromBody] HacerCheckInDTO dto)
         {
+	        ValidarQueNoEsteDosVecesElMismoPasajero(dto);
+
 	        var reserva = ReservaMapper.Map(dto);
 
             await SiElPasajeroTitularYaExisteModificarloSinoCrearlo(reserva);
@@ -81,6 +84,17 @@ namespace Api.Controllers
             await _service.HacerCheckIn(reserva);
             
             return reserva.Id;
+        }
+
+        private static void ValidarQueNoEsteDosVecesElMismoPasajero(HacerCheckInDTO dto)
+        {
+	        if (dto.PasajerosAnexos != null)
+			{
+				var dnisOPasaportesDeTodosLosPasajeros = new List<string>(dto.PasajerosAnexos.Select(x => x.DniOPasaporte)) { dto.PasajeroTitular.DniOPasaporte };
+
+				if (dnisOPasaportesDeTodosLosPasajeros.Count != dnisOPasaportesDeTodosLosPasajeros.Distinct().Count())
+					throw new AppException("No puede haber pasajeros con el mismo DNI o Pasaporte");
+			}
         }
 
         private async Task SiElPasajeroTitularYaExisteModificarloSinoCrearlo(Reserva reserva)
