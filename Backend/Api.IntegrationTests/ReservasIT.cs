@@ -151,50 +151,39 @@ namespace Api.IntegrationTests
             //Chequear que todos los demás campos no se hayan modificado
         }
 
-        //[Test]
-        //public async Task HaceCheckIn_EnReservaConPasajerosAnexos_Correctamente()
-        //{
-        //	var camaId = await CrearHabitacionConUnaCama();
-        //	var response = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
-        //	response.StatusCode.Should().Be(HttpStatusCode.OK);
-        //	var reservaId = await response.Content.ReadAsAsync<int>();
+		[Test]
+		public async Task HaceCheckIn_EditandoPasajeroTitularExistente_ConPasajerosAnexos_Correctamente()
+		{
+			var camaId = await CrearHabitacionConUnaCama();
+			var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 
-        //	_pasajero.NombreCompleto = "El inefable Señor Gama Alta";
-        //	var pasajero2 = _pasajero;
-        //	pasajero2.DniOPasaporte = "222";
-        //	pasajero2.NombreCompleto = "Samanta Schweblin";
+			_pasajero.NombreCompleto = "El inefable Señor Gama Alta";
+			var pasajeroAnexo = new PasajeroDTO
+			{
+				NombreCompleto = "Samanta Schweblin",
+				DniOPasaporte = "222",
+				Email = "mrrobot@fsociety.ong",
+				Telefono = "5556453",
+				Pais = "AR",
+			};
 
-        //	var dto = new HacerCheckInDTO
-        //	{
-        //		ReservaId = reservaId,
-        //		PasajeroTitular = _pasajero,
-        //		PasajerosAnexos = new List<PasajeroDTO> { pasajero2 }
-        //	};
+            var dto = new HacerCheckInDTO
+			{
+				ReservaId = reservaId,
+				PasajeroTitular = _pasajero,
+				PasajerosAnexos = new List<PasajeroDTO> { pasajeroAnexo }
+			};
 
-        //	var responseHacerCheckIn = await _reservasHttpClient.HacerCheckIn(dto);
-        //	responseHacerCheckIn.StatusCode.Should().Be(HttpStatusCode.OK);
+			await _reservasHttpClient.HacerCheckIn(dto);
+			var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
 
-        //	var consultaResponse = await _reservasHttpClient.ObtenerPorId(reservaId);
-        //	consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        //	var reserva = await consultaResponse.Content.ReadAsAsync<ReservaDetalleDTO>();
+			reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+			reserva.PasajeroTitular.NombreCompleto.Should().Be("El inefable Señor Gama Alta");
+            reserva.PasajerosAnexos.Count.Should().Be(1);
+            reserva.PasajerosAnexos.First().NombreCompleto.Should().Be("Samanta Schweblin");
 
-        //	reserva.DiaDeCheckin.Should().Be("2020-09-17");
-        //	reserva.DiaDeCheckout.Should().Be("2020-09-18");
-        //	reserva.HoraEstimadaDeLlegada.Should().Be("11:30");
-        //	reserva.CantidadDePasajeros.Should().Be(2);
-        //	reserva.Canal.Should().Be("Booking");
-        //	reserva.Camas.Should().HaveCount(1);
-        //	reserva.Camas.First().Id.Should().Be(camaId);
-        //	reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
-
-        //	reserva.PasajeroTitular.NombreCompleto = "El inefable Señor Gama Alta";
-        //	reserva.PasajeroTitular.Telefono = _pasajero.Telefono;
-        //	reserva.PasajeroTitular.Email = _pasajero.Email;
-        //	reserva.PasajeroTitular.DniOPasaporte = _pasajero.DniOPasaporte;
-        //	reserva.PasajeroTitular.Pais = _pasajero.Pais;
-
-        //	Falta assertear que los pasajeros anexos se guarden correctamente
-        //}
+            //Chequear que todos los demás campos no se hayan modificado
+        }
 
         [Test]
         public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()

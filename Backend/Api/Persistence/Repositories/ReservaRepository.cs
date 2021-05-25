@@ -57,6 +57,9 @@ namespace Api.Persistence.Repositories
 	        return await _context.Set<Reserva>()
 							.Include(x => x.PasajeroTitular)
 
+							.Include(x => x.ReservaPasajerosAnexos)
+								.ThenInclude(x => x.Pasajero)
+
 							.Include(x => x.ReservaCamas)
 								.ThenInclude(x => x.Cama)
 									.ThenInclude(x => (x as CamaIndividual).Habitacion)

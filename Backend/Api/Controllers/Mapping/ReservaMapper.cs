@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
+using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
 using Api.Core;
 using Api.Core.Entidades;
@@ -24,6 +25,7 @@ namespace Api.Controllers.Mapping
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
 				PasajeroTitular = PasajeroMapper.Map(entidad.PasajeroTitular),
 				HabitacionesPrivadas = new List<HabitacionDTO>(),
+				PasajerosAnexos = new List<PasajeroDTO>(),
 				Camas = new List<CamaDTO>()
 			};
 
@@ -33,6 +35,9 @@ namespace Api.Controllers.Mapping
 
 			if (entidad.ReservaCamas != null)
 				dto.Camas = HabitacionMapper.MapCamas(entidad.ReservaCamas.Select(x => x.Cama)).ToList();
+
+			if (entidad.ReservaPasajerosAnexos != null)
+				dto.PasajerosAnexos = PasajeroMapper.Map(entidad.ReservaPasajerosAnexos.Select(x => x.Pasajero)).ToList();
 
 			return dto;
 		}
