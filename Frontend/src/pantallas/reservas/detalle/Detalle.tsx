@@ -108,6 +108,7 @@ const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
                 {datos.estado === ReservaEstadoEnum.CheckinPendiente ? (
                   <div className="column">
                     <Boton
+                      icono="walking"
                       texto="Hacer Check-In"
                       className={`is-primary ${Estilos.ocuparTodoElAncho}`}
                       onClick={(): void => {
