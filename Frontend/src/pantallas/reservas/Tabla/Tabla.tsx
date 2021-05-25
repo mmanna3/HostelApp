@@ -1,5 +1,4 @@
 import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
-import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HabitacionDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'store/api/DTOs';
@@ -37,7 +36,6 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   return (
     <>
       <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleHabitacion>
-      <DetalleReserva />
       <div className={Estilos.contenedor}>
         <table className="table is-hoverable is-bordered is-fullwidth">
           <EncabezadoDias fechaDesde={datos.desde} fechaHasta={datos.hasta} />

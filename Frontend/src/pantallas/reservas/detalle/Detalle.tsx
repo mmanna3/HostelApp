@@ -11,7 +11,11 @@ import Estilos from './Detalle.module.scss';
 import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
 import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
 
-const Detalle = (): ReactElement => {
+interface IProps {
+  alOcultar: () => void;
+}
+
+const Detalle = ({ alOcultar }: IProps): ReactElement => {
   const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
   const dispatch = useDispatch();
@@ -20,7 +24,7 @@ const Detalle = (): ReactElement => {
     estado: ESTADO;
   };
 
-  function ocultar(): void {
+  function reiniciarDatos(): void {
     dispatch(api.reservas.obtenerPorId.reiniciar());
   }
 
@@ -58,11 +62,13 @@ const Detalle = (): ReactElement => {
         datos={datos}
         esVisible={modalHacerCheckInEsVisible}
         ocultar={(): void => {
-          cambiarVisibilidadDeModalPrincipal(true);
           cambiarVisibilidadDeModalHacerCheckIn(false);
+          cambiarVisibilidadDeModalPrincipal(true);
+          reiniciarDatos();
+          alOcultar();
         }}
       />
-      <Modal isVisible={modalPrincipalEsVisible} onHide={ocultar}>
+      <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
             <p className={Estilos.nombre}>

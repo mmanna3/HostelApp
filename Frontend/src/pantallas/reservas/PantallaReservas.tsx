@@ -5,6 +5,7 @@ import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiReque
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Cabecera from './Cabecera/Cabecera';
 import Crear from './crear/Crear';
+import DetalleReserva from './detalle/Detalle';
 import Estilos from './PantallaReservas.module.scss';
 import Tabla from './Tabla/Tabla';
 
@@ -39,6 +40,11 @@ const ReservasPage = (): ReactElement => {
     fetchData();
   }
 
+  function alOcultarDetalle(): void {
+    reiniciarCabecera();
+    fetchData();
+  }
+
   return (
     <div className={Estilos.contenedorDeTabla}>
       {IsModalVisible && (
@@ -46,7 +52,7 @@ const ReservasPage = (): ReactElement => {
       )}
 
       <Cabecera key={cabeceraKey} showModal={showModal} onFechaChange={onFechaChange} />
-
+      <DetalleReserva alOcultar={alOcultarDetalle} />
       <div>
         {estado === ESTADO.huboError ? (
           'Hubo un error.'
