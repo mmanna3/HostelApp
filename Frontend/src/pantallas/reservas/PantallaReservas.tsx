@@ -34,25 +34,28 @@ const ReservasPage = (): ReactElement => {
     setModalVisibility(true);
   }
 
-  function closeModalAndRefreshTable(): void {
+  function reiniciarTabla(): void {
     reiniciarCabecera();
-    hideModal();
     fetchData();
   }
 
-  function alOcultarDetalle(): void {
-    reiniciarCabecera();
-    fetchData();
+  function cerrarModalDeCreacionYReiniciarTabla(): void {
+    hideModal();
+    reiniciarTabla();
   }
 
   return (
     <div className={Estilos.contenedorDeTabla}>
       {IsModalVisible && (
-        <Crear isVisible={IsModalVisible} onHide={hideModal} onSuccessfulSubmit={closeModalAndRefreshTable}></Crear>
+        <Crear
+          isVisible={IsModalVisible}
+          onHide={hideModal}
+          onSuccessfulSubmit={cerrarModalDeCreacionYReiniciarTabla}
+        ></Crear>
       )}
 
       <Cabecera key={cabeceraKey} showModal={showModal} onFechaChange={onFechaChange} />
-      <DetalleReserva alOcultar={alOcultarDetalle} />
+      <DetalleReserva enCheckInExitoso={reiniciarTabla} />
       <div>
         {estado === ESTADO.huboError ? (
           'Hubo un error.'

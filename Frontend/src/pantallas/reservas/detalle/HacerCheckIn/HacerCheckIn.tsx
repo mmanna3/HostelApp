@@ -11,10 +11,11 @@ import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 interface IProps {
   esVisible: boolean;
   ocultar: () => void;
+  enCheckInExitoso: () => void;
   datos: ReservaDetalleDTO;
 }
 
-const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
+const HacerCheckIn = ({ esVisible, datos, ocultar, enCheckInExitoso }: IProps): ReactElement => {
   const [pasajeros, actualizarPasajeroes] = useState<PasajeroDTO[]>([datos.pasajeroTitular]);
   const [IndiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const HacerCheckIn = ({ esVisible, ocultar, datos }: IProps): ReactElement => {
   };
 
   const alEnviar = (data: any): void => {
-    dispatch(api.reservas.hacerCheckIn.invocar(data, ocultar));
+    dispatch(api.reservas.hacerCheckIn.invocar(data, enCheckInExitoso));
   };
 
   return (

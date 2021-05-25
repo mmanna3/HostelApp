@@ -12,10 +12,10 @@ import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
 import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
 
 interface IProps {
-  alOcultar: () => void;
+  enCheckInExitoso: () => void;
 }
 
-const Detalle = ({ alOcultar }: IProps): ReactElement => {
+const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
   const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
   const dispatch = useDispatch();
@@ -64,8 +64,12 @@ const Detalle = ({ alOcultar }: IProps): ReactElement => {
         ocultar={(): void => {
           cambiarVisibilidadDeModalHacerCheckIn(false);
           cambiarVisibilidadDeModalPrincipal(true);
+        }}
+        enCheckInExitoso={(): void => {
+          cambiarVisibilidadDeModalHacerCheckIn(false);
+          cambiarVisibilidadDeModalPrincipal(true);
           reiniciarDatos();
-          alOcultar();
+          enCheckInExitoso();
         }}
       />
       <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
