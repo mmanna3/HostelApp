@@ -158,6 +158,7 @@ namespace Api.IntegrationTests
 			var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 
 			_pasajero.NombreCompleto = "El inefable Señor Gama Alta";
+
 			var pasajeroAnexo = new PasajeroDTO
 			{
 				NombreCompleto = "Samanta Schweblin",
@@ -184,6 +185,43 @@ namespace Api.IntegrationTests
 
             //Chequear que todos los demás campos no se hayan modificado
         }
+
+		[Test]
+		public async Task HaceCheckIn_ConNuevoPasajeroTitular_ConPasajerosAnexos_Correctamente()
+		{
+			var camaId = await CrearHabitacionConUnaCama();
+			var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+
+			_pasajero.NombreCompleto = "El inefable Señor Gama Alta";
+			_pasajero.Id = 0;
+			_pasajero.DniOPasaporte = "678";
+
+			var pasajeroAnexo = new PasajeroDTO
+			{
+				NombreCompleto = "Samanta Schweblin",
+				DniOPasaporte = "222",
+				Email = "mrrobot@fsociety.ong",
+				Telefono = "5556453",
+				Pais = "AR",
+			};
+
+			var dto = new HacerCheckInDTO
+			{
+				ReservaId = reservaId,
+				PasajeroTitular = _pasajero,
+				PasajerosAnexos = new List<PasajeroDTO> { pasajeroAnexo }
+			};
+
+			await _reservasHttpClient.HacerCheckIn(dto);
+			var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
+
+			reserva.Estado.Should().Be(ReservaEstadoEnum.InHouse);
+			reserva.PasajeroTitular.NombreCompleto.Should().Be("El inefable Señor Gama Alta");
+			reserva.PasajerosAnexos.Count.Should().Be(1);
+			reserva.PasajerosAnexos.First().NombreCompleto.Should().Be("Samanta Schweblin");
+
+			//Chequear que todos los demás campos no se hayan modificado
+		}
 
         [Test]
         public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
