@@ -70,7 +70,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     [listarConLugaresLibresRequest, dispatch]
   );
 
-  const [pasajeroKey, pasajero, buscarDniOPasaporte] = useDatosDelPasajero();
+  const { pasajeroKey, pasajero, buscarDniOPasaporte, estado: estadoBusquedaPasajero } = useDatosDelPasajero();
 
   return (
     <ModalForm isVisible={isVisible} onHide={ocultar} onSubmit={onSubmit} minWidth="900px" key={modalKey}>
@@ -87,6 +87,7 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
           pasajero={pasajero}
           name="PasajeroTitular"
           buscarDniOPasaporte={buscarDniOPasaporte}
+          estadoBusqueda={estadoBusquedaPasajero}
         />
 
         <LineaDivisoria texto="HABITACIONES Y CAMAS" />

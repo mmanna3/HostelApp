@@ -3,14 +3,16 @@ import { Input } from 'components/Input';
 import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelPasajero/ListaDePaises';
 import React, { ReactElement } from 'react';
 import { PasajeroDTO } from 'store/api/DTOs';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
   pasajero?: PasajeroDTO;
   buscarDniOPasaporte: (dniOPasaporte: string) => void;
   name: string;
+  estadoBusqueda: EstadosApiRequestEnum;
 }
 
-const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name }: IProps): ReactElement => {
+const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda }: IProps): ReactElement => {
   const paisDelPasajero = pasajero ? paisesParaAutocomplete.find((x): boolean => x.value === pasajero.pais) : undefined;
   const paisOpcionInicial = paisDelPasajero ? paisDelPasajero : paisesParaAutocomplete[8];
 
@@ -22,6 +24,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name }: IProps): Reac
             placeholder="DNI o Pasaporte"
             textoDelBoton="Buscar"
             onButtonClick={buscarDniOPasaporte}
+            botonCargando={estadoBusqueda === EstadosApiRequestEnum.cargando}
             dataCy="dni"
             name={`${name}.DNIOPasaporte`}
             type="number"

@@ -6,7 +6,7 @@ import { useCounterKey } from 'utils/hooks/useCounterKey';
 
 export const useDatosDelPasajero = (): any => {
   const [pasajeroKey, reiniciarDatosDelPasajero] = useCounterKey(1000);
-  const { datos: pasajero } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
+  const { datos: pasajero, estado } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
   const dispatch = useDispatch();
 
   const mostrarToastOK = (pasajero: PasajeroDTO): void => {
@@ -29,5 +29,5 @@ export const useDatosDelPasajero = (): any => {
     dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }, mostrarToastOK, mostrarToastError));
   };
 
-  return [pasajeroKey, pasajero, buscarDniOPasaporte];
+  return { pasajeroKey, pasajero, buscarDniOPasaporte, estado };
 };

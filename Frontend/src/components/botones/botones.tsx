@@ -33,6 +33,7 @@ interface IBotonProps {
   style?: CSSProperties;
   className?: string;
   icono?: IconProp;
+  cargando?: boolean;
 }
 
 export function Boton({
@@ -43,9 +44,18 @@ export function Boton({
   style,
   value,
   className = 'is-primary',
+  cargando,
 }: IBotonProps): ReactElement {
   return (
-    <button data-cy={dataCy} className={`button ${className}`} type="button" style={style} onClick={onClick} value={value}>
+    <button
+      data-cy={dataCy}
+      className={`button ${className} ${cargando ? 'is-loading' : ''}`}
+      disabled={cargando}
+      type="button"
+      style={style}
+      onClick={onClick}
+      value={value}
+    >
       {icono && <Icon faCode={icono} />}
       <span>{texto}</span>
     </button>

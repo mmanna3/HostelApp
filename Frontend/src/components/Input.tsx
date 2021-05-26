@@ -9,6 +9,7 @@ interface InputProps {
   faIconCode?: IconProp;
   textoDelBoton?: string;
   onButtonClick?: (valor: string) => any;
+  botonCargando?: boolean;
   handleOnChange?: (e: any) => void;
   defaultValue?: string | number;
   placeholder?: string;
@@ -27,6 +28,7 @@ export function Input({
   name,
   textoDelBoton,
   onButtonClick,
+  botonCargando,
   defaultValue,
   placeholder,
   style,
@@ -73,7 +75,12 @@ export function Input({
           </div>
           {onButtonClick && textoDelBoton && (
             <div className="control">
-              <Boton dataCy={'boton-' + dataCy} texto={textoDelBoton} onClick={(): void => onButtonClick(field.value)} />
+              <Boton
+                dataCy={'boton-' + dataCy}
+                cargando={botonCargando}
+                texto={textoDelBoton}
+                onClick={(): void => onButtonClick(field.value)}
+              />
             </div>
           )}
         </div>

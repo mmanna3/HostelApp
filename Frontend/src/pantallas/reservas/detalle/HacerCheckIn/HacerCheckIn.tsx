@@ -100,6 +100,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
           pasajero={pasajeros[0]}
           name="PasajeroTitular"
           buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, 0)}
+          estadoBusqueda={estadoPasajeroEncontrado}
         />
 
         {pasajeros.slice(1).map(
@@ -111,6 +112,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
                 pasajero={pasajero}
                 name={`PasajerosAnexos[${i}]`}
                 buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, i + 1)}
+                estadoBusqueda={estadoPasajeroEncontrado}
               />
             </div>
           )
