@@ -10,7 +10,7 @@ export const useDatosDelPasajero = (): any => {
   const dispatch = useDispatch();
 
   const mostrarToastOK = (pasajero: PasajeroDTO): void => {
-    toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
+    toast('El pasajero está registrado. De ser necesario, podés editar sus datos.', {
       type: toast.TYPE.SUCCESS,
       toastId: `toast-exito-${pasajero.dniOPasaporte}`,
     });
@@ -18,7 +18,7 @@ export const useDatosDelPasajero = (): any => {
 
   const mostrarToastError = (): void => {
     dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
-    toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
+    toast('El pasajero no está registrado. Llená sus datos para registrarlo.', {
       type: toast.TYPE.ERROR,
       toastId: `toast-error`,
     });

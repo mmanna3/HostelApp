@@ -5,6 +5,7 @@ import ValidationSummary from 'components/ValidationSummary';
 import DatosDelPasajero from 'pantallas/reservas/crear/DatosDelPasajero/DatosDelPasajero';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import api from 'store/api/api';
 import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
@@ -20,9 +21,11 @@ interface IProps {
 const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps): ReactElement => {
   const [key, reiniciarKey] = useCounterKey();
   const [pasajeros, actualizarPasajeroes] = useState<PasajeroDTO[]>([datos.pasajeroTitular]);
-  const [IndiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
+  const [indiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
   const dispatch = useDispatch();
-  const { datos: pasajeroEncontrado } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
+  const { datos: pasajeroEncontrado, estado: estadoPasajeroEncontrado } = useSelector(
+    api.pasajeros.obtenerPorDniOPasaporte.selector
+  );
   const { errores, estado } = useSelector(api.reservas.hacerCheckIn.selector);
 
   useEffect((): void => {
@@ -43,16 +46,30 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
   useEffect((): void => {
     if (pasajeroEncontrado) {
       actualizarPasajeroes((anteriores): PasajeroDTO[] => [
-        ...anteriores.map((item, i): PasajeroDTO => (i === IndiceEnBusquedaActiva ? pasajeroEncontrado : item)),
+        ...anteriores.map((item, i): PasajeroDTO => (i === indiceEnBusquedaActiva ? pasajeroEncontrado : item)),
       ]);
     }
 
     dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
-  }, [pasajeroEncontrado, IndiceEnBusquedaActiva, dispatch]);
+  }, [pasajeroEncontrado, indiceEnBusquedaActiva, dispatch]);
+
+  useEffect((): void => {
+    if (estadoPasajeroEncontrado === EstadosApiRequestEnum.exitoso) {
+      toast('El pasajero está registrado. De ser necesario, podés editar sus datos.', {
+        type: toast.TYPE.SUCCESS,
+        toastId: `toast-exito-${indiceEnBusquedaActiva}`,
+      });
+    } else if (estadoPasajeroEncontrado === EstadosApiRequestEnum.huboError) {
+      toast('El pasajero no está registrado. Llená sus datos para registrarlo.', {
+        type: toast.TYPE.ERROR,
+        toastId: `toast-error-${indiceEnBusquedaActiva}`,
+      });
+    }
+  }, [estadoPasajeroEncontrado, indiceEnBusquedaActiva]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     reiniciarKey();
-    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte })); //Reescribir esto agregándole un onSuccess
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
   };
 
   const clickEnBuscar = (dniOPasaporte: string, index: number): void => {
