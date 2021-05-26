@@ -12,7 +12,11 @@ interface Selector<T> {
 interface ISliceHttpGetGenerado<TResultado, TParametros = {}> {
   selector: (state: any) => Selector<TResultado>;
   reducer: any;
-  invocar: (parametros?: TParametros) => any;
+  invocar: (
+    parametros?: TParametros,
+    enRespuestaOK?: (resultado: TResultado) => void,
+    enRespuestaFallida?: () => void
+  ) => any;
   reiniciar: () => void;
 }
 
@@ -40,8 +44,18 @@ export function generarSliceHttpGet<TResultado, TParametros = {}>(
   const selector = (state: any): any => state[requestSlice.nombreDelSlice];
   const reducer = slice.reducer;
 
-  function invocar(parametros?: TParametros): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
-    return fetchFunc<TResultado, TParametros>(requestSlice.endpoint, slice.actions, parametros);
+  function invocar(
+    parametros?: TParametros,
+    enRespuestaOK?: (resultado: TResultado) => void,
+    enRespuestaFallida?: () => void
+  ): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
+    return fetchFunc<TResultado, TParametros>(
+      requestSlice.endpoint,
+      slice.actions,
+      parametros,
+      enRespuestaOK,
+      enRespuestaFallida
+    );
   }
 
   function reiniciar(): (dispatch: Dispatch) => void {

@@ -39,7 +39,8 @@ export function fetchFunc<TResultado, TParametros>(
   endpoint: string,
   actions: any,
   parametros?: TParametros,
-  onSuccessCallback?: () => void
+  enRespuestaOK?: (resultado: TResultado) => void,
+  enRespuestaFallida?: () => void
 ): (dispatch: Dispatch) => Promise<AxiosResponse<TResultado>> {
   const { fetchInit, fetchSuccess, fetchFailure } = actions;
 
@@ -57,13 +58,14 @@ export function fetchFunc<TResultado, TParametros>(
     dispatch(fetchInit());
 
     axios
-      .get<TResultado[]>(`/api${endpoint}${parametrosUrl}`)
+      .get<TResultado>(`/api${endpoint}${parametrosUrl}`)
       .then((res): void => {
         dispatch(fetchSuccess(res.data));
-        typeof onSuccessCallback === 'function' && onSuccessCallback();
+        typeof enRespuestaOK === 'function' && enRespuestaOK(res.data);
       })
       .catch((error): void => {
         dispatch(fetchFailure(error.message));
+        typeof enRespuestaFallida === 'function' && enRespuestaFallida();
       });
   };
 

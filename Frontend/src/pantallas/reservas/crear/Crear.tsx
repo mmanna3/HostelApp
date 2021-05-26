@@ -1,11 +1,11 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
 import ValidationSummary from 'components/ValidationSummary';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import api from 'store/api/api';
-import { ReservaCreacionDTO } from 'store/api/DTOs';
+import { PasajeroDTO, ReservaCreacionDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import DatosDelPasajero from './DatosDelPasajero/DatosDelPasajero';
@@ -33,7 +33,6 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
     reiniciarDatosGenerales();
     onSuccessfulSubmit();
     reiniciarModal();
-    dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
   }
 
   interface ReservaDTOYPropsIgnoradas extends ReservaCreacionDTO {
@@ -73,23 +72,26 @@ const Crear = ({ isVisible, onHide, onSuccessfulSubmit }: IParams): ReactElement
 
   // Todo esto a customHook
   const [datosDelPasajeroKey, reiniciarDatosDelPasajero] = useCounterKey(1000);
-  const { datos: pasajero, estado: estadoPasajero } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
-  useEffect((): void => {
-    if (estadoPasajero === EstadosApiRequestEnum.exitoso && pasajero != null)
-      toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
-        type: toast.TYPE.SUCCESS,
-        toastId: `toast-exito-${pasajero.dniOPasaporte}`,
-      });
-    else if (estadoPasajero === EstadosApiRequestEnum.huboError)
-      toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
-        type: toast.TYPE.ERROR,
-        toastId: `toast-error`,
-      });
-  }, [estadoPasajero, pasajero]);
+  const { datos: pasajero } = useSelector(api.pasajeros.obtenerPorDniOPasaporte.selector);
+
+  const mostrarToastOK = (pasajero: PasajeroDTO): void => {
+    toast('El huésped está registrado. De ser necesario, podés editar sus datos.', {
+      type: toast.TYPE.SUCCESS,
+      toastId: `toast-exito-${pasajero.dniOPasaporte}`,
+    });
+  };
+
+  const mostrarToastError = (): void => {
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.reiniciar());
+    toast('El huésped no está registrado. Llená sus datos para registrarlo.', {
+      type: toast.TYPE.ERROR,
+      toastId: `toast-error`,
+    });
+  };
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
     reiniciarDatosDelPasajero();
-    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }));
+    dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte }, mostrarToastOK, mostrarToastError));
   };
   // Hasta acá
 
