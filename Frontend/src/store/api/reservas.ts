@@ -13,9 +13,9 @@ import {
   IObtenerPorIdParams,
 } from './utils/generadorDeSlicesParaRequest';
 
-const listarSliceInfo: IApiSliceInfo = {
+const listarVigentesSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'reservas',
-  endpoint: '/reservas',
+  endpoint: '/reservas/vigentes',
   dataInicial: [],
 };
 
@@ -56,8 +56,8 @@ const obtenerPorIdSliceInfo: IApiSliceInfo = {
 
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
-const listar = {
-  ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarParams>(listarSliceInfo),
+const listarVigentes = {
+  ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarParams>(listarVigentesSliceInfo),
 };
 
 const crear = {
@@ -75,7 +75,7 @@ const hacerCheckOut = {
 const obtenerPorId = { ...generarSliceHttpGet<ReservaDetalleDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
 export default {
-  listar,
+  listarVigentes,
   checkoutsDeHoy,
   crear,
   obtenerPorId,

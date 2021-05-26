@@ -41,9 +41,9 @@ namespace Api.IntegrationTests
 			return await respuesta.Content.ReadAsAsync<int>();
 		}
 
-		public async Task<HttpResponseMessage> ListarEntre(string primeraNoche, int dias)
+		public async Task<HttpResponseMessage> ListarVigentesEntre(string primeraNoche, int dias)
 		{
-			return await _httpClient.GetAsync(ENDPOINT + $"?primeraNoche={primeraNoche}&dias={dias}");
+			return await _httpClient.GetAsync(ENDPOINT + $"/vigentes?primeraNoche={primeraNoche}&dias={dias}");
 		}
 
 		public async Task<ReservaDetalleDTO> ObtenerPorId(int id)

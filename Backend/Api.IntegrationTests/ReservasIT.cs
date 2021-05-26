@@ -45,7 +45,7 @@ namespace Api.IntegrationTests
             var camaId = await CrearHabitacionConUnaCama();
             await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 
-            var consultaResponse = await _reservasHttpClient.ListarEntre(Utilidades.ConvertirFecha(_desde), 1);
+            var consultaResponse = await _reservasHttpClient.ListarVigentesEntre(Utilidades.ConvertirFecha(_desde), 1);
             consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
             var reservasDelMes = await consultaResponse.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
 

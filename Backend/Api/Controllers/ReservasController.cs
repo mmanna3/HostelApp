@@ -37,8 +37,8 @@ namespace Api.Controllers
 	        return ReservaMapper.Map(reserva);
         }
 
-        [HttpGet]
-        public async Task<ReservasDelPeriodoDTO> ListarEntre(string primeraNoche, int dias)
+        [HttpGet, Route("vigentes")]
+        public async Task<ReservasDelPeriodoDTO> ListarVigentesEntre(string primeraNoche, int dias)
         {
 	        var primeraNocheDateTime = Utilidades.ConvertirFecha(primeraNoche);
 	        var ultimaNoche = primeraNocheDateTime.AddDays(dias - 1);

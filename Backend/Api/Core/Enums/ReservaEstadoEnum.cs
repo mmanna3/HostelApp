@@ -4,6 +4,9 @@ namespace Api.Core.Enums
 {
 	public enum ReservaEstadoEnum
 	{
+		[Description("Cancelada")]
+		Cancelada = 0,
+
 		[Description("Check-in pendiente")]
 		CheckinPendiente = 1,
 

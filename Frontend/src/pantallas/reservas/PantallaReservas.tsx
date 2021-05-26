@@ -12,7 +12,7 @@ import Tabla from './Tabla/Tabla';
 const ReservasPage = (): ReactElement => {
   const dispatch = useDispatch();
   const habitaciones = useSelector(api.habitaciones.listar.selector);
-  const { datos, estado } = useSelector(api.reservas.listar.selector);
+  const { datos, estado } = useSelector(api.reservas.listarVigentes.selector);
   const [IsModalVisible, setModalVisibility] = useState(false);
   const [cabeceraKey, reiniciarCabecera] = useCounterKey();
 
@@ -23,7 +23,7 @@ const ReservasPage = (): ReactElement => {
   useEffect((): void => fetchData(), [fetchData]);
 
   function onFechaChange(primeraNoche: string, dias: number): void {
-    dispatch(api.reservas.listar.invocar({ primeraNoche, dias }));
+    dispatch(api.reservas.listarVigentes.invocar({ primeraNoche, dias }));
   }
 
   function hideModal(): void {

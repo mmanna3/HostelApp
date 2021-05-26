@@ -135,6 +135,7 @@ export enum HabitacionTipoEnum {
 
 // ..\Backend\Api\Core\Enums\ReservaEstadoEnum.cs
 export enum ReservaEstadoEnum {
+    Cancelada = 0,
     CheckinPendiente = 1,
     InHouse = 2,
     HizoCheckout = 3,
