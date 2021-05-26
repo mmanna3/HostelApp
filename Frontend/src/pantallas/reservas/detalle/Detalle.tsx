@@ -9,14 +9,17 @@ import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiReque
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Estilos from './Detalle.module.scss';
 import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
+import HacerCheckOut from './HacerCheckOut/HacerCheckOut';
 import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
 
 interface IProps {
   enCheckInExitoso: () => void;
+  enCheckOutExitoso: () => void;
 }
 
-const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
+const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement => {
   const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
+  const [modalHacerCheckOutEsVisible, cambiarVisibilidadDeModalHacerCheckOut] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
   const dispatch = useDispatch();
   const { datos } = useSelector(api.reservas.obtenerPorId.selector) as {
@@ -72,6 +75,20 @@ const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
           enCheckInExitoso();
         }}
       />
+      <HacerCheckOut
+        datos={datos}
+        esVisible={modalHacerCheckOutEsVisible}
+        alOcultar={(): void => {
+          cambiarVisibilidadDeModalHacerCheckOut(false);
+          cambiarVisibilidadDeModalPrincipal(true);
+        }}
+        enCheckOutExitoso={(): void => {
+          cambiarVisibilidadDeModalHacerCheckOut(false);
+          cambiarVisibilidadDeModalPrincipal(true);
+          reiniciarDatos();
+          enCheckOutExitoso();
+        }}
+      />
       <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
@@ -114,6 +131,18 @@ const Detalle = ({ enCheckInExitoso }: IProps): ReactElement => {
                       onClick={(): void => {
                         cambiarVisibilidadDeModalPrincipal(false);
                         cambiarVisibilidadDeModalHacerCheckIn(true);
+                      }}
+                    />
+                  </div>
+                ) : datos.estado === ReservaEstadoEnum.InHouse ? (
+                  <div className="column">
+                    <Boton
+                      icono="walking"
+                      texto="Hacer Check-out"
+                      className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                      onClick={(): void => {
+                        cambiarVisibilidadDeModalPrincipal(false);
+                        cambiarVisibilidadDeModalHacerCheckOut(true);
                       }}
                     />
                   </div>

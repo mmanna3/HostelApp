@@ -55,7 +55,7 @@ const ReservasPage = (): ReactElement => {
       )}
 
       <Cabecera key={cabeceraKey} showModal={showModal} onFechaChange={onFechaChange} />
-      <DetalleReserva enCheckInExitoso={reiniciarTabla} />
+      <DetalleReserva enCheckInExitoso={reiniciarTabla} enCheckOutExitoso={reiniciarTabla} />
       <div>
         {estado === ESTADO.huboError ? (
           'Hubo un error.'

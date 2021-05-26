@@ -7,18 +7,19 @@ interface ISubmitButtonProps {
   text: string;
   dataCy?: string;
   loading: boolean;
+  className?: string;
 }
 
-export function SubmitButton({ text, dataCy = '', loading }: ISubmitButtonProps): ReactElement {
+export function SubmitButton({ text, dataCy = '', className = 'is-primary', loading }: ISubmitButtonProps): ReactElement {
   if (!loading)
     return (
-      <button data-cy={dataCy} className="button is-primary" type="submit">
+      <button data-cy={dataCy} className={`button ${className}`} type="submit">
         {text}
       </button>
     );
   else
     return (
-      <button className="button is-primary is-loading" type="button">
+      <button className={`button ${className} is-loading`} type="button">
         {text}
       </button>
     );

@@ -58,6 +58,11 @@ export interface HacerCheckInDTO {
     pasajerosAnexos: PasajeroDTO[];
 }
 
+// ..\Backend\Api\Controllers\DTOs\Reserva\HacerCheckOutDTO.cs
+export interface HacerCheckOutDTO {
+    reservaId: number;
+}
+
 // ..\Backend\Api\Controllers\DTOs\Reserva\ReservaBaseDTO.cs
 export interface ReservaBaseDTO {
     id: number;
@@ -80,6 +85,7 @@ export interface ReservaCreacionDTO extends ReservaBaseDTO {
 export interface ReservaDetalleDTO extends ReservaBaseDTO {
     camas: CamaDTO[];
     habitacionesPrivadas: HabitacionDTO[];
+    pasajerosAnexos: PasajeroDTO[];
 }
 
 // ..\Backend\Api\Controllers\DTOs\Reserva\ReservaResumenDTO.cs
