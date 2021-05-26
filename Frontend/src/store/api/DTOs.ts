@@ -45,6 +45,11 @@ export interface PasajeroDTO {
     email: string;
 }
 
+// ..\Backend\Api\Controllers\DTOs\Reserva\CancelarDTO.cs
+export interface CancelarDTO {
+    reservaId: number;
+}
+
 // ..\Backend\Api\Controllers\DTOs\Reserva\CheckoutsDeHoyDTO.cs
 export interface CheckoutsDeHoyDTO {
     id: number;

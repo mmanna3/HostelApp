@@ -1,4 +1,5 @@
 import {
+  CancelarDTO,
   CheckoutsDeHoyDTO,
   HacerCheckInDTO,
   HacerCheckOutDTO,
@@ -43,6 +44,12 @@ const hacerCheckOutSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
+const cancelarSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'cancelar',
+  endpoint: '/reservas/cancelar',
+  dataInicial: null,
+};
+
 interface IListarParams {
   primeraNoche: string;
   dias: number;
@@ -61,11 +68,15 @@ const listarVigentes = {
 };
 
 const crear = {
-  ...generarSliceHttpPost<string, ReservaCreacionDTO>(crearSliceInfo),
+  ...generarSliceHttpPost<number, ReservaCreacionDTO>(crearSliceInfo),
 };
 
 const hacerCheckIn = {
-  ...generarSliceHttpPost<string, HacerCheckInDTO>(hacerCheckInSliceInfo),
+  ...generarSliceHttpPost<number, HacerCheckInDTO>(hacerCheckInSliceInfo),
+};
+
+const cancelar = {
+  ...generarSliceHttpPost<number, CancelarDTO>(cancelarSliceInfo),
 };
 
 const hacerCheckOut = {
@@ -79,6 +90,7 @@ export default {
   checkoutsDeHoy,
   crear,
   obtenerPorId,
+  cancelar,
   hacerCheckIn,
   hacerCheckOut,
 };
