@@ -29,7 +29,7 @@ const HacerCheckOut = ({ esVisible, datos, alOcultar, enCheckOutExitoso }: IProp
       <Body width="500px">
         <div className={Estilos.contenedor}>
           <Form defaultValues={undefined} onSubmit={alEnviar}>
-            ¿Querés confirmar el check-out?
+            <div className={Estilos.pregunta}>¿Querés confirmar el check-out?</div>
             <Input style={{ display: 'none' }} defaultValue={datos.id} name="reservaId" />
             <div className="columns">
               <div className="column">
