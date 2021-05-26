@@ -91,6 +91,17 @@ namespace Api.Controllers.Mapping
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}
 
+		public static Reserva Map(HacerCheckOutDTO dto)
+		{
+			var reserva = new Reserva
+			{
+				Id = dto.ReservaId,
+				Estado = ReservaEstadoEnum.HizoCheckout,
+			};
+
+			return reserva;
+		}
+
 		public static Reserva Map(ReservaCreacionDTO dto)
 		{
 			var reserva = new Reserva

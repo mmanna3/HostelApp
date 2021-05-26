@@ -51,6 +51,20 @@ namespace Api.Core.Services
 	        return reservaExistente.Id;
         }
 
+        public async Task<int> HacerCheckOut(Reserva reservaModificada)
+        {
+	        var reservaExistente = await _repository.ObtenerPorId(reservaModificada.Id);
+
+	        if (!reservaExistente.Estado.Equals(ReservaEstadoEnum.InHouse))
+		        throw new AppException("Para hacer Check-Out, la reserva debe estar en estado In-House");
+
+	        reservaExistente.Estado = reservaModificada.Estado;
+
+	        await _unitOfWork.CompleteAsync();
+
+	        return reservaExistente.Id;
+        }
+
         public async Task<int> Crear(Reserva reserva)
         {
             if (HayUnaCamaReservadaDosVeces(reserva))

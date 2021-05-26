@@ -126,6 +126,28 @@ namespace Api.IntegrationTests
         }
 
         [Test]
+        public async Task HaceCheckOut_Correctamente()
+        {
+	        var camaId = await CrearHabitacionConUnaCama();
+	        var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+	        await _reservasHttpClient.HacerCheckIn(new HacerCheckInDTO
+	        {
+		        ReservaId = reservaId,
+		        PasajeroTitular = _pasajero,
+	        });
+
+	        await _reservasHttpClient.HacerCheckOut(new HacerCheckOutDTO
+	        {
+		        ReservaId = reservaId,
+	        });
+
+	        var reserva = await _reservasHttpClient.ObtenerPorId(reservaId);
+
+	        reserva.Estado.Should().Be(ReservaEstadoEnum.HizoCheckout);
+	        //Chequear que todos los demás campos no se hayan modificado
+        }
+
+		[Test]
         public async Task HaceCheckIn_ConNuevoPasajeroTitular_SinPasajerosAnexos_Correctamente()
         {
 	        var camaId = await CrearHabitacionConUnaCama();

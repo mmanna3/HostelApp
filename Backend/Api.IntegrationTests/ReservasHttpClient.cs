@@ -89,5 +89,12 @@ namespace Api.IntegrationTests
 			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
 			return await respuesta.Content.ReadAsAsync<int>();
 		}
+
+		public async Task<int> HacerCheckOut(HacerCheckOutDTO dto)
+		{
+			var respuesta = await _httpClient.PostAsJsonAsync(ENDPOINT + "/hacerCheckOut", dto);
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<int>();
+		}
 	}
 }

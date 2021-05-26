@@ -86,6 +86,16 @@ namespace Api.Controllers
             return reserva.Id;
         }
 
+        [HttpPost, Route("hacerCheckOut")]
+        public async Task<int> HacerCheckOut([FromBody] HacerCheckOutDTO dto)
+        {
+	        var reserva = ReservaMapper.Map(dto);
+
+	        await _service.HacerCheckOut(reserva);
+
+	        return reserva.Id;
+        }
+
         private static void ValidarQueNoEsteDosVecesElMismoPasajero(HacerCheckInDTO dto)
         {
 	        if (dto.PasajerosAnexos != null)
