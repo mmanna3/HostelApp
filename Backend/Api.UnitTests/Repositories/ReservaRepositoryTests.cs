@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using Api.Persistence.Repositories;
 using FluentAssertions;
 using NUnit.Framework;
@@ -49,7 +50,7 @@ namespace Api.UnitTests.Repositories
         }
 
         [Test]
-        public async Task ObtenerPorId_Devuelve_ElHuesped()
+        public async Task ObtenerPorId_Devuelve_ElPasajero()
         {
 	        var reservaId = AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 09, 17), new DateTime(2020, 10, 17));
 	        var reserva = await _repository.ObtenerPorId(reservaId);
@@ -61,51 +62,60 @@ namespace Api.UnitTests.Repositories
         }
 
         [Test]
-        public async Task Listar_ListaSiReservaTerminaDiaInicial()
+        public async Task ListarVigentes_ListaSiReservaTerminaDiaInicial()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
-	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18));
 
 	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task Listar_ListaSiReservaEmpiezaUltimaNoche()
+        public async Task ListarVigentes_ListaSiReservaEmpiezaUltimaNoche()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 10, 30));
-	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 27));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 27));
 
 	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task Listar_ListaSiReservaEmpiezaMesAnteriorYTerminaEnElRango()
+        public async Task ListarVigentes_ListaSiReservaEmpiezaMesAnteriorYTerminaEnElRango()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
-	        var listado = await _repository.ListarEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 1));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 1));
 
 	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task Listar_ListaSiReservaEmpiezaAntesYTerminaDespuesDelRango()
+        public async Task ListarVigentes_ListaSiReservaEmpiezaAntesYTerminaDespuesDelRango()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
-	        var listado = await _repository.ListarEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 2));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 11, 1), new DateTime(2020, 11, 2));
 
 	        listado.Count().Should().Be(1);
         }
 
         [Test]
-        public async Task Listar_NoListaReservasFueraDeRango()
+        public async Task ListarVigentes_NoListaReservasFueraDeRango()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 27), new DateTime(2020, 11, 3));
-	        var listado = await _repository.ListarEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
 	        listado.Count().Should().Be(0);
 
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 9, 27), new DateTime(2020, 9, 30));
-	        listado = await _repository.ListarEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
+	        listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 1), new DateTime(2020, 10, 26));
             listado.Count().Should().Be(0);
+        }
+
+        [Test]
+        public async Task ListarVigentes_NoListaReservaCancelada()
+        {
+	        AgregarReservaCanceladaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
+	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18));
+
+	        listado.Count().Should().Be(0);
         }
 
         private int AgregarReservaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
@@ -116,7 +126,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche };
+            var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = ReservaEstadoEnum.CheckinPendiente };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };
@@ -126,6 +136,26 @@ namespace Api.UnitTests.Repositories
             _context.SaveChanges();
 
             return reserva.Id;
+        }
+
+        private int AgregarReservaCanceladaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
+        {
+	        var habitacion = new HabitacionCompartida { Nombre = "Azul" };
+	        _context.Habitaciones.Add(habitacion);
+
+	        var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
+	        _context.CamasIndividuales.Add(cama);
+
+	        var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = ReservaEstadoEnum.Cancelada};
+	        _context.Reservas.Add(reserva);
+
+	        var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };
+	        reserva.ReservaCamas = new List<ReservaCama> { reservaCama };
+	        cama.ReservaCamas = new List<ReservaCama> { reservaCama };
+
+	        _context.SaveChanges();
+
+	        return reserva.Id;
         }
     }
 }

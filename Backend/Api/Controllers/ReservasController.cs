@@ -43,7 +43,7 @@ namespace Api.Controllers
 	        var primeraNocheDateTime = Utilidades.ConvertirFecha(primeraNoche);
 	        var ultimaNoche = primeraNocheDateTime.AddDays(dias - 1);
 
-            var reservas = await _service.ListarEntre(primeraNocheDateTime, ultimaNoche);
+            var reservas = await _service.ListarVigentesEntre(primeraNocheDateTime, ultimaNoche);
             return ReservaMapper.Map(reservas, primeraNocheDateTime, ultimaNoche.AddDays(1));
         }
 
@@ -84,6 +84,16 @@ namespace Api.Controllers
             await _service.HacerCheckIn(reserva);
             
             return reserva.Id;
+        }
+
+        [HttpPost, Route("cancelar")]
+        public async Task<int> Cancelar([FromBody] CancelarDTO dto)
+        {
+	        var reserva = ReservaMapper.Map(dto);
+
+	        await _service.Cancelar(reserva);
+
+	        return reserva.Id;
         }
 
         [HttpPost, Route("hacerCheckOut")]

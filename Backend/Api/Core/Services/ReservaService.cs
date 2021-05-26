@@ -20,9 +20,9 @@ namespace Api.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        public async Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
-	        return await _repository.ListarEntre(primeraNoche, ultimaNoche);
+	        return await _repository.ListarVigentesEntre(primeraNoche, ultimaNoche);
         }
 
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()
@@ -57,6 +57,20 @@ namespace Api.Core.Services
 
 	        if (!reservaExistente.Estado.Equals(ReservaEstadoEnum.InHouse))
 		        throw new AppException("Para hacer Check-Out, la reserva debe estar en estado In-House");
+
+	        reservaExistente.Estado = reservaModificada.Estado;
+
+	        await _unitOfWork.CompleteAsync();
+
+	        return reservaExistente.Id;
+        }
+
+        public async Task<int> Cancelar(Reserva reservaModificada)
+        {
+	        var reservaExistente = await _repository.ObtenerPorId(reservaModificada.Id);
+
+	        if (!reservaExistente.Estado.Equals(ReservaEstadoEnum.CheckinPendiente))
+		        throw new AppException("Para cancelar, la reserva debe estar en estado 'Check-In Pendiente'");
 
 	        reservaExistente.Estado = reservaModificada.Estado;
 

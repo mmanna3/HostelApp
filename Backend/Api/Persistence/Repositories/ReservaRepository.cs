@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using Api.Core.Repositories;
 using Api.Persistence.Config;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Api.Persistence.Repositories
         public ReservaRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task<IEnumerable<Reserva>> ListarEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        public async Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
             return await _context.Reservas
 	            .Include(x => x.PasajeroTitular)
@@ -40,7 +41,8 @@ namespace Api.Persistence.Repositories
 						.ThenInclude(x => x.CamasMatrimoniales)
                 
 	            .Where(x => x.PrimeraNoche <= ultimaNoche && x.UltimaNoche >= primeraNoche)
-                .ToListAsync();
+	            .Where(x => x.Estado != ReservaEstadoEnum.Cancelada)
+				.ToListAsync();
         }
 
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()

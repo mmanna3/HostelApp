@@ -39,16 +39,13 @@ namespace Api.IntegrationTests
         }
 
         [Test]
-        public async Task Crea_UnaReserva_Y_ApareceEnListado()
+        public async Task Crea_UnaReserva_Y_ApareceEnListadoDeVigentes()
         {
 
             var camaId = await CrearHabitacionConUnaCama();
             await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
 
-            var consultaResponse = await _reservasHttpClient.ListarVigentesEntre(Utilidades.ConvertirFecha(_desde), 1);
-            consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var reservasDelMes = await consultaResponse.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
-
+            var reservasDelMes = await _reservasHttpClient.ListarVigentesEntre(Utilidades.ConvertirFecha(_desde), 1);
             reservasDelMes.Reservas.Count().Should().Be(1);
             var reserva = reservasDelMes.Reservas.ToList().First();
 
@@ -60,7 +57,17 @@ namespace Api.IntegrationTests
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
         }
 
-        [Test]
+		[Test]
+		public async Task Crea_UnaReserva_LuegoLaCancela_Y_NoAparece_EnListadoDeVigentes()
+		{
+			var camaId = await CrearHabitacionConUnaCama();
+			var reservaId = await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, _desde, _hasta);
+			await _reservasHttpClient.Cancelar(new CancelarDTO { ReservaId = reservaId } );
+			var reservasDelMes = await _reservasHttpClient.ListarVigentesEntre(Utilidades.ConvertirFecha(_desde), 1);
+			reservasDelMes.Reservas.Count().Should().Be(0);
+		}
+
+		[Test]
         public async Task Crea_UnaReserva_Y_LaObtienePorId()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
@@ -85,13 +92,13 @@ namespace Api.IntegrationTests
         }
 
         [Test]
-        public async Task DadoQueElHuespedNoexistia_CreaUnaReserva_Y_SeCreaElHuesped()
+        public async Task DadoQueElPasajeroNoexistia_CreaUnaReserva_Y_SeCreaElPasajero()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 
 	        await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 
-	        var pasajerosResponse = await _reservasHttpClient.ListarHuespedes();
+	        var pasajerosResponse = await _reservasHttpClient.ListarPasajeros();
 	        pasajerosResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var pasajeros = await pasajerosResponse.Content.ReadAsAsync<IEnumerable<PasajeroDTO>>();
 	        var pasajero = pasajeros.First();
@@ -246,13 +253,13 @@ namespace Api.IntegrationTests
 		}
 
         [Test]
-        public async Task DadoQueElHuespedYaExistia_CreaUnaReserva_Y_SeModificaElHuesped()
+        public async Task DadoQueElPasajeroYaExistia_CreaUnaReserva_Y_SeModificaElPasajero()
         {
 	        var camaId = await CrearHabitacionConUnaCama();
 	        var pasajeroId = await _reservasHttpClient.CrearPasajero(_pasajero);
 	        await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-1), DateTime.Today);
 
-	        var huespedesResponse = await _reservasHttpClient.ListarHuespedes();
+	        var huespedesResponse = await _reservasHttpClient.ListarPasajeros();
 	        huespedesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 	        var pasajeros = await huespedesResponse.Content.ReadAsAsync<IEnumerable<PasajeroDTO>>();
 	        var pasajero = pasajeros.Single(x => x.Id == pasajeroId);
@@ -285,6 +292,7 @@ namespace Api.IntegrationTests
             var body = new HabitacionDTO
             {
                 Nombre = "Roja",
+				EsPrivada = false,
                 CamasIndividuales = new List<CamaDTO>
                 {
                     new CamaDTO

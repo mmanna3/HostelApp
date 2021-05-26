@@ -41,9 +41,11 @@ namespace Api.IntegrationTests
 			return await respuesta.Content.ReadAsAsync<int>();
 		}
 
-		public async Task<HttpResponseMessage> ListarVigentesEntre(string primeraNoche, int dias)
+		public async Task<ReservasDelPeriodoDTO> ListarVigentesEntre(string primeraNoche, int dias)
 		{
-			return await _httpClient.GetAsync(ENDPOINT + $"/vigentes?primeraNoche={primeraNoche}&dias={dias}");
+			var respuesta = await _httpClient.GetAsync(ENDPOINT + $"/vigentes?primeraNoche={primeraNoche}&dias={dias}");
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<ReservasDelPeriodoDTO>();
 		}
 
 		public async Task<ReservaDetalleDTO> ObtenerPorId(int id)
@@ -53,7 +55,7 @@ namespace Api.IntegrationTests
 			return await respuesta.Content.ReadAsAsync<ReservaDetalleDTO>();
 		}
 
-		public async Task<HttpResponseMessage> ListarHuespedes()
+		public async Task<HttpResponseMessage> ListarPasajeros()
 		{
 			return await _httpClient.GetAsync(ENDPOINT_PASAJEROS);
 		}
@@ -86,6 +88,13 @@ namespace Api.IntegrationTests
 		public async Task<int> HacerCheckIn(HacerCheckInDTO dto)
 		{
 			var respuesta = await _httpClient.PostAsJsonAsync(ENDPOINT + "/hacerCheckIn", dto);
+			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
+			return await respuesta.Content.ReadAsAsync<int>();
+		}
+
+		public async Task<int> Cancelar(CancelarDTO dto)
+		{
+			var respuesta = await _httpClient.PostAsJsonAsync(ENDPOINT + "/cancelar", dto);
 			respuesta.StatusCode.Should().Be(HttpStatusCode.OK);
 			return await respuesta.Content.ReadAsAsync<int>();
 		}
