@@ -114,14 +114,16 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement 
                 camasDeHabitacionesCompartidas={datos.camas}
               />
               <div className={Estilos.botones}>
-                <div className="column">
-                  <Boton
-                    icono="times"
-                    texto="Cancelar reserva"
-                    className={Estilos.ocuparTodoElAncho}
-                    onClick={(): void => {}}
-                  />
-                </div>
+                {datos.estado === ReservaEstadoEnum.CheckinPendiente && (
+                  <div className="column">
+                    <Boton
+                      icono="times"
+                      texto="Cancelar reserva"
+                      className={Estilos.ocuparTodoElAncho}
+                      onClick={(): void => {}}
+                    />
+                  </div>
+                )}
                 {datos.estado === ReservaEstadoEnum.CheckinPendiente ? (
                   <div className="column">
                     <Boton
