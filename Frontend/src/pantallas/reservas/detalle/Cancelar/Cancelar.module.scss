@@ -1,0 +1,18 @@
+@import 'universal.scss';
+
+.contenedor {
+  border-radius: 20px;
+  padding: 1.5rem;
+  background-color: white;
+  color: $color-tipografia;
+}
+
+.ocuparTodoElAncho {
+  width: 100%;
+}
+
+.pregunta {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}

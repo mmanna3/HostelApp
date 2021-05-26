@@ -7,6 +7,7 @@ import api from 'store/api/api';
 import { ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
+import Cancelar from './Cancelar/Cancelar';
 import Estilos from './Detalle.module.scss';
 import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
 import HacerCheckOut from './HacerCheckOut/HacerCheckOut';
@@ -15,11 +16,13 @@ import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabita
 interface IProps {
   enCheckInExitoso: () => void;
   enCheckOutExitoso: () => void;
+  enCancelacionExitosa: () => void;
 }
 
-const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement => {
+const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: IProps): ReactElement => {
   const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
   const [modalHacerCheckOutEsVisible, cambiarVisibilidadDeModalHacerCheckOut] = useState(false);
+  const [modalCancelarEsVisible, cambiarVisibilidadDeModalCancelar] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
   const dispatch = useDispatch();
   const { datos } = useSelector(api.reservas.obtenerPorId.selector) as {
@@ -89,6 +92,20 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement 
           enCheckOutExitoso();
         }}
       />
+      <Cancelar
+        datos={datos}
+        esVisible={modalCancelarEsVisible}
+        alOcultar={(): void => {
+          cambiarVisibilidadDeModalCancelar(false);
+          cambiarVisibilidadDeModalPrincipal(true);
+        }}
+        enCancelacionExitosa={(): void => {
+          cambiarVisibilidadDeModalCancelar(false);
+          cambiarVisibilidadDeModalPrincipal(true);
+          reiniciarDatos();
+          enCancelacionExitosa();
+        }}
+      />
       <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
@@ -121,7 +138,10 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement 
                         icono="times"
                         texto="Cancelar reserva"
                         className={Estilos.ocuparTodoElAncho}
-                        onClick={(): void => {}}
+                        onClick={(): void => {
+                          cambiarVisibilidadDeModalPrincipal(false);
+                          cambiarVisibilidadDeModalCancelar(true);
+                        }}
                       />
                     </div>
                     <div className="column">
