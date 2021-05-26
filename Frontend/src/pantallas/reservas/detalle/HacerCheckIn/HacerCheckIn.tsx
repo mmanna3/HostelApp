@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
-// import Estilos from './HacerCheckIn.module.scss';
 
 interface IProps {
   esVisible: boolean;

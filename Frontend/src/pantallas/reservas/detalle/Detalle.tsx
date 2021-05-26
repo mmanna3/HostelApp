@@ -115,28 +115,30 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement 
               />
               <div className={Estilos.botones}>
                 {datos.estado === ReservaEstadoEnum.CheckinPendiente && (
-                  <div className="column">
-                    <Boton
-                      icono="times"
-                      texto="Cancelar reserva"
-                      className={Estilos.ocuparTodoElAncho}
-                      onClick={(): void => {}}
-                    />
-                  </div>
+                  <>
+                    <div className="column">
+                      <Boton
+                        icono="times"
+                        texto="Cancelar reserva"
+                        className={Estilos.ocuparTodoElAncho}
+                        onClick={(): void => {}}
+                      />
+                    </div>
+                    <div className="column">
+                      <Boton
+                        icono="walking"
+                        texto="Hacer Check-In"
+                        className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                        onClick={(): void => {
+                          cambiarVisibilidadDeModalPrincipal(false);
+                          cambiarVisibilidadDeModalHacerCheckIn(true);
+                        }}
+                      />
+                    </div>
+                  </>
                 )}
-                {datos.estado === ReservaEstadoEnum.CheckinPendiente ? (
-                  <div className="column">
-                    <Boton
-                      icono="walking"
-                      texto="Hacer Check-In"
-                      className={`is-primary ${Estilos.ocuparTodoElAncho}`}
-                      onClick={(): void => {
-                        cambiarVisibilidadDeModalPrincipal(false);
-                        cambiarVisibilidadDeModalHacerCheckIn(true);
-                      }}
-                    />
-                  </div>
-                ) : datos.estado === ReservaEstadoEnum.InHouse ? (
+
+                {datos.estado === ReservaEstadoEnum.InHouse && (
                   <div className="column">
                     <Boton
                       icono="walking"
@@ -148,8 +150,6 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso }: IProps): ReactElement 
                       }}
                     />
                   </div>
-                ) : (
-                  <></>
                 )}
               </div>
             </div>
