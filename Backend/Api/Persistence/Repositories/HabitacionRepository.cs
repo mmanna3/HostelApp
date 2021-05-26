@@ -60,7 +60,21 @@ namespace Api.Persistence.Repositories
                 .ToListAsync();
 
 	        var habitacionesPrivadas = await _context.HabitacionesPrivadas
-		        .Include(x => x.ReservaHabitacionesPrivadas)
+		        .Include(x => x.CamasIndividuales)
+			        .ThenInclude(x => x.ReservaCamas)
+			        .ThenInclude(x => x.Reserva)
+		        .Include(x => x.CamasCuchetas)
+			        .ThenInclude(x => x.Abajo)
+			        .ThenInclude(x => x.ReservaCamas)
+			        .ThenInclude(x => x.Reserva)
+		        .Include(x => x.CamasCuchetas)
+			        .ThenInclude(x => x.Arriba)
+			        .ThenInclude(x => x.ReservaCamas)
+			        .ThenInclude(x => x.Reserva)
+		        .Include(x => x.CamasMatrimoniales)
+			        .ThenInclude(x => x.ReservaCamas)
+			        .ThenInclude(x => x.Reserva)
+                .Include(x => x.ReservaHabitacionesPrivadas)
 			        .ThenInclude(x => x.Reserva)
 			        .ToListAsync();
 

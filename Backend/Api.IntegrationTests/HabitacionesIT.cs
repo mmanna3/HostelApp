@@ -91,7 +91,6 @@ namespace Api.IntegrationTests
             var consultarHabitacionesResponse = await ListarHabitacionesConLugaresLibresEnElRango();
             var habitaciones = await consultarHabitacionesResponse.Content.ReadAsAsync<IEnumerable<HabitacionConLugaresLibresDTO>>();
             var habitacion = habitaciones.ToList().First();
-
             habitacion.CantidadDeLugaresLibres.Should().Be(4);
         }
 
@@ -104,9 +103,13 @@ namespace Api.IntegrationTests
 			var consultarHabitacionesResponse = await ListarHabitacionesConLugaresLibresEnElRango();
 			var habitaciones = await consultarHabitacionesResponse.Content.ReadAsAsync<IEnumerable<HabitacionConLugaresLibresDTO>>();
 			var habitacion = habitaciones.ToList().First(x => x.EsPrivada);
-
 			habitacion.CantidadDeLugaresLibres.Should().Be(0);
-		}
+
+			var fueraDeRangoResponse = await ListarHabitacionesConLugaresLibresFueraDelRango();
+			var habitacionesFueraDeRango = await fueraDeRangoResponse.Content.ReadAsAsync<IEnumerable<HabitacionConLugaresLibresDTO>>();
+			var habitacionFueraDeRango = habitacionesFueraDeRango.ToList().First();
+			habitacionFueraDeRango.CantidadDeLugaresLibres.Should().Be(5);
+        }
 
 		private async Task CargarUnaReservaEnLaPrimeraCamaDeLaPrimeraHabitacion()
         {
@@ -207,6 +210,11 @@ namespace Api.IntegrationTests
         private async Task<HttpResponseMessage> ListarHabitacionesConLugaresLibresEnElRango()
         {
             return await _httpClient.GetAsync($"{ENDPOINT_CONLUGARESLIBRES}?desde={Utilidades.ConvertirFecha(DESDE)}&hasta={Utilidades.ConvertirFecha(HASTA)}");
+        }
+
+        private async Task<HttpResponseMessage> ListarHabitacionesConLugaresLibresFueraDelRango()
+        {
+	        return await _httpClient.GetAsync($"{ENDPOINT_CONLUGARESLIBRES}?desde={Utilidades.ConvertirFecha(HASTA.AddDays(1))}&hasta={Utilidades.ConvertirFecha(HASTA.AddDays(2))}");
         }
     }
 }

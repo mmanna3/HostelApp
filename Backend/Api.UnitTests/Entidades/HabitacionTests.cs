@@ -12,6 +12,7 @@ namespace Api.UnitTests.Entidades
         private static readonly DateTime INICIO = new DateTime(2020, 09, 03);
         private static readonly DateTime FIN = new DateTime(2020, 09, 07);
         private HabitacionCompartida _habitacionCompartida;
+        private HabitacionPrivada _habitacionPrivada;
 
         private Mock<CamaIndividual> _mockCamaIndividual;
         private Mock<CamaCuchetaDeAbajo> _mockCamaCuchetaDeAbajo;
@@ -27,10 +28,11 @@ namespace Api.UnitTests.Entidades
             _mockCamaMatrimonial = new Mock<CamaMatrimonial>();
 
             _habitacionCompartida = new HabitacionCompartida();
+            _habitacionPrivada = new HabitacionPrivada();
         }
 
         [Test]
-        public void SumaCorrectamente_Reservas_CamasMatrimoniales()
+        public void Calcula_LugaresLibres_EnCompartida_ConCamasMatrimoniales_Correctamente()
         {
             _mockCamaMatrimonial.Setup(x=> x.LugaresLibresEntre(INICIO, FIN)).Returns(2);
             _habitacionCompartida.CamasMatrimoniales = new List<CamaMatrimonial>{_mockCamaMatrimonial.Object};
@@ -39,7 +41,16 @@ namespace Api.UnitTests.Entidades
         }
 
         [Test]
-        public void SumaCorrectamente_Reservas_CamasIndividuales()
+        public void Calcula_LugaresLibres_EnPrivada_ConCamasMatrimoniales_Correctamente()
+        {
+	        _mockCamaMatrimonial.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(2);
+	        _habitacionPrivada.CamasMatrimoniales = new List<CamaMatrimonial> { _mockCamaMatrimonial.Object };
+
+	        _habitacionPrivada.LugaresLibresEntre(INICIO, FIN).Should().Be(2);
+        }
+
+        [Test]
+        public void Calcula_LugaresLibres_EnCompartida_ConCamasIndividuales_Correctamente()
         {
             _mockCamaIndividual.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(1);
             _habitacionCompartida.CamasIndividuales = new List<CamaIndividual> { _mockCamaIndividual.Object };
@@ -48,7 +59,16 @@ namespace Api.UnitTests.Entidades
         }
 
         [Test]
-        public void SumaCorrectamente_Reservas_CamasCuchetas()
+        public void Calcula_LugaresLibres_EnPrivada_ConCamasIndividuales_Correctamente()
+        {
+	        _mockCamaIndividual.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(1);
+	        _habitacionPrivada.CamasIndividuales = new List<CamaIndividual> { _mockCamaIndividual.Object };
+
+	        _habitacionPrivada.LugaresLibresEntre(INICIO, FIN).Should().Be(1);
+        }
+
+        [Test]
+        public void Calcula_LugaresLibres_EnCompartida_ConCamasCuchetas_Correctamente()
         {
             _mockCamaCuchetaDeAbajo.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(1);
             _mockCamaCuchetaDeArriba.Setup(x => x.LugaresLibresEntre(INICIO, FIN)).Returns(1);

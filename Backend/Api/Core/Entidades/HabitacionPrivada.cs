@@ -16,8 +16,12 @@ namespace Api.Core.Entidades
 
 		public override int LugaresLibresEntre(DateTime desde, DateTime hasta)
 		{
-			var totalDeLugares = (CamasIndividuales?.Sum(x => x.Plazas()) + CamasMatrimoniales?.Sum(x => x.Plazas()) + CamasCuchetas?.Sum(x => x.Abajo.Plazas() + x.Arriba.Plazas()) ?? 0);
-			return EstaLibreEntre(desde, hasta) ? totalDeLugares : 0;
+			var sumaIndividuales = CamasIndividuales?.Sum(x => x.LugaresLibresEntre(desde, hasta)) ?? 0;
+			var sumaMatri = CamasMatrimoniales?.Sum(x => x.LugaresLibresEntre(desde, hasta)) ?? 0;
+			var sumaCucheta = CamasCuchetas?.Sum(x => x.Abajo.LugaresLibresEntre(desde, hasta) + x.Arriba.LugaresLibresEntre(desde, hasta)) ?? 0;
+			var lugaresTotales = sumaIndividuales + sumaMatri + sumaCucheta;
+
+			return EstaLibreEntre(desde, hasta) ? lugaresTotales : 0;
 		}
 
 		public bool EstaLibreEntre(DateTime desde, DateTime hasta)
