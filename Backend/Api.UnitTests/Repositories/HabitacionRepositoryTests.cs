@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using Api.Persistence.Repositories;
 using FluentAssertions;
 using NUnit.Framework;
@@ -30,7 +31,7 @@ namespace Api.UnitTests.Repositories
 
 
             var indi2 = new CamaIndividual { Id = 5, Nombre = "Azul", HabitacionId = 1 };
-            var reserva = new Reserva {PrimeraNoche = DESDE.AddDays(1), UltimaNoche = HASTA.AddDays(2)};
+            var reserva = new Reserva { PrimeraNoche = DESDE.AddDays(1), UltimaNoche = HASTA.AddDays(2), Estado = ReservaEstadoEnum.CheckinPendiente };
             var reservasPorCama = new ReservaCama {Reserva = reserva, Cama = indi2};
             reserva.ReservaCamas = new List<ReservaCama> {reservasPorCama};
             await _context.Reservas.AddAsync(reserva);

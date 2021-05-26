@@ -60,7 +60,7 @@ namespace Api.Controllers.Mapping
 		};
 		}
 
-		public static HabitacionConLugaresLibresDTO MapHabitacionParaReservaDTO(Habitacion habitacion, DateTime desde, DateTime hasta)
+		public static HabitacionConLugaresLibresDTO MapHabitacionConLugaresLibres(Habitacion habitacion, DateTime desde, DateTime hasta)
 		{
 			var camas = new List<Cama>();
 			if (habitacion.Tipo().Equals(HabitacionTipoEnum.Compartida))
@@ -144,7 +144,7 @@ namespace Api.Controllers.Mapping
 
 		public static IEnumerable<HabitacionConLugaresLibresDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)
 		{
-			return habitaciones.Select(x => MapHabitacionParaReservaDTO(x, desde, hasta)).OrderByDescending(x => x.CantidadDeLugaresLibres);
+			return habitaciones.Select(x => MapHabitacionConLugaresLibres(x, desde, hasta)).OrderByDescending(x => x.CantidadDeLugaresLibres);
 		}
 
 		public static IEnumerable<HabitacionDTO> Map(IEnumerable<Habitacion> habitaciones)

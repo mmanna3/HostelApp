@@ -46,7 +46,7 @@ namespace Api.Persistence.Repositories
 		        .Include(x => x.CamasIndividuales)
                     .ThenInclude(x => x.ReservaCamas)
                     .ThenInclude(x => x.Reserva)
-                .Include(x => x.CamasCuchetas)
+		        .Include(x => x.CamasCuchetas)
                     .ThenInclude(x => x.Abajo)
                     .ThenInclude(x => x.ReservaCamas)
                     .ThenInclude(x => x.Reserva)
@@ -56,8 +56,8 @@ namespace Api.Persistence.Repositories
                     .ThenInclude(x => x.Reserva)
                 .Include(x => x.CamasMatrimoniales)
                     .ThenInclude(x => x.ReservaCamas)
-                    .ThenInclude(x => x.Reserva)
-                .ToListAsync();
+		        .ThenInclude(x => x.Reserva)
+		        .ToListAsync();
 
 	        var habitacionesPrivadas = await _context.HabitacionesPrivadas
 		        .Include(x => x.CamasIndividuales)
@@ -76,7 +76,7 @@ namespace Api.Persistence.Repositories
 			        .ThenInclude(x => x.Reserva)
                 .Include(x => x.ReservaHabitacionesPrivadas)
 			        .ThenInclude(x => x.Reserva)
-			        .ToListAsync();
+		        .ToListAsync();
 
 	        return habitacionesCompartidas.Concat(habitacionesPrivadas.Cast<Habitacion>()).ToList();
         }

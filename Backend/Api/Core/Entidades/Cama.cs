@@ -33,12 +33,18 @@ namespace Api.Core.Entidades
 
         private bool AlgunaReservaIncluyeElDia(DateTime dia)
         {
-            return ReservaCamas?.Select(x => x.Reserva).Any(x => x.EstaReservado(dia)) ?? false;
+            return ReservaCamas?
+	            .Select(x => x.Reserva)
+	            .Where(x => !x.Estado.Equals(ReservaEstadoEnum.Cancelada))
+                .Any(x => x.EstaReservado(dia)) ?? false;
         }
 
         private bool ElRangoIncluyeAlgunaReserva(DateTime desde, DateTime hasta)
         {
-            return ReservaCamas?.Select(x => x.Reserva).Any(x => x.PrimeraNoche >= desde && x.UltimaNoche <= hasta) ?? false;
+            return ReservaCamas?
+	            .Select(x => x.Reserva)
+	            .Where(x => !x.Estado.Equals(ReservaEstadoEnum.Cancelada))
+                .Any(x => x.PrimeraNoche >= desde && x.UltimaNoche <= hasta) ?? false;
         }
 
         public abstract CamaTipoEnum Tipo();
