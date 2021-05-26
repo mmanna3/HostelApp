@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import { PasajeroDTO, ReservaDetalleDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import { useCounterKey } from 'utils/hooks/useCounterKey';
 
 interface IProps {
   esVisible: boolean;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps): ReactElement => {
+  const [key, reiniciarKey] = useCounterKey();
   const [pasajeros, actualizarPasajeroes] = useState<PasajeroDTO[]>([datos.pasajeroTitular]);
   const [IndiceEnBusquedaActiva, actualizarIndiceEnBusquedaActiva] = useState(0);
   const dispatch = useDispatch();
@@ -49,6 +51,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
   }, [pasajeroEncontrado, IndiceEnBusquedaActiva, dispatch]);
 
   const buscarDniOPasaporte = (dniOPasaporte: string): void => {
+    reiniciarKey();
     dispatch(api.pasajeros.obtenerPorDniOPasaporte.invocar({ dniOPasaporte })); //Reescribir esto agregándole un onSuccess
   };
 
@@ -76,6 +79,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
 
         <LineaDivisoria texto="TITULAR DE LA RESERVA" />
         <DatosDelPasajero
+          key={`${key}-0`}
           pasajero={pasajeros[0]}
           name="PasajeroTitular"
           buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, 0)}
@@ -86,6 +90,7 @@ const HacerCheckIn = ({ esVisible, datos, alOcultar, enCheckInExitoso }: IProps)
             <div key={i + 1}>
               <LineaDivisoria texto={`PASAJERO ${i + 2}`} />
               <DatosDelPasajero
+                key={`${key}-${i + 1}`}
                 pasajero={pasajero}
                 name={`PasajerosAnexos[${i}]`}
                 buscarDniOPasaporte={(dniOPasaporte: string): void => clickEnBuscar(dniOPasaporte, i + 1)}
