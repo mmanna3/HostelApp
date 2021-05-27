@@ -5,6 +5,7 @@ import {
   HacerCheckOutDTO,
   ReservaCreacionDTO,
   ReservaDetalleDTO,
+  ReservaResumenDTO,
   ReservasDelPeriodoDTO,
 } from 'store/api/DTOs';
 import {
@@ -13,6 +14,12 @@ import {
   IApiSliceInfo,
   IObtenerPorIdParams,
 } from './utils/generadorDeSlicesParaRequest';
+
+const listarSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'reservas',
+  endpoint: '/reservas',
+  dataInicial: [],
+};
 
 const listarVigentesSliceInfo: IApiSliceInfo = {
   nombreDelSlice: 'reservas',
@@ -63,6 +70,10 @@ const obtenerPorIdSliceInfo: IApiSliceInfo = {
 
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
+const listar = {
+  ...generarSliceHttpGet<ReservaResumenDTO[]>(listarSliceInfo),
+};
+
 const listarVigentes = {
   ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarParams>(listarVigentesSliceInfo),
 };
@@ -86,6 +97,7 @@ const hacerCheckOut = {
 const obtenerPorId = { ...generarSliceHttpGet<ReservaDetalleDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
 export default {
+  listar,
   listarVigentes,
   checkoutsDeHoy,
   crear,

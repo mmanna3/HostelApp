@@ -12,7 +12,7 @@ namespace Api.Controllers.Mapping
 {
 	public static class ReservaMapper
 	{
-		public static ReservaDetalleDTO Map(Reserva entidad)
+		public static ReservaDetalleDTO MapDetalle(Reserva entidad)
 		{
 			var dto = new ReservaDetalleDTO
 			{
@@ -40,6 +40,23 @@ namespace Api.Controllers.Mapping
 				dto.PasajerosAnexos = PasajeroMapper.Map(entidad.ReservaPasajerosAnexos.Select(x => x.Pasajero)).ToList();
 
 			return dto;
+		}
+
+		public static IEnumerable<ReservaResumenDTO> Map(IEnumerable<Reserva> reservas)
+		{
+			return reservas.Select(Map);
+		}
+
+		public static ReservaResumenDTO Map(Reserva entidad)
+		{
+			return new ReservaResumenDTO
+			{
+				Id = entidad.Id,
+				// NombreAbreviadoDelPasajero = entidad.ObtenerNombreAbreviadoDelHuesped(),
+				Estado = entidad.Estado,
+				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
+				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche),
+			};
 		}
 
 		public static ReservasDelPeriodoDTO Map(IEnumerable<Reserva> entidad, DateTime primeraNoche, DateTime ultimaNoche)
@@ -86,7 +103,7 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		public static IEnumerable<CheckoutsDeHoyDTO> Map(IEnumerable<Reserva> reservas)
+		public static IEnumerable<CheckoutsDeHoyDTO> MapCheckouts(IEnumerable<Reserva> reservas)
 		{
 			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
 		}

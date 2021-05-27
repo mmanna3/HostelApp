@@ -25,6 +25,11 @@ namespace Api.Core.Services
 	        return await _repository.ListarVigentesEntre(primeraNoche, ultimaNoche);
         }
 
+        public async Task<IEnumerable<Reserva>> Listar()
+        {
+	        return await _repository.Listar();
+        }
+
         public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()
         {
             return await _repository.ListarCheckoutsDeHoy();

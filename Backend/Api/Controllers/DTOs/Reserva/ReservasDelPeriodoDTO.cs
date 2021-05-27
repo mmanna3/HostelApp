@@ -2,7 +2,7 @@
 
 namespace Api.Controllers.DTOs.Reserva
 {
-	public partial class ReservasDelPeriodoDTO
+	public class ReservasDelPeriodoDTO
     {
         public List<ReservaResumenDTO> Reservas { get; set; }
         public string Desde { get; set; }

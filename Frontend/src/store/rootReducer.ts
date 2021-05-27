@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
   tablaDeReservas: tablaDeReservas,
 
   obtenerReservaPorId: api.reservas.obtenerPorId.reducer,
-  reservas: api.reservas.listarVigentes.reducer,
+  reservas: api.reservas.listar.reducer,
+  reservasVigentes: api.reservas.listarVigentes.reducer,
   crearReserva: api.reservas.crear.reducer,
   checkoutsDeHoy: api.reservas.checkoutsDeHoy.reducer,
   cancelar: api.reservas.cancelar.reducer,

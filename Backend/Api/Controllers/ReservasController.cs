@@ -27,14 +27,21 @@ namespace Api.Controllers
         public async Task<IEnumerable<CheckoutsDeHoyDTO>> ListarCheckoutsDeHoy()
         {
             var reservas = await _service.ListarCheckoutsDeHoy();
-            return ReservaMapper.Map(reservas);
+            return ReservaMapper.MapCheckouts(reservas);
         }
 
         [HttpGet, Route("obtener")]
         public async Task<ReservaDetalleDTO> ObtenerPorId(int id)
         {
 	        var reserva = await _service.ObtenerPorId(id);
-	        return ReservaMapper.Map(reserva);
+	        return ReservaMapper.MapDetalle(reserva);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<ReservaResumenDTO>> Listar()
+        {
+	        var reservas = await _service.Listar();
+	        return ReservaMapper.Map(reservas);
         }
 
         [HttpGet, Route("vigentes")]

@@ -8,6 +8,7 @@ namespace Api.Core.Services.Interfaces
     public interface IReservaService
     {
 	    Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche);
+	    Task<IEnumerable<Reserva>> Listar();
         Task<int> Crear(Reserva reserva);
         Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
         Task<Reserva> ObtenerPorId(int id);
