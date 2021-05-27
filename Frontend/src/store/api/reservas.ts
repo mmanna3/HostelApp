@@ -22,7 +22,7 @@ const listarSliceInfo: IApiSliceInfo = {
 };
 
 const listarVigentesSliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'reservas',
+  nombreDelSlice: 'reservasVigentes',
   endpoint: '/reservas/vigentes',
   dataInicial: [],
 };
