@@ -9,7 +9,7 @@ environment:
   deploy_password:
     secure: SFAvHfsz398LTl83QbS5gw==
   deploy_server:
-    secure: QZb9E2Kb2G38QTrply5a+ykcQA4qLkqT5nC/n4KVbprtHPcDEHxh7c+2JHfOYqcc39QTeF9XdTUvVJo7vqCCPYiCgh0Jlur5A0DTZUlCxq1Snvw+sSxdF1BnlpoS0Z9N
+    secure: QZb9E2Kb2G38QTrply5a+ykcQA4qLkqT5nC/n4KVbppLE1CAWBy6GMUK3Wt02blo3h85q4ezalmx1UXUoM5wIFBCSfQIc9cfQWazeEX0Q9b3hW/Wdkgr2kzEbKuks0xU
   deploy_website:
     secure: MO8/qEUyKnWjVjQXFagIC4qt3RKQNM+wn36MKxnUrHc=
   db_server:
