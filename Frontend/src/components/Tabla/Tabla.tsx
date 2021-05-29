@@ -18,7 +18,15 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
   const data = React.useMemo((): {}[] => datos, [datos]);
   const columns = React.useMemo((): Column<{}>[] => columnas, [columnas]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data,
+    initialState: {
+      hiddenColumns: columns
+        .filter((col: any): any => col.mostrar === false)
+        .map((col): any => col.id || col.accessor) as any,
+    },
+  });
 
   const bodyConDatos = (
     <tbody {...getTableBodyProps()}>

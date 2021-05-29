@@ -15,6 +15,11 @@ const HabitacionesPage = (): ReactElement => {
 
   const columnas = [
     {
+      Header: '',
+      accessor: 'id',
+      mostrar: false,
+    },
+    {
       Header: 'Nombre',
       accessor: 'nombre',
     },
@@ -32,7 +37,7 @@ const HabitacionesPage = (): ReactElement => {
     },
     {
       Header: '',
-      accessor: 'id',
+      id: 'aciones',
       Cell: ({ cell }: any): ReactElement => (
         <Icon
           faCode="info-circle"
