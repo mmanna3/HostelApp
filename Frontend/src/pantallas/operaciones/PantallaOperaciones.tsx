@@ -72,7 +72,7 @@ const PantallaOperaciones = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    if (estadoSeleccionado != undefined) dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
+    if (estadoSeleccionado !== undefined) dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
     else dispatch(api.reservas.listar.invocar());
   }, [dispatch, estadoSeleccionado]);
 
