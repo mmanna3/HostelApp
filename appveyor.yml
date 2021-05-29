@@ -11,7 +11,7 @@ environment:
   deploy_server:
     secure: qbUfDe0ngl5+/7mkQxs8ByxZ6QB93c59/494w4lEpOai3cgh5bDAiRBRYeOt7hQQ7JkG1kD6wV2IigmoKDvZHD4lsSg4IrSwWOWLSPJCyCI=
   deploy_website:
-    secure: L4aPGohGkV1xWMMxniWVZryvAIvbB4zCKIDM5WvUh9k=
+    secure: MO8/qEUyKnWjVjQXFagIC4qt3RKQNM+wn36MKxnUrHc=
   db_server:
     secure: K3tw1JJQqsF0zSckjLdOJg==
   db_name:
