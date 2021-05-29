@@ -39,7 +39,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum estado)
+        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum? estado)
         {
 	        var reservas = await _service.Listar(estado);
 	        return ReservaMapper.Map(reservas);

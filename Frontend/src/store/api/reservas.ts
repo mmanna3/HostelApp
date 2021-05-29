@@ -64,7 +64,7 @@ interface IListarVigentesParams {
 }
 
 interface IListarParams {
-  estado?: ReservaEstadoEnum;
+  estado: ReservaEstadoEnum | undefined;
 }
 
 const obtenerPorIdSliceInfo: IApiSliceInfo = {

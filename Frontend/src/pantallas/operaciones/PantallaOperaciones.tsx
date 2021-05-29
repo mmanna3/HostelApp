@@ -13,7 +13,7 @@ import Estilos from './PantallaOperaciones.module.scss';
 const PantallaOperaciones = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
-  const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum>(ReservaEstadoEnum.CheckinPendiente);
+  const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum | undefined>(undefined);
 
   interface IEstilo {
     estilo: string;
@@ -72,10 +72,12 @@ const PantallaOperaciones = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
+    if (estadoSeleccionado != undefined) dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
+    else dispatch(api.reservas.listar.invocar());
   }, [dispatch, estadoSeleccionado]);
 
   const estadosDeReserva = [
+    { label: 'Todas', value: 'todas' },
     { label: 'Cancelada', value: ReservaEstadoEnum.Cancelada },
     { label: 'Check-In pendiente', value: ReservaEstadoEnum.CheckinPendiente },
     { label: 'In-House', value: ReservaEstadoEnum.InHouse },
@@ -92,10 +94,11 @@ const PantallaOperaciones = (): ReactElement => {
               dataCy="estado"
               name="estado"
               opciones={estadosDeReserva}
-              opcionInicial={estadosDeReserva[1]}
+              opcionInicial={estadosDeReserva[0]}
               placeholder="Estado"
               onChange={(reservaEstado: string): void => {
-                modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
+                if (reservaEstado === 'todas') modificarEstadoSeleccionado(undefined);
+                else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
               }}
             />
           </div>

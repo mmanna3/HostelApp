@@ -25,7 +25,7 @@ namespace Api.Core.Services
 	        return await _repository.ListarVigentesEntre(primeraNoche, ultimaNoche);
         }
 
-        public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum estado)
+        public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado)
         {
 	        return await _repository.Listar(estado);
         }
