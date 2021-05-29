@@ -34,7 +34,7 @@ const PantallaOperaciones = (): ReactElement => {
 
   return (
     <div className="container">
-      <h1 className="title is-1">Operaciones</h1>
+      <h1 className="title is-2">Operaciones</h1>
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>
   );

@@ -63,7 +63,7 @@ const HabitacionesPage = (): ReactElement => {
       ></Crear>
       <Detalle id={idSeleccionadoParaDetalle} onHide={(): void => cambiarIdSeleccionadoParaDetalle(null)}></Detalle>
 
-      <h1 className="title is-1">Habitaciones</h1>
+      <h1 className="title is-2">Habitaciones</h1>
       <div className="botonera">
         <div className="is-pulled-right">
           <Boton onClick={(): void => mostrarModalDeCreacion(true)} texto="Cargar nueva" />
