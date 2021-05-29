@@ -35,7 +35,7 @@ beforeEach((): void => {
   const ayer = fechaUtils.sumarDiasALaFecha(fechaUtils.hoy(), -1);
   const ayerString = fechaUtils.convertirAString(ayer);
 
-  const url = `/api/reservas?primeraNoche=${ayerString}&dias=14`;
+  const url = `/api/reservas/vigentes?primeraNoche=${ayerString}&dias=14`;
   const reservasDelPeriodo: ReservasDelPeriodoDTO = {
     reservas: [
       {
