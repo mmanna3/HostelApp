@@ -15,6 +15,7 @@
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "@types/react-table": "^7.7.1",
     "@wojtekmaj/react-daterange-picker": "^3.0.0",
     "axios": "^0.19.2",
     "bulma-checkradio": "^1.1.1",

@@ -1,13 +1,15 @@
-import Table from 'components/Table';
+import Table from 'components/Tabla';
 import React, { ReactElement, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Column } from 'react-table';
 import api from 'store/api/api';
+import { ReservaResumenDTO } from 'store/api/DTOs';
 
 const PantallaOperaciones = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
 
-  const columnas = [
+  const columnas: Column<ReservaResumenDTO>[] = [
     {
       Header: 'Id',
       accessor: 'id',
