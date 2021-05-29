@@ -71,7 +71,7 @@ namespace Api.UnitTests.Controllers.Mapping
         {
 	        DadaUnaListaDeReservas();
 	        var reserva = _unaListaDeReservas.Skip(1).First();
-	        var reservaDTO = ReservaMapper.Map(reserva);
+	        var reservaDTO = ReservaMapper.MapDetalle(reserva);
 
 	        reservaDTO.Estado.Should().Be(ReservaEstadoEnum.InHouse);
 	        reservaDTO.HoraEstimadaDeLlegada.Should().Be("11:00");
@@ -94,7 +94,7 @@ namespace Api.UnitTests.Controllers.Mapping
         public void ReservaConHabPrivada_a_ReservaDTO()
         {
 	        var reserva = DadaUnaReservaQueTieneHabitacionPrivadaPeroNoCama();
-	        var reservaDTO = ReservaMapper.Map(reserva);
+	        var reservaDTO = ReservaMapper.MapDetalle(reserva);
 
 	        reservaDTO.DiaDeCheckin.Should().Be(Utilidades.ConvertirFecha(_desde));
 	        reservaDTO.DiaDeCheckout.Should().Be(Utilidades.ConvertirFecha(_hasta.AddDays(1)));
