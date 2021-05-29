@@ -96,6 +96,7 @@ export interface ReservaDetalleDTO extends ReservaBaseDTO {
 // ..\Backend\Api\Controllers\DTOs\Reserva\ReservaResumenDTO.cs
 export interface ReservaResumenDTO {
     id: number;
+    pasejeroTitular: string;
     nombreAbreviadoDelPasajero: string;
     estado: ReservaEstadoEnum;
     diaDeCheckin: string;

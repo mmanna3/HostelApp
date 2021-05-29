@@ -41,6 +41,10 @@ const PantallaOperaciones = (): ReactElement => {
       ),
     },
     {
+      Header: 'Pasajero',
+      accessor: 'pasejeroTitular',
+    },
+    {
       Header: 'Check-In',
       accessor: 'diaDeCheckin',
     },

@@ -53,6 +53,7 @@ namespace Api.IntegrationTests
             reserva.DiaDeCheckout.Should().Be("2020-09-17");
             reserva.CamasIds.Should().HaveCount(1);
             reserva.CamasIds.First().Should().Be(camaId);
+            reserva.PasejeroTitular.Should().Be("Elliot Alderson");
             reserva.NombreAbreviadoDelPasajero.Should().Be("Elliot");
             reserva.Estado.Should().Be(ReservaEstadoEnum.CheckinPendiente);
         }

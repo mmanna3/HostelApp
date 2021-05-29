@@ -52,7 +52,7 @@ namespace Api.Controllers.Mapping
 			return new ReservaResumenDTO
 			{
 				Id = entidad.Id,
-				// NombreAbreviadoDelPasajero = entidad.ObtenerNombreAbreviadoDelHuesped(),
+				PasejeroTitular = entidad.PasajeroTitular.NombreCompleto,
 				Estado = entidad.Estado,
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
 				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche),
@@ -95,6 +95,7 @@ namespace Api.Controllers.Mapping
 			return new ReservaResumenDTO
 			{
 				Id = entidad.Id,
+				PasejeroTitular = entidad.PasajeroTitular.NombreCompleto,
 				NombreAbreviadoDelPasajero = entidad.ObtenerNombreAbreviadoDelHuesped(),
 				Estado = entidad.Estado,
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche < primeraNoche ? primeraNoche : entidad.PrimeraNoche), 
