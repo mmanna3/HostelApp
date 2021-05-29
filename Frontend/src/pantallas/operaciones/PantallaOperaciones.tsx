@@ -11,7 +11,7 @@ const PantallaOperaciones = (): ReactElement => {
 
   const columnas: Column<ReservaResumenDTO>[] = [
     {
-      Header: 'Id',
+      Header: 'Nº reserva',
       accessor: 'id',
     },
     {
@@ -23,7 +23,7 @@ const PantallaOperaciones = (): ReactElement => {
       accessor: 'diaDeCheckin',
     },
     {
-      Header: 'Camas individuales',
+      Header: 'Check-out',
       accessor: 'diaDeCheckout',
     },
   ];
