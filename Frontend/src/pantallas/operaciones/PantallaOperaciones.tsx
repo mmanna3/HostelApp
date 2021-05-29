@@ -1,3 +1,5 @@
+import { Autocomplete } from 'components/Autocomplete';
+import Form from 'components/Form';
 import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
 import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
@@ -72,9 +74,32 @@ const PantallaOperaciones = (): ReactElement => {
     dispatch(api.reservas.listar.invocar());
   }, [dispatch]);
 
+  const estadosDeReserva = [
+    { label: 'Cancelada', value: ReservaEstadoEnum.Cancelada },
+    { label: 'Check-In pendiente', value: ReservaEstadoEnum.CheckinPendiente },
+    { label: 'In-House', value: ReservaEstadoEnum.InHouse },
+    { label: 'Hizo Check-Out', value: ReservaEstadoEnum.HizoCheckout },
+  ];
+
   return (
     <div className="container">
       <h1 className="title is-2">Operaciones</h1>
+      <Form defaultValues={undefined} onSubmit={(): void => {}}>
+        <div className="columns">
+          <div className="column is-one-quarter">
+            <Autocomplete
+              dataCy="estado"
+              name="estado"
+              opciones={estadosDeReserva}
+              opcionInicial={estadosDeReserva[1]}
+              placeholder="Estado"
+              onChange={(reservaEstado: string): void => {
+                console.log(reservaEstado);
+              }}
+            />
+          </div>
+        </div>
+      </Form>
       <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>

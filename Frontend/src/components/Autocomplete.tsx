@@ -19,7 +19,7 @@ interface IProps {
 }
 
 export interface ILabelValue {
-  value: string;
+  value: string | number;
   label: string;
   [key: string]: any;
 }
