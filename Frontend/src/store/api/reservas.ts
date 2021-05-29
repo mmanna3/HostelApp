@@ -5,6 +5,7 @@ import {
   HacerCheckOutDTO,
   ReservaCreacionDTO,
   ReservaDetalleDTO,
+  ReservaEstadoEnum,
   ReservaResumenDTO,
   ReservasDelPeriodoDTO,
 } from 'store/api/DTOs';
@@ -57,9 +58,13 @@ const cancelarSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
-interface IListarParams {
+interface IListarVigentesParams {
   primeraNoche: string;
   dias: number;
+}
+
+interface IListarParams {
+  estado?: ReservaEstadoEnum;
 }
 
 const obtenerPorIdSliceInfo: IApiSliceInfo = {
@@ -71,11 +76,11 @@ const obtenerPorIdSliceInfo: IApiSliceInfo = {
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
 const listar = {
-  ...generarSliceHttpGet<ReservaResumenDTO[]>(listarSliceInfo),
+  ...generarSliceHttpGet<ReservaResumenDTO[], IListarParams>(listarSliceInfo),
 };
 
 const listarVigentes = {
-  ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarParams>(listarVigentesSliceInfo),
+  ...generarSliceHttpGet<ReservasDelPeriodoDTO, IListarVigentesParams>(listarVigentesSliceInfo),
 };
 
 const crear = {

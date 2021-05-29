@@ -3,7 +3,7 @@ import Form from 'components/Form';
 import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
 import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
@@ -13,6 +13,7 @@ import Estilos from './PantallaOperaciones.module.scss';
 const PantallaOperaciones = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
+  const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum>(ReservaEstadoEnum.CheckinPendiente);
 
   interface IEstilo {
     estilo: string;
@@ -71,8 +72,8 @@ const PantallaOperaciones = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    dispatch(api.reservas.listar.invocar());
-  }, [dispatch]);
+    dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
+  }, [dispatch, estadoSeleccionado]);
 
   const estadosDeReserva = [
     { label: 'Cancelada', value: ReservaEstadoEnum.Cancelada },
@@ -94,7 +95,7 @@ const PantallaOperaciones = (): ReactElement => {
               opcionInicial={estadosDeReserva[1]}
               placeholder="Estado"
               onChange={(reservaEstado: string): void => {
-                console.log(reservaEstado);
+                modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
               }}
             />
           </div>
