@@ -5,11 +5,24 @@ import React, { ReactElement, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
-import { ReservaResumenDTO } from 'store/api/DTOs';
+import { ReservaEstadoEnum, ReservaResumenDTO } from 'store/api/DTOs';
+import Estilos from './PantallaOperaciones.module.scss';
 
 const PantallaOperaciones = (): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
+
+  interface IEstilo {
+    estilo: string;
+    descripcion: string;
+  }
+
+  const estilosEstado = new Map<ReservaEstadoEnum, IEstilo>([
+    [ReservaEstadoEnum.Cancelada, { estilo: Estilos.estadoCancelada, descripcion: 'Cancelada' }],
+    [ReservaEstadoEnum.CheckinPendiente, { estilo: Estilos.estadoCheckinPendiente, descripcion: 'Check-In Pendiente' }],
+    [ReservaEstadoEnum.InHouse, { estilo: Estilos.estadoInHouse, descripcion: 'In-House' }],
+    [ReservaEstadoEnum.HizoCheckout, { estilo: Estilos.estadoHizoCheckout, descripcion: 'Hizo Checkout' }],
+  ]);
 
   const columnas: Column<ReservaResumenDTO>[] = [
     {
@@ -19,6 +32,13 @@ const PantallaOperaciones = (): ReactElement => {
     {
       Header: 'Estado',
       accessor: 'estado',
+      Cell: ({ cell }: any): ReactElement => (
+        <div className={Estilos.estadoContenedor}>
+          <div className={estilosEstado.get(cell.row.values.estado)?.estilo}>
+            {estilosEstado.get(cell.row.values.estado)?.descripcion}
+          </div>
+        </div>
+      ),
     },
     {
       Header: 'Check-In',
