@@ -35,8 +35,8 @@ const HabitacionesPage = (): ReactElement => {
       accessor: 'id',
       Cell: ({ cell }: any): ReactElement => (
         <Boton
-          onClick={(e: any): void => {
-            cambiarIdSeleccionadoParaDetalle(e.target.value);
+          onClick={(): void => {
+            cambiarIdSeleccionadoParaDetalle(cell.row.values.id);
           }}
           value={cell.row.values.id}
           texto="Ver detalle"
