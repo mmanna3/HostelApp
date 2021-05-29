@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { Column, useTable } from 'react-table';
 import { EstadosApiRequestEnum as ESTADO, EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import Estilos from './Tabla.module.scss';
 
 interface IProps<Data extends object = {}> {
   fetchData: Function;
@@ -45,14 +46,14 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
   if (estado === ESTADO.huboError) return <p>Hubo un error.</p>;
 
   return (
-    <table {...getTableProps()} className="table is-hoverable is-bordered is-fullwidth">
+    <table {...getTableProps()} className="table is-hoverable is-fullwidth">
       <thead>
         {headerGroups.map(
           (headerGroup, i): ReactElement => (
             <tr {...headerGroup.getHeaderGroupProps()} key={i}>
               {headerGroup.headers.map(
                 (column, i): ReactElement => (
-                  <th {...column.getHeaderProps()} key={i} className="is-primary">
+                  <th {...column.getHeaderProps()} key={i} className={`is-primary ${Estilos.cabecera}`}>
                     {column.render('Header')}
                   </th>
                 )

@@ -1,4 +1,4 @@
-import Table from 'components/Tabla';
+import Table from 'components/Tabla/Tabla';
 import React, { ReactElement, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';

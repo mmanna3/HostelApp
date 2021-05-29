@@ -1,5 +1,5 @@
 import { Boton } from 'components/botones/botones';
-import Table from 'components/Tabla';
+import Table from 'components/Tabla/Tabla';
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
