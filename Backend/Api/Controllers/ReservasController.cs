@@ -7,6 +7,7 @@ using Api.Controllers.DTOs.Reserva;
 using Api.Controllers.Mapping;
 using Api.Core;
 using Api.Core.Entidades;
+using Api.Core.Enums;
 using Api.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,9 +39,9 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ReservaResumenDTO>> Listar()
+        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum estado)
         {
-	        var reservas = await _service.Listar();
+	        var reservas = await _service.Listar(estado);
 	        return ReservaMapper.Map(reservas);
         }
 
