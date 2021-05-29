@@ -1,4 +1,6 @@
+import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
+import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import React, { ReactElement, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
@@ -26,6 +28,20 @@ const PantallaOperaciones = (): ReactElement => {
       Header: 'Check-out',
       accessor: 'diaDeCheckout',
     },
+    {
+      Header: '',
+      id: 'aciones',
+      Cell: ({ cell }: any): ReactElement => (
+        <Icon
+          faCode="info-circle"
+          size="lg"
+          cssClass="primary-clickeable"
+          onClick={(): void => {
+            dispatch(api.reservas.obtenerPorId.invocar({ id: cell.row.values.id }));
+          }}
+        />
+      ),
+    },
   ];
 
   const fetchData = useCallback((): void => {
@@ -35,6 +51,7 @@ const PantallaOperaciones = (): ReactElement => {
   return (
     <div className="container">
       <h1 className="title is-2">Operaciones</h1>
+      <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>
   );
