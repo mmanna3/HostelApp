@@ -1,4 +1,5 @@
 import { Boton } from 'components/botones/botones';
+import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,16 +31,16 @@ const HabitacionesPage = (): ReactElement => {
       accessor: 'camasIndividuales.length',
     },
     {
-      width: 300,
       Header: '',
       accessor: 'id',
       Cell: ({ cell }: any): ReactElement => (
-        <Boton
+        <Icon
+          faCode="info-circle"
+          size="lg"
+          cssClass="primary-clickeable"
           onClick={(): void => {
             cambiarIdSeleccionadoParaDetalle(cell.row.values.id);
           }}
-          value={cell.row.values.id}
-          texto="Ver detalle"
         />
       ),
     },

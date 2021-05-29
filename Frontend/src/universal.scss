@@ -155,3 +155,12 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 /* FIN: Le saca las flechitas a los inputs type number */
+
+.primary-clickeable {
+  color: $primary;
+  cursor: pointer;
+}
+
+.primary-clickeable:hover {
+  opacity: 0.5;
+}

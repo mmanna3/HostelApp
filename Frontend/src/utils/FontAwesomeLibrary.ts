@@ -11,7 +11,9 @@ import {
   faGlobe,
   faIdCard,
   faInfo,
+  faInfoCircle,
   faLock,
+  faPen,
   faPhone,
   faTimes,
   faTrashAlt,
@@ -42,3 +44,5 @@ library.add(faUsers);
 library.add(faUserLock);
 library.add(faTimes);
 library.add(faWalking);
+library.add(faPen);
+library.add(faInfoCircle);

@@ -7,10 +7,11 @@ interface IProps {
   size?: SizeProp;
   style?: CSSProperties;
   cssClass?: string;
+  onClick?: (e: any) => void;
 }
 
-export const Icon = ({ faCode, size, style, cssClass }: IProps): ReactElement => (
-  <span className={`icon ${cssClass}`} style={style}>
+export const Icon = ({ faCode, size, style, cssClass, onClick = (): void => {} }: IProps): ReactElement => (
+  <span className={`icon ${cssClass}`} style={style} onClick={onClick}>
     <FontAwesomeIcon icon={faCode} size={size} />
   </span>
 );
