@@ -17,5 +17,6 @@ namespace Api.Core.Services.Interfaces
         Task<int> HacerCheckOut(Reserva reservaModificada);
         Task<int> Cancelar(Reserva reserva);
 		Task<int> ObtenerCantidadDeCheckInsDeHoy();
+		Task<int> ObtenerCantidadDeCheckOutsDeHoy();
     }
 }

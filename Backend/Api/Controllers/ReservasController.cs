@@ -32,10 +32,13 @@ namespace Api.Controllers
             return ReservaMapper.MapCheckouts(reservas);
         }
 
-        [HttpGet, Route("cantidadDeCheckInsDeHoy")]
-        public async Task<int> ObtenerCantidadDecheckInsDeHoy()
+        [HttpGet, Route("cantidadDeCheckInsYCheckOutsDeHoy")]
+        public async Task<CantidadCheckInsYCheckOutsDeHoyDTO> ObtenerCantidadDecheckInsYCheckOutsDeHoy()
         {
-	        return await _service.ObtenerCantidadDeCheckInsDeHoy();
+	        var checkIns = await _service.ObtenerCantidadDeCheckInsDeHoy();
+	        var checkOuts = await _service.ObtenerCantidadDeCheckOutsDeHoy();
+
+            return new CantidadCheckInsYCheckOutsDeHoyDTO {CheckIns = checkIns, CheckOuts = checkOuts};
         }
 
         [HttpGet, Route("obtener")]

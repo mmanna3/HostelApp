@@ -50,6 +50,12 @@ export interface CancelarDTO {
     reservaId: number;
 }
 
+// ..\Backend\Api\Controllers\DTOs\Reserva\CantidadCheckInsYCheckOutsDeHoyDTO.cs
+export interface CantidadCheckInsYCheckOutsDeHoyDTO {
+    checkIns: number;
+    checkOuts: number;
+}
+
 // ..\Backend\Api\Controllers\DTOs\Reserva\CheckoutsDeHoyDTO.cs
 export interface CheckoutsDeHoyDTO {
     id: number;

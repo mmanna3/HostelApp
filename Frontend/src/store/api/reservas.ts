@@ -1,5 +1,6 @@
 import {
   CancelarDTO,
+  CantidadCheckInsYCheckOutsDeHoyDTO,
   CheckoutsDeHoyDTO,
   HacerCheckInDTO,
   HacerCheckOutDTO,
@@ -64,9 +65,9 @@ const obtenerPorIdSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
-const cantidadDeCheckInsDeHoySliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'cantidadDeCheckInsDeHoy',
-  endpoint: '/reservas/cantidadDeCheckInsDeHoy',
+const cantidadDeCheckInsYCheckOutsDeHoySliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'cantidadDeCheckInsYCheckOutsDeHoy',
+  endpoint: '/reservas/cantidadDeCheckInsYCheckOutsDeHoy',
   dataInicial: null,
 };
 interface IListarVigentesParams {
@@ -110,7 +111,9 @@ const hacerCheckOut = {
 
 const obtenerPorId = { ...generarSliceHttpGet<ReservaDetalleDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
-const cantidadDeCheckInsDeHoy = { ...generarSliceHttpGet<number, {}>(cantidadDeCheckInsDeHoySliceInfo) };
+const cantidadDeCheckInsYCheckOutsDeHoy = {
+  ...generarSliceHttpGet<CantidadCheckInsYCheckOutsDeHoyDTO, {}>(cantidadDeCheckInsYCheckOutsDeHoySliceInfo),
+};
 
 export default {
   listar,
@@ -121,5 +124,5 @@ export default {
   cancelar,
   hacerCheckIn,
   hacerCheckOut,
-  cantidadDeCheckInsDeHoy,
+  cantidadDeCheckInsYCheckOutsDeHoy,
 };

@@ -89,6 +89,11 @@ namespace Api.Core.Services
 	        return await _repository.ObtenerCantidadDeCheckInsDeHoy();
         }
 
+        public async Task<int> ObtenerCantidadDeCheckOutsDeHoy()
+        {
+	        return await _repository.ObtenerCantidadDeCheckOutsDeHoy();
+        }
+
         public async Task<int> Crear(Reserva reserva)
         {
             if (HayUnaCamaReservadaDosVeces(reserva))

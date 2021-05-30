@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   cancelar: api.reservas.cancelar.reducer,
   hacerCheckIn: api.reservas.hacerCheckIn.reducer,
   hacerCheckOut: api.reservas.hacerCheckOut.reducer,
-  cantidadDeCheckInsDeHoy: api.reservas.cantidadDeCheckInsDeHoy.reducer,
+  cantidadDeCheckInsYCheckOutsDeHoy: api.reservas.cantidadDeCheckInsYCheckOutsDeHoy.reducer,
 });
 
 export default rootReducer;

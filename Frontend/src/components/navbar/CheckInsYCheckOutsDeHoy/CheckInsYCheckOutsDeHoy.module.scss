@@ -1,0 +1,17 @@
+@import 'universal.scss';
+
+.contenedor span {
+  top: 3px;
+}
+
+.contenedor span:first-child {
+  margin-right: 1.8rem;
+}
+
+.icono {
+  cursor: pointer;
+}
+
+.icono:hover {
+  opacity: 0.5;
+}

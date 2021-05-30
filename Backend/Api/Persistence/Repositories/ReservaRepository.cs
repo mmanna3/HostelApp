@@ -24,7 +24,16 @@ namespace Api.Persistence.Repositories
 		        .CountAsync();
         }
 
-        public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta, DateTime? checkOutDesde, DateTime? checkOutHasta)
+        public async Task<int> ObtenerCantidadDeCheckOutsDeHoy()
+        {
+	        var ayer = DateTime.Today.AddDays(-1);
+	        return await _context.Reservas
+		        .Where(x => x.Estado.Equals(ReservaEstadoEnum.InHouse))
+		        .Where(x => x.UltimaNoche == ayer)
+		        .CountAsync();
+        }
+
+		public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta, DateTime? checkOutDesde, DateTime? checkOutHasta)
 		{
 			var ultimaNocheDesde = checkOutDesde?.AddDays(-1);
 			var ultimaNocheHasta = checkOutHasta?.AddDays(-1);
