@@ -1,0 +1,42 @@
+@import 'universal.scss';
+
+.tieneBadge {
+  position: relative;
+}
+
+.tieneBadge[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -6px;
+  right: -11px;
+  font-size: 0.7em;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+}
+
+.tieneBadgeSuccess,
+.tieneBadgeInfo,
+.tieneBadgeWarning {
+  @extend .tieneBadge;
+}
+
+.tieneBadgeSuccess[data-badge]:after {
+  @extend .tieneBadge[data-badge]:after;
+  background: $success;
+  color: $success-invert;
+}
+
+.tieneBadgeInfo[data-badge]:after {
+  @extend .tieneBadge[data-badge]:after;
+  background: $info;
+  color: $info-invert;
+}
+
+.tieneBadgeWarning[data-badge]:after {
+  @extend .tieneBadge[data-badge]:after;
+  background: $warning;
+  color: $warning-invert;
+}

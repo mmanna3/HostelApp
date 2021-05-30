@@ -1,7 +1,7 @@
 import { IconProp, SizeProp, Transform } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { CSSProperties, ReactElement } from 'react';
-import Estilos from './Icon.module.scss';
+import { classCssBadge, IBadge } from './_utilidades/utilidades';
 
 interface IProps {
   faCode: IconProp;
@@ -9,7 +9,7 @@ interface IProps {
   style?: CSSProperties;
   cssClass?: string;
   onClick?: (e: any) => void;
-  dataBadge?: string;
+  badge?: IBadge;
   transformar?: Transform;
 }
 
@@ -18,14 +18,14 @@ export const Icon = ({
   size,
   style,
   cssClass,
-  dataBadge,
+  badge,
   transformar,
   onClick = (): void => {},
 }: IProps): ReactElement => (
   <span
-    className={`icon ${dataBadge ? Estilos.tieneBadge : ''} ${cssClass}`}
+    className={`icon ${badge ? classCssBadge.get(badge.color) : ''} ${cssClass}`}
     style={style}
-    data-badge={dataBadge}
+    data-badge={badge?.texto}
     onClick={onClick}
   >
     <FontAwesomeIcon icon={faCode} size={size} transform={transformar} />
