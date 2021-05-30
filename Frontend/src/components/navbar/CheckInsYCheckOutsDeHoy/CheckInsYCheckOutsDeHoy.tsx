@@ -20,6 +20,7 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
         style={{ cursor: 'pointer' }}
         dataBadge={estado === EstadosApiRequestEnum.exitoso ? datos.toString() : '?'}
         onClick={(): void => {}}
+        transformar={{ flipX: true }}
       />
     </span>
   );
