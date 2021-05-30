@@ -8,17 +8,23 @@ interface IProps {
   texto: string;
   icono: IconProp;
   seleccionadaPorDefecto?: boolean;
+  contenido: ReactElement;
 }
 
-const Tab = ({ id, texto, icono, seleccionadaPorDefecto = false }: IProps): ReactElement => {
-  const { idSeleccionada, setIdSeleccionada } = useContext<IValor>(TabsContext);
+const Tab = ({ id, texto, icono, contenido, seleccionadaPorDefecto = false }: IProps): ReactElement => {
+  const { idSeleccionada, setIdSeleccionada, setContenido } = useContext<IValor>(TabsContext);
 
   useEffect((): void => {
     if (seleccionadaPorDefecto) setIdSeleccionada(id);
   }, [seleccionadaPorDefecto, setIdSeleccionada, id]);
 
+  const seleccionarTab = (): void => {
+    setIdSeleccionada(id);
+    setContenido(contenido);
+  };
+
   return (
-    <li className={idSeleccionada === id ? 'is-active' : ''} onClick={(): void => setIdSeleccionada(id)}>
+    <li className={idSeleccionada === id ? 'is-active' : ''} onClick={seleccionarTab}>
       <a href={`#${id}`}>
         <Icon faCode={icono} />
         <span>{texto}</span>

@@ -8,10 +8,16 @@ const PantallaOperaciones = (): ReactElement => {
     <div className="container">
       <h1 className="title is-2">Operaciones</h1>
       <TabContainer>
-        <Tab id={1} texto="Todas las reservas" icono="calendar" seleccionadaPorDefecto={true} />
-        <Tab id={2} texto="Check-Ins" icono="walking" />
+        <Tab
+          id={1}
+          texto="Todas las reservas"
+          icono="calendar"
+          seleccionadaPorDefecto={true}
+          contenido={<TodasLasReservas />}
+        />
+        <Tab id={2} texto="Check-Ins" icono="walking" contenido={<div>Holi</div>} />
       </TabContainer>
-      <TodasLasReservas />
+      {/* <TodasLasReservas /> */}
     </div>
   );
 };
