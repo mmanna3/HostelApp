@@ -46,7 +46,7 @@ const Navbar = () => {
               <Link className="navbar-item has-text-weight-medium" to="/pasajeros">
                 Pasajeros
               </Link>
-              <Link className="navbar-item has-text-weight-medium" to="/operaciones">
+              <Link className="navbar-item has-text-weight-medium" to="/operaciones/1">
                 Operaciones
               </Link>
             </div>

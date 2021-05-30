@@ -27,7 +27,7 @@ const App = (): ReactElement => {
         <div>
           <Navbar />
           <Route exact path="/habitaciones" component={HabitacionesPage} />
-          <Route exact path="/operaciones" component={PantallaOperaciones} />
+          <Route path="/operaciones/:id" component={PantallaOperaciones} />
           <Route exact path="/pasajeros" component={PasajerosPage} />
           <Route exact path="/reservas" component={PantallaReservas} />
           <ToastContainer

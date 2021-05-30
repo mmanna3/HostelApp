@@ -4,8 +4,16 @@ import React, { ReactElement } from 'react';
 import TodasLasReservas from './Tabs/TodasLasReservas';
 import { ReservaEstadoEnum } from 'store/api/DTOs';
 import { convertirAString, hoy } from 'utils/Fecha';
+import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 const PantallaOperaciones = (): ReactElement => {
+  interface IUrlParams {
+    id: string;
+  }
+
+  let { id } = useParams<IUrlParams>();
+
   return (
     <div className="container">
       <h1 className="title is-2">Operaciones</h1>
@@ -14,13 +22,14 @@ const PantallaOperaciones = (): ReactElement => {
           id={1}
           texto="Todas las reservas"
           icono="calendar"
-          seleccionadaPorDefecto={true}
+          seleccionadaPorDefecto={id === '1'}
           contenido={<TodasLasReservas verFiltros={true} />}
         />
         <Tab
           id={2}
           texto="Check-Ins de hoy"
           icono="walking"
+          seleccionadaPorDefecto={id === '2'}
           contenido={
             <TodasLasReservas
               verFiltros={false}
