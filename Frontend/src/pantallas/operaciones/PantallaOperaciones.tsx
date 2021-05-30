@@ -23,15 +23,16 @@ const PantallaOperaciones = (): ReactElement => {
           texto="Todas las reservas"
           icono="calendar"
           seleccionadaPorDefecto={id === '1'}
-          contenido={<TodasLasReservas verFiltros={true} />}
+          contenido={<TodasLasReservas key={1} verFiltros={true} />}
         />
         <Tab
           id={2}
-          texto="Check-Ins de hoy"
+          texto="Check-In de hoy"
           icono="walking"
           seleccionadaPorDefecto={id === '2'}
           contenido={
             <TodasLasReservas
+              key={2}
               verFiltros={false}
               estadoInicial={ReservaEstadoEnum.CheckinPendiente}
               checkInDesde={convertirAString(hoy())}

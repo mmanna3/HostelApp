@@ -2,7 +2,7 @@ import { Autocomplete } from 'components/Autocomplete';
 import Form from 'components/Form';
 import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
