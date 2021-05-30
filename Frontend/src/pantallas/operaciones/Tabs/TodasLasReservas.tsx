@@ -10,10 +10,16 @@ import { ReservaEstadoEnum, ReservaResumenDTO } from 'store/api/DTOs';
 import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import Estilos from './TodasLasReservas.module.scss';
 
-const TodasLasReservas = (): ReactElement => {
+interface IProps {
+  checkInDesde?: string;
+  checkInHasta?: string;
+  estadoInicial?: ReservaEstadoEnum | '';
+}
+
+const TodasLasReservas = ({ checkInDesde = '', checkInHasta = '', estadoInicial = '' }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
-  const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum | undefined>(undefined);
+  const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum | ''>(estadoInicial);
 
   interface IEstilo {
     estilo: string;
@@ -72,9 +78,8 @@ const TodasLasReservas = (): ReactElement => {
   ];
 
   const fetchData = useCallback((): void => {
-    if (estadoSeleccionado !== undefined) dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado }));
-    else dispatch(api.reservas.listar.invocar());
-  }, [dispatch, estadoSeleccionado]);
+    dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado, checkInDesde, checkInHasta }));
+  }, [dispatch, estadoSeleccionado, checkInDesde, checkInHasta]);
 
   const estadosDeReserva = [
     { label: 'Todas', value: 'todas' },
@@ -97,7 +102,7 @@ const TodasLasReservas = (): ReactElement => {
                 opcionInicial={estadosDeReserva[0]}
                 placeholder="Estado"
                 onChange={(reservaEstado: string): void => {
-                  if (reservaEstado === 'todas') modificarEstadoSeleccionado(undefined);
+                  if (reservaEstado === 'todas') modificarEstadoSeleccionado('');
                   else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
                 }}
               />

@@ -64,7 +64,9 @@ interface IListarVigentesParams {
 }
 
 interface IListarParams {
-  estado: ReservaEstadoEnum | undefined;
+  estado: ReservaEstadoEnum | '';
+  checkInDesde: Nullable<string>;
+  checkInHasta: Nullable<string>;
 }
 
 const obtenerPorIdSliceInfo: IApiSliceInfo = {

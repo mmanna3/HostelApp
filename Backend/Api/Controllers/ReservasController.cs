@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Controllers.DTOs;
@@ -39,9 +40,11 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum? estado)
+        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum? estado, string checkInDesde, string checkInHasta)
         {
-	        var reservas = await _service.Listar(estado);
+	        var checkInDesdeDateTime = checkInDesde != null ? Utilidades.ConvertirFecha(checkInDesde) : (DateTime?) null;
+	        var checkInHastaDateTime = checkInHasta != null ? Utilidades.ConvertirFecha(checkInHasta) : (DateTime?) null;
+            var reservas = await _service.Listar(estado, checkInDesdeDateTime, checkInHastaDateTime);
 	        return ReservaMapper.Map(reservas);
         }
 

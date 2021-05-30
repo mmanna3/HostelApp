@@ -8,7 +8,7 @@ namespace Api.Core.Repositories
 {
     public interface IReservaRepository : IABMRepository<Reserva>
     {
-		Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado);
+	    Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta);
 		Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche);
 	    Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
     }

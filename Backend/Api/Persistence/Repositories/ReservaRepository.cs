@@ -15,9 +15,13 @@ namespace Api.Persistence.Repositories
         public ReservaRepository(AppDbContext context) : base(context)
         {
         }
-		public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado)
+		public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta)
 		{
-			return await _context.Reservas.Include(x => x.PasajeroTitular).Where(x => estado == null || x.Estado.Equals(estado)).ToListAsync();
+			return await _context.Reservas.Include(x => x.PasajeroTitular)
+				.Where(x => estado == null || x.Estado.Equals(estado))
+				.Where(x => checkInDesde == null || x.PrimeraNoche >= checkInDesde)
+				.Where(x => checkInHasta == null || x.PrimeraNoche <= checkInHasta)
+				.ToListAsync();
 		}
 
 		public async Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche)
