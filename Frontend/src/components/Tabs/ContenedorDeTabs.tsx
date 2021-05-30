@@ -1,4 +1,5 @@
 import React, { createContext, ReactElement, ReactNode, useState } from 'react';
+import Estilos from './ContenedorDeTabs.module.scss';
 
 interface IProps {
   children: ReactNode;
@@ -16,7 +17,7 @@ const valorInicial = {
 
 export const TabsContext = createContext<IValor>(valorInicial);
 
-const TabContainer = ({ children }: IProps): ReactElement => {
+const ContenedorDeTabs = ({ children }: IProps): ReactElement => {
   const [state, setState] = useState<number>(0);
   const [contenido, setContenido] = useState<ReactElement>();
 
@@ -32,9 +33,9 @@ const TabContainer = ({ children }: IProps): ReactElement => {
           <ul>{children}</ul>
         </TabsContext.Provider>
       </div>
-      {contenido}
+      <div className={Estilos.contenido}>{contenido}</div>
     </>
   );
 };
 
-export default TabContainer;
+export default ContenedorDeTabs;

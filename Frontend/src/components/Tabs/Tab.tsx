@@ -1,7 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Icon } from 'components/Icon';
 import React, { ReactElement, useContext, useEffect } from 'react';
-import { IValor, TabsContext } from './TabContainer';
+import { IValor, TabsContext } from './ContenedorDeTabs';
 
 interface IProps {
   id: number;

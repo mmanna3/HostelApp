@@ -86,23 +86,25 @@ const TodasLasReservas = (): ReactElement => {
 
   return (
     <div className="container">
-      <Form defaultValues={undefined} onSubmit={(): void => {}}>
-        <div className="columns">
-          <div className="column is-one-quarter">
-            <Autocomplete
-              dataCy="estado"
-              name="estado"
-              opciones={estadosDeReserva}
-              opcionInicial={estadosDeReserva[0]}
-              placeholder="Estado"
-              onChange={(reservaEstado: string): void => {
-                if (reservaEstado === 'todas') modificarEstadoSeleccionado(undefined);
-                else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
-              }}
-            />
+      <div className="botonera">
+        <Form defaultValues={undefined} onSubmit={(): void => {}}>
+          <div className="columns">
+            <div className="column is-one-quarter">
+              <Autocomplete
+                dataCy="estado"
+                name="estado"
+                opciones={estadosDeReserva}
+                opcionInicial={estadosDeReserva[0]}
+                placeholder="Estado"
+                onChange={(reservaEstado: string): void => {
+                  if (reservaEstado === 'todas') modificarEstadoSeleccionado(undefined);
+                  else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </Form>
+        </Form>
+      </div>
       <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>
