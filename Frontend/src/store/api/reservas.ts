@@ -76,8 +76,10 @@ interface IListarVigentesParams {
 
 interface IListarParams {
   estado: ReservaEstadoEnum | '';
-  checkInDesde: Nullable<string>;
-  checkInHasta: Nullable<string>;
+  checkInDesde: string;
+  checkInHasta: string;
+  checkOutDesde: string;
+  checkOutHasta: string;
 }
 
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };

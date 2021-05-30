@@ -2,7 +2,7 @@ import { Autocomplete } from 'components/Autocomplete';
 import Form from 'components/Form';
 import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
@@ -14,12 +14,16 @@ interface IProps {
   verFiltros: boolean;
   checkInDesde?: string;
   checkInHasta?: string;
+  checkOutDesde?: string;
+  checkOutHasta?: string;
   estadoInicial?: ReservaEstadoEnum | '';
 }
 
 const TodasLasReservas = ({
   checkInDesde = '',
   checkInHasta = '',
+  checkOutDesde = '',
+  checkOutHasta = '',
   estadoInicial = '',
   verFiltros,
 }: IProps): ReactElement => {
@@ -84,8 +88,10 @@ const TodasLasReservas = ({
   ];
 
   const fetchData = useCallback((): void => {
-    dispatch(api.reservas.listar.invocar({ estado: estadoSeleccionado, checkInDesde, checkInHasta }));
-  }, [dispatch, estadoSeleccionado, checkInDesde, checkInHasta]);
+    dispatch(
+      api.reservas.listar.invocar({ estado: estadoSeleccionado, checkInDesde, checkInHasta, checkOutDesde, checkOutHasta })
+    );
+  }, [dispatch, estadoSeleccionado, checkInDesde, checkInHasta, checkOutDesde, checkOutHasta]);
 
   const estadosDeReserva = [
     { label: 'Todas', value: 'todas' },

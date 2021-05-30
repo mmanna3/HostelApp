@@ -27,7 +27,7 @@ const PantallaOperaciones = (): ReactElement => {
         />
         <Tab
           id={2}
-          texto="Check-In de hoy"
+          texto="Check-Ins de hoy"
           icono="walking"
           seleccionadaPorDefecto={id === '2'}
           contenido={
@@ -37,6 +37,21 @@ const PantallaOperaciones = (): ReactElement => {
               estadoInicial={ReservaEstadoEnum.CheckinPendiente}
               checkInDesde={convertirAString(hoy())}
               checkInHasta={convertirAString(hoy())}
+            />
+          }
+        />
+        <Tab
+          id={3}
+          texto="Check-Outs de hoy"
+          icono="walking"
+          seleccionadaPorDefecto={id === '3'}
+          contenido={
+            <TodasLasReservas
+              key={3}
+              verFiltros={false}
+              estadoInicial={ReservaEstadoEnum.InHouse}
+              checkOutDesde={convertirAString(hoy())}
+              checkOutHasta={convertirAString(hoy())}
             />
           }
         />
