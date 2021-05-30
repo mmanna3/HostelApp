@@ -64,12 +64,28 @@ namespace Api.UnitTests.Repositories
         [Test]
         public async Task Listar_FiltraCorrectamenteCheckOutsDeHoy()
         {
-	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 15), new DateTime(2020, 10, 16), ReservaEstadoEnum.InHouse);
+	        var hoy = new DateTime(2020, 10, 18);
+
+            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 15), new DateTime(2020, 10, 16), ReservaEstadoEnum.InHouse);
             AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 16), new DateTime(2020, 10, 17), ReservaEstadoEnum.InHouse);
-            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18), ReservaEstadoEnum.InHouse);
-            var listado = await _repository.Listar(ReservaEstadoEnum.InHouse, null, null, new DateTime(2020, 10, 18), new DateTime(2020, 10, 18));
+            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 17), hoy, ReservaEstadoEnum.InHouse);
+            var listado = await _repository.Listar(ReservaEstadoEnum.InHouse, null, null, hoy, hoy);
 
 	        listado.Count().Should().Be(1);
+        }
+
+        [Test]
+        public async Task Listar_FiltraCorrectamenteCheckInsDeHoy()
+        {
+	        var hoy = new DateTime(2020, 10, 18);
+
+	        AgregarReservaDeUnaCamaParaLaFecha(hoy, new DateTime(2020, 10, 19));
+            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 17), new DateTime(2020, 10, 19));
+	        AgregarReservaDeUnaCamaParaLaFecha(hoy, hoy);
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 19), new DateTime(2020, 10, 20));
+	        var listado = await _repository.Listar(ReservaEstadoEnum.CheckinPendiente, hoy, hoy, null, null);
+
+	        listado.Count().Should().Be(2);
         }
 
         [Test]
