@@ -12,19 +12,14 @@ interface IProps {
 }
 
 const Tab = ({ id, texto, icono, contenido, seleccionadaPorDefecto = false }: IProps): ReactElement => {
-  const { idSeleccionada, setIdSeleccionada, setContenido } = useContext<IValor>(TabsContext);
+  const { idSeleccionada, seleccionar } = useContext<IValor>(TabsContext);
 
   useEffect((): void => {
-    if (seleccionadaPorDefecto) setIdSeleccionada(id);
-  }, [seleccionadaPorDefecto, setIdSeleccionada, id]);
-
-  const seleccionarTab = (): void => {
-    setIdSeleccionada(id);
-    setContenido(contenido);
-  };
+    if (idSeleccionada === 0 && seleccionadaPorDefecto) seleccionar(id, contenido);
+  });
 
   return (
-    <li className={idSeleccionada === id ? 'is-active' : ''} onClick={seleccionarTab}>
+    <li className={idSeleccionada === id ? 'is-active' : ''} onClick={(): void => seleccionar(id, contenido)}>
       <a href={`#${id}`}>
         <Icon faCode={icono} />
         <span>{texto}</span>

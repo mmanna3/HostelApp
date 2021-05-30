@@ -17,7 +17,6 @@ const PantallaOperaciones = (): ReactElement => {
         />
         <Tab id={2} texto="Check-Ins" icono="walking" contenido={<div>Holi</div>} />
       </TabContainer>
-      {/* <TodasLasReservas /> */}
     </div>
   );
 };
