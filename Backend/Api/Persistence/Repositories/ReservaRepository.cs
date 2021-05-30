@@ -24,12 +24,17 @@ namespace Api.Persistence.Repositories
 		        .CountAsync();
         }
 
-        public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta)
+        public async Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta, DateTime? checkOutDesde, DateTime? checkOutHasta)
 		{
+			var ultimaNocheDesde = checkOutDesde?.AddDays(-1);
+			var ultimaNocheHasta = checkOutHasta?.AddDays(-1);
+
 			return await _context.Reservas.Include(x => x.PasajeroTitular)
 				.Where(x => estado == null || x.Estado.Equals(estado))
 				.Where(x => checkInDesde == null || x.PrimeraNoche >= checkInDesde)
 				.Where(x => checkInHasta == null || x.PrimeraNoche <= checkInHasta)
+				.Where(x => ultimaNocheDesde == null || x.UltimaNoche >= ultimaNocheDesde)
+				.Where(x => ultimaNocheHasta == null || x.UltimaNoche <= ultimaNocheHasta)
 				.ToListAsync();
 		}
 

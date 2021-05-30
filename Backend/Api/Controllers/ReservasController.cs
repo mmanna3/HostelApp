@@ -46,11 +46,13 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum? estado, string checkInDesde, string checkInHasta)
+        public async Task<IEnumerable<ReservaResumenDTO>> Listar(ReservaEstadoEnum? estado, string checkInDesde, string checkInHasta, string checkOutDesde, string checkOutHasta)
         {
 	        var checkInDesdeDateTime = checkInDesde != null ? Utilidades.ConvertirFecha(checkInDesde) : (DateTime?) null;
 	        var checkInHastaDateTime = checkInHasta != null ? Utilidades.ConvertirFecha(checkInHasta) : (DateTime?) null;
-            var reservas = await _service.Listar(estado, checkInDesdeDateTime, checkInHastaDateTime);
+	        var checkOutDesdeDateTime = checkOutDesde != null ? Utilidades.ConvertirFecha(checkOutDesde) : (DateTime?)null;
+	        var checkOutHastaDateTime = checkOutHasta != null ? Utilidades.ConvertirFecha(checkOutHasta) : (DateTime?)null;
+            var reservas = await _service.Listar(estado, checkInDesdeDateTime, checkInHastaDateTime, checkOutDesdeDateTime, checkOutHastaDateTime);
 	        return ReservaMapper.Map(reservas);
         }
 

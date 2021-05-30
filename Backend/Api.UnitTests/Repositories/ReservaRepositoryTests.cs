@@ -62,6 +62,17 @@ namespace Api.UnitTests.Repositories
         }
 
         [Test]
+        public async Task Listar_FiltraCorrectamenteCheckOutsDeHoy()
+        {
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 15), new DateTime(2020, 10, 16), ReservaEstadoEnum.InHouse);
+            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 16), new DateTime(2020, 10, 17), ReservaEstadoEnum.InHouse);
+            AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18), ReservaEstadoEnum.InHouse);
+            var listado = await _repository.Listar(ReservaEstadoEnum.InHouse, null, null, new DateTime(2020, 10, 18), new DateTime(2020, 10, 18));
+
+	        listado.Count().Should().Be(1);
+        }
+
+        [Test]
         public async Task ListarVigentes_ListaSiReservaTerminaDiaInicial()
         {
 	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
@@ -112,13 +123,13 @@ namespace Api.UnitTests.Repositories
         [Test]
         public async Task ListarVigentes_NoListaReservaCancelada()
         {
-	        AgregarReservaCanceladaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17));
+	        AgregarReservaDeUnaCamaParaLaFecha(new DateTime(2020, 08, 17), new DateTime(2020, 10, 17), ReservaEstadoEnum.Cancelada);
 	        var listado = await _repository.ListarVigentesEntre(new DateTime(2020, 10, 17), new DateTime(2020, 10, 18));
 
 	        listado.Count().Should().Be(0);
         }
 
-        private int AgregarReservaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
+        private int AgregarReservaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche, ReservaEstadoEnum estado = ReservaEstadoEnum.CheckinPendiente)
         {
             var habitacion = new HabitacionCompartida {Nombre = "Azul"};
             _context.Habitaciones.Add(habitacion);
@@ -126,7 +137,7 @@ namespace Api.UnitTests.Repositories
             var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
             _context.CamasIndividuales.Add(cama);
 
-            var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = ReservaEstadoEnum.CheckinPendiente };
+            var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = estado };
             _context.Reservas.Add(reserva);
 
             var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };
@@ -136,26 +147,6 @@ namespace Api.UnitTests.Repositories
             _context.SaveChanges();
 
             return reserva.Id;
-        }
-
-        private int AgregarReservaCanceladaDeUnaCamaParaLaFecha(DateTime primeraNoche, DateTime ultimaNoche)
-        {
-	        var habitacion = new HabitacionCompartida { Nombre = "Azul" };
-	        _context.Habitaciones.Add(habitacion);
-
-	        var cama = new CamaIndividual { Nombre = "Azul", Habitacion = habitacion };
-	        _context.CamasIndividuales.Add(cama);
-
-	        var reserva = new Reserva { PasajeroTitular = _pasajero, PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = ReservaEstadoEnum.Cancelada};
-	        _context.Reservas.Add(reserva);
-
-	        var reservaCama = new ReservaCama { Cama = cama, Reserva = reserva };
-	        reserva.ReservaCamas = new List<ReservaCama> { reservaCama };
-	        cama.ReservaCamas = new List<ReservaCama> { reservaCama };
-
-	        _context.SaveChanges();
-
-	        return reserva.Id;
         }
     }
 }
