@@ -15,12 +15,13 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
     dispatch(api.reservas.cantidadDeCheckInsDeHoy.invocar());
   }, [dispatch]);
 
+  //Hacé una clase y ponele un hover opacity
   return (
     <span>
       <Icon
         faCode="walking"
         size="lg"
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', top: '2px' }}
         dataBadge={estado === EstadosApiRequestEnum.exitoso ? datos.toString() : '?'}
         onClick={(): void => {
           history.push('/operaciones/2');
