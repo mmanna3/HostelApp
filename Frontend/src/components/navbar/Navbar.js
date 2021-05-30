@@ -2,6 +2,7 @@ import { obtenerUsuarioLogueado } from 'pantallas/login/servicio';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BotonCerrarSesion from './botonCerrarSesion/botonCerrarSesion';
+import CheckInsYCheckOutsDeHoy from './CheckInsYCheckOutsDeHoy/CheckInsYCheckOutsDeHoy';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
@@ -51,6 +52,9 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-end">
+              <div className="navbar-item">
+                <CheckInsYCheckOutsDeHoy />
+              </div>
               <div className="navbar-item">
                 <div className="buttons">
                   <p className="button is-primary is-hidden-touch">

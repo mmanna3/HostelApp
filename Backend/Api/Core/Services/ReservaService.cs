@@ -84,6 +84,11 @@ namespace Api.Core.Services
 	        return reservaExistente.Id;
         }
 
+        public async Task<int> ObtenerCantidadDeCheckInsDeHoy()
+        {
+	        return await _repository.ObtenerCantidadDeCheckInsDeHoy();
+        }
+
         public async Task<int> Crear(Reserva reserva)
         {
             if (HayUnaCamaReservadaDosVeces(reserva))

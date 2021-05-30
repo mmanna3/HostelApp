@@ -58,6 +58,17 @@ const cancelarSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
+const obtenerPorIdSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'obtenerReservaPorId',
+  endpoint: '/reservas/obtener',
+  dataInicial: null,
+};
+
+const cantidadDeCheckInsDeHoySliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'cantidadDeCheckInsDeHoy',
+  endpoint: '/reservas/cantidadDeCheckInsDeHoy',
+  dataInicial: null,
+};
 interface IListarVigentesParams {
   primeraNoche: string;
   dias: number;
@@ -68,12 +79,6 @@ interface IListarParams {
   checkInDesde: Nullable<string>;
   checkInHasta: Nullable<string>;
 }
-
-const obtenerPorIdSliceInfo: IApiSliceInfo = {
-  nombreDelSlice: 'obtenerReservaPorId',
-  endpoint: '/reservas/obtener',
-  dataInicial: null,
-};
 
 const checkoutsDeHoy = { ...generarSliceHttpGet<CheckoutsDeHoyDTO[]>(checkoutsDeHoySliceInfo) };
 
@@ -103,6 +108,8 @@ const hacerCheckOut = {
 
 const obtenerPorId = { ...generarSliceHttpGet<ReservaDetalleDTO, IObtenerPorIdParams>(obtenerPorIdSliceInfo) };
 
+const cantidadDeCheckInsDeHoy = { ...generarSliceHttpGet<number, {}>(cantidadDeCheckInsDeHoySliceInfo) };
+
 export default {
   listar,
   listarVigentes,
@@ -112,4 +119,5 @@ export default {
   cancelar,
   hacerCheckIn,
   hacerCheckOut,
+  cantidadDeCheckInsDeHoy,
 };
