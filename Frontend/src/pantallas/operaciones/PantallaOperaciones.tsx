@@ -2,6 +2,8 @@ import Tab from 'components/Tabs/Tab';
 import ContenedorDeTabs from 'components/Tabs/ContenedorDeTabs';
 import React, { ReactElement } from 'react';
 import TodasLasReservas from './Tabs/TodasLasReservas';
+import { ReservaEstadoEnum } from 'store/api/DTOs';
+import { convertirAString, hoy } from 'utils/Fecha';
 
 const PantallaOperaciones = (): ReactElement => {
   return (
@@ -13,9 +15,21 @@ const PantallaOperaciones = (): ReactElement => {
           texto="Todas las reservas"
           icono="calendar"
           seleccionadaPorDefecto={true}
-          contenido={<TodasLasReservas />}
+          contenido={<TodasLasReservas verFiltros={true} />}
         />
-        <Tab id={2} texto="Check-Ins" icono="walking" contenido={<div>Holi</div>} />
+        <Tab
+          id={2}
+          texto="Check-Ins de hoy"
+          icono="walking"
+          contenido={
+            <TodasLasReservas
+              verFiltros={false}
+              estadoInicial={ReservaEstadoEnum.CheckinPendiente}
+              checkInDesde={convertirAString(hoy())}
+              checkInHasta={convertirAString(hoy())}
+            />
+          }
+        />
       </ContenedorDeTabs>
     </div>
   );

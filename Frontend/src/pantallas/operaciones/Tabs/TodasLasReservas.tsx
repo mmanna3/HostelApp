@@ -11,12 +11,18 @@ import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import Estilos from './TodasLasReservas.module.scss';
 
 interface IProps {
+  verFiltros: boolean;
   checkInDesde?: string;
   checkInHasta?: string;
   estadoInicial?: ReservaEstadoEnum | '';
 }
 
-const TodasLasReservas = ({ checkInDesde = '', checkInHasta = '', estadoInicial = '' }: IProps): ReactElement => {
+const TodasLasReservas = ({
+  checkInDesde = '',
+  checkInHasta = '',
+  estadoInicial = '',
+  verFiltros,
+}: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
   const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum | ''>(estadoInicial);
@@ -91,25 +97,27 @@ const TodasLasReservas = ({ checkInDesde = '', checkInHasta = '', estadoInicial 
 
   return (
     <div className="container">
-      <div className="botonera">
-        <Form defaultValues={undefined} onSubmit={(): void => {}}>
-          <div className="columns">
-            <div className="column is-one-quarter">
-              <Autocomplete
-                dataCy="estado"
-                name="estado"
-                opciones={estadosDeReserva}
-                opcionInicial={estadosDeReserva[0]}
-                placeholder="Estado"
-                onChange={(reservaEstado: string): void => {
-                  if (reservaEstado === 'todas') modificarEstadoSeleccionado('');
-                  else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
-                }}
-              />
+      {verFiltros && (
+        <div className="botonera">
+          <Form defaultValues={undefined} onSubmit={(): void => {}}>
+            <div className="columns">
+              <div className="column is-one-quarter">
+                <Autocomplete
+                  dataCy="estado"
+                  name="estado"
+                  opciones={estadosDeReserva}
+                  opcionInicial={estadosDeReserva[0]}
+                  placeholder="Estado"
+                  onChange={(reservaEstado: string): void => {
+                    if (reservaEstado === 'todas') modificarEstadoSeleccionado('');
+                    else modificarEstadoSeleccionado(parseInt(reservaEstado) as ReservaEstadoEnum);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        </Form>
-      </div>
+          </Form>
+        </div>
+      )}
       <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
     </div>
