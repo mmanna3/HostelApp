@@ -6,7 +6,11 @@ interface IProps {
 }
 
 const TabContainer = ({ children }: IProps): ReactElement => {
-  return <div className="tabs is-boxed">{children}</div>;
+  return (
+    <div className="tabs is-boxed">
+      <ul>{children}</ul>
+    </div>
+  );
 };
 
 export default TabContainer;

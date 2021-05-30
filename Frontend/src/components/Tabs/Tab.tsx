@@ -1,12 +1,22 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Icon } from 'components/Icon';
 import React, { ReactElement, ReactNode } from 'react';
 import Estilos from './Tab.module.scss';
 
 interface IProps {
-  children: ReactNode;
+  texto: string;
+  icono: IconProp;
 }
 
-const Tab = ({ children }: IProps): ReactElement => {
-  return <div className="tabs is-boxed">{children}</div>;
+const Tab = ({ texto, icono }: IProps): ReactElement => {
+  return (
+    <li>
+      <a>
+        <Icon faCode={icono} />
+        <span>{texto}</span>
+      </a>
+    </li>
+  );
 };
 
 export default Tab;
