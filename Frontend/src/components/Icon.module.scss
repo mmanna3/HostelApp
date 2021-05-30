@@ -1,0 +1,19 @@
+@import 'universal.scss';
+
+.tieneBadge {
+  position: relative;
+}
+
+.tieneBadge[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -6px;
+  right: -11px;
+  font-size: 0.7em;
+  background: $success;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+}
