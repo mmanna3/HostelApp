@@ -2,7 +2,7 @@ import { IconProp, SizeProp, Transform } from '@fortawesome/fontawesome-svg-core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { CSSProperties, ReactElement } from 'react';
 import { classCssBadge, IBadge } from './_utilidades/utilidades';
-import EstilosTooltip from 'components/_utilidades/Tooltip.module.scss';
+import Estilos from './Icon.module.scss';
 
 interface IProps {
   faCode: IconProp;
@@ -15,19 +15,10 @@ interface IProps {
   transformar?: Transform;
 }
 
-export const Icon = ({
-  faCode,
-  size,
-  style,
-  cssClass,
-  badge,
-  tooltip,
-  transformar,
-  onClick = (): void => {},
-}: IProps): ReactElement => (
-  <span className={`${tooltip ? EstilosTooltip.tooltip : ''}`} data-tooltip={tooltip}>
+export const Icon = ({ faCode, size, style, cssClass, badge, tooltip, transformar, onClick }: IProps): ReactElement => (
+  <span className={`${tooltip ? Estilos.tooltip : ''}`} data-tooltip={tooltip}>
     <span
-      className={`icon ${badge ? classCssBadge.get(badge.color) : ''} ${cssClass}`}
+      className={`icon ${badge ? classCssBadge.get(badge.color) : ''} ${onClick ? Estilos.esClickeable : ''} ${cssClass}`}
       style={style}
       data-badge={badge?.texto}
       onClick={onClick}

@@ -30,3 +30,11 @@
   position: absolute;
   z-index: 99;
 }
+
+.esClickeable {
+  cursor: pointer;
+}
+
+.esClickeable:hover {
+  opacity: 0.6;
+}
