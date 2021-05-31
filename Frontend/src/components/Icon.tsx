@@ -15,8 +15,8 @@ interface IProps {
   transformar?: Transform;
 }
 
-export const Icon = ({ faCode, size, style, cssClass, badge, tooltip, transformar, onClick }: IProps): ReactElement => (
-  <span className={`${tooltip ? Estilos.tooltip : ''}`} data-tooltip={tooltip}>
+export const Icon = ({ faCode, size, style, cssClass = '', badge, tooltip, transformar, onClick }: IProps): ReactElement => {
+  const componente = (
     <span
       className={`icon ${badge ? classCssBadge.get(badge.color) : ''} ${onClick ? Estilos.esClickeable : ''} ${cssClass}`}
       style={style}
@@ -25,5 +25,14 @@ export const Icon = ({ faCode, size, style, cssClass, badge, tooltip, transforma
     >
       <FontAwesomeIcon icon={faCode} size={size} transform={transformar} />
     </span>
-  </span>
-);
+  );
+
+  if (tooltip)
+    return (
+      <span className={`${tooltip ? Estilos.tooltip : ''}`} data-tooltip={tooltip}>
+        {componente}
+      </span>
+    );
+
+  return componente;
+};
