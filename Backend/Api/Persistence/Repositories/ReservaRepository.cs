@@ -77,16 +77,7 @@ namespace Api.Persistence.Repositories
 				.ToListAsync();
         }
 
-        public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()
-        {
-            return await _context.Reservas
-                .Include(x => x.ReservaCamas)
-					.ThenInclude(x => x.Cama)
-                .Where(x => x.UltimaNoche == DateTime.Today.AddDays(-1))
-                .ToListAsync();
-        }
-
-        public override async Task<Reserva> ObtenerPorId(int id)
+		public override async Task<Reserva> ObtenerPorId(int id)
         {
 	        return await _context.Set<Reserva>()
 							.Include(x => x.PasajeroTitular)

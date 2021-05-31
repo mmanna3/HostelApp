@@ -11,7 +11,6 @@ namespace Api.Core.Services.Interfaces
 	    Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche);
 	    Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta, DateTime? checkOutDesde, DateTime? checkOutHasta);
         Task<int> Crear(Reserva reserva);
-        Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
         Task<Reserva> ObtenerPorId(int id);
         Task<int> HacerCheckIn(Reserva reservaModificada);
         Task<int> HacerCheckOut(Reserva reservaModificada);

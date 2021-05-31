@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api.Controllers.DTOs;
 using Api.Controllers.DTOs.Habitacion;
 using Api.Controllers.DTOs.Pasajero;
 using Api.Controllers.DTOs.Reserva;
@@ -269,23 +268,6 @@ namespace Api.IntegrationTests
 	        pasajero.Email.Should().Be(_pasajero.Email);
 	        pasajero.NombreCompleto.Should().Be(_pasajero.NombreCompleto);
 	        pasajero.Telefono.Should().Be(_pasajero.Telefono);
-        }
-
-        [Test]
-        public async Task Lista_Correctamente_CheckoutsDeHoy()
-        {
-            var camaId = await CrearHabitacionConUnaCama();
-
-            await _reservasHttpClient.CrearReserva(camaId, null, _pasajero, DateTime.Today.AddDays(-3), DateTime.Today);
-
-            var consultaResponse = await _reservasHttpClient.ListarCheckoutsDeHoy();
-            consultaResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var reservasConCheckoutHoy = await consultaResponse.Content.ReadAsAsync<List<CheckoutsDeHoyDTO>>();
-
-            reservasConCheckoutHoy.Count().Should().Be(1);
-            var reserva = reservasConCheckoutHoy.ToList().First();
-
-            //reserva.ANombreDe.Should().Be(A_NOMBRE_DE);
         }
 
         private async Task<int> CrearHabitacionConUnaCama()

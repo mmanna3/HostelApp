@@ -30,11 +30,6 @@ namespace Api.Core.Services
 	        return await _repository.Listar(estado, checkInDesde, checkInHasta, checkOutDesde, checkOutHasta);
         }
 
-        public async Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy()
-        {
-            return await _repository.ListarCheckoutsDeHoy();
-        }
-
         public async Task<Reserva> ObtenerPorId(int id)
         {
 	        return await _repository.ObtenerPorId(id);

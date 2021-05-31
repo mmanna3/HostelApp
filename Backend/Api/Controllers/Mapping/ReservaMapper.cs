@@ -104,11 +104,6 @@ namespace Api.Controllers.Mapping
 			};
 		}
 
-		public static IEnumerable<CheckoutsDeHoyDTO> MapCheckouts(IEnumerable<Reserva> reservas)
-		{
-			return reservas.Select(x => new CheckoutsDeHoyDTO {Id = x.Id});
-		}
-
 		internal static Reserva Map(CancelarDTO dto)
 		{
 			var reserva = new Reserva

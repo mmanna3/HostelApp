@@ -25,13 +25,6 @@ namespace Api.Controllers
             _pasajeroService = pasajeroService;
         }
 
-        [HttpGet, Route("checkoutsDeHoy")]
-        public async Task<IEnumerable<CheckoutsDeHoyDTO>> ListarCheckoutsDeHoy()
-        {
-            var reservas = await _service.ListarCheckoutsDeHoy();
-            return ReservaMapper.MapCheckouts(reservas);
-        }
-
         [HttpGet, Route("cantidadDeCheckInsYCheckOutsDeHoy")]
         public async Task<CantidadCheckInsYCheckOutsDeHoyDTO> ObtenerCantidadDecheckInsYCheckOutsDeHoy()
         {

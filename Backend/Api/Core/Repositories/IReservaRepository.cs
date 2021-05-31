@@ -12,6 +12,5 @@ namespace Api.Core.Repositories
 		Task<int> ObtenerCantidadDeCheckOutsDeHoy();
 		Task<IEnumerable<Reserva>> Listar(ReservaEstadoEnum? estado, DateTime? checkInDesde, DateTime? checkInHasta, DateTime? checkOutDesde, DateTime? checkOutHasta);
 		Task<IEnumerable<Reserva>> ListarVigentesEntre(DateTime primeraNoche, DateTime ultimaNoche);
-	    Task<IEnumerable<Reserva>> ListarCheckoutsDeHoy();
     }
 }
