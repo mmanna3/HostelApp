@@ -19,7 +19,7 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
 
   return (
     <div className={Estilos.contenedor}>
-      <span>
+      <span className={Estilos.tooltip} data-tooltip="Check-Ins de hoy">
         <Icon
           faCode="walking"
           size="lg"
@@ -35,7 +35,7 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
           transformar={{ flipX: true }}
         />
       </span>
-      <span>
+      <span className={Estilos.tooltip} data-tooltip="Check-Outs de hoy">
         <Icon
           faCode="walking"
           size="lg"
