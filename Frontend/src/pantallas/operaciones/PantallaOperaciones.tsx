@@ -1,35 +1,40 @@
 import Tab from 'components/Tabs/Tab';
 import ContenedorDeTabs from 'components/Tabs/ContenedorDeTabs';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import TodasLasReservas from './Tabs/TodasLasReservas';
 import { ReservaEstadoEnum } from 'store/api/DTOs';
 import { convertirAString, hoy } from 'utils/Fecha';
-import { useParams } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+
+interface IUrlParams {
+  id: string;
+}
 
 const PantallaOperaciones = (): ReactElement => {
-  interface IUrlParams {
-    id: string;
-  }
-
   let { id } = useParams<IUrlParams>();
+  let location = useLocation();
+  const [tabSeleccionadaPorParametro, modificarTabSeleccionadaPorParametro] = useState(id);
+
+  useEffect((): void => {
+    modificarTabSeleccionadaPorParametro(id);
+  }, [location, id]);
 
   return (
     <div className="container">
       <h1 className="title is-2">Operaciones</h1>
-      <ContenedorDeTabs>
+      <ContenedorDeTabs key={tabSeleccionadaPorParametro}>
         <Tab
           id={1}
           texto="Todas las reservas"
           icono="calendar"
-          seleccionadaPorDefecto={id === '1'}
+          seleccionadaPorDefecto={tabSeleccionadaPorParametro === '1'}
           contenido={<TodasLasReservas key={1} verFiltros={true} />}
         />
         <Tab
           id={2}
           texto="Check-Ins de hoy"
           icono="walking"
-          seleccionadaPorDefecto={id === '2'}
+          seleccionadaPorDefecto={tabSeleccionadaPorParametro === '2'}
           contenido={
             <TodasLasReservas
               key={2}
@@ -44,7 +49,7 @@ const PantallaOperaciones = (): ReactElement => {
           id={3}
           texto="Check-Outs de hoy"
           icono="walking"
-          seleccionadaPorDefecto={id === '3'}
+          seleccionadaPorDefecto={tabSeleccionadaPorParametro === '3'}
           contenido={
             <TodasLasReservas
               key={3}
