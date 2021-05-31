@@ -1,0 +1,32 @@
+.tooltip {
+  position: relative;
+}
+
+.tooltip:hover:after {
+  background: #111;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.5em;
+  top: 1.8rem;
+  color: #fff;
+  content: attr(data-tooltip);
+  display: block;
+  left: -0.8rem;
+  padding: 0.3em 1em;
+  position: absolute;
+  text-shadow: 0 1px 0 #000;
+  white-space: nowrap;
+  z-index: 98;
+}
+
+.tooltip:hover:before {
+  border: solid;
+  border-color: #111 transparent;
+  border-color: rgba(0, 0, 0, 0.8) transparent;
+  border-width: 0 0.4rem 0.4rem 0.4rem;
+  top: 1.5rem;
+  content: '';
+  display: block;
+  left: 0.1rem;
+  position: absolute;
+  z-index: 99;
+}

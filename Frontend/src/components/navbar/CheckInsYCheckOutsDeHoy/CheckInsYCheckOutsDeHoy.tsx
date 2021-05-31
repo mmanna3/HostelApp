@@ -19,11 +19,12 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
 
   return (
     <div className={Estilos.contenedor}>
-      <span className={Estilos.tooltip} data-tooltip="Check-Ins de hoy">
+      <span>
         <Icon
           faCode="walking"
           size="lg"
           cssClass={Estilos.icono}
+          tooltip="Check-Ins de hoy"
           badge={
             estado === EstadosApiRequestEnum.exitoso
               ? { texto: datos.checkIns.toString(), color: ColoresCssEnum.success }
@@ -35,11 +36,12 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
           transformar={{ flipX: true }}
         />
       </span>
-      <span className={Estilos.tooltip} data-tooltip="Check-Outs de hoy">
+      <span>
         <Icon
           faCode="walking"
           size="lg"
           cssClass={Estilos.icono}
+          tooltip="Check-Outs de hoy"
           badge={
             estado === EstadosApiRequestEnum.exitoso
               ? { texto: datos.checkIns.toString(), color: ColoresCssEnum.info }
