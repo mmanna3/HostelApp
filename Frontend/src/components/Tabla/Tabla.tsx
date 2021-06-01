@@ -1,3 +1,4 @@
+import { Icon } from 'components/Icon';
 import React, { ReactElement, useEffect } from 'react';
 import { Column, useTable } from 'react-table';
 import { EstadosApiRequestEnum as ESTADO, EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
@@ -51,7 +52,60 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
     </tbody>
   );
 
-  if (estado === ESTADO.huboError) return <p>Hubo un error.</p>;
+  const cargando = (
+    <tbody>
+      <tr>
+        <td colSpan={100}>
+          <div className={Estilos.animacionCargandoContenedor}>
+            <div className={Estilos.animacionCargando}>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  );
+
+  const noHayDatos = (
+    <tbody>
+      <tr>
+        <td colSpan={100}>
+          <div className={Estilos.mensajeContenedor}>
+            <span className="icon-text has-text-primary">
+              <Icon faCode="exclamation-triangle" size="lg" />
+            </span>
+            No se encontraron datos.
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  );
+
+  const huboUnError = (
+    <tbody>
+      <tr>
+        <td colSpan={100}>
+          <div className={Estilos.mensajeContenedor}>
+            <span className="icon-text has-text-danger">
+              <Icon faCode="exclamation-triangle" size="lg" />
+            </span>
+            Hubo un error. Por favor, volvé a intentarlo.
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  );
 
   return (
     <table {...getTableProps()} className="table is-hoverable is-fullwidth">
@@ -70,15 +124,13 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
           )
         )}
       </thead>
-      {estado === ESTADO.cargando ? (
-        <tbody>
-          <tr>
-            <td>Cargando...</td>
-          </tr>
-        </tbody>
-      ) : (
-        bodyConDatos
-      )}
+      {estado === ESTADO.huboError
+        ? huboUnError
+        : estado === ESTADO.cargando
+        ? cargando
+        : datos.length > 0
+        ? bodyConDatos
+        : noHayDatos}
     </table>
   );
 };
