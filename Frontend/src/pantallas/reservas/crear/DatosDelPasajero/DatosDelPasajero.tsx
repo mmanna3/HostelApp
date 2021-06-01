@@ -4,6 +4,7 @@ import { paisesParaAutocomplete } from 'pantallas/reservas/crear/DatosDelPasajer
 import React, { ReactElement } from 'react';
 import { PasajeroDTO } from 'store/api/DTOs';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import nameof from 'ts-nameof.macro';
 
 interface IProps {
   pasajero?: PasajeroDTO;
@@ -26,7 +27,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda 
             onButtonClick={buscarDniOPasaporte}
             botonCargando={estadoBusqueda === EstadosApiRequestEnum.cargando}
             dataCy="dni"
-            name={`${name}.DNIOPasaporte`}
+            name={`${name}.${nameof<PasajeroDTO>((x): string => x.dniOPasaporte)}`}
             type="number"
             defaultValue={pasajero?.dniOPasaporte}
             faIconCode="id-card"
@@ -36,7 +37,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda 
           <Input
             placeholder="Nombre completo"
             dataCy="nombre"
-            name={`${name}.NombreCompleto`}
+            name={`${name}.${nameof<PasajeroDTO>((x): string => x.nombreCompleto)}`}
             defaultValue={pasajero?.nombreCompleto}
             faIconCode="user"
           />
@@ -47,7 +48,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda 
           <Autocomplete
             key={paisOpcionInicial.value}
             dataCy="pais"
-            name={`${name}.Pais`}
+            name={`${name}.${nameof<PasajeroDTO>((x): string => x.pais)}`}
             opciones={paisesParaAutocomplete}
             opcionInicial={paisOpcionInicial}
             placeholder="Nacionalidad"
@@ -57,7 +58,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda 
         <div className="column is-one-fifth">
           <Input
             dataCy="telefono"
-            name={`${name}.Telefono`}
+            name={`${name}.${nameof<PasajeroDTO>((x): string => x.telefono)}`}
             type="number"
             defaultValue={pasajero?.telefono}
             placeholder="Teléfono"
@@ -67,7 +68,7 @@ const DatosDelPasajero = ({ pasajero, buscarDniOPasaporte, name, estadoBusqueda 
         <div className="column">
           <Input
             dataCy="email"
-            name={`${name}.Email`}
+            name={`${name}.${nameof<PasajeroDTO>((x): string => x.email)}`}
             defaultValue={pasajero?.email}
             type="email"
             placeholder="Email"

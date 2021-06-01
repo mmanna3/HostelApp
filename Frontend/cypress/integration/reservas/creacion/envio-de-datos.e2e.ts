@@ -1,6 +1,6 @@
 import 'cypress-localstorage-commands';
 import { CamaTipoEnum, HabitacionConLugaresLibresDTO, PasajeroDTO } from '../../../../src/store/api/DTOs';
-import { convertirAString, hoy, sumarMesesALaFecha } from '../../../../src/utils/Fecha';
+import { convertirAString, hoy } from '../../../../src/utils/Fecha';
 import * as paginaReservas from '../../../pageObjectModels/reservas/pagina.POM';
 
 function dadoQueHayDosHabitacionesConLugaresLibres(): void {
@@ -106,20 +106,20 @@ describe('Envío de datos', (): void => {
     cy.get('[data-cy=confirmar]').click();
 
     let diaDeCheckin = hoy();
-    diaDeCheckin = sumarMesesALaFecha(diaDeCheckin, 1);
     diaDeCheckin.setDate(11);
+    diaDeCheckin.setMonth(hoy().getMonth() + 1);
 
     let diaDeCheckout = hoy();
-    diaDeCheckout = sumarMesesALaFecha(diaDeCheckout, 1);
     diaDeCheckout.setDate(12);
+    diaDeCheckout.setMonth(hoy().getMonth() + 1);
 
     const form = {
       PasajeroTitular: {
-        DNIOPasaporte: '111',
-        Email: 'elcolorado@gmail.edu',
-        NombreCompleto: 'Kvothe',
-        Pais: 'de',
-        Telefono: '44610000',
+        dniOPasaporte: '111',
+        email: 'elcolorado@gmail.edu',
+        nombreCompleto: 'Kvothe',
+        pais: 'de',
+        telefono: '44610000',
       },
       camasIds: [29, 52],
       canal: 'Presencial',
