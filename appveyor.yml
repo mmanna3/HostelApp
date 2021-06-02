@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2019
 branches:
   only:
-  - master
+    - master
 environment:
   deploy_username:
     secure: ZumRpgIeGcRgW3H7yXK0bQ==
@@ -21,7 +21,7 @@ environment:
   db_password:
     secure: 4y9U8rtIudL2GAfDA3JfbQ==
   jwt_secret:
-      secure: M+XNGZRp9MtgE0JL5vqreHbaN2zGo6Md40OU9kyv6sjXxyRfmQkMfYYVmKId4RPR
+    secure: M+XNGZRp9MtgE0JL5vqreHbaN2zGo6Md40OU9kyv6sjXxyRfmQkMfYYVmKId4RPR
 install:
   - ps: >-
       $file = "./Backend/Api/appsettings.Production.json";
@@ -34,7 +34,7 @@ before_build:
   - yarn install
   - yarn run test-ci
   - yarn run build
-  - cd ..  
+  - cd ..
   - ps: >-
       Copy-Item -Path "./Frontend/build" -Destination "./Backend/Api/ClientApp/build" -Recurse
 build:
@@ -43,7 +43,7 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-  - cmd: dotnet publish --framework netcoreapp3.1 --self-contained true -r win-x64 Backend\Api --output %appveyor_build_folder%\dist
+  - cmd: dotnet publish --framework net5.0 --self-contained true -r win-x64 Backend\Api --output %appveyor_build_folder%\dist
 artifacts:
   - path: dist
 deploy:
