@@ -1,3 +1,5 @@
+import AnimacionCargando from 'components/Tabla/AnimacionCargando/AnimacionCargando';
+import ErrorGenerico from 'components/Tabla/ErrorGenerico/ErrorGenerico';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -62,9 +64,13 @@ const ReservasPage = (): ReactElement => {
       />
       <div>
         {estado === ESTADO.huboError ? (
-          'Hubo un error.'
+          <table className="table is-fullwidth">
+            <ErrorGenerico />
+          </table>
         ) : estado === ESTADO.cargando ? (
-          'Cargando...'
+          <table className="table is-fullwidth">
+            <AnimacionCargando />
+          </table>
         ) : estado === ESTADO.exitoso && datos ? (
           <Tabla datos={datos} habitaciones={habitaciones.datos} />
         ) : (

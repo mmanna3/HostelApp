@@ -1,7 +1,9 @@
-import { Icon } from 'components/Icon';
 import React, { ReactElement, useEffect } from 'react';
 import { Column, useTable } from 'react-table';
 import { EstadosApiRequestEnum as ESTADO, EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
+import AnimacionCargando from './AnimacionCargando/AnimacionCargando';
+import ErrorGenerico from './ErrorGenerico/ErrorGenerico';
+import NoHayDatos from './NoHayDatos/NoHayDatos';
 import Estilos from './Tabla.module.scss';
 
 interface IProps<Data extends object = {}> {
@@ -52,61 +54,6 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
     </tbody>
   );
 
-  const cargando = (
-    <tbody>
-      <tr>
-        <td colSpan={100}>
-          <div className={Estilos.animacionCargandoContenedor}>
-            <div className={Estilos.animacionCargando}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  );
-
-  const noHayDatos = (
-    <tbody>
-      <tr>
-        <td colSpan={100}>
-          <div className={Estilos.mensajeContenedor}>
-            <span className="icon-text has-text-primary">
-              <Icon faCode="exclamation-triangle" size="lg" />
-            </span>
-            No se encontraron datos.
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  );
-
-  const huboUnError = (
-    <tbody>
-      <tr>
-        <td colSpan={100}>
-          <div className={Estilos.mensajeContenedor}>
-            <span className="icon-text has-text-danger">
-              <Icon faCode="exclamation-triangle" size="lg" />
-            </span>
-            Hubo un error. Por favor, volvé a intentarlo.
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  );
-
   return (
     <table {...getTableProps()} className="table is-hoverable is-fullwidth">
       <thead>
@@ -124,13 +71,15 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
           )
         )}
       </thead>
-      {estado === ESTADO.huboError
-        ? huboUnError
-        : estado === ESTADO.cargando
-        ? cargando
-        : datos.length > 0
-        ? bodyConDatos
-        : noHayDatos}
+      {estado === ESTADO.huboError ? (
+        <ErrorGenerico />
+      ) : estado === ESTADO.cargando ? (
+        <AnimacionCargando />
+      ) : datos.length === 0 ? (
+        <NoHayDatos />
+      ) : (
+        bodyConDatos
+      )}
     </table>
   );
 };
