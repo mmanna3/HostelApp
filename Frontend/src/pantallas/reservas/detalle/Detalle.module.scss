@@ -7,6 +7,12 @@
   color: $color-tipografia;
 }
 
+.numeroDeReserva {
+  font-size: 11px;
+  margin-bottom: 0.2rem;
+  margin-left: 0.1rem;
+}
+
 .nombre {
   font-size: 20px;
   font-weight: bold;
@@ -20,6 +26,11 @@
   border-radius: 6px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.estadoCancelada {
+  @extend .estado;
+  background-color: $gris-clarito;
 }
 
 .estadoCheckinPendiente {

@@ -57,6 +57,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
   }
 
   const estilosEstado = new Map<ReservaEstadoEnum, IEstilo>([
+    [ReservaEstadoEnum.Cancelada, { estilo: Estilos.estadoCancelada, descripcion: 'Cancelada' }],
     [ReservaEstadoEnum.CheckinPendiente, { estilo: Estilos.estadoCheckinPendiente, descripcion: 'Check-In Pendiente' }],
     [ReservaEstadoEnum.InHouse, { estilo: Estilos.estadoInHouse, descripcion: 'In-House' }],
     [ReservaEstadoEnum.HizoCheckout, { estilo: Estilos.estadoHizoCheckout, descripcion: 'Hizo Checkout' }],
@@ -109,6 +110,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
       <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
+            <p className={Estilos.numeroDeReserva}>Nº {datos.id}</p>
             <p className={Estilos.nombre}>
               {datos.pasajeroTitular.nombreCompleto}
               <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
