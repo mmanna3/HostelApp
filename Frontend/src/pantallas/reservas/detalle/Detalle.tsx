@@ -110,7 +110,6 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
       <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
         <Body width={'500px'}>
           <div className={Estilos.contenedor}>
-            <p className={Estilos.numeroDeReserva}>Nº {datos.id}</p>
             <p className={Estilos.nombre}>
               {datos.pasajeroTitular.nombreCompleto}
               <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
