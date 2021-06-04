@@ -2,13 +2,14 @@ import { Autocomplete } from 'components/Autocomplete';
 import Form from 'components/Form';
 import { Icon } from 'components/Icon';
 import Table from 'components/Tabla/Tabla';
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
 import { ReservaEstadoEnum, ReservaResumenDTO } from 'store/api/DTOs';
 import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
 import Estilos from './TodasLasReservas.module.scss';
+import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
 interface IProps {
   verFiltros: boolean;
@@ -29,7 +30,14 @@ const TodasLasReservas = ({
 }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos, estado } = useSelector(api.reservas.listar.selector);
+  const { estado: estadoDetalle } = useSelector(api.reservas.obtenerPorId.selector);
   const [estadoSeleccionado, modificarEstadoSeleccionado] = useState<ReservaEstadoEnum | ''>(estadoInicial);
+  const [estadoDeRequest, modificarEstadoDeRequest] = useState(estado);
+
+  useEffect((): void => {
+    if (estadoDetalle === EstadosApiRequestEnum.cargando) modificarEstadoDeRequest(estadoDetalle);
+    else modificarEstadoDeRequest(estado);
+  }, [estado, estadoDetalle]);
 
   interface IEstilo {
     estilo: string;
@@ -125,7 +133,7 @@ const TodasLasReservas = ({
         </div>
       )}
       <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
-      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
+      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estadoDeRequest} />
     </div>
   );
 };
