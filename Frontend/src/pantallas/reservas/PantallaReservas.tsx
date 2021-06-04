@@ -14,6 +14,7 @@ import Tabla from './Tabla/Tabla';
 const ReservasPage = (): ReactElement => {
   const dispatch = useDispatch();
   const habitaciones = useSelector(api.habitaciones.listar.selector);
+  const { estado: estadoDetalle } = useSelector(api.reservas.obtenerPorId.selector);
   const { datos, estado } = useSelector(api.reservas.listarVigentes.selector);
   const [IsModalVisible, setModalVisibility] = useState(false);
   const [cabeceraKey, reiniciarCabecera] = useCounterKey();
@@ -67,7 +68,7 @@ const ReservasPage = (): ReactElement => {
           <table className="table is-fullwidth">
             <ErrorGenerico />
           </table>
-        ) : estado === ESTADO.cargando ? (
+        ) : estado === ESTADO.cargando || estadoDetalle === ESTADO.cargando ? (
           <table className="table is-fullwidth">
             <AnimacionCargando />
           </table>
