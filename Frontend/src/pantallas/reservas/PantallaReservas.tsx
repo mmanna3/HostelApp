@@ -64,7 +64,7 @@ const ReservasPage = (): ReactElement => {
         enCancelacionExitosa={reiniciarTabla}
       />
       <div>
-        {estado === ESTADO.huboError ? (
+        {estado === ESTADO.huboError || estadoDetalle === ESTADO.huboError ? (
           <table className="table is-fullwidth">
             <ErrorGenerico />
           </table>

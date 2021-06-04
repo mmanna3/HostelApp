@@ -35,7 +35,8 @@ const TodasLasReservas = ({
   const [estadoDeRequest, modificarEstadoDeRequest] = useState(estado);
 
   useEffect((): void => {
-    if (estadoDetalle === EstadosApiRequestEnum.cargando) modificarEstadoDeRequest(estadoDetalle);
+    if (estadoDetalle === EstadosApiRequestEnum.cargando || estadoDetalle === EstadosApiRequestEnum.huboError)
+      modificarEstadoDeRequest(estadoDetalle);
     else modificarEstadoDeRequest(estado);
   }, [estado, estadoDetalle]);
 
