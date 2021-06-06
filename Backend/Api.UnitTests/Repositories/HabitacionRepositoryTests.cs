@@ -51,17 +51,27 @@ namespace Api.UnitTests.Repositories
             (await _repository.ListarConCamasLibres()).First().LugaresLibresEntre(_primeraNoche, _ultimaNoche).Should().Be(5);
         }
 
-		[Ignore("Cuando decidas optimizar, esto va a servir mucho")]
+		[Test]
 		public async Task Lista_correctamente_lugares_libres_en_la_fecha_desde_hasta()
 		{
 			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo();
-			var camaIndividualReservadaId = DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _ultimaNoche);
-			var camaMatrimonialReservadaId = DadoQueSeReservaUnaCamaMatrimonial(habitacionId, _primeraNoche, _ultimaNoche);
+			var camaIndividualReservadaId = await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _ultimaNoche);
+			var camaMatrimonialReservadaId = await DadoQueSeReservaUnaCamaMatrimonial(habitacionId, _primeraNoche, _ultimaNoche);
 			var camaCuchetaDeAbajoReservadaId = await DadoQueSeReservaUnaCamaCuchetaDeAbajo(habitacionId, _primeraNoche, _ultimaNoche);
 
 			//CantidadDeLugaresLibres.Should().Be(6);
-			//var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
-			//habitacion.CamasIndividuales.Count.Should().Be(1);
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(1);
+			habitacion.CamasIndividuales.First().Id.Should().NotBe(camaIndividualReservadaId);
+
+			habitacion.CamasMatrimoniales.Count.Should().Be(1);
+			habitacion.CamasMatrimoniales.First().Id.Should().NotBe(camaMatrimonialReservadaId);
+
+			habitacion.CamasCuchetas.Count.Should().Be(2);
+			habitacion.CamasCuchetas.First().Abajo.Should().BeNull();
+			habitacion.CamasCuchetas.First().Arriba.Should().NotBeNull();
+			habitacion.CamasCuchetas.Skip(1).First().Abajo.Id.Should().NotBe(camaCuchetaDeAbajoReservadaId);
+			habitacion.CamasCuchetas.Skip(1).First().Arriba.Should().NotBeNull();
 		}
 
 		private async Task<int> DadoQueSeReservaUnaCamaMatrimonial(int habitacionId, DateTime primeraNoche, DateTime ultimaNoche)

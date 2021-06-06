@@ -13,8 +13,10 @@ namespace Api.Persistence.Config
         public DbSet<HabitacionPrivada> HabitacionesPrivadas { get; set; }
 
         public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<ReservaCama> ReservaCamas { get; set; }
 
-        public DbSet<CamaIndividual> CamasIndividuales { get; set; }
+		public DbSet<Cama> Camas { get; set; }
+		public DbSet<CamaIndividual> CamasIndividuales { get; set; }
         public DbSet<CamaMatrimonial> CamasMatrimoniales { get; set; }
         public DbSet<CamaCuchetaDeAbajo> CamasCuchetasDeAbajo { get; set; }
         public DbSet<CamaCuchetaDeArriba> CamasCuchetasDeArriba { get; set; }
