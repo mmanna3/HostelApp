@@ -134,6 +134,17 @@ namespace Api.UnitTests.Repositories
 			habitacion.CamasIndividuales.Count.Should().Be(1);
 		}
 
+		[Test]
+		public async Task CamaLibre_PorqueReserva_EstaCancelada()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _primeraNoche);
+			await DadoQueSeCancelanTodasLasReservas();
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(1);
+		}
+
 		private async Task<int> DadoQueSeReservaUnaCamaMatrimonial(int habitacionId, DateTime primeraNoche, DateTime ultimaNoche)
 		{
 			var habitacion = _context.Habitaciones.Single(x => x.Id == habitacionId);
@@ -176,6 +187,12 @@ namespace Api.UnitTests.Repositories
 			await _context.SaveChangesAsync();
 
 			return habitacion.Id;
+		}
+
+		private async Task DadoQueSeCancelanTodasLasReservas()
+		{
+			foreach (var reserva in _context.Reservas) reserva.Estado = ReservaEstadoEnum.Cancelada;
+			await _context.SaveChangesAsync();
 		}
 
 		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo()
