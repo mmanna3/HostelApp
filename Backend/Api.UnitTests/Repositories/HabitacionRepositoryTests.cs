@@ -52,7 +52,7 @@ namespace Api.UnitTests.Repositories
         }
 
 		[Test]
-		public async Task Lista_correctamente_lugares_libres_en_el_rango()
+		public async Task Lista_correctamente_habitacionesCompartidas_conLugaresLibres()
 		{
 			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo();
 			var camaIndividualReservadaId = await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _ultimaNoche);
@@ -72,6 +72,50 @@ namespace Api.UnitTests.Repositories
 			habitacion.CamasCuchetas.First().Arriba.Should().NotBeNull();
 			habitacion.CamasCuchetas.Skip(1).First().Abajo.Id.Should().NotBe(camaCuchetaDeAbajoReservadaId);
 			habitacion.CamasCuchetas.Skip(1).First().Arriba.Should().NotBeNull();
+		}
+
+		[Test]
+		public async Task Lista_correctamente_habitacionesPrivadas_conLugaresLibres()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo();
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(2);
+			habitacion.CamasMatrimoniales.Count.Should().Be(2);
+			habitacion.CamasCuchetas.Count.Should().Be(2);
+		}
+
+		private async Task<int> DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo()
+		{
+			var habitacion = new HabitacionPrivada { Nombre = "Azul" };
+
+			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
+			var indi2 = new CamaIndividual { Nombre = "Indi2", Habitacion = habitacion };
+			var matri1 = new CamaMatrimonial { Nombre = "Matri1", Habitacion = habitacion };
+			var matri2 = new CamaMatrimonial { Nombre = "Matri2", Habitacion = habitacion };
+			var cucheta1 = new CamaCucheta
+			{
+				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo1" },
+				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo1" },
+				Habitacion = habitacion
+			};
+			var cucheta2 = new CamaCucheta
+			{
+				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo2" },
+				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo2" },
+				Habitacion = habitacion
+			};
+
+			await _context.CamasIndividuales.AddAsync(indi1);
+			await _context.CamasIndividuales.AddAsync(indi2);
+			await _context.CamasMatrimoniales.AddAsync(matri1);
+			await _context.CamasMatrimoniales.AddAsync(matri2);
+			await _context.CamasCuchetas.AddAsync(cucheta1);
+			await _context.CamasCuchetas.AddAsync(cucheta2);
+
+			await _context.SaveChangesAsync();
+
+			return habitacion.Id;
 		}
 
 		[Test]

@@ -43,12 +43,29 @@ namespace Api.Persistence.Repositories
 
         public async Task<IEnumerable<Habitacion>> ListarConCamasLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
-	        var habitacionesConCamasLibres = HabitacionesCompartidasConCamasLibresEntre(primeraNoche, ultimaNoche);
+	        var habitacionesCompartidasConCamasLibres = await HabitacionesCompartidasConCamasLibresEntre(primeraNoche, ultimaNoche).ToListAsync();
+	        var habitacionesPrivadasLibres = await HabitacionesPrivadasLibresEntre(primeraNoche, ultimaNoche).ToListAsync();
 
-	        return await habitacionesConCamasLibres.ToListAsync();
+			return habitacionesCompartidasConCamasLibres.Concat(habitacionesPrivadasLibres.Cast<Habitacion>());
         }
 
-        private IQueryable<HabitacionCompartida> HabitacionesCompartidasConCamasLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        private IQueryable<HabitacionPrivada> HabitacionesPrivadasLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        {
+	        var idsDeHabitacionesOcupadasAlMenosUnaNocheEnElRango =
+		        _context.ReservaHabitacionesPrivadas
+					.Where(rc => rc.Reserva.Estado != ReservaEstadoEnum.Cancelada)
+			        .Where(rc => (rc.Reserva.PrimeraNoche <= primeraNoche && rc.Reserva.UltimaNoche >= primeraNoche)
+			                     || (rc.Reserva.PrimeraNoche <= ultimaNoche && rc.Reserva.UltimaNoche >= primeraNoche))
+			        .Select(c => c.HabitacionPrivada.Id)
+			        .ToList();
+
+	        var habitacionesPrivadasLibres = _context.HabitacionesPrivadas.Where(x =>
+		        !idsDeHabitacionesOcupadasAlMenosUnaNocheEnElRango.Contains(x.Id));
+
+	        return habitacionesPrivadasLibres;
+        }
+
+		private IQueryable<HabitacionCompartida> HabitacionesCompartidasConCamasLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
 	        var idsDeCamasOcupadasAlMenosUnaNocheEnElRango =
 		        _context.ReservaCamas
