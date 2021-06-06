@@ -75,7 +75,7 @@ namespace Api.UnitTests.Repositories
 		}
 
 		[Test]
-		public async Task Lista_correctamente_habitacionesPrivadas_conLugaresLibres()
+		public async Task ListaConLugaresLibres_HabitacionPrivada_ConTodasSusCamas_PorqueEstaLibre()
 		{
 			var habitacionId = await DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo();
 
@@ -83,6 +83,27 @@ namespace Api.UnitTests.Repositories
 			habitacion.CamasIndividuales.Count.Should().Be(2);
 			habitacion.CamasMatrimoniales.Count.Should().Be(2);
 			habitacion.CamasCuchetas.Count.Should().Be(2);
+		}
+
+		[Test]
+		public async Task ListaConLugaresLibres_HabitacionPrivada_SinCamas_PorqueEstaOcupada()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo();
+			await DadoQueSeReservaLaHabitacionPrivada(habitacionId, _primeraNoche, _ultimaNoche);
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(0);
+			habitacion.CamasMatrimoniales.Count.Should().Be(0);
+			habitacion.CamasCuchetas.Count.Should().Be(0);
+		}
+
+		private async Task DadoQueSeReservaLaHabitacionPrivada(int habitacionId, DateTime primeraNoche, DateTime ultimaNoche)
+		{
+			var reserva = new Reserva { PrimeraNoche = primeraNoche, UltimaNoche = ultimaNoche, Estado = ReservaEstadoEnum.CheckinPendiente };
+			var reservasHabitacionesPrivadas = new ReservaHabitacionPrivada { Reserva = reserva, HabitacionPrivadaId = habitacionId };
+			reserva.ReservaHabitacionesPrivadas = new List<ReservaHabitacionPrivada> { reservasHabitacionesPrivadas };
+			await _context.Reservas.AddAsync(reserva);
+			await _context.SaveChangesAsync();
 		}
 
 		private async Task<int> DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo()

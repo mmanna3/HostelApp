@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
@@ -26,6 +27,11 @@ namespace Api.Core.Services
         public async Task<IEnumerable<Habitacion>> ListarConLugaresLibres()
         {
             return await _habitacionRepository.ListarConCamasLibres();
+        }
+
+        public async Task<IEnumerable<Habitacion>> ListarConLugaresLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
+        {
+	        return await _habitacionRepository.ListarConCamasLibresEntre(primeraNoche, ultimaNoche);
         }
 
         public async Task<Habitacion> ObtenerPorId(int id)

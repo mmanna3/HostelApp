@@ -59,8 +59,24 @@ namespace Api.Persistence.Repositories
 			        .Select(c => c.HabitacionPrivada.Id)
 			        .ToList();
 
-	        var habitacionesPrivadasLibres = _context.HabitacionesPrivadas.Where(x =>
-		        !idsDeHabitacionesOcupadasAlMenosUnaNocheEnElRango.Contains(x.Id));
+	        var habitacionesPrivadasLibres = _context.HabitacionesPrivadas
+				.Include(x => x.CamasIndividuales)
+				.Include(x => x.CamasMatrimoniales)
+				.Include(x => x.CamasCuchetas)
+					.ThenInclude(x => x.Abajo)
+				.Include(x => x.CamasCuchetas)
+					.ThenInclude(x => x.Arriba)
+				.Select(x => 
+					!idsDeHabitacionesOcupadasAlMenosUnaNocheEnElRango.Contains(x.Id) ? 
+					x : 
+					new HabitacionPrivada
+					{
+						Id = x.Id,
+						Nombre = x.Nombre,
+						CamasIndividuales = new List<CamaIndividual>(),
+						CamasCuchetas = new List<CamaCucheta>(),
+						CamasMatrimoniales = new List<CamaMatrimonial>(),
+					});
 
 	        return habitacionesPrivadasLibres;
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Core.Entidades;
 
@@ -11,5 +12,6 @@ namespace Api.Core.Services.Interfaces
         Task ModificarAsync(int id, Habitacion habitacion);
         Task<IEnumerable<Habitacion>> ListarConLugaresLibres();
         Task<Habitacion> ObtenerPorId(int id);
+        Task<IEnumerable<Habitacion>> ListarConLugaresLibresEntre(DateTime primeraNoche, DateTime ultimaNoche);
     }
 }
