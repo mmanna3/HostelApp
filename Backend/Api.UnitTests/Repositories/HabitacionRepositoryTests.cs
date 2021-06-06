@@ -52,7 +52,7 @@ namespace Api.UnitTests.Repositories
         }
 
 		[Test]
-		public async Task Lista_correctamente_lugares_libres_en_la_fecha_desde_hasta()
+		public async Task Lista_correctamente_lugares_libres_en_el_rango()
 		{
 			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo();
 			var camaIndividualReservadaId = await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _ultimaNoche);
@@ -72,6 +72,66 @@ namespace Api.UnitTests.Repositories
 			habitacion.CamasCuchetas.First().Arriba.Should().NotBeNull();
 			habitacion.CamasCuchetas.Skip(1).First().Abajo.Id.Should().NotBe(camaCuchetaDeAbajoReservadaId);
 			habitacion.CamasCuchetas.Skip(1).First().Arriba.Should().NotBeNull();
+		}
+
+		[Test]
+		public async Task CamaOcupada_PorqueReserva_EmpiezaAntesDePrimeraNoche_Y_TerminaAntesDeUltimaNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche.AddDays(-1), _ultimaNoche.AddDays(-1));
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(0);
+		}
+
+		[Test]
+		public async Task CamaOcupada_PorqueReserva_EmpiezaDespuesDePrimeraNoche_Y_TerminaDespuesDeUltimaNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche.AddDays(1), _ultimaNoche.AddDays(1));
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(0);
+		}
+
+		[Test]
+		public async Task CamaOcupada_PorqueReserva_EmpiezaEnPrimeraNoche_Y_TerminaEnUltimaNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche, _ultimaNoche);
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(0);
+		}
+
+		[Test]
+		public async Task CamaOcupada_PorqueReserva_EmpiezaDespuesDePrimeraNoche_Y_TerminaAntesDeUltimaNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche.AddDays(1), _primeraNoche.AddDays(1));
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(0);
+		}
+
+		[Test]
+		public async Task CamaLibre_PorqueReserva_EmpiezaDespuesDeUltimaNoche_Y_TerminaDespuesDeUltimaNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _ultimaNoche.AddDays(1), _ultimaNoche.AddDays(2));
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(1);
+		}
+
+		[Test]
+		public async Task CamaLibre_PorqueReserva_EmpiezaAntesDePrimeraNoche_Y_TerminaAntesDePrimeraNoche()
+		{
+			var habitacionId = await DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual();
+			await DadoQueSeReservaUnaCamaIndividual(habitacionId, _primeraNoche.AddDays(-2), _primeraNoche.AddDays(-1));
+
+			var habitacion = (await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Single(x => x.Id == habitacionId);
+			habitacion.CamasIndividuales.Count.Should().Be(1);
 		}
 
 		private async Task<int> DadoQueSeReservaUnaCamaMatrimonial(int habitacionId, DateTime primeraNoche, DateTime ultimaNoche)
@@ -105,6 +165,17 @@ namespace Api.UnitTests.Repositories
 			reserva.ReservaCamas = new List<ReservaCama> { reservasPorCama };
 			await _context.Reservas.AddAsync(reserva);
 			await _context.SaveChangesAsync();
+		}
+
+		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual()
+		{
+			var habitacion = new HabitacionCompartida { Nombre = "Azul" };
+			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
+			
+			await _context.CamasIndividuales.AddAsync(indi1);
+			await _context.SaveChangesAsync();
+
+			return habitacion.Id;
 		}
 
 		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo()
