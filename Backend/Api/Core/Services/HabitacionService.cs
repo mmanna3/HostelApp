@@ -24,11 +24,6 @@ namespace Api.Core.Services
             return await _habitacionRepository.Listar();
         }
 
-        public async Task<IEnumerable<Habitacion>> ListarConLugaresLibres()
-        {
-            return await _habitacionRepository.ListarConCamasLibres();
-        }
-
         public async Task<IEnumerable<Habitacion>> ListarConLugaresLibresEntre(DateTime primeraNoche, DateTime ultimaNoche)
         {
 	        return await _habitacionRepository.ListarConCamasLibresEntre(primeraNoche, ultimaNoche);
