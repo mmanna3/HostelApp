@@ -44,7 +44,7 @@ const CheckInsYCheckOutsDeHoy = (): ReactElement => {
           tooltip="Check-Outs de hoy"
           badge={
             estado === EstadosApiRequestEnum.exitoso
-              ? { texto: datos.checkIns.toString(), color: ColoresCssEnum.info }
+              ? { texto: datos.checkOuts.toString(), color: ColoresCssEnum.info }
               : { texto: '?', color: ColoresCssEnum.warning }
           }
           onClick={(): void => {
