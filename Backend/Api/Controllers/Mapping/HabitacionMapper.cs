@@ -1,5 +1,4 @@
 ﻿using Api.Core.Entidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.Controllers.DTOs.Habitacion;
@@ -58,27 +57,6 @@ namespace Api.Controllers.Mapping
 				Nombre = cama.Nombre,
 				NombreHabitacion = cama.ObtenerHabitacion().Nombre,
 		};
-		}
-
-		public static HabitacionConLugaresLibresDTO MapHabitacionConLugaresLibres(Habitacion habitacion, DateTime desde, DateTime hasta)
-		{
-			var camas = new List<Cama>();
-			if (habitacion.Tipo().Equals(HabitacionTipoEnum.Compartida))
-			{
-				camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Abajo).Where(x => x.EstaLibreEntre(desde, hasta)));
-				camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Arriba).Where(x => x.EstaLibreEntre(desde, hasta)));
-				camas.AddRange(habitacion.CamasMatrimoniales.Where(x => x.EstaLibreEntre(desde, hasta)));
-				camas.AddRange(habitacion.CamasIndividuales.Where(x => x.EstaLibreEntre(desde, hasta)));
-			}
-
-			return new HabitacionConLugaresLibresDTO
-			{
-				Id = habitacion.Id,
-				Nombre = habitacion.Nombre,
-				CantidadDeLugaresLibres = habitacion.LugaresLibresEntre(desde, hasta),
-				EsPrivada = habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
-				Camas = camas.Select(x => new CamaDTO{ Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
-			};
 		}
 
 		public static Habitacion Map(HabitacionDTO dto)
@@ -140,11 +118,6 @@ namespace Api.Controllers.Mapping
 		public static IEnumerable<CamaDTO> MapCamas(IEnumerable<Cama> camas)
 		{
 			return camas.Select(MapCama);
-		}
-
-		public static IEnumerable<HabitacionConLugaresLibresDTO> MapHabitacionParaReservaDTO(IEnumerable<Habitacion> habitaciones, DateTime desde, DateTime hasta)
-		{
-			return habitaciones.Select(x => MapHabitacionConLugaresLibres(x, desde, hasta)).OrderByDescending(x => x.CantidadDeLugaresLibres);
 		}
 
 		public static IEnumerable<HabitacionDTO> Map(IEnumerable<Habitacion> habitaciones)

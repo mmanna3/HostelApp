@@ -54,7 +54,5 @@ namespace Api.Core.Entidades
 
             return camas;
         }
-
-        public abstract int LugaresLibresEntre(DateTime desde, DateTime hasta);
     }
 }
