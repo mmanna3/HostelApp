@@ -1,6 +1,6 @@
 import { Boton } from 'components/botones/botones';
 import { Icon } from 'components/Icon';
-import { Body, Modal } from 'components/Modal';
+import ModalDetalle from 'components/ModalDetalle/ModalDetalle';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -107,76 +107,72 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
           enCancelacionExitosa();
         }}
       />
-      <Modal isVisible={modalPrincipalEsVisible} onHide={reiniciarDatos}>
-        <Body width={'500px'}>
-          <div className={Estilos.contenedor}>
-            <p className={Estilos.nombre}>
-              {datos.pasajeroTitular.nombreCompleto}
-              <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
-            </p>
-            <p className={Estilos.fechas}>
-              {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
-            </p>
-            <div className={Estilos.cuerpo}>
-              <div className={Estilos.dato}>
-                <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
-              </div>
-              <div className={Estilos.dato}>
-                <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
-              </div>
-              <div className={Estilos.dato}>
-                <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
-              </div>
-              <MostrarHabitacionesYCamas
-                habitacionesPrivadas={datos.habitacionesPrivadas}
-                camasDeHabitacionesCompartidas={datos.camas}
-              />
-              <div className={Estilos.botones}>
-                {datos.estado === ReservaEstadoEnum.CheckinPendiente && (
-                  <>
-                    <div className="column">
-                      <Boton
-                        icono="times"
-                        texto="Cancelar reserva"
-                        className={Estilos.ocuparTodoElAncho}
-                        onClick={(): void => {
-                          cambiarVisibilidadDeModalPrincipal(false);
-                          cambiarVisibilidadDeModalCancelar(true);
-                        }}
-                      />
-                    </div>
-                    <div className="column">
-                      <Boton
-                        icono="walking"
-                        texto="Hacer Check-In"
-                        className={`is-primary ${Estilos.ocuparTodoElAncho}`}
-                        onClick={(): void => {
-                          cambiarVisibilidadDeModalPrincipal(false);
-                          cambiarVisibilidadDeModalHacerCheckIn(true);
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-
-                {datos.estado === ReservaEstadoEnum.InHouse && (
-                  <div className="column">
-                    <Boton
-                      icono="walking"
-                      texto="Hacer Check-out"
-                      className={`is-primary ${Estilos.ocuparTodoElAncho}`}
-                      onClick={(): void => {
-                        cambiarVisibilidadDeModalPrincipal(false);
-                        cambiarVisibilidadDeModalHacerCheckOut(true);
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
+      <ModalDetalle esVisible={modalPrincipalEsVisible} alOcultar={reiniciarDatos}>
+        <p className={Estilos.nombre}>
+          {datos.pasajeroTitular.nombreCompleto}
+          <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
+        </p>
+        <p className={Estilos.fechas}>
+          {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
+        </p>
+        <div className={Estilos.cuerpo}>
+          <div className={Estilos.dato}>
+            <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
           </div>
-        </Body>
-      </Modal>
+          <div className={Estilos.dato}>
+            <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
+          </div>
+          <div className={Estilos.dato}>
+            <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
+          </div>
+          <MostrarHabitacionesYCamas
+            habitacionesPrivadas={datos.habitacionesPrivadas}
+            camasDeHabitacionesCompartidas={datos.camas}
+          />
+          <div className={Estilos.botones}>
+            {datos.estado === ReservaEstadoEnum.CheckinPendiente && (
+              <>
+                <div className="column">
+                  <Boton
+                    icono="times"
+                    texto="Cancelar reserva"
+                    className={Estilos.ocuparTodoElAncho}
+                    onClick={(): void => {
+                      cambiarVisibilidadDeModalPrincipal(false);
+                      cambiarVisibilidadDeModalCancelar(true);
+                    }}
+                  />
+                </div>
+                <div className="column">
+                  <Boton
+                    icono="walking"
+                    texto="Hacer Check-In"
+                    className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                    onClick={(): void => {
+                      cambiarVisibilidadDeModalPrincipal(false);
+                      cambiarVisibilidadDeModalHacerCheckIn(true);
+                    }}
+                  />
+                </div>
+              </>
+            )}
+
+            {datos.estado === ReservaEstadoEnum.InHouse && (
+              <div className="column">
+                <Boton
+                  icono="walking"
+                  texto="Hacer Check-out"
+                  className={`is-primary ${Estilos.ocuparTodoElAncho}`}
+                  onClick={(): void => {
+                    cambiarVisibilidadDeModalPrincipal(false);
+                    cambiarVisibilidadDeModalHacerCheckOut(true);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </ModalDetalle>
     </>
   ) : (
     <></>
