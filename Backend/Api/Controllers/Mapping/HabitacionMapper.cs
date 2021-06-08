@@ -154,19 +154,13 @@ namespace Api.Controllers.Mapping
 
 		public static HabitacionConLugaresLibresDTO MapHabitacionesConLugaresLugares(Habitacion habitacion)
 		{
-			var camas = new List<Cama>();
-			camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Abajo));
-			camas.AddRange(habitacion.CamasCuchetas.Select(x => x.Arriba));
-			camas.AddRange(habitacion.CamasMatrimoniales);
-			camas.AddRange(habitacion.CamasIndividuales);
-
 			return new HabitacionConLugaresLibresDTO
 			{
 				Id = habitacion.Id,
 				Nombre = habitacion.Nombre,
 				CantidadDeLugaresLibres = habitacion.CantidadTotalDeLugaresDisponibles(),
 				EsPrivada = habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
-				Camas = camas.Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
+				Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
 			};
 		}
 

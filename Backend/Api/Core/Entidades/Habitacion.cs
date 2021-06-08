@@ -33,20 +33,26 @@ namespace Api.Core.Entidades
 
         public int CantidadTotalDeLugaresDisponibles()
         {
-	        var lugaresDeCamasIndividuales = CamasIndividuales?.Count ?? 0;
-	        var lugaresDeCamasMatrimoniales = CamasMatrimoniales?.Count * 2 ?? 0;
-	        var lugaresDeCamasCuchetas = 0;
+            var camas = ObtenerTodasLasCamas();            
+	        return camas.Sum(x => x.Plazas());
+        }
 
+        public List<Cama> ObtenerTodasLasCamas()
+		{
+            var camas = new List<Cama>();
+            camas.AddRange(CamasMatrimoniales);
+            camas.AddRange(CamasIndividuales);
+            
             if (CamasCuchetas != null)
-	            foreach (var camaCucheta in CamasCuchetas)
-	            {
-		            if (camaCucheta.Abajo != null)
-			            lugaresDeCamasCuchetas++;
+                foreach (var camaCucheta in CamasCuchetas)
+                {
+                    if (camaCucheta.Abajo != null)
+                        camas.Add(camaCucheta.Abajo);
                     if (camaCucheta.Arriba != null)
-	                    lugaresDeCamasCuchetas++;
-	            }
+                        camas.Add(camaCucheta.Arriba);
+                }
 
-	        return lugaresDeCamasIndividuales + lugaresDeCamasMatrimoniales + lugaresDeCamasCuchetas;
+            return camas;
         }
 
         public abstract int LugaresLibresEntre(DateTime desde, DateTime hasta);
