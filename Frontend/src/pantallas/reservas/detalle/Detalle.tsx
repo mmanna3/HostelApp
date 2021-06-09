@@ -1,5 +1,5 @@
 import { Boton } from 'components/botones/botones';
-import { Icon } from 'components/Icon';
+import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
 import Modal from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -116,15 +116,10 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
           {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
         </p>
         <div className={Estilos.cuerpo}>
-          <div className={Estilos.dato}>
-            <Icon faCode="calendar" /> <p>{textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)}</p>
-          </div>
-          <div className={Estilos.dato}>
-            <Icon faCode="user-friends" /> <p>{textoPasajeros(datos.cantidadDePasajeros)}</p>
-          </div>
-          <div className={Estilos.dato}>
-            <Icon faCode="clock" /> <p>Llega a las {datos.horaEstimadaDeLlegada} hs.</p>
-          </div>
+          <DatoConIcono icono="calendar" texto={textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)} />
+          <DatoConIcono icono="user-friends" texto={textoPasajeros(datos.cantidadDePasajeros)} />
+          <DatoConIcono icono="clock" texto={`Llega a las ${datos.horaEstimadaDeLlegada} hs.`} />
+
           <MostrarHabitacionesYCamas
             habitacionesPrivadas={datos.habitacionesPrivadas}
             camasDeHabitacionesCompartidas={datos.camas}

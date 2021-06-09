@@ -1,12 +1,5 @@
 @import 'universal.scss';
 
-.contenedor {
-  border-radius: 20px;
-  padding: 1.5rem;
-  background-color: white;
-  color: $color-tipografia;
-}
-
 .nombre {
   font-size: 20px;
   font-weight: bold;
@@ -48,21 +41,6 @@
 
 .cuerpo {
   margin-top: 22px;
-}
-
-.dato {
-  margin-bottom: 0.5rem;
-}
-
-.dato span {
-  font-size: 1.25rem;
-  margin-right: 0.37rem;
-  display: inline-block;
-}
-
-.dato p {
-  display: inline-block;
-  margin-left: 0.5rem;
 }
 
 .botones {
