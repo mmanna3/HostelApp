@@ -1,24 +1,5 @@
 @import 'universal.scss';
 
-.boton {
-  @extend .button;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-.textoDelBoton {
-  margin-left: 0.5rem;
-}
-
-.contenedor {
-  margin-top: 0.25rem;
-  background-color: $white-ter;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 2rem;
-  border-radius: 8px;
-}
-
 .dato {
   margin-bottom: 0.5rem;
 }
