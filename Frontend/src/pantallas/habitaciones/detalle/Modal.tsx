@@ -1,5 +1,6 @@
-import Display, { DisplayLista, DisplayTextarea, SiNo } from 'components/display/Display';
-import { CardBody, FooterVolver, Header, ModalCard } from 'components/Modal/Modal';
+import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
+import { DisplayLista, DisplayTextarea } from 'components/display/Display';
+import Modal, { CuerpoModal, TituloModal } from 'components/Modal/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -25,24 +26,20 @@ const Detalle = (): ReactElement => {
     [false, 'Compartida'],
   ]);
 
+  var textoTieneBanio = new Map<boolean, string>([
+    [true, 'Tiene baño privado'],
+    [false, 'No tiene baño privado'],
+  ]);
+
   if (datos !== null) {
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
-      <ModalCard isVisible={true} onHide={ocultar}>
-        <Header title="Detalle de habitación" onHide={ocultar} />
-        <CardBody>
-          <div className="columns">
-            <div className="column">
-              <Display label="Nombre" valor={datos.nombre} />
-            </div>
-            <div className="column">
-              <Display label="Tipo" valor={textoTipo.get(datos.esPrivada)} />
-            </div>
-            <div className="column">
-              <SiNo label="Tiene baño" valor={datos.tieneBanio} />
-            </div>
-          </div>
+      <Modal esVisible={true} alOcultar={ocultar}>
+        <TituloModal>Habitación {datos.nombre}</TituloModal>
+        <CuerpoModal>
+          <DatoConIcono icono="door-closed" texto={textoTipo.get(datos.esPrivada) ?? ''} />
+          <DatoConIcono icono="sink" texto={textoTieneBanio.get(datos.tieneBanio) ?? ''} />
           <div className="columns">
             <div className="column">
               <DisplayLista
@@ -74,9 +71,8 @@ const Detalle = (): ReactElement => {
               <DisplayTextarea label="Información adicional" valor={datos.informacionAdicional} />
             </div>
           </div>
-        </CardBody>
-        <FooterVolver onClick={ocultar} />
-      </ModalCard>
+        </CuerpoModal>
+      </Modal>
     );
   }
   return <></>;
