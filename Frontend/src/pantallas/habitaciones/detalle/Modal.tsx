@@ -1,12 +1,11 @@
 import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
 import { DisplayTextarea } from 'components/display/Display';
-import Label from 'components/Label';
 import Modal, { CuerpoModal, TituloModal } from 'components/Modal/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import Estilos from './Modal.module.scss';
 import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
+import Acordeon from 'components/Acordeon/Acordeon';
 
 const Detalle = (): ReactElement => {
   const dispatch = useDispatch();
@@ -33,8 +32,8 @@ const Detalle = (): ReactElement => {
         <CuerpoModal>
           <DatoConIcono icono="door-closed" texto={textoTipo.get(datos.esPrivada) ?? ''} />
           <DatoConIcono icono="sink" texto={textoTieneBanio.get(datos.tieneBanio) ?? ''} />
-          <div className={Estilos.camas}>
-            <Label text="Camas" />
+
+          <Acordeon icono="bed" texto="camas">
             <table className="table is-fullwidth">
               <tbody>
                 {datos.camas.map(
@@ -47,7 +46,8 @@ const Detalle = (): ReactElement => {
                 )}
               </tbody>
             </table>
-          </div>
+          </Acordeon>
+
           <div className="columns">
             <div className="column">
               <DisplayTextarea label="Información adicional" valor={datos.informacionAdicional} />

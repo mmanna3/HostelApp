@@ -75,8 +75,10 @@ const MostrarHabitacionesYCamas = ({ habitacionesPrivadas, camasDeHabitacionesCo
 
   return (
     <Acordeon texto="habitaciones y camas" icono="bed">
-      {renderizarHabitacionesPrivadas(habitacionesPrivadas)}
-      {renderizarCamasDeHabitacionesCompartidas(camasDeHabitacionesCompartidas)}
+      <div className={Estilos.contenedor}>
+        {renderizarHabitacionesPrivadas(habitacionesPrivadas)}
+        {renderizarCamasDeHabitacionesCompartidas(camasDeHabitacionesCompartidas)}
+      </div>
     </Acordeon>
   );
 };
