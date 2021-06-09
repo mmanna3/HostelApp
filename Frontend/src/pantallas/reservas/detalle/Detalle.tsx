@@ -1,6 +1,6 @@
 import { Boton } from 'components/botones/botones';
 import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
-import Modal from 'components/Modal/Modal';
+import Modal, { TituloModal } from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -108,10 +108,10 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
         }}
       />
       <Modal esVisible={modalPrincipalEsVisible} alOcultar={reiniciarDatos}>
-        <p className={Estilos.nombre}>
+        <TituloModal>
           {datos.pasajeroTitular.nombreCompleto}
           <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
-        </p>
+        </TituloModal>
         <p className={Estilos.fechas}>
           {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
         </p>

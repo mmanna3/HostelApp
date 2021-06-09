@@ -28,6 +28,14 @@ const Modal = ({ children, esVisible, alOcultar }: IProps): ReactElement => {
 
 export default Modal;
 
+interface ITituloModalProps {
+  children: ReactNode;
+}
+
+export const TituloModal = ({ children }: ITituloModalProps): ReactElement => (
+  <p className={Estilos.tituloModal}>{children}</p>
+);
+
 interface IModalParams {
   children: ReactNode;
   onHide: () => void;
