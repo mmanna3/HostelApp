@@ -1,4 +1,3 @@
-import DetalleHabitacion from 'pantallas/habitaciones/detalle/Modal';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { HabitacionDTO, ReservaResumenDTO, ReservasDelPeriodoDTO } from 'store/api/DTOs';
@@ -18,7 +17,6 @@ interface IParams {
 const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
   const dispatch = useDispatch();
   const [habitacionesConCamasUnificadas, setHabitacionesConCamasUnificadas] = useState<IHabitacionParaTablaReservas[]>([]);
-  const [idDetalleHabitacion, cambiarIdDetalleHabitacion] = useState<Nullable<number>>(null);
 
   useEffect((): void => {
     var dias: Date[] = calcularDiasDeReservasVisibles(datos.desde, datos.hasta);
@@ -35,14 +33,10 @@ const TablaReservas = ({ datos, habitaciones }: IParams): ReactElement => {
 
   return (
     <>
-      <DetalleHabitacion id={idDetalleHabitacion} onHide={(): void => cambiarIdDetalleHabitacion(null)}></DetalleHabitacion>
       <div className={Estilos.contenedor}>
         <table className="table is-hoverable is-bordered is-fullwidth">
           <EncabezadoDias fechaDesde={datos.desde} fechaHasta={datos.hasta} />
-          <Cuerpo
-            habitacionesConCamasUnificadas={habitacionesConCamasUnificadas}
-            mostrarDetalleDeHabitacion={(id: Nullable<number>): void => cambiarIdDetalleHabitacion(id)}
-          ></Cuerpo>
+          <Cuerpo habitacionesConCamasUnificadas={habitacionesConCamasUnificadas}></Cuerpo>
         </table>
       </div>
       <FooterReferencias />

@@ -1,24 +1,12 @@
 import Display, { DisplayLista, DisplayTextarea, SiNo } from 'components/display/Display';
 import { CardBody, FooterVolver, Header, ModalCard } from 'components/Modal/Modal';
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiRequestEnum';
 
-interface IProps {
-  onHide: () => any;
-  id: Nullable<number>;
-}
-
-const Detalle = ({ onHide, id }: IProps): ReactElement => {
+const Detalle = (): ReactElement => {
   const dispatch = useDispatch();
-  const { datos, estado } = useSelector(api.habitaciones.obtenerPorId.selector);
-
-  const fetchData = useCallback((): any => {
-    if (id !== null) dispatch(api.habitaciones.obtenerPorId.invocar({ id }));
-  }, [dispatch, id]);
-
-  useEffect((): any => fetchData(), [fetchData]);
+  const { datos } = useSelector(api.habitaciones.obtenerPorId.selector);
 
   function calcularMaximoDeCamas(): number {
     var maximo = datos.camasMatrimoniales.length;
@@ -29,7 +17,6 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
   }
 
   function ocultar(): void {
-    onHide();
     dispatch(api.habitaciones.obtenerPorId.reiniciar());
   }
 
@@ -42,7 +29,7 @@ const Detalle = ({ onHide, id }: IProps): ReactElement => {
     const rowsDelTextAreaDeCamas = calcularMaximoDeCamas() + 1;
 
     return (
-      <ModalCard isVisible={id !== null && estado === ESTADO.exitoso} onHide={ocultar}>
+      <ModalCard isVisible={true} onHide={ocultar}>
         <Header title="Detalle de habitación" onHide={ocultar} />
         <CardBody>
           <div className="columns">

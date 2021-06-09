@@ -10,10 +10,9 @@ import Estilos from './Cuerpo.module.scss';
 
 interface IParams {
   habitacionesConCamasUnificadas: IHabitacionParaTablaReservas[];
-  mostrarDetalleDeHabitacion: (id: Nullable<number>) => void;
 }
 
-const Cuerpo = ({ habitacionesConCamasUnificadas, mostrarDetalleDeHabitacion }: IParams): ReactElement => {
+const Cuerpo = ({ habitacionesConCamasUnificadas }: IParams): ReactElement => {
   const tablaDeReservas = useSelector(tablaDeReservasSelector);
   const [filas, actualizarFilas] = useState<ReactElement[]>([]);
 

@@ -10,7 +10,6 @@ import Detalle from './detalle/Modal';
 const HabitacionesPage = (): ReactElement => {
   const dispatch = useDispatch();
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
-  const [idSeleccionadoParaDetalle, cambiarIdSeleccionadoParaDetalle] = useState(null);
   const { datos, estado } = useSelector(api.habitaciones.listar.selector);
 
   const columnas = [
@@ -44,7 +43,7 @@ const HabitacionesPage = (): ReactElement => {
           size="lg"
           cssClass="primary-clickeable"
           onClick={(): void => {
-            cambiarIdSeleccionadoParaDetalle(cell.row.values.id);
+            dispatch(api.habitaciones.obtenerPorId.invocar({ id: cell.row.values.id }));
           }}
         />
       ),
@@ -67,7 +66,7 @@ const HabitacionesPage = (): ReactElement => {
         onHide={(): void => mostrarModalDeCreacion(false)}
         onSuccessfulSubmit={cerrarModalDeCreacionYRefrescarTabla}
       ></Crear>
-      <Detalle id={idSeleccionadoParaDetalle} onHide={(): void => cambiarIdSeleccionadoParaDetalle(null)}></Detalle>
+      <Detalle />
 
       <h1 className="title is-2">Habitaciones</h1>
       <div className="botonera">
