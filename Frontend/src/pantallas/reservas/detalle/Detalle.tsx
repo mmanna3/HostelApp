@@ -1,6 +1,6 @@
 import { Boton } from 'components/botones/botones';
 import { Icon } from 'components/Icon';
-import ModalDetalle from 'components/ModalDetalle/ModalDetalle';
+import Modal from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -107,7 +107,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
           enCancelacionExitosa();
         }}
       />
-      <ModalDetalle esVisible={modalPrincipalEsVisible} alOcultar={reiniciarDatos}>
+      <Modal esVisible={modalPrincipalEsVisible} alOcultar={reiniciarDatos}>
         <p className={Estilos.nombre}>
           {datos.pasajeroTitular.nombreCompleto}
           <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
@@ -172,7 +172,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
             )}
           </div>
         </div>
-      </ModalDetalle>
+      </Modal>
     </>
   ) : (
     <></>

@@ -1,5 +1,5 @@
 import Display, { DisplayLista, DisplayTextarea, SiNo } from 'components/display/Display';
-import { CardBody, FooterVolver, Header, ModalCard } from 'components/Modal';
+import { CardBody, FooterVolver, Header, ModalCard } from 'components/Modal/Modal';
 import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';

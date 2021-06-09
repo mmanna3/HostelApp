@@ -1,5 +1,5 @@
 import { Input } from 'components/Input';
-import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal/Modal';
 import ValidationSummary from 'components/ValidationSummary';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';

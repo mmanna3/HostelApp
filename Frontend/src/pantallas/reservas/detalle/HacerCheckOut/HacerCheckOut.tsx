@@ -1,7 +1,7 @@
 import { Boton, SubmitButton } from 'components/botones/botones';
 import Form from 'components/Form';
 import { Input } from 'components/Input';
-import ModalDetalle from 'components/ModalDetalle/ModalDetalle';
+import Modal from 'components/Modal/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -25,7 +25,7 @@ const HacerCheckOut = ({ esVisible, datos, alOcultar, enCheckOutExitoso }: IProp
   };
 
   return (
-    <ModalDetalle esVisible={esVisible} alOcultar={alOcultar}>
+    <Modal esVisible={esVisible} alOcultar={alOcultar}>
       <Form defaultValues={undefined} onSubmit={alEnviar}>
         <div className={Estilos.pregunta}>¿Querés confirmar el check-out?</div>
         <Input style={{ display: 'none' }} defaultValue={datos.id} name="reservaId" />
@@ -42,7 +42,7 @@ const HacerCheckOut = ({ esVisible, datos, alOcultar, enCheckOutExitoso }: IProp
           </div>
         </div>
       </Form>
-    </ModalDetalle>
+    </Modal>
   );
 };
 

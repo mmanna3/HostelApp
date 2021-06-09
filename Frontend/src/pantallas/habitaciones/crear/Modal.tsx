@@ -1,7 +1,7 @@
 import { Boton } from 'components/botones/botones';
 import { Input } from 'components/Input';
 import Label from 'components/Label';
-import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal/Modal';
 import Select from 'components/Select';
 import SiNo from 'components/SiNo';
 import Textarea from 'components/Textarea';

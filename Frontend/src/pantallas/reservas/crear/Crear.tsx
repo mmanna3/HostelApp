@@ -1,5 +1,5 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
-import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal/Modal';
 import ValidationSummary from 'components/ValidationSummary';
 import React, { ReactElement, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

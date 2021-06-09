@@ -1,6 +1,32 @@
 import { BotonSalir, SubmitButton } from 'components/botones/botones';
 import Form from 'components/Form';
 import React, { ReactElement, ReactNode } from 'react';
+import Estilos from './Modal.module.scss';
+
+interface IProps {
+  children: ReactNode;
+  esVisible: boolean;
+  alOcultar: () => void;
+}
+
+const Modal = ({ children, esVisible, alOcultar }: IProps): ReactElement => {
+  const visibilidad = new Map<boolean, string>([
+    [true, 'is-active'],
+    [false, ''],
+  ]);
+
+  return (
+    <div className={`modal ${visibilidad.get(esVisible)}`}>
+      <div className="modal-background" onClick={alOcultar}></div>
+
+      <div className="modal-content" style={{ width: '500px', maxHeight: '480px' }}>
+        <div className={Estilos.contenedor}>{children}</div>
+      </div>
+    </div>
+  );
+};
+
+export default Modal;
 
 interface IModalParams {
   children: ReactNode;
@@ -21,20 +47,6 @@ export const ModalCard = ({ children, onHide, isVisible, minWidth = '' }: IModal
       <div className="modal-card" style={{ minWidth: minWidth }}>
         {children}
       </div>
-    </div>
-  );
-};
-
-export const Modal = ({ children, onHide, isVisible }: IModalParams): ReactElement => {
-  const visibilidad = new Map<boolean, string>([
-    [true, 'is-active'],
-    [false, ''],
-  ]);
-
-  return (
-    <div className={`modal ${visibilidad.get(isVisible)}`}>
-      <div className="modal-background" onClick={onHide}></div>
-      {children}
     </div>
   );
 };
@@ -122,19 +134,5 @@ export const CardBody = ({ children, minHeight = '' }: ICardBody): ReactElement 
     <section className="modal-card-body" style={{ width: 'inherit', minHeight: minHeight, maxHeight: '480px' }}>
       <div className="content">{children}</div>
     </section>
-  );
-};
-
-interface IBody {
-  children: ReactNode;
-  width?: string;
-  minHeight?: string;
-}
-
-export const Body = ({ children, width = 'inherit', minHeight = '' }: IBody): ReactElement => {
-  return (
-    <div className="modal-content" style={{ width: width, minHeight: minHeight, maxHeight: '480px' }}>
-      {children}
-    </div>
   );
 };

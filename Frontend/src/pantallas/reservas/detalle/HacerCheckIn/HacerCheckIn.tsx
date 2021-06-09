@@ -1,6 +1,6 @@
 import { LineaDivisoria } from 'components/Divider/LineaDivisoria';
 import { Input } from 'components/Input';
-import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal';
+import { CardBody, FooterAcceptCancel, Header, ModalForm } from 'components/Modal/Modal';
 import ValidationSummary from 'components/ValidationSummary';
 import DatosDelPasajero from 'pantallas/reservas/crear/DatosDelPasajero/DatosDelPasajero';
 import React, { ReactElement, useEffect, useState } from 'react';
