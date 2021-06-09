@@ -1,5 +1,4 @@
 import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
-import { DisplayTextarea } from 'components/display/Display';
 import Modal, { CuerpoModal, TituloModal } from 'components/Modal/Modal';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,12 +46,9 @@ const Detalle = (): ReactElement => {
               </tbody>
             </table>
           </Acordeon>
-
-          <div className="columns">
-            <div className="column">
-              <DisplayTextarea label="Información adicional" valor={datos.informacionAdicional} />
-            </div>
-          </div>
+          <Acordeon icono="align-right" texto="información adicional">
+            {datos.informacionAdicional !== '' ? datos.informacionAdicional : 'Sin información adicional'}
+          </Acordeon>
         </CuerpoModal>
       </Modal>
     );

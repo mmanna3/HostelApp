@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faAlignRight,
   faArrowRight,
   faBed,
   faCalendar,
@@ -48,3 +49,4 @@ library.add(faWalking);
 library.add(faPen);
 library.add(faInfoCircle);
 library.add(faSink);
+library.add(faAlignRight);
