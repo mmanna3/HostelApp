@@ -23,6 +23,16 @@ export interface HabitacionConLugaresLibresDTO {
     cantidadDeLugaresLibres: number;
 }
 
+// ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionDetalleDTO.cs
+export interface HabitacionDetalleDTO {
+    id: number;
+    nombre: string;
+    tieneBanio: boolean;
+    esPrivada: boolean;
+    informacionAdicional: string;
+    camas: CamaDTO[];
+}
+
 // ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionDTO.cs
 export interface HabitacionDTO {
     id: number;

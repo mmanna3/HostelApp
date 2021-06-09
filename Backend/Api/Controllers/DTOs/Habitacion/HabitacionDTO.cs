@@ -25,5 +25,5 @@ namespace Api.Controllers.DTOs.Habitacion
         public List<CamaCuchetaDTO> CamasCuchetas { get; set; }
 
         public List<CamaDTO> CamasMatrimoniales { get; set; }
-    }
+	}
 }

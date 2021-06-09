@@ -8,6 +8,19 @@ namespace Api.Controllers.Mapping
 {
 	public static class HabitacionMapper
 	{
+		public static HabitacionDetalleDTO MapDetalle(Habitacion habitacion)
+		{
+			return new HabitacionDetalleDTO
+			{
+				Id = habitacion.Id,
+				Nombre = habitacion.Nombre,
+				TieneBanio = habitacion.TieneBanio,
+				EsPrivada = habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
+				InformacionAdicional = habitacion.InformacionAdicional,
+				Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
+			};
+		}
+
 		public static HabitacionDTO Map(Habitacion entidad)
 		{
 			return new HabitacionDTO

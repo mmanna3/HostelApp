@@ -68,18 +68,13 @@ namespace Api.IntegrationTests
 
             var obtenerPorIdResponse = await _httpClient.GetAsync($"{ENDPOINT}/obtener?id={habitacionId}");
             obtenerPorIdResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var habitacion = await obtenerPorIdResponse.Content.ReadAsAsync<HabitacionDTO>();
+            var habitacion = await obtenerPorIdResponse.Content.ReadAsAsync<HabitacionDetalleDTO>();
 
             habitacion.EsPrivada.Should().BeFalse();
             habitacion.TieneBanio.Should().BeTrue();
             habitacion.InformacionAdicional.Should().Be("asd");
 
-            habitacion.CamasMatrimoniales.Count.Should().Be(1);
-            habitacion.CamasIndividuales.Count.Should().Be(1);
-
-            habitacion.CamasCuchetas.Count.Should().Be(1);
-            habitacion.CamasCuchetas.First().Abajo.Should().NotBeNull();
-            habitacion.CamasCuchetas.First().Arriba.Should().NotBeNull();
+            habitacion.Camas.Count.Should().Be(4);
         }
 
         [Test]
