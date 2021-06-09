@@ -2,11 +2,11 @@ import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
 import { DisplayTextarea } from 'components/display/Display';
 import Label from 'components/Label';
 import Modal, { CuerpoModal, TituloModal } from 'components/Modal/Modal';
-import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
 import React, { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
 import Estilos from './Modal.module.scss';
+import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 
 const Detalle = (): ReactElement => {
   const dispatch = useDispatch();

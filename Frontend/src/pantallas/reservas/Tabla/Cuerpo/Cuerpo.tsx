@@ -1,5 +1,6 @@
 import { Icon } from 'components/Icon';
-import { IHabitacionParaTablaReservas, obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
+import { IHabitacionParaTablaReservas } from 'pantallas/reservas/utilidades';
+import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import React, { Fragment, ReactElement, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CamaDTO } from 'store/api/DTOs';

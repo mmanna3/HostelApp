@@ -1,5 +1,5 @@
 import { Icon } from 'components/Icon';
-import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
+import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { CamaDTO, HabitacionDTO } from 'store/api/DTOs';
 import Estilos from './MostrarHabitacionesYCamas.module.scss';

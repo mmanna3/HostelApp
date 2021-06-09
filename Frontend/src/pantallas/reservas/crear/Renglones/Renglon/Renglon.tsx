@@ -1,7 +1,7 @@
 import { Autocomplete, ILabelValue } from 'components/Autocomplete';
 import { Icon } from 'components/Icon';
 import { Input } from 'components/Input';
-import { obtenerTipoCamaDescripcion } from 'pantallas/reservas/utilidades';
+import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import React, { ReactElement } from 'react';
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Estilos from './Renglon.module.scss';
