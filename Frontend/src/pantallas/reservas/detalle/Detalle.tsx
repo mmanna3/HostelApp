@@ -1,6 +1,6 @@
 import { Boton } from 'components/botones/botones';
 import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
-import Modal, { TituloModal } from 'components/Modal/Modal';
+import Modal, { TituloModal, CuerpoModal } from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
@@ -115,7 +115,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
         <p className={Estilos.fechas}>
           {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
         </p>
-        <div className={Estilos.cuerpo}>
+        <CuerpoModal>
           <DatoConIcono icono="calendar" texto={textoNoches(datos.diaDeCheckout, datos.diaDeCheckin)} />
           <DatoConIcono icono="user-friends" texto={textoPasajeros(datos.cantidadDePasajeros)} />
           <DatoConIcono icono="clock" texto={`Llega a las ${datos.horaEstimadaDeLlegada} hs.`} />
@@ -166,7 +166,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
               </div>
             )}
           </div>
-        </div>
+        </CuerpoModal>
       </Modal>
     </>
   ) : (

@@ -36,6 +36,14 @@ export const TituloModal = ({ children }: ITituloModalProps): ReactElement => (
   <p className={Estilos.tituloModal}>{children}</p>
 );
 
+interface ICuerpoModalProps {
+  children: ReactNode;
+}
+
+export const CuerpoModal = ({ children }: ICuerpoModalProps): ReactElement => (
+  <div className={Estilos.cuerpoModal}>{children}</div>
+);
+
 interface IModalParams {
   children: ReactNode;
   onHide: () => void;
