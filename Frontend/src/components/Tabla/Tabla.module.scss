@@ -1,3 +1,17 @@
 .cabecera {
-  font-weight: 400;
+  font-weight: 500;
+  height: 3rem;
+}
+
+.cabecera:first-child {
+  border-top-left-radius: 1.2rem;
+}
+
+.cabecera:last-child {
+  border-top-right-radius: 1.2rem;
+}
+
+.cabeceraContenedor {
+  text-align: center;
+  margin-top: 0.2rem;
 }

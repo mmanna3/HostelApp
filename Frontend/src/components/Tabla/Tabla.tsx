@@ -63,7 +63,7 @@ const Table = ({ fetchData, columnas, datos, estado }: IProps): ReactElement => 
               {headerGroup.headers.map(
                 (column, i): ReactElement => (
                   <th {...column.getHeaderProps()} key={i} className={`is-primary ${Estilos.cabecera}`}>
-                    {column.render('Header')}
+                    <p className={Estilos.cabeceraContenedor}>{column.render('Header')}</p>
                   </th>
                 )
               )}
