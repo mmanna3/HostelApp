@@ -1,4 +1,4 @@
-import { HabitacionConLugaresLibresDTO, HabitacionDTO, HabitacionDetalleDTO } from 'store/api/DTOs';
+import { HabitacionConLugaresLibresDTO, HabitacionDTO, HabitacionDetalleDTO, CambiarHabilitacionDTO } from 'store/api/DTOs';
 import {
   generarSliceHttpGet,
   generarSliceHttpPost,
@@ -35,6 +35,18 @@ const crearSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
+const deshabilitarSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'deshabilitarHabitacion',
+  endpoint: '/habitaciones/deshabilitar',
+  dataInicial: null,
+};
+
+const habilitarSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'habilitarHabitacion',
+  endpoint: '/habitaciones/habilitar',
+  dataInicial: null,
+};
+
 const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
 const listarConLugaresLibres = {
   ...generarSliceHttpGet<HabitacionConLugaresLibresDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
@@ -44,9 +56,18 @@ const crear = {
   ...generarSliceHttpPost<string, HabitacionDTO>(crearSliceInfo),
 };
 
+const deshabilitar = {
+  ...generarSliceHttpPost<void, CambiarHabilitacionDTO>(deshabilitarSliceInfo),
+};
+const habilitar = {
+  ...generarSliceHttpPost<void, CambiarHabilitacionDTO>(habilitarSliceInfo),
+};
+
 export default {
   listar,
   listarConLugaresLibres,
   obtenerPorId,
   crear,
+  deshabilitar,
+  habilitar,
 };

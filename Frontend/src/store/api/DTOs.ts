@@ -14,6 +14,21 @@ export interface CamaDTO {
     nombreHabitacion: string;
 }
 
+// ..\Backend\Api\Controllers\DTOs\Habitacion\CambiarHabilitacionDTO.cs
+export interface CambiarHabilitacionDTO {
+    id: number;
+}
+
+// ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionBaseDTO.cs
+export interface HabitacionBaseDTO {
+    id: number;
+    nombre: string;
+    tieneBanio: boolean;
+    esPrivada: boolean;
+    estaHabilitada: boolean;
+    informacionAdicional: string;
+}
+
 // ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionConLugaresLibresDTO.cs
 export interface HabitacionConLugaresLibresDTO {
     id: number;
@@ -24,22 +39,12 @@ export interface HabitacionConLugaresLibresDTO {
 }
 
 // ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionDetalleDTO.cs
-export interface HabitacionDetalleDTO {
-    id: number;
-    nombre: string;
-    tieneBanio: boolean;
-    esPrivada: boolean;
-    informacionAdicional: string;
+export interface HabitacionDetalleDTO extends HabitacionBaseDTO {
     camas: CamaDTO[];
 }
 
 // ..\Backend\Api\Controllers\DTOs\Habitacion\HabitacionDTO.cs
-export interface HabitacionDTO {
-    id: number;
-    nombre: string;
-    tieneBanio: boolean;
-    esPrivada: boolean;
-    informacionAdicional: string;
+export interface HabitacionDTO extends HabitacionBaseDTO {
     camasIndividuales: CamaDTO[];
     camasCuchetas: CamaCuchetaDTO[];
     camasMatrimoniales: CamaDTO[];

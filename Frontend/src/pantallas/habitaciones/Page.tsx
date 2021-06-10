@@ -71,7 +71,7 @@ const HabitacionesPage = (): ReactElement => {
         onHide={(): void => mostrarModalDeCreacion(false)}
         onSuccessfulSubmit={cerrarModalDeCreacionYRefrescarTabla}
       ></Crear>
-      <Detalle />
+      <Detalle enDeshabilitacionExitosa={fetchData} />
 
       <h1 className="title is-2">Habitaciones</h1>
       <div className="botonera">
