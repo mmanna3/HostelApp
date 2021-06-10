@@ -7,7 +7,9 @@ namespace Api.Core.Entidades
     public abstract class Cama : EntidadConId
     {
         [Required, MaxLength(10)]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; }        
+        [Required]
+        public bool EstaHabilitada { get; set; }
         public ICollection<ReservaCama> ReservaCamas { get; set; }
         public abstract Habitacion ObtenerHabitacion();
 

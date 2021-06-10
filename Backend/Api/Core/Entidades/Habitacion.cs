@@ -24,6 +24,9 @@ namespace Api.Core.Entidades
         [Required]
         public bool TieneBanio { get; set; }
 
+        [Required]
+        public bool EstaHabilitada { get; set; }
+
         [MaxLength(140)]
         public string InformacionAdicional { get; set; }
 
