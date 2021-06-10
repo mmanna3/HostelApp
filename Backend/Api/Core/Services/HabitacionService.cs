@@ -97,5 +97,25 @@ namespace Api.Core.Services
 
             return nombres.GroupBy(x => x).Any(g => g.Count() > 1);
         }
-    }
+
+		public async Task Deshabilitar(int id)
+		{
+            var habitacionAModificar = await _habitacionRepository.ObtenerPorId(id);
+
+            if (habitacionAModificar == null)
+                throw new AppException($"No se encontró la habitación de id:{id}");
+
+
+            var habitacionModificada = habitacionAModificar;
+            habitacionModificada.EstaHabilitada = false;
+            _habitacionRepository.Modificar(habitacionAModificar, habitacionModificada);
+
+            await _unitOfWork.CompleteAsync();
+        }
+
+		public async Task Habilitar(int id)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

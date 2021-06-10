@@ -36,6 +36,29 @@ namespace Api.IntegrationTests
         }
 
         [Test]
+        public async Task Deshabilitar_Habitacion()
+        {
+            var response = await CrearUnaHabitacionCompartida();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var idHabitacionCreada = await response.Content.ReadAsAsync<int>();
+
+            var consultarHabitacionesResponse1 = await ListarHabitaciones();
+            consultarHabitacionesResponse1.StatusCode.Should().Be(HttpStatusCode.OK);
+            var habitaciones1 = await consultarHabitacionesResponse1.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+            habitaciones1.First().EstaHabilitada.Should().Be(true);
+
+            var deshabilitarResponse = await DeshabilitarHabitacion(idHabitacionCreada);
+            deshabilitarResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var consultarHabitacionesResponse2 = await ListarHabitaciones();
+            consultarHabitacionesResponse2.StatusCode.Should().Be(HttpStatusCode.OK);
+            var habitaciones2 = await consultarHabitacionesResponse2.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+
+            habitaciones2.First().Id.Should().Be(idHabitacionCreada);
+            habitaciones2.First().EstaHabilitada.Should().Be(false);
+        }
+
+        [Test]
         public async Task CreaHabitacion_Compartida_Correctamente()
         {
             var response = await CrearUnaHabitacionCompartida();
@@ -200,6 +223,12 @@ namespace Api.IntegrationTests
         private async Task<HttpResponseMessage> ListarHabitaciones()
         {
             return await _httpClient.GetAsync(ENDPOINT);
+        }
+
+        private async Task<HttpResponseMessage> DeshabilitarHabitacion(int id)
+		{
+            var body = new CambiarHabilitacionDTO { Id = id};
+            return await _httpClient.PostAsJsonAsync($"{ENDPOINT}/deshabilitar", body);
         }
 
         private async Task<HttpResponseMessage> ListarHabitacionesConLugaresLibresEnElRango()

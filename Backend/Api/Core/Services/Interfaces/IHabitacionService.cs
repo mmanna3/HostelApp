@@ -12,5 +12,7 @@ namespace Api.Core.Services.Interfaces
         Task ModificarAsync(int id, Habitacion habitacion);
         Task<Habitacion> ObtenerPorId(int id);
         Task<IEnumerable<Habitacion>> ListarConLugaresLibresEntre(DateTime primeraNoche, DateTime ultimaNoche);
-    }
+		Task Deshabilitar(int id);
+		Task Habilitar(int id);
+	}
 }
