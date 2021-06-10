@@ -8,57 +8,62 @@ namespace Api.Controllers.Mapping
 {
 	public static class HabitacionMapper
 	{
+		public static void MapBase(Habitacion entidad, HabitacionBaseDTO dto)
+		{
+			dto.Id = entidad.Id;
+			dto.Nombre = entidad.Nombre;
+			dto.TieneBanio = entidad.TieneBanio;
+			dto.EsPrivada = entidad.Tipo().Equals(HabitacionTipoEnum.Privada);
+			dto.EstaHabilitada = entidad.EstaHabilitada;
+			dto.InformacionAdicional = entidad.InformacionAdicional;
+		}
+
 		public static HabitacionDetalleDTO MapDetalle(Habitacion habitacion)
 		{
-			return new HabitacionDetalleDTO
-			{
-				Id = habitacion.Id,
-				Nombre = habitacion.Nombre,
-				TieneBanio = habitacion.TieneBanio,
-				EsPrivada = habitacion.Tipo().Equals(HabitacionTipoEnum.Privada),
-				InformacionAdicional = habitacion.InformacionAdicional,
-				Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList()
-			};
+			var dto = new HabitacionDetalleDTO();
+			MapBase(habitacion, dto);
+			dto.Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList();
+			return dto;			
 		}
 
 		public static HabitacionDTO Map(Habitacion entidad)
 		{
-			return new HabitacionDTO
+			var dto = new HabitacionDTO();
+			
+			MapBase(entidad, dto);
+
+			dto.CamasIndividuales = entidad.CamasIndividuales.Select(entidadCamasIndividuale => new CamaDTO
 			{
-				Id = entidad.Id,
-				Nombre = entidad.Nombre,
-				TieneBanio = entidad.TieneBanio,
-				EsPrivada = entidad.Tipo().Equals(HabitacionTipoEnum.Privada),
-				InformacionAdicional = entidad.InformacionAdicional,
-				CamasIndividuales = entidad.CamasIndividuales.Select(entidadCamasIndividuale => new CamaDTO
+				Id = entidadCamasIndividuale.Id,
+				Nombre = entidadCamasIndividuale.Nombre,
+				Tipo = entidadCamasIndividuale.Tipo()
+			}).ToList();
+
+			dto.CamasCuchetas = entidad.CamasCuchetas.Select(entidadCamasCucheta => new CamaCuchetaDTO
+			{
+				Id = entidadCamasCucheta.Id,
+				Abajo = new CamaDTO
 				{
-					Id = entidadCamasIndividuale.Id,
-					Nombre = entidadCamasIndividuale.Nombre,
-					Tipo = entidadCamasIndividuale.Tipo()
-				}).ToList(),
-				CamasCuchetas = entidad.CamasCuchetas.Select(entidadCamasCucheta => new CamaCuchetaDTO
+					Id = entidadCamasCucheta.Abajo.Id,
+					Nombre = entidadCamasCucheta.Abajo.Nombre,
+					Tipo = entidadCamasCucheta.Abajo.Tipo()
+				},
+				Arriba = new CamaDTO
 				{
-					Id = entidadCamasCucheta.Id,
-					Abajo = new CamaDTO
-					{
-						Id = entidadCamasCucheta.Abajo.Id,
-						Nombre = entidadCamasCucheta.Abajo.Nombre,
-						Tipo = entidadCamasCucheta.Abajo.Tipo()
-					},
-					Arriba = new CamaDTO
-					{
-						Id = entidadCamasCucheta.Arriba.Id,
-						Nombre = entidadCamasCucheta.Arriba.Nombre,
-						Tipo = entidadCamasCucheta.Arriba.Tipo()
-					}
-				}).ToList(),
-				CamasMatrimoniales = entidad.CamasMatrimoniales.Select(entidadCamasMatrimoniale => new CamaDTO
-				{
-					Id = entidadCamasMatrimoniale.Id,
-					Nombre = entidadCamasMatrimoniale.Nombre,
-					Tipo = entidadCamasMatrimoniale.Tipo()
-				}).ToList()
-			};
+					Id = entidadCamasCucheta.Arriba.Id,
+					Nombre = entidadCamasCucheta.Arriba.Nombre,
+					Tipo = entidadCamasCucheta.Arriba.Tipo()
+				}
+			}).ToList();
+			
+			dto.CamasMatrimoniales = entidad.CamasMatrimoniales.Select(entidadCamasMatrimoniale => new CamaDTO
+			{
+				Id = entidadCamasMatrimoniale.Id,
+				Nombre = entidadCamasMatrimoniale.Nombre,
+				Tipo = entidadCamasMatrimoniale.Tipo()
+			}).ToList();
+
+			return dto;
 		}
 
 		public static CamaDTO MapCama(Cama cama)

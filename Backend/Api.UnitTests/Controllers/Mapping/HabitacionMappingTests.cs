@@ -38,6 +38,7 @@ namespace Api.UnitTests.Controllers.Mapping
             var habitacionesDTO = HabitacionMapper.Map(_unaListaDeHabitaciones);
 
             habitacionesDTO.First().EsPrivada.Should().BeTrue();
+            habitacionesDTO.First().EstaHabilitada.Should().BeTrue();
             habitacionesDTO.First().TieneBanio.Should().BeTrue();
             habitacionesDTO.First().InformacionAdicional.Should().Be("asd");
             habitacionesDTO.First().EsPrivada.Should().Be(true);
@@ -56,6 +57,7 @@ namespace Api.UnitTests.Controllers.Mapping
                 Nombre = "Azul",
                 TieneBanio = true,
                 InformacionAdicional = "asd",
+                EstaHabilitada = true,
                 CamasIndividuales = new List<CamaIndividual>
                 {
                     new CamaIndividual
