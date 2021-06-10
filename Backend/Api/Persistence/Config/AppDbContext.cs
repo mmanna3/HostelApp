@@ -48,7 +48,13 @@ namespace Api.Persistence.Config
 				.Property(x => x.Estado)
 				.HasDefaultValue(ReservaEstadoEnum.CheckinPendiente);
 
+			builder.Entity<Cama>()
+				.Property(x => x.EstaHabilitada)
+				.HasDefaultValue(true);
 
+			builder.Entity<Habitacion>()
+				.Property(x => x.EstaHabilitada)
+				.HasDefaultValue(true);
 		}
 
 		private static void HabitacionesConTipo(ModelBuilder builder)
