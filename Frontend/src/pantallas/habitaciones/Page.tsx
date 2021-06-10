@@ -23,6 +23,11 @@ const HabitacionesPage = (): ReactElement => {
       accessor: 'nombre',
     },
     {
+      id: 'estaHabilitada',
+      Header: 'Habilitada',
+      accessor: (d: any): string => (d.estaHabilitada ? 'Sí' : 'No'),
+    },
+    {
       Header: 'Camas matrimoniales',
       accessor: 'camasMatrimoniales.length',
     },
