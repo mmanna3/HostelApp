@@ -115,7 +115,16 @@ namespace Api.Core.Services
 
 		public async Task Habilitar(int id)
 		{
-			throw new NotImplementedException();
-		}
+            var habitacionAModificar = await _habitacionRepository.ObtenerPorId(id);
+
+            if (habitacionAModificar == null)
+                throw new AppException($"No se encontró la habitación de id:{id}");
+
+            var habitacionModificada = habitacionAModificar;
+            habitacionModificada.EstaHabilitada = true;
+            _habitacionRepository.Modificar(habitacionAModificar, habitacionModificada);
+
+            await _unitOfWork.CompleteAsync();
+        }
 	}
 }

@@ -52,9 +52,9 @@ namespace Api.Controllers
         }
 
         [HttpPost, Route("habilitar")]
-        public async Task Habilitar([FromBody] int id)
+        public async Task Habilitar([FromBody] CambiarHabilitacionDTO dto)
         {
-            await _habitacionService.Habilitar(id);
+            await _habitacionService.Habilitar(dto.Id);
         }
 
         [HttpPut("{id}")]
