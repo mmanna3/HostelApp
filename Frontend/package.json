@@ -17,7 +17,7 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-table": "^7.7.1",
     "@wojtekmaj/react-daterange-picker": "^3.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bulma-checkradio": "^1.1.1",
     "bulma-switch": "^2.0.0",
     "cypress-localstorage-commands": "^1.2.2",
