@@ -7,15 +7,19 @@ import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import Acordeon from 'components/Acordeon/Acordeon';
 import { Boton } from 'components/botones/botones';
 import Deshabilitar from './Deshabilitar';
+import Habilitar from './Habilitar';
+import Estilos from './Modal.module.scss';
 
 interface IProps {
   enDeshabilitacionExitosa: () => void;
+  enHabilitacionExitosa: () => void;
 }
 
-const Detalle = ({ enDeshabilitacionExitosa }: IProps): ReactElement => {
+const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): ReactElement => {
   const dispatch = useDispatch();
   const { datos } = useSelector(api.habitaciones.obtenerPorId.selector);
   const [modalDeshabilitarEsVisible, cambiarVisibilidadDeModalDeshabilitar] = useState(false);
+  const [modalHabilitarEsVisible, cambiarVisibilidadDeModalHabilitar] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
 
   function ocultar(): void {
@@ -49,7 +53,20 @@ const Detalle = ({ enDeshabilitacionExitosa }: IProps): ReactElement => {
             enDeshabilitacionExitosa();
           }}
         />
-
+        <Habilitar
+          id={datos.id}
+          esVisible={modalHabilitarEsVisible}
+          alOcultar={(): void => {
+            cambiarVisibilidadDeModalHabilitar(false);
+            cambiarVisibilidadDeModalPrincipal(true);
+          }}
+          enHabilitacionExitosa={(): void => {
+            cambiarVisibilidadDeModalHabilitar(false);
+            cambiarVisibilidadDeModalPrincipal(true);
+            ocultar();
+            enHabilitacionExitosa();
+          }}
+        />
         <Modal esVisible={modalPrincipalEsVisible} alOcultar={ocultar}>
           <TituloModal>Habitación {datos.nombre}</TituloModal>
           <CuerpoModal>
@@ -73,17 +90,34 @@ const Detalle = ({ enDeshabilitacionExitosa }: IProps): ReactElement => {
             <Acordeon icono="align-right" texto="información adicional">
               {datos.informacionAdicional !== '' ? datos.informacionAdicional : 'Sin información adicional'}
             </Acordeon>
-            <div className="columns">
-              <div className="column">
-                <Boton
-                  icono="times"
-                  className="is-danger"
-                  texto="Deshabilitar"
-                  onClick={(): void => {
-                    cambiarVisibilidadDeModalPrincipal(false);
-                    cambiarVisibilidadDeModalDeshabilitar(true);
-                  }}
-                />
+            <div className={Estilos.margenArriba05rem}>
+              <div className="columns">
+                <div className="column">
+                  {datos.estaHabilitada ? (
+                    <Boton
+                      icono="times"
+                      className="is-danger ocuparTodoElAncho"
+                      texto="Deshabilitar"
+                      onClick={(): void => {
+                        cambiarVisibilidadDeModalPrincipal(false);
+                        cambiarVisibilidadDeModalDeshabilitar(true);
+                      }}
+                    />
+                  ) : (
+                    <Boton
+                      icono="check"
+                      className="is-primary ocuparTodoElAncho"
+                      texto="Habilitar"
+                      onClick={(): void => {
+                        cambiarVisibilidadDeModalPrincipal(false);
+                        cambiarVisibilidadDeModalHabilitar(true);
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="column">
+                  <Boton icono="copy" className="ocuparTodoElAncho" texto="Crear copia" onClick={(): void => {}} />
+                </div>
               </div>
             </div>
           </CuerpoModal>

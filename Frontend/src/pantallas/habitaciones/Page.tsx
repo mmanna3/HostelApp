@@ -11,6 +11,7 @@ const HabitacionesPage = (): ReactElement => {
   const dispatch = useDispatch();
   const [seMuestraModalDeCreacion, mostrarModalDeCreacion] = useState(false);
   const { datos, estado } = useSelector(api.habitaciones.listar.selector);
+  const { estado: estadoDetalle } = useSelector(api.habitaciones.obtenerPorId.selector);
 
   const columnas = [
     {
@@ -71,7 +72,7 @@ const HabitacionesPage = (): ReactElement => {
         onHide={(): void => mostrarModalDeCreacion(false)}
         onSuccessfulSubmit={cerrarModalDeCreacionYRefrescarTabla}
       ></Crear>
-      <Detalle enDeshabilitacionExitosa={fetchData} />
+      <Detalle enDeshabilitacionExitosa={fetchData} enHabilitacionExitosa={fetchData} />
 
       <h1 className="title is-2">Habitaciones</h1>
       <div className="botonera">
@@ -79,7 +80,7 @@ const HabitacionesPage = (): ReactElement => {
           <Boton onClick={(): void => mostrarModalDeCreacion(true)} texto="Cargar nueva" />
         </div>
       </div>
-      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado} />
+      <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estado || estadoDetalle} />
     </div>
   );
 };

@@ -4,8 +4,10 @@ import {
   faArrowRight,
   faBed,
   faCalendar,
+  faCheck,
   faCheckCircle,
   faClock,
+  faCopy,
   faDoorClosed,
   faEnvelope,
   faExclamationTriangle,
@@ -34,6 +36,8 @@ library.add(faPhone);
 library.add(faIdCard);
 library.add(faEnvelope);
 library.add(faUser);
+library.add(faCheck);
+library.add(faCopy);
 library.add(faCheckCircle);
 library.add(faExclamationTriangle);
 library.add(faArrowRight);
