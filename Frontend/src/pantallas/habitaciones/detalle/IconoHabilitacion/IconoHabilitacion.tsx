@@ -16,7 +16,7 @@ const IconoHabilitacion = ({ estaHabilitada }: IProps): ReactElement => {
   } else
     return (
       <span className={`icon-text has-text-danger ${Estilos.contenedor}`}>
-        <Icon faCode="times-circle" size="sm" />
+        <Icon cssClass="deshabilitada" faCode="times-circle" size="sm" />
       </span>
     );
 };
