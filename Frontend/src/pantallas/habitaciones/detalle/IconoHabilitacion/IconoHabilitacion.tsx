@@ -9,14 +9,14 @@ interface IProps {
 const IconoHabilitacion = ({ estaHabilitada }: IProps): ReactElement => {
   if (estaHabilitada) {
     return (
-      <span className={`icon-text has-text-success ${Estilos.contenedor}`}>
+      <span className={`icon-text has-text-success ${Estilos.contenedorHabilitada}`}>
         <Icon faCode="check-circle" size="sm" />
       </span>
     );
   } else
     return (
-      <span className={`icon-text has-text-danger ${Estilos.contenedor}`}>
-        <Icon cssClass="deshabilitada" faCode="times-circle" size="sm" />
+      <span className={`icon-text has-text-danger ${Estilos.contenedorDeshabilitada}`}>
+        <Icon faCode="times-circle" size="sm" />
       </span>
     );
 };
