@@ -20,6 +20,7 @@ import {
   faPhone,
   faSink,
   faTimes,
+  faTimesCircle,
   faTrashAlt,
   faUser,
   faUserFriends,
@@ -39,6 +40,7 @@ library.add(faUser);
 library.add(faCheck);
 library.add(faCopy);
 library.add(faCheckCircle);
+library.add(faTimesCircle);
 library.add(faExclamationTriangle);
 library.add(faArrowRight);
 library.add(faDoorClosed);

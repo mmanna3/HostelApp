@@ -9,6 +9,7 @@ import { Boton } from 'components/botones/botones';
 import Deshabilitar from './Deshabilitar';
 import Habilitar from './Habilitar';
 import Estilos from './Modal.module.scss';
+import IconoHabilitacion from './IconoHabilitacion/IconoHabilitacion';
 
 interface IProps {
   enDeshabilitacionExitosa: () => void;
@@ -68,7 +69,9 @@ const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): R
           }}
         />
         <Modal esVisible={modalPrincipalEsVisible} alOcultar={ocultar}>
-          <TituloModal>Habitación {datos.nombre}</TituloModal>
+          <TituloModal>
+            Habitación {datos.nombre} <IconoHabilitacion estaHabilitada={datos.estaHabilitada} />
+          </TituloModal>
           <CuerpoModal>
             <DatoConIcono icono="door-closed" texto={textoTipo.get(datos.esPrivada) ?? ''} />
             <DatoConIcono icono="sink" texto={textoTieneBanio.get(datos.tieneBanio) ?? ''} />
@@ -93,6 +96,9 @@ const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): R
             <div className={Estilos.margenArriba05rem}>
               <div className="columns">
                 <div className="column">
+                  <Boton icono="copy" className="ocuparTodoElAncho" texto="Crear copia" onClick={(): void => {}} />
+                </div>
+                <div className="column">
                   {datos.estaHabilitada ? (
                     <Boton
                       icono="times"
@@ -114,9 +120,6 @@ const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): R
                       }}
                     />
                   )}
-                </div>
-                <div className="column">
-                  <Boton icono="copy" className="ocuparTodoElAncho" texto="Crear copia" onClick={(): void => {}} />
                 </div>
               </div>
             </div>
