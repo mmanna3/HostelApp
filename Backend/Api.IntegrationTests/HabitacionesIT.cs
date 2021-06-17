@@ -29,44 +29,50 @@ namespace Api.IntegrationTests
         };
 
         private ReservasHttpClient _reservasHttpClient;
+        private HabitacionesHttpClient _habitacionesHttpClient;
 
         protected override void EjecutarUnaSolaVez()
         {
 	        _reservasHttpClient = new ReservasHttpClient(_httpClient);
+            _habitacionesHttpClient = new HabitacionesHttpClient(_httpClient);
         }
 
         [Test]
         public async Task Deshabilitar_Habitacion()
-        {
-            var response = await CrearUnaHabitacionCompartida();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var idHabitacionCreada = await response.Content.ReadAsAsync<int>();
-
-            var consultarHabitacionesResponse1 = await ListarHabitaciones();
-            consultarHabitacionesResponse1.StatusCode.Should().Be(HttpStatusCode.OK);
-            var habitaciones1 = await consultarHabitacionesResponse1.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+        {                        
+            var idHabitacionCreada = await _habitacionesHttpClient.CrearUnaHabitacionCompartidaConUnaCamaDeCadaTipo();
+            var habitaciones1 = await _habitacionesHttpClient.Listar();
             habitaciones1.First().EstaHabilitada.Should().Be(true);
 
-            var deshabilitarResponse = await DeshabilitarHabitacion(idHabitacionCreada);
-            deshabilitarResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            await _habitacionesHttpClient.DeshabilitarHabitacion(idHabitacionCreada);
 
-            var consultarHabitacionesResponse2 = await ListarHabitaciones();
-            consultarHabitacionesResponse2.StatusCode.Should().Be(HttpStatusCode.OK);
-            var habitaciones2 = await consultarHabitacionesResponse2.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+            var habitaciones2 = await _habitacionesHttpClient.Listar();
 
             habitaciones2.First().Id.Should().Be(idHabitacionCreada);
             habitaciones2.First().EstaHabilitada.Should().Be(false);
         }
 
         [Test]
+        public async Task Deshabilitar_Cama()
+        {
+            await _habitacionesHttpClient.CrearUnaHabitacionCompartidaConUnaCamaDeCadaTipo();
+            var habitaciones1 = await _habitacionesHttpClient.Listar();            
+            var camaIndividual1 = habitaciones1.First().CamasIndividuales.First();
+            camaIndividual1.EstaHabilitada.Should().Be(true);
+
+            await _habitacionesHttpClient.DeshabilitarCama(camaIndividual1.Id);
+
+            var habitaciones2 = await _habitacionesHttpClient.Listar();
+            var camaIndividual2 = habitaciones2.First().CamasIndividuales.First();
+            camaIndividual2.EstaHabilitada.Should().Be(false);
+        }
+
+        [Test]
         public async Task CreaHabitacion_Compartida_Correctamente()
         {
-            var response = await CrearUnaHabitacionCompartida();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            await _habitacionesHttpClient.CrearUnaHabitacionCompartidaConUnaCamaDeCadaTipo();
 
-            var consultarHabitacionesResponse = await ListarHabitaciones();
-            consultarHabitacionesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var habitaciones = await consultarHabitacionesResponse.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+            var habitaciones = await _habitacionesHttpClient.Listar();
 
             habitaciones.Count().Should().Be(1);
             var habitacion = habitaciones.ToList().First();
@@ -86,8 +92,7 @@ namespace Api.IntegrationTests
         [Test]
         public async Task ObtienePorIdCorrectamente()
         {
-            var response = await CrearUnaHabitacionCompartida();
-            var habitacionId = await response.Content.ReadAsAsync<int>();
+            var habitacionId = await _habitacionesHttpClient.CrearUnaHabitacionCompartidaConUnaCamaDeCadaTipo();
 
             var obtenerPorIdResponse = await _httpClient.GetAsync($"{ENDPOINT}/obtener?id={habitacionId}");
             obtenerPorIdResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -103,7 +108,7 @@ namespace Api.IntegrationTests
         [Test]
         public async Task ListaConLugaresLibres_DeUnaCompartida_Correctamente()
         {
-            await CrearUnaHabitacionCompartida();
+            await _habitacionesHttpClient.CrearUnaHabitacionCompartidaConUnaCamaDeCadaTipo();
             await CargarUnaReservaEnLaPrimeraCamaDeLaPrimeraHabitacion();
 
             var consultarHabitacionesResponse = await ListarHabitacionesConLugaresLibresEnElRango();
@@ -131,8 +136,7 @@ namespace Api.IntegrationTests
 
 		private async Task CargarUnaReservaEnLaPrimeraCamaDeLaPrimeraHabitacion()
         {
-            var consultarHabitacionesResponse = await ListarHabitaciones();
-            var habitaciones = await consultarHabitacionesResponse.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+            var habitaciones = await _habitacionesHttpClient.Listar();
 
             var habitacion = habitaciones.ToList().First();
 
@@ -143,48 +147,12 @@ namespace Api.IntegrationTests
 
 		private async Task CargarUnaReservaDeLaHabitacionPrivada()
 		{
-			var consultarHabitacionesResponse = await ListarHabitaciones();
-			var habitaciones = await consultarHabitacionesResponse.Content.ReadAsAsync<IEnumerable<HabitacionDTO>>();
+			var habitaciones = await _habitacionesHttpClient.Listar();
 
-			var habitacion = habitaciones.ToList().First(x => x.EsPrivada);
+            var habitacion = habitaciones.ToList().First(x => x.EsPrivada);
 
 			await _reservasHttpClient.CrearReserva(null, habitacion.Id, _pasajero, DESDE, HASTA);
 		}
-        
-
-        public async Task<HttpResponseMessage> CrearUnaHabitacionCompartida()
-        {
-            var body = new HabitacionDTO
-            {
-                Nombre = "Azul",
-                EsPrivada = false,
-                TieneBanio = true,
-                InformacionAdicional = "asd",
-                CamasIndividuales = new List<CamaDTO>
-                {
-                    new CamaDTO
-                    {
-                        Nombre = "Indi"
-                    }
-                },
-                CamasMatrimoniales = new List<CamaDTO>
-                {
-                    new CamaDTO
-                    {
-                        Nombre = "Ma"
-                    }
-                },
-                CamasCuchetas = new List<CamaCuchetaDTO>
-                {
-                    new CamaCuchetaDTO
-                    {
-                        Nombre = "Cucheta"
-                    }
-                }
-            };
-
-            return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
-        }
 
         public async Task<HttpResponseMessage> CrearUnaHabitacionPrivada()
         {
@@ -218,17 +186,6 @@ namespace Api.IntegrationTests
 	        };
 
 	        return await _httpClient.PostAsJsonAsync(ENDPOINT, body);
-        }
-
-        private async Task<HttpResponseMessage> ListarHabitaciones()
-        {
-            return await _httpClient.GetAsync(ENDPOINT);
-        }
-
-        private async Task<HttpResponseMessage> DeshabilitarHabitacion(int id)
-		{
-            var body = new CambiarHabilitacionDTO { Id = id};
-            return await _httpClient.PostAsJsonAsync($"{ENDPOINT}/deshabilitar", body);
         }
 
         private async Task<HttpResponseMessage> ListarHabitacionesConLugaresLibresEnElRango()

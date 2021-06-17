@@ -57,6 +57,18 @@ namespace Api.Controllers
             await _habitacionService.Habilitar(dto.Id);
         }
 
+        [HttpPost, Route("deshabilitarCama")]
+        public async Task DeshabilitarCama([FromBody] CambiarHabilitacionDTO dto)
+        {
+            await _habitacionService.DeshabilitarCama(dto.Id);
+        }
+
+        [HttpPost, Route("habilitarCama")]
+        public async Task HabilitarCama([FromBody] CambiarHabilitacionDTO dto)
+        {
+            await _habitacionService.HabilitarCama(dto.Id);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Modificar(int id, [FromBody] HabitacionDTO dto)
         {

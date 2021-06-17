@@ -6,6 +6,8 @@ namespace Api.Controllers.DTOs.Habitacion
     {
         public int Id { get; set; }
 
+        public bool EstaHabilitada { get; set; }
+
         [YKNStringLength(Maximo = 10)]
         public string Nombre { get; set; }
 

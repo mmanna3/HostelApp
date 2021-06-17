@@ -36,7 +36,8 @@ namespace Api.Controllers.Mapping
 			{
 				Id = entidadCamasIndividuale.Id,
 				Nombre = entidadCamasIndividuale.Nombre,
-				Tipo = entidadCamasIndividuale.Tipo()
+				Tipo = entidadCamasIndividuale.Tipo(),
+				EstaHabilitada = entidadCamasIndividuale.EstaHabilitada
 			}).ToList();
 
 			dto.CamasCuchetas = entidad.CamasCuchetas.Select(entidadCamasCucheta => new CamaCuchetaDTO
@@ -46,13 +47,15 @@ namespace Api.Controllers.Mapping
 				{
 					Id = entidadCamasCucheta.Abajo.Id,
 					Nombre = entidadCamasCucheta.Abajo.Nombre,
-					Tipo = entidadCamasCucheta.Abajo.Tipo()
+					Tipo = entidadCamasCucheta.Abajo.Tipo(),
+					EstaHabilitada = entidadCamasCucheta.Abajo.EstaHabilitada
 				},
 				Arriba = new CamaDTO
 				{
 					Id = entidadCamasCucheta.Arriba.Id,
 					Nombre = entidadCamasCucheta.Arriba.Nombre,
-					Tipo = entidadCamasCucheta.Arriba.Tipo()
+					Tipo = entidadCamasCucheta.Arriba.Tipo(),
+					EstaHabilitada = entidadCamasCucheta.Arriba.EstaHabilitada
 				}
 			}).ToList();
 			
@@ -60,7 +63,8 @@ namespace Api.Controllers.Mapping
 			{
 				Id = entidadCamasMatrimoniale.Id,
 				Nombre = entidadCamasMatrimoniale.Nombre,
-				Tipo = entidadCamasMatrimoniale.Tipo()
+				Tipo = entidadCamasMatrimoniale.Tipo(),
+				EstaHabilitada = entidadCamasMatrimoniale.EstaHabilitada
 			}).ToList();
 
 			return dto;

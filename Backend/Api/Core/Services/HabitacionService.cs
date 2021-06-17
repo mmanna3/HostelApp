@@ -11,11 +11,13 @@ namespace Api.Core.Services
     public class HabitacionService : IHabitacionService
     {
         private readonly IHabitacionRepository _habitacionRepository;
+        private readonly ICamaRepository _camaRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public HabitacionService(IHabitacionRepository habitacionRepository, IUnitOfWork unitOfWork)
+        public HabitacionService(IHabitacionRepository habitacionRepository, ICamaRepository camaRepository, IUnitOfWork unitOfWork)
         {
             _habitacionRepository = habitacionRepository;
+            _camaRepository = camaRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -126,5 +128,34 @@ namespace Api.Core.Services
 
             await _unitOfWork.CompleteAsync();
         }
-	}
+
+        public async Task DeshabilitarCama(int id)
+        {
+            var camaAModificar = await _camaRepository.ObtenerPorId(id);
+            
+            if (camaAModificar == null)
+                throw new AppException($"No se encontró la cama de id:{id}");
+
+
+            var camaModificada = camaAModificar;
+            camaModificada.EstaHabilitada = false;
+            _camaRepository.Modificar(camaAModificar, camaModificada);
+
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task HabilitarCama(int id)
+        {
+            var camaAModificar = await _camaRepository.ObtenerPorId(id);
+
+            if (camaAModificar == null)
+                throw new AppException($"No se encontró la cama de id:{id}");
+
+            var camaModificada = camaAModificar;
+            camaModificada.EstaHabilitada = true;
+            _camaRepository.Modificar(camaAModificar, camaModificada);
+
+            await _unitOfWork.CompleteAsync();
+        }
+    }
 }

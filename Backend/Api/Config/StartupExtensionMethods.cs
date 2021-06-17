@@ -68,6 +68,8 @@ namespace Api.Config
 
             services.AddScoped<IReservaService, ReservaService>();
             services.AddScoped<IReservaRepository, ReservaRepository>();
+
+            services.AddScoped<ICamaRepository, CamaRepository>();
         }
     }
 }

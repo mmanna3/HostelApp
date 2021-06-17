@@ -16,6 +16,7 @@ namespace Api.UnitTests.Services
         private IHabitacionService _service;
 
         private Mock<IHabitacionRepository> _mockRepo;
+        private Mock<ICamaRepository> _mockCamaRepo;
         private Mock<IUnitOfWork> _mockUnitOfWork;
 
         private const string TODAS_LAS_CAMAS_DEBEN_TENER_IDENTIFICADOR = "Todas las camas deben tener Identificador";
@@ -25,8 +26,9 @@ namespace Api.UnitTests.Services
         public void Inicializar()
         {
             _mockRepo = new Mock<IHabitacionRepository>();
+            _mockCamaRepo = new Mock<ICamaRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _service = new HabitacionService(_mockRepo.Object, _mockUnitOfWork.Object);
+            _service = new HabitacionService(_mockRepo.Object, _mockCamaRepo.Object, _mockUnitOfWork.Object);
         }
 
         [Test]

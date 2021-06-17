@@ -14,5 +14,7 @@ namespace Api.Core.Services.Interfaces
         Task<IEnumerable<Habitacion>> ListarConLugaresLibresEntre(DateTime primeraNoche, DateTime ultimaNoche);
 		Task Deshabilitar(int id);
 		Task Habilitar(int id);
+		Task HabilitarCama(int id);
+		Task DeshabilitarCama(int id);
 	}
 }
