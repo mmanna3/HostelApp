@@ -15,7 +15,16 @@ interface IProps {
   transformar?: Transform;
 }
 
-export const Icon = ({ faCode, size, style, cssClass = '', badge, tooltip, transformar, onClick }: IProps): ReactElement => {
+export const Icon = ({
+  faCode,
+  size = '1x',
+  style,
+  cssClass = '',
+  badge,
+  tooltip,
+  transformar,
+  onClick,
+}: IProps): ReactElement => {
   const componente = (
     <span
       className={`icon ${badge ? classCssBadge.get(badge.color) : ''} ${onClick ? Estilos.esClickeable : ''} ${cssClass}`}
