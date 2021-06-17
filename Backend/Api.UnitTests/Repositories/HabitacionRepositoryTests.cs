@@ -56,7 +56,7 @@ namespace Api.UnitTests.Repositories
 		}
 
 		[Test]
-		public async Task ListaConLugaresLibres_HabitacionPrivada_SinCamas_PorqueEstaOcupada()
+		public async Task NoListaConLugaresLibres_HabitacionPrivada_SinCamas_PorqueEstaOcupada()
 		{
 			var habitacionId = await DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo();
 			await DadoQueSeReservaLaHabitacionPrivada(habitacionId, _primeraNoche, _ultimaNoche);
@@ -65,6 +65,20 @@ namespace Api.UnitTests.Repositories
 			habitacion.CamasIndividuales.Count.Should().Be(0);
 			habitacion.CamasMatrimoniales.Count.Should().Be(0);
 			habitacion.CamasCuchetas.Count.Should().Be(0);
+		}
+
+		[Test]
+		public async Task NoListaConLugaresLibres_HabitacionPrivada_PorqueEstaDeshabilitada()
+		{
+			await DadoQueExisteUnaHabitacionPrivadaDeshabilitadaConDosCamasDeCadaTipo();
+			(await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Count().Should().Be(0);
+		}
+
+		[Test]
+		public async Task NoListaConLugaresLibres_HabitacionCompartida_PorqueEstaDeshabilitada()
+		{
+			await DadoQueExisteUnaHabitacionCompartidaDeshabilitadaConUnaCamaIndividual();
+			(await _repository.ListarConCamasLibresEntre(_primeraNoche, _ultimaNoche)).Count().Should().Be(0);
 		}
 
 		private async Task DadoQueSeReservaLaHabitacionPrivada(int habitacionId, DateTime primeraNoche, DateTime ultimaNoche)
@@ -78,7 +92,7 @@ namespace Api.UnitTests.Repositories
 
 		private async Task<int> DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo()
 		{
-			var habitacion = new HabitacionPrivada { Nombre = "Azul" };
+			var habitacion = new HabitacionPrivada { Nombre = "Azul", EstaHabilitada = true };
 
 			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
 			var indi2 = new CamaIndividual { Nombre = "Indi2", Habitacion = habitacion };
@@ -107,6 +121,17 @@ namespace Api.UnitTests.Repositories
 			await _context.SaveChangesAsync();
 
 			return habitacion.Id;
+		}
+
+		private async Task<int> DadoQueExisteUnaHabitacionPrivadaDeshabilitadaConDosCamasDeCadaTipo()
+		{
+			var id = await DadoQueExisteUnaHabitacionPrivadaConDosCamasDeCadaTipo();
+			var habitacion = _context.HabitacionesPrivadas.Find(id);
+			var nuevaHabitacion = habitacion;
+			nuevaHabitacion.EstaHabilitada = false;
+			_context.Entry(habitacion).CurrentValues.SetValues(nuevaHabitacion);
+			await _context.SaveChangesAsync();
+			return id;
 		}
 
 		[Test]
@@ -215,9 +240,20 @@ namespace Api.UnitTests.Repositories
 
 		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual()
 		{
-			var habitacion = new HabitacionCompartida { Nombre = "Azul" };
+			var habitacion = new HabitacionCompartida { Nombre = "Azul", EstaHabilitada = true };
 			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
 			
+			await _context.CamasIndividuales.AddAsync(indi1);
+			await _context.SaveChangesAsync();
+
+			return habitacion.Id;
+		}
+
+		private async Task<int> DadoQueExisteUnaHabitacionCompartidaDeshabilitadaConUnaCamaIndividual()
+		{
+			var habitacion = new HabitacionCompartida { Nombre = "Azul", EstaHabilitada = false };
+			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
+
 			await _context.CamasIndividuales.AddAsync(indi1);
 			await _context.SaveChangesAsync();
 
@@ -232,7 +268,7 @@ namespace Api.UnitTests.Repositories
 
 		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConDosCamasDeCadaTipo()
 		{
-			var habitacion = new HabitacionCompartida { Nombre = "Azul" };
+			var habitacion = new HabitacionCompartida { Nombre = "Azul", EstaHabilitada = true };
 
 			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
 			var indi2 = new CamaIndividual { Nombre = "Indi2", Habitacion = habitacion };

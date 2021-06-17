@@ -60,6 +60,7 @@ namespace Api.Persistence.Repositories
 			        .ToList();
 
 	        var habitacionesPrivadasLibres = _context.HabitacionesPrivadas
+				.Where(x => x.EstaHabilitada)
 				.Include(x => x.CamasIndividuales)
 				.Include(x => x.CamasMatrimoniales)
 				.Include(x => x.CamasCuchetas)
@@ -91,7 +92,7 @@ namespace Api.Persistence.Repositories
 				        .Select(c => c.Cama.Id)
 			        .ToList();
 
-	        var habitacionesConCamasLibres = _context.HabitacionesCompartidas.Select(x =>
+	        var habitacionesConCamasLibres = _context.HabitacionesCompartidas.Where(x => x.EstaHabilitada).Select(x =>
 		        new HabitacionCompartida
 		        {
 			        Id = x.Id,
