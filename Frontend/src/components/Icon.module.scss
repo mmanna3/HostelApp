@@ -2,6 +2,14 @@
   position: relative;
 }
 
+.tooltipLg {
+  @extend .tooltip;
+}
+
+.tooltip1x {
+  @extend .tooltip;
+}
+
 .tooltip:hover:after {
   background: #111;
   background: rgba(0, 0, 0, 0.8);
@@ -29,6 +37,18 @@
   left: 0.1rem;
   position: absolute;
   z-index: 99;
+}
+
+.tooltipLg:hover:before {
+  left: 0.1rem;
+}
+
+.tooltip1x:hover:before {
+  left: 0.3rem;
+}
+
+.tooltip1x:hover:after {
+  font-size: 0.85rem;
 }
 
 .esClickeable {

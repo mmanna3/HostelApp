@@ -36,12 +36,18 @@ export const Icon = ({
     </span>
   );
 
-  if (tooltip)
+  if (tooltip) {
+    var estiloTooltipBySize = new Map<string, string>([
+      ['1x', Estilos.tooltip1x],
+      ['lg', Estilos.tooltipLg],
+    ]);
+
     return (
-      <span className={`${Estilos.tooltip}`} data-tooltip={tooltip}>
+      <span className={`${estiloTooltipBySize.get(size)}`} data-tooltip={tooltip}>
         {componente}
       </span>
     );
+  }
 
   return componente;
 };
