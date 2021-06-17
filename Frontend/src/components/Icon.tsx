@@ -29,7 +29,7 @@ export const Icon = ({ faCode, size, style, cssClass = '', badge, tooltip, trans
 
   if (tooltip)
     return (
-      <span className={`${tooltip ? Estilos.tooltip : ''}`} data-tooltip={tooltip}>
+      <span className={`${Estilos.tooltip}`} data-tooltip={tooltip}>
         {componente}
       </span>
     );

@@ -59,7 +59,7 @@ const Cuerpo = ({ habitacionesConCamasUnificadas }: IParams): ReactElement => {
               {habitacion.nombre}
               {!habitacion.estaHabilitada && (
                 <span className={`icon-text has-text-danger ${Estilos.habitacionDeshabilitada}`}>
-                  <Icon faCode="times-circle" />
+                  <Icon faCode="times-circle" tooltip="Está deshabilitada" />
                 </span>
               )}
             </div>
