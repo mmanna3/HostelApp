@@ -55,7 +55,14 @@ const Cuerpo = ({ habitacionesConCamasUnificadas }: IParams): ReactElement => {
             ) : (
               <Icon faCode="users" size="lg" />
             )}
-            <div>{habitacion.nombre}</div>
+            <div>
+              {habitacion.nombre}
+              {!habitacion.estaHabilitada && (
+                <span className={`icon-text has-text-danger ${Estilos.habitacionDeshabilitada}`}>
+                  <Icon faCode="times-circle" />
+                </span>
+              )}
+            </div>
           </div>
         </td>
         {renderizarEncabezadoCamaYCeldasDeDatosDeLaFila(habitacion.camas[0], true)}

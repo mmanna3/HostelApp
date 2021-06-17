@@ -34,6 +34,7 @@ export function calcularCamasIdsYHabitacionesConCamasUnificadas(habitaciones: Ha
     habitacionesConCamasUnificadas.push({
       nombre: habitacion.nombre,
       id: habitacion.id,
+      estaHabilitada: habitacion.estaHabilitada,
       esPrivada: habitacion.esPrivada,
       camas: camasUnificadasDeLaHabitacion,
     });
