@@ -26,6 +26,11 @@ const Cuerpo = ({ habitacionesConCamasUnificadas }: IParams): ReactElement => {
         <>
           <td key={cama.id} className={Estilos.cama} data-es-primera-cama={esPrimeraCamaDeLaHabitacion}>
             {cama.nombre} - {obtenerTipoCamaDescripcion.get(cama.tipo)}
+            {!cama.estaHabilitada && (
+              <span className={`icon-text has-text-danger ${Estilos.habitacionDeshabilitada}`}>
+                <Icon faCode="times-circle" size="1x" />
+              </span>
+            )}
           </td>
           {tablaDeReservas.dias.map(
             (dia): ReactElement => (
