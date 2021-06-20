@@ -241,7 +241,7 @@ namespace Api.UnitTests.Repositories
 		private async Task<int> DadoQueExisteUnaHabitacionCompartidaConUnaCamaIndividual()
 		{
 			var habitacion = new HabitacionCompartida { Nombre = "Azul", EstaHabilitada = true };
-			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
+			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion, EstaHabilitada = true };
 			
 			await _context.CamasIndividuales.AddAsync(indi1);
 			await _context.SaveChangesAsync();
@@ -270,20 +270,20 @@ namespace Api.UnitTests.Repositories
 		{
 			var habitacion = new HabitacionCompartida { Nombre = "Azul", EstaHabilitada = true };
 
-			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion };
-			var indi2 = new CamaIndividual { Nombre = "Indi2", Habitacion = habitacion };
-			var matri1 = new CamaMatrimonial { Nombre = "Matri1", Habitacion = habitacion };
-			var matri2 = new CamaMatrimonial { Nombre = "Matri2", Habitacion = habitacion };
+			var indi1 = new CamaIndividual { Nombre = "Indi1", Habitacion = habitacion, EstaHabilitada = true };
+			var indi2 = new CamaIndividual { Nombre = "Indi2", Habitacion = habitacion, EstaHabilitada = true };
+			var matri1 = new CamaMatrimonial { Nombre = "Matri1", Habitacion = habitacion, EstaHabilitada = true };
+			var matri2 = new CamaMatrimonial { Nombre = "Matri2", Habitacion = habitacion, EstaHabilitada = true };
 			var cucheta1 = new CamaCucheta
 			{
-				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo1" },
-				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo1" },
+				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo1", EstaHabilitada = true },
+				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo1", EstaHabilitada = true },
 				Habitacion = habitacion
 			};
 			var cucheta2 = new CamaCucheta
 			{
-				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo2" },
-				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo2" },
+				Abajo = new CamaCuchetaDeAbajo { Nombre = "cuchetaAbajo2", EstaHabilitada = true },
+				Arriba = new CamaCuchetaDeArriba { Nombre = "cuchetaAbajo2", EstaHabilitada = true },
 				Habitacion = habitacion
 			};
 
