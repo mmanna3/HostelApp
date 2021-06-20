@@ -75,7 +75,10 @@ const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): R
           <CuerpoModal>
             <DatoConIcono icono="door-closed" texto={textoTipo.get(datos.esPrivada) ?? ''} />
             <DatoConIcono icono="sink" texto={textoTieneBanio.get(datos.tieneBanio) ?? ''} />
-            <Camas camas={datos.camas} />
+            <Camas
+              camas={datos.camas}
+              enAccionExitosa={(): void => dispatch(api.habitaciones.obtenerPorId.invocar({ id: datos.id }))}
+            />
 
             <Acordeon icono="align-right" texto="información adicional">
               {datos.informacionAdicional !== '' ? datos.informacionAdicional : 'Sin información adicional'}

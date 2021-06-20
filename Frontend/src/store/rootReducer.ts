@@ -11,6 +11,8 @@ const rootReducer = combineReducers({
   crearHabitacion: api.habitaciones.crear.reducer,
   habilitarHabitacion: api.habitaciones.habilitar.reducer,
   deshabilitarHabitacion: api.habitaciones.deshabilitar.reducer,
+  habilitarCama: api.habitaciones.habilitarCama.reducer,
+  deshabilitarCama: api.habitaciones.deshabilitarCama.reducer,
 
   pasajeros: api.pasajeros.listar.reducer,
   crearPasajero: api.pasajeros.crear.reducer,

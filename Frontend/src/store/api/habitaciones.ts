@@ -47,6 +47,18 @@ const habilitarSliceInfo: IApiSliceInfo = {
   dataInicial: null,
 };
 
+const deshabilitarCamaSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'deshabilitarCama',
+  endpoint: '/habitaciones/deshabilitarCama',
+  dataInicial: null,
+};
+
+const habilitarCamaSliceInfo: IApiSliceInfo = {
+  nombreDelSlice: 'habilitarCama',
+  endpoint: '/habitaciones/habilitarCama',
+  dataInicial: null,
+};
+
 const listar = { ...generarSliceHttpGet<HabitacionDTO[]>(listarSliceInfo) };
 const listarConLugaresLibres = {
   ...generarSliceHttpGet<HabitacionConLugaresLibresDTO[], ILugaresLibresParams>(listarConLugaresLibresSliceInfo),
@@ -63,6 +75,13 @@ const habilitar = {
   ...generarSliceHttpPost<void, CambiarHabilitacionDTO>(habilitarSliceInfo),
 };
 
+const deshabilitarCama = {
+  ...generarSliceHttpPost<void, CambiarHabilitacionDTO>(deshabilitarCamaSliceInfo),
+};
+const habilitarCama = {
+  ...generarSliceHttpPost<void, CambiarHabilitacionDTO>(habilitarCamaSliceInfo),
+};
+
 export default {
   listar,
   listarConLugaresLibres,
@@ -70,4 +89,6 @@ export default {
   crear,
   deshabilitar,
   habilitar,
+  deshabilitarCama,
+  habilitarCama,
 };

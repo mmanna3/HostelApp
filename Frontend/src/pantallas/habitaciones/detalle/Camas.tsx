@@ -4,12 +4,25 @@ import { CamaDTO } from 'store/api/DTOs';
 import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import { Icon } from 'components/Icon';
 import { Boton } from 'components/botones/botones';
+import { useDispatch } from 'react-redux';
+import api from 'store/api/api';
 
 interface IProps {
   camas: CamaDTO[];
+  enAccionExitosa: () => void;
 }
 
-const Camas = ({ camas }: IProps): ReactElement => {
+const Camas = ({ camas, enAccionExitosa }: IProps): ReactElement => {
+  const dispatch = useDispatch();
+
+  const deshabilitar = (id: number): void => {
+    dispatch(api.habitaciones.deshabilitarCama.invocar({ id }, enAccionExitosa));
+  };
+
+  const habilitar = (id: number): void => {
+    dispatch(api.habitaciones.habilitarCama.invocar({ id }, enAccionExitosa));
+  };
+
   return (
     <Acordeon icono="bed" texto="camas">
       <table className="table is-fullwidth">
@@ -34,21 +47,19 @@ const Camas = ({ camas }: IProps): ReactElement => {
                   {cama.estaHabilitada ? (
                     <Boton
                       icono="times"
-                      className="is-danger is-small"
+                      className="is-small"
                       texto="Deshabilitar"
                       onClick={(): void => {
-                        // cambiarVisibilidadDeModalPrincipal(false);
-                        // cambiarVisibilidadDeModalDeshabilitar(true);
+                        deshabilitar(cama.id);
                       }}
                     />
                   ) : (
                     <Boton
                       icono="check"
-                      className="is-primary is-small"
+                      className="is-small"
                       texto="Habilitar"
                       onClick={(): void => {
-                        // cambiarVisibilidadDeModalPrincipal(false);
-                        // cambiarVisibilidadDeModalHabilitar(true);
+                        habilitar(cama.id);
                       }}
                     />
                   )}
