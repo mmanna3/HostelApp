@@ -97,13 +97,13 @@ namespace Api.Persistence.Repositories
 		        {
 			        Id = x.Id,
 			        Nombre = x.Nombre,
-			        CamasIndividuales = x.CamasIndividuales.Where(c => !idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(c.Id)).ToList(),
-			        CamasMatrimoniales = x.CamasMatrimoniales.Where(c => !idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(c.Id)).ToList(),
+			        CamasIndividuales = x.CamasIndividuales.Where(c => c.EstaHabilitada && !idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(c.Id)).ToList(),
+			        CamasMatrimoniales = x.CamasMatrimoniales.Where(c => c.EstaHabilitada && !idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(c.Id)).ToList(),
 			        CamasCuchetas = x.CamasCuchetas.Select(cc => new CamaCucheta
 			        {
 				        Id = cc.Id,
-				        Abajo = idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(cc.Abajo.Id) ? null : cc.Abajo,
-				        Arriba = idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(cc.Arriba.Id) ? null : cc.Arriba,
+				        Abajo = cc.Abajo.EstaHabilitada && idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(cc.Abajo.Id) ? null : cc.Abajo,
+				        Arriba = cc.Arriba.EstaHabilitada && idsDeCamasOcupadasAlMenosUnaNocheEnElRango.Contains(cc.Arriba.Id) ? null : cc.Arriba,
 				        Habitacion = x
 			        }).ToList()
 		        });
