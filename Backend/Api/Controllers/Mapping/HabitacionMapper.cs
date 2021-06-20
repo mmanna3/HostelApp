@@ -22,7 +22,7 @@ namespace Api.Controllers.Mapping
 		{
 			var dto = new HabitacionDetalleDTO();
 			MapBase(habitacion, dto);
-			dto.Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo() }).ToList();
+			dto.Camas = habitacion.ObtenerTodasLasCamas().Select(x => new CamaDTO { Id = x.Id, Nombre = x.Nombre, Tipo = x.Tipo(), EstaHabilitada = x.EstaHabilitada }).ToList();
 			return dto;			
 		}
 

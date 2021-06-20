@@ -9,6 +9,7 @@ export interface CamaCuchetaDTO {
 // ..\Backend\Api\Controllers\DTOs\Habitacion\CamaDTO.cs
 export interface CamaDTO {
     id: number;
+    estaHabilitada: boolean;
     nombre: string;
     tipo: CamaTipoEnum;
     nombreHabitacion: string;

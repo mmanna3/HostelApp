@@ -3,13 +3,13 @@ import Modal, { CuerpoModal, TituloModal } from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import api from 'store/api/api';
-import { obtenerTipoCamaDescripcion } from 'components/_utilidades/utilidades';
 import Acordeon from 'components/Acordeon/Acordeon';
 import { Boton } from 'components/botones/botones';
 import Deshabilitar from './Deshabilitar';
 import Habilitar from './Habilitar';
 import Estilos from './Modal.module.scss';
 import IconoHabilitacion from './IconoHabilitacion/IconoHabilitacion';
+import Camas from './Camas';
 
 interface IProps {
   enDeshabilitacionExitosa: () => void;
@@ -75,21 +75,8 @@ const Detalle = ({ enDeshabilitacionExitosa, enHabilitacionExitosa }: IProps): R
           <CuerpoModal>
             <DatoConIcono icono="door-closed" texto={textoTipo.get(datos.esPrivada) ?? ''} />
             <DatoConIcono icono="sink" texto={textoTieneBanio.get(datos.tieneBanio) ?? ''} />
+            <Camas camas={datos.camas} />
 
-            <Acordeon icono="bed" texto="camas">
-              <table className="table is-fullwidth">
-                <tbody>
-                  {datos.camas.map(
-                    (cama): ReactElement => (
-                      <tr key={cama.id}>
-                        <td>Cama {cama.nombre}</td>
-                        <td>{obtenerTipoCamaDescripcion.get(cama.tipo)}</td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </table>
-            </Acordeon>
             <Acordeon icono="align-right" texto="información adicional">
               {datos.informacionAdicional !== '' ? datos.informacionAdicional : 'Sin información adicional'}
             </Acordeon>
