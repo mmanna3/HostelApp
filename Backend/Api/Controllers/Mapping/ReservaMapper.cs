@@ -55,7 +55,7 @@ namespace Api.Controllers.Mapping
 				PasejeroTitular = entidad.PasajeroTitular.NombreCompleto,
 				Estado = entidad.Estado,
 				DiaDeCheckin = Utilidades.ConvertirFecha(entidad.PrimeraNoche),
-				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche),
+				DiaDeCheckout = Utilidades.ConvertirFecha(entidad.UltimaNoche.AddDays(1)),
 			};
 		}
 
