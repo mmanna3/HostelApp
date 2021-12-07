@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Column } from 'react-table';
 import api from 'store/api/api';
 import { ReservaEstadoEnum, ReservaResumenDTO } from 'store/api/DTOs';
-import DetalleReserva from 'pantallas/reservas/detalle/Detalle';
+import DetalleReserva from 'pantallas/reservas/detalle/DetalleReserva';
 import Estilos from './TodasLasReservas.module.scss';
 import { EstadosApiRequestEnum } from 'store/api/utils/estadosApiRequestEnum';
 
@@ -133,7 +133,7 @@ const TodasLasReservas = ({
           </Form>
         </div>
       )}
-      <DetalleReserva enCheckInExitoso={fetchData} enCheckOutExitoso={fetchData} enCancelacionExitosa={fetchData} />
+      <DetalleReserva ejecutarAlTerminar={fetchData} />
       <Table fetchData={fetchData} columnas={columnas} datos={datos} estado={estadoDeRequest} />
     </div>
   );

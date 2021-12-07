@@ -2,33 +2,24 @@ import { Boton } from 'components/botones/botones';
 import DatoConIcono from 'components/DatoConIcono/DatoConIcono';
 import Modal, { TituloModal, CuerpoModal } from 'components/Modal/Modal';
 import React, { ReactElement, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import api from 'store/api/api';
-import { ReservaEstadoEnum } from 'store/api/DTOs';
+
+import { ReservaDetalleDTO, ReservaEstadoEnum } from 'store/api/DTOs';
 import { convertirADate, nombreDelDiaDeLaSemana, nombreDelMes, restarFechas } from 'utils/Fecha';
 import Cancelar from './Cancelar/Cancelar';
 import Estilos from './Detalle.module.scss';
 import HacerCheckIn from './HacerCheckIn/HacerCheckIn';
-import HacerCheckOut from './HacerCheckOut/HacerCheckOut';
-import MostrarHabitacionesYCamas from './MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
+import MostrarHabitacionesYCamas from '../MostrarHabitacionesYCamas/MostrarHabitacionesYCamas';
 
 interface IProps {
-  enCheckInExitoso: () => void;
-  enCheckOutExitoso: () => void;
-  enCancelacionExitosa: () => void;
+  ejecutarAlTerminar: () => void;
+  datos: ReservaDetalleDTO;
+  reiniciarDatos: () => void;
 }
 
-const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: IProps): ReactElement => {
+const DetalleCheckInPendiente = ({ ejecutarAlTerminar, datos, reiniciarDatos }: IProps): ReactElement => {
   const [modalHacerCheckInEsVisible, cambiarVisibilidadDeModalHacerCheckIn] = useState(false);
-  const [modalHacerCheckOutEsVisible, cambiarVisibilidadDeModalHacerCheckOut] = useState(false);
   const [modalCancelarEsVisible, cambiarVisibilidadDeModalCancelar] = useState(false);
   const [modalPrincipalEsVisible, cambiarVisibilidadDeModalPrincipal] = useState(true);
-  const dispatch = useDispatch();
-  const { datos } = useSelector(api.reservas.obtenerPorId.selector);
-
-  function reiniciarDatos(): void {
-    dispatch(api.reservas.obtenerPorId.reiniciar());
-  }
 
   const fechaParaMostrar = (fecha: string): string => {
     var fechaDate = convertirADate(fecha);
@@ -52,13 +43,6 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
     descripcion: string;
   }
 
-  const estilosEstado = new Map<ReservaEstadoEnum, IEstilo>([
-    [ReservaEstadoEnum.Cancelada, { estilo: Estilos.estadoCancelada, descripcion: 'Cancelada' }],
-    [ReservaEstadoEnum.CheckinPendiente, { estilo: Estilos.estadoCheckinPendiente, descripcion: 'Check-In Pendiente' }],
-    [ReservaEstadoEnum.InHouse, { estilo: Estilos.estadoInHouse, descripcion: 'In-House' }],
-    [ReservaEstadoEnum.HizoCheckout, { estilo: Estilos.estadoHizoCheckout, descripcion: 'Hizo Checkout' }],
-  ]);
-
   return datos !== null ? (
     <>
       <HacerCheckIn
@@ -72,21 +56,7 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
           cambiarVisibilidadDeModalHacerCheckIn(false);
           cambiarVisibilidadDeModalPrincipal(true);
           reiniciarDatos();
-          enCheckInExitoso();
-        }}
-      />
-      <HacerCheckOut
-        datos={datos}
-        esVisible={modalHacerCheckOutEsVisible}
-        alOcultar={(): void => {
-          cambiarVisibilidadDeModalHacerCheckOut(false);
-          cambiarVisibilidadDeModalPrincipal(true);
-        }}
-        enCheckOutExitoso={(): void => {
-          cambiarVisibilidadDeModalHacerCheckOut(false);
-          cambiarVisibilidadDeModalPrincipal(true);
-          reiniciarDatos();
-          enCheckOutExitoso();
+          ejecutarAlTerminar();
         }}
       />
       <Cancelar
@@ -100,13 +70,13 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
           cambiarVisibilidadDeModalCancelar(false);
           cambiarVisibilidadDeModalPrincipal(true);
           reiniciarDatos();
-          enCancelacionExitosa();
+          ejecutarAlTerminar();
         }}
       />
       <Modal esVisible={modalPrincipalEsVisible} alOcultar={reiniciarDatos}>
         <TituloModal>
           {datos.pasajeroTitular.nombreCompleto}
-          <span className={estilosEstado.get(datos.estado)?.estilo}>{estilosEstado.get(datos.estado)?.descripcion}</span>
+          <span className={Estilos.estadoCheckinPendiente}>Check-In Pendiente</span>
         </TituloModal>
         <p className={Estilos.fechas}>
           {fechaParaMostrar(datos.diaDeCheckin)} → {fechaParaMostrar(datos.diaDeCheckout)}
@@ -156,7 +126,6 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
                   className={`is-primary ${Estilos.ocuparTodoElAncho}`}
                   onClick={(): void => {
                     cambiarVisibilidadDeModalPrincipal(false);
-                    cambiarVisibilidadDeModalHacerCheckOut(true);
                   }}
                 />
               </div>
@@ -170,4 +139,4 @@ const Detalle = ({ enCheckInExitoso, enCheckOutExitoso, enCancelacionExitosa }: 
   );
 };
 
-export default Detalle;
+export default DetalleCheckInPendiente;

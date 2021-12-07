@@ -1,0 +1,44 @@
+@import 'universal.scss';
+
+.estado {
+  font-size: 14px;
+  font-weight: normal;
+  float: right;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.estadoCancelada {
+  @extend .estado;
+  background-color: $gris-clarito;
+}
+
+.estadoCheckinPendiente {
+  @extend .estado;
+  background-color: $color-pastel-verde;
+}
+
+.estadoInHouse {
+  @extend .estado;
+  background-color: $color-pastel-azul;
+}
+
+.estadoHizoCheckout {
+  @extend .estado;
+  background-color: $color-pastel-rojo;
+}
+
+.fechas {
+  text-align: left;
+}
+
+.botones {
+  @extend .columns;
+  margin-top: 0.05rem;
+}
+
+.ocuparTodoElAncho {
+  width: 100%;
+}

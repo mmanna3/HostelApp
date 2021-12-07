@@ -7,7 +7,7 @@ import { EstadosApiRequestEnum as ESTADO } from 'store/api/utils/estadosApiReque
 import { useCounterKey } from 'utils/hooks/useCounterKey';
 import Cabecera from './Cabecera/Cabecera';
 import Crear from './crear/Crear';
-import DetalleReserva from './detalle/Detalle';
+import DetalleReserva from './detalle/DetalleReserva';
 import Estilos from './PantallaReservas.module.scss';
 import Tabla from './Tabla/Tabla';
 
@@ -58,11 +58,7 @@ const ReservasPage = (): ReactElement => {
       )}
 
       <Cabecera key={cabeceraKey} showModal={showModal} onFechaChange={onFechaChange} />
-      <DetalleReserva
-        enCheckInExitoso={reiniciarTabla}
-        enCheckOutExitoso={reiniciarTabla}
-        enCancelacionExitosa={reiniciarTabla}
-      />
+      <DetalleReserva ejecutarAlTerminar={reiniciarTabla} />
       <div>
         {estado === ESTADO.huboError || estadoDetalle === ESTADO.huboError ? (
           <table className="table is-fullwidth">
