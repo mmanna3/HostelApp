@@ -360,3 +360,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 Backend/Api/ClientApp/
+
+.DS_Store
