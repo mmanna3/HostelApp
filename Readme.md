@@ -95,3 +95,22 @@ yarn cy-run --spec 'cypress/integration/reservas/creacion/cabecera-huesped.e2e.t
 # Crear enum
 
 Es una property más de la clase en cuestión, pero tenés que decirle por FluentApi en AppDbContext cuál es el valor default (sino es 0)
+
+# Levantar BD en Docker
+
+## Instalar docker y crear container con imagen
+
+## Levantar container
+```
+open -a docker
+docker start InstanciaSQLServer		# Cambiarle el nombre
+```
+
+## Conectarse desde DBeaver
+
+Plugin: SQL Server
+host: localhost
+port: 1433
+database/schema: master (en realidad es hostelapp_dev)
+username: sa
+password: Buk0wski
