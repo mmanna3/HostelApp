@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "cb4ba6b1-d312-42a5-8ade-7c0181135f23",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://localhost:5001/api/usuarios/autenticar",
+    "url": "https://localhost:5001/api/usuarios/autenticar",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-06-14T23:24:47.471Z",
+    "modified": "2023-06-14T23:25:10.449Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  username: 'prueba',\n  password: 'prueba'\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

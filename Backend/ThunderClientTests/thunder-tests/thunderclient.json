@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "eda82762-123c-4d5c-b5f3-5c28ef869c83",
+    "colId": "1919ceb6-5583-4b8c-a808-84298b05a1ee",
+    "containerId": "",
+    "name": "Autenticar OK",
+    "url": "https://localhost:5001/api/usuarios/autenticar",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-06-14T23:25:55.246Z",
+    "modified": "2023-06-14T23:25:55.246Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  username: 'prueba',\n  password: 'prueba'\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]
