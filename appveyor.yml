@@ -9,9 +9,9 @@ environment:
   deploy_password:
     secure: SFAvHfsz398LTl83QbS5gw==
   deploy_server:
-    secure: q706iWwM10zvcjRbqItSEu+HLTX/qJnpDfK3ywcWoyfL6qOLejFH6xbm6u2D0v/4D/MXwMsubDv0sJstTjFk9kSqVewyDg1VEK+jK5Xr0CE=
+    secure: KJNJmJ/UMoRl39WAhZNvikW5Kr8RChWA58nR9IIf+akYsdxXZ0J5X0DfcTv73Tk7C2JS98m33wa5/VJpXtN2tUfoxBWJPrhFZXSvs9MkndQ=
   deploy_website:
-    secure: o1tcoGCP0zw5GbDXcxws3JKx8VtPO1guVcF93yySiMc=
+    secure: 3Jguj4ejOF5aJvU15/Kq+bU42khaEO6fcdRxdFUpmys=
   db_server:
     secure: K3tw1JJQqsF0zSckjLdOJg==
   db_name:
