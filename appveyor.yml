@@ -4,7 +4,7 @@ branches:
   only:
     - master
 environment:
-  nodejs_version: "15"
+  nodejs_version: "14"
   deploy_username:
     secure: ZumRpgIeGcRgW3H7yXK0bQ==
   deploy_password:
