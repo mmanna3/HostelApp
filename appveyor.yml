@@ -26,11 +26,12 @@ environment:
 install:
   - ps: >-
       $file = "./Backend/Api/appsettings.Production.json";
-      (Get-Content $file).Replace("{db_server}", $env:db_server).Replace("{db_name}", $env:db_name).Replace("{db_username}", $env:db_username).Replace("{db_password}", $env:db_password).Replace("{jwt_secret}", $env:jwt_secret) | Set-Content $file
-  - ps: Install-Product node $env:nodejs_version
+      (Get-Content $file).Replace("{db_server}", $env:db_server).Replace("{db_name}", $env:db_name).Replace("{db_username}", $env:db_username).Replace("{db_password}", $env:db_password).Replace("{jwt_secret}", $env:jwt_secret) | Set-Content $file  
 before_build:
   - cmd: dotnet --version
   - cmd: dotnet restore ./Backend/Api.sln --verbosity m
+  - ps: Install-Product node $env:nodejs_version
+  - node --version
   - npm install --global yarn
   - cd Frontend
   - yarn install
