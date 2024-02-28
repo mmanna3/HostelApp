@@ -16,13 +16,25 @@ const PasajerosPage = () => {
 
   const columnas = [
     {
-      Header: 'DNI o Pasaporte',
+      Header: 'DNI/Pasaporte',
       accessor: 'dniOPasaporte',
     },
     {
       Header: 'Nombre',
       accessor: 'nombreCompleto',
     },
+    {
+      Header: 'País',
+      accessor: 'pais',
+    },
+    {
+      Header: 'Teléfono',
+      accessor: 'telefono',
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
+    }
   ];
 
   const [IsModalVisible, setModalVisibility] = useState(false);
